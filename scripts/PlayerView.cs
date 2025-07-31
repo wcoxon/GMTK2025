@@ -9,15 +9,14 @@ public partial class PlayerView : Node3D
     // selecting town and controlling UI shit too, like updating ui when new town is selected
 
     //refs to other stuff in the scene
-    [Export] PlayerTraveller player; // player could instead assign itself to this on ready?
+    public PlayerTraveller player; // player assigns itself to this on its _ready
+
     [Export] TownPanel townPanel;
-
     [Export] Waypoints waypoints;
-
     [Export] ScaleTime pauseButton; // we want to simulate pushing these buttons rather than fucking with the timescale directly, so the UI updates correctly
     [Export] ScaleTime playButton;
 
-    public Vector3 cameraVelocity;
+    public Vector3 cameraVelocity = Vector3.Zero;
     public const float cameraAcceleration = 9.0f;
     [Export] public float maxSpeed = 6.0f;
 
@@ -25,47 +24,31 @@ public partial class PlayerView : Node3D
 
     public float worldSpeed = 1; // this is for scaling delta time in the world simulation stuff
 
-    public void setWorldSpeed(float timescale)
-    {
-        // just made this method so the speed buttons signals could connect to this to change speed
-        worldSpeed = timescale;
-    }
+    public void setWorldSpeed(float timescale) => worldSpeed = timescale;
+    public void PauseWorldSpeed() => pauseButton.ButtonPressed = true;
+    public void PlayWorldSpeed() => playButton.ButtonPressed = true;
+    
 
-    public void PauseWorldSpeed()
-    {
-        pauseButton.ButtonPressed = true;
-
-        setWorldSpeed(pauseButton.newTimeScale);
-    }
-
-    public void PlayWorldSpeed()
-    {
-        playButton.ButtonPressed = true;
-
-        setWorldSpeed(playButton.newTimeScale);
-    }
-
-    Town selectedTown = null;
+    Town selectedTown;
     public Town SelectedTown
     {
         get => selectedTown;
         set
         {
             if (selectedTown is not null) selectedTown.Selected = false;
+
             selectedTown = value;
             selectedTown.Selected = true;
 
             townPanel.Target = selectedTown;
-
-            //player.Target = selectedTown;
         }
     }
 
     public override void _Ready()
     {
-        waypoints.lastDot = player.lastTown;
-        instance = this;
-        cameraVelocity = new Vector3(0,0,0);
+        instance = this; // global handle
+        player = GetNode<PlayerTraveller>("../Map/Traveller");
+        waypoints.lastDot = player.Town; // start path at current town
     }
 
     // drag mouse to pan camera, should do some easing on it, maybe place a grabber on the surface
@@ -74,20 +57,22 @@ public partial class PlayerView : Node3D
     {
         if (@event is InputEventMouseMotion mouseMotion && Input.IsMouseButtonPressed(MouseButton.Right))
         {
-            Translate(new Vector3(mouseMotion.Relative.X, 0, mouseMotion.Relative.Y) * -0.05f); // 0.05 being pan sensitivity
+            float dragScale = 0.05f;
+            Vector3 mouseDelta = mouseMotion.Relative.X*Vector3.Right + mouseMotion.Relative.Y*Vector3.Back; // should actually base this on camera direction kinda
+            
+            Translate(mouseDelta * dragScale);
         }
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        Vector3 velocity = new Vector3(cameraVelocity.X, 0, cameraVelocity.Z);
+        Vector3 velocity = new Vector3(cameraVelocity.X, 0, cameraVelocity.Z); // could we not edit cameraVelocity directly?
 
         Vector2 inputVector = Input.GetVector("left", "right", "up", "down");
         Vector3 inputDirection = new Vector3(inputVector.X, 0, inputVector.Y);
 
         if (inputDirection != Vector3.Zero)
         {
-
             //accelerate in input direction
             velocity += inputDirection * cameraAcceleration * (float)delta;
 
@@ -101,27 +86,27 @@ public partial class PlayerView : Node3D
         }
 
         cameraVelocity = velocity;
-        
-        Translate(cameraVelocity); // 0.05 being pan sensitivity
-    }
 
+        Translate(cameraVelocity * (float)delta);
+    }
 
     public void plotJourney()
     {
-        // right now this part is a stub, this would be what initiates the waypoint placing thing
-        // but rn you just beeline for the selected town
-        // player.Target = SelectedTown;
-        waypoints.Active = !waypoints.Active;
-        townPanel.Embarkmode = waypoints.Active ? TownPanel.EmbarkMode.Embarking : TownPanel.EmbarkMode.Planning;
-        if (waypoints.Active)
-        {
-            waypoints.endDot = SelectedTown;
-            waypoints.OnMouseExited();
-        }
-        else
-        {
-            var (nodes, dashes) = waypoints.PopJourney();
-            player.SetJourney(nodes, dashes);
-        }
+        waypoints.Active = true;
+        townPanel.Embarkmode = TownPanel.EmbarkMode.Planning; 
+        
+        waypoints.endDot = SelectedTown;
+        waypoints.OnMouseExited(); // (since the mouse is off the map at this moment)
+    }
+
+    public void embark()
+    {
+        waypoints.Active = false;
+        townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking;
+
+        var (nodes, dashes) = waypoints.PopJourney();
+        player.SetJourney(nodes, dashes);
+
+        player.onDeparture();
     }
 }

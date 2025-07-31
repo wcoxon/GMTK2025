@@ -7,14 +7,8 @@ public partial class ScaleTime : Button
 
     [Export] public int newTimeScale;
 
-
-
-    public override void _Pressed()
+    public override void _Toggled(bool toggledOn)
     {
-        base._Pressed();
-        PlayerView.instance.setWorldSpeed(newTimeScale);
+        if(toggledOn) PlayerView.instance.setWorldSpeed(newTimeScale);
     }
-
-
-
 }

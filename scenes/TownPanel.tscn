@@ -1,0 +1,95 @@
+[gd_scene load_steps=4 format=3 uid="uid://dpdvumg63k3xu"]
+
+[ext_resource type="Script" path="res://scripts/TownPanel.cs" id="1_0baqy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_duute"]
+bg_color = Color(0.15188, 0.221635, 0.210282, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_45b72"]
+font_size = 26
+
+[node name="Panel" type="Panel" node_paths=PackedStringArray("nameLabel", "populationLabel", "stockContainer", "plotButton", "embarkButton")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_duute")
+script = ExtResource("1_0baqy")
+nameLabel = NodePath("VBoxContainer/TownName")
+populationLabel = NodePath("VBoxContainer/TownPop")
+stockContainer = NodePath("VBoxContainer/StocksContainer")
+plotButton = NodePath("VBoxContainer/plot")
+embarkButton = NodePath("VBoxContainer/embark")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 9.0
+offset_top = 25.0
+offset_right = -9.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="TownName" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "TOWN NAME"
+label_settings = SubResource("LabelSettings_45b72")
+horizontal_alignment = 1
+
+[node name="TownPop" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "population: "
+
+[node name="StocksHeader" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "
+Stocks:"
+
+[node name="StocksContainer" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="row1" type="Label" parent="VBoxContainer/StocksContainer"]
+editor_description = "should prob make a prefab made up of 3 labels in row for this instead of doing it in 1 label btw
+"
+layout_mode = 2
+text = "	e-cigs : £5"
+horizontal_alignment = 2
+
+[node name="row2" type="Label" parent="VBoxContainer/StocksContainer"]
+layout_mode = 2
+text = "mysterious pebbles : £20"
+horizontal_alignment = 2
+
+[node name="row3" type="Label" parent="VBoxContainer/StocksContainer"]
+layout_mode = 2
+text = "cylinders : £12"
+horizontal_alignment = 2
+
+[node name="ProductionHeader" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "
+Production:"
+
+[node name="trade" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+text = "Trade goods"
+
+[node name="rumours" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Investigate rumours"
+
+[node name="plot" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Plot journey"
+
+[node name="embark" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Embark"
