@@ -38,6 +38,9 @@ script = ExtResource("2_6fa14")
 player = NodePath("../Map/Traveller")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/Panel")
 waypoints = NodePath("../Waypoints")
+pauseButton = NodePath("../CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/TimeScale0")
+playButton = NodePath("../CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/TimeScale1")
+maxSpeed = 1.0
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 0.47355, 0.880767, 0, -0.880767, 0.47355, 0, 15.0562, 8.77994)
