@@ -33,13 +33,15 @@ font_size = 26
 
 [node name="Map" parent="." instance=ExtResource("1_5opw3")]
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("player", "townPanel", "waypoints", "pauseButton", "playButton")]
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("player", "townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton")]
 script = ExtResource("2_6fa14")
 player = NodePath("../Map/Traveller")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/Panel")
 waypoints = NodePath("../Waypoints")
 pauseButton = NodePath("../CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/TimeScale0")
 playButton = NodePath("../CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/TimeScale1")
+fastSpeedButton = NodePath("../CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/TimeScale2")
+turboSpeedButton = NodePath("../CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/TimeScale4")
 maxSpeed = 1.0
 
 [node name="Camera3D" type="Camera3D" parent="Player"]

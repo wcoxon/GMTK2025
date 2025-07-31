@@ -15,6 +15,8 @@ public partial class PlayerView : Node3D
     [Export] Waypoints waypoints;
     [Export] ScaleTime pauseButton; // we want to simulate pushing these buttons rather than fucking with the timescale directly, so the UI updates correctly
     [Export] ScaleTime playButton;
+    [Export] ScaleTime fastSpeedButton;
+    [Export] ScaleTime turboSpeedButton;
 
     public Vector3 cameraVelocity = Vector3.Zero;
     public const float cameraAcceleration = 9.0f;
@@ -28,6 +30,34 @@ public partial class PlayerView : Node3D
     public void PauseWorldSpeed() => pauseButton.ButtonPressed = true;
     public void PlayWorldSpeed() => playButton.ButtonPressed = true;
     
+
+    public void PauseWorldSpeed()
+    {
+        pauseButton.ButtonPressed = true;
+
+        setWorldSpeed(pauseButton.newTimeScale);
+    }
+
+    public void PlayWorldSpeed()
+    {
+        playButton.ButtonPressed = true;
+
+        setWorldSpeed(playButton.newTimeScale);
+    }
+
+    public void FastForwardWorldSpeed()
+    {
+        fastSpeedButton.ButtonPressed = true;
+
+        setWorldSpeed(fastSpeedButton.newTimeScale);
+    }
+
+    public void TurboWorldSpeed()
+    {
+        turboSpeedButton.ButtonPressed = true;
+
+        setWorldSpeed(turboSpeedButton.newTimeScale);
+    }
 
     Town selectedTown;
     public Town SelectedTown
@@ -61,6 +91,33 @@ public partial class PlayerView : Node3D
             Vector3 mouseDelta = mouseMotion.Relative.X*Vector3.Right + mouseMotion.Relative.Y*Vector3.Back; // should actually base this on camera direction kinda
             
             Translate(mouseDelta * dragScale);
+        }
+
+        if (@event.IsActionPressed("speed0"))
+        {
+            if (worldSpeed == 0)
+            {
+                PlayWorldSpeed();
+            }
+            else
+            {
+                PauseWorldSpeed();
+            }
+        }
+
+        if (@event.IsActionPressed("speed1"))
+        {
+            PlayWorldSpeed();
+        }
+
+        if (@event.IsActionPressed("speed2"))
+        {
+            FastForwardWorldSpeed();
+        }
+
+        if (@event.IsActionPressed("speed3"))
+        {
+            TurboWorldSpeed();
         }
     }
 
