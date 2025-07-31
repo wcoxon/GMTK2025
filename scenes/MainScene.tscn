@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://cvlfxg610affe"]
+[gd_scene load_steps=11 format=3 uid="uid://cvlfxg610affe"]
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
-[ext_resource type="Script" path="res://scripts/PlayerView.cs" id="2_6fa14"]
-[ext_resource type="Script" path="res://scripts/TownPanel.cs" id="3_3djmv"]
-[ext_resource type="Script" path="res://scripts/DateUI.cs" id="4_c2qql"]
+[ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/PlayerView.cs" id="2_6fa14"]
+[ext_resource type="Script" uid="uid://kj27sednfxyt" path="res://scripts/TownPanel.cs" id="3_3djmv"]
+[ext_resource type="Script" uid="uid://bxk7okto3l8y3" path="res://scripts/DateUI.cs" id="4_c2qql"]
+[ext_resource type="Script" uid="uid://dpgf4ygtataug" path="res://scripts/ScaleTime.cs" id="4_k24pf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qk1f2"]
 sky_top_color = Color(0.66796, 0.355097, 5.77569e-07, 1)
@@ -155,18 +156,25 @@ alignment = 1
 [node name="Button" type="Button" parent="CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer"]
 layout_mode = 2
 text = "x0"
+script = ExtResource("4_k24pf")
 
 [node name="Button2" type="Button" parent="CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer"]
 layout_mode = 2
 text = "x1"
+script = ExtResource("4_k24pf")
+newTimeScale = 1
 
 [node name="Button3" type="Button" parent="CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer"]
 layout_mode = 2
 text = "x2"
+script = ExtResource("4_k24pf")
+newTimeScale = 2
 
 [node name="Button4" type="Button" parent="CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer"]
 layout_mode = 2
 text = "x4"
+script = ExtResource("4_k24pf")
+newTimeScale = 4
 
 [node name="Label" type="Label" parent="CanvasLayer/HSplitContainer/Control/Panel"]
 layout_mode = 0
@@ -208,7 +216,3 @@ step = 0.1
 value = 1.0
 
 [connection signal="pressed" from="CanvasLayer/HSplitContainer/Panel/VBoxContainer/embark" to="Player" method="plotJourney"]
-[connection signal="pressed" from="CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/Button" to="Player" method="setWorldSpeed" binds= [0.0]]
-[connection signal="pressed" from="CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/Button2" to="Player" method="setWorldSpeed" binds= [1.0]]
-[connection signal="pressed" from="CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/Button3" to="Player" method="setWorldSpeed" binds= [2.0]]
-[connection signal="pressed" from="CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/Button4" to="Player" method="setWorldSpeed" binds= [4.0]]
