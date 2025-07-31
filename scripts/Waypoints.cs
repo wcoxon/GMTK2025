@@ -6,7 +6,6 @@ using System.Diagnostics;
 public partial class Waypoints : Node3D
 {
     [Export] public PackedScene dot;
-
     [Export] public PackedScene dashes;
 
     public Node3D curDot;
@@ -93,9 +92,7 @@ public partial class Waypoints : Node3D
 
     public void OnMouseExited()
     {
-        GD.Print("mouseoff");
-        if (!active)
-            return;
+        if (!active) return;
         curDot.Visible = false;
         curLine.Visible = false;
         endLine.SetLine(lastDot.Position, endDot.Position);

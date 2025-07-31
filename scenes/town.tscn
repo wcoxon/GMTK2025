@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://b212emu5my3lk"]
 
-[ext_resource type="Script" uid="uid://d03wi68dgsdwa" path="res://scripts/Town.cs" id="1_2sgm5"]
+[ext_resource type="Script" path="res://scripts/Town.cs" id="1_2sgm5"]
 [ext_resource type="Material" uid="uid://diuq60p02iwus" path="res://shaders/outline/outlineMaterial.tres" id="2_j0xxs"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_3iyqr"]
