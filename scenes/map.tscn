@@ -1,0 +1,34 @@
+[gd_scene load_steps=8 format=3 uid="uid://clc830lkjlhip"]
+
+[ext_resource type="PackedScene" uid="uid://b212emu5my3lk" path="res://scenes/town.tscn" id="1_2hyix"]
+[ext_resource type="PackedScene" uid="uid://dylgmhbel8gcv" path="res://scenes/traveller.tscn" id="2_h6b5g"]
+[ext_resource type="Resource" uid="uid://ch8lqqgiplsg3" path="res://data/GurgishamData.tres" id="2_qhcnf"]
+[ext_resource type="Resource" uid="uid://c0yvi6dd5l3sq" path="res://data/GumbusvilleData.tres" id="3_54cpw"]
+[ext_resource type="Resource" uid="uid://dn1lrvkia3voq" path="res://data/SloptonData.tres" id="4_1eu6x"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_m57gh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_poiku"]
+albedo_color = Color(0.1479, 0.51, 0.47379, 1)
+
+[node name="Map" type="Node3D"]
+
+[node name="SurfacePlane" type="MeshInstance3D" parent="."]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
+mesh = SubResource("PlaneMesh_m57gh")
+surface_material_override/0 = SubResource("StandardMaterial3D_poiku")
+
+[node name="Town" parent="." instance=ExtResource("1_2hyix")]
+transform = Transform3D(0.950997, 0, -0.3092, 0, 1, 0, 0.3092, 0, 0.950997, 5.43591, 0, 7.28171)
+data = ExtResource("2_qhcnf")
+
+[node name="Town2" parent="." instance=ExtResource("1_2hyix")]
+transform = Transform3D(0.812165, 0, 0.583428, 0, 1, 0, -0.583428, 0, 0.812165, -7.94515, -9.53674e-07, -4.22497)
+data = ExtResource("3_54cpw")
+
+[node name="Town3" parent="." instance=ExtResource("1_2hyix")]
+transform = Transform3D(-0.30207, 0, -0.953286, 0, 1, 0, 0.953286, 0, -0.30207, 7.07024, -9.53674e-07, -8.17452)
+data = ExtResource("4_1eu6x")
+
+[node name="Traveller" parent="." instance=ExtResource("2_h6b5g")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.77423, 0, -4.39215)

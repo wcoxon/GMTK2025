@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dn1lrvkia3voq"]
+
+[ext_resource type="Script" path="res://scripts/TownData.cs" id="1_mhphq"]
+
+[resource]
+script = ExtResource("1_mhphq")
+townName = "Slopton"
+population = 500
+stock = {
+"crystal candle": 459,
+"facts and wisdom on paper": 71,
+"sea shells": 125
+}

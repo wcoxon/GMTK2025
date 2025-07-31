@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://diuq60p02iwus"]
+
+[ext_resource type="Shader" path="res://shaders/outline/outline.gdshader" id="1_qg0tv"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_qg0tv")
+shader_parameter/colour = Vector4(1, 0, 0, 1)

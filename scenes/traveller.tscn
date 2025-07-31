@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dylgmhbel8gcv"]
+
+[ext_resource type="Script" path="res://scripts/PlayerTraveller.cs" id="1_maw3y"]
+[ext_resource type="Texture2D" uid="uid://dp7fhv6yvmsb2" path="res://images/traderCutout.png" id="2_1qb1y"]
+
+[node name="Traveller" type="Node3D"]
+script = ExtResource("1_maw3y")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875017, 0)
+billboard = 1
+double_sided = false
+no_depth_test = true
+texture = ExtResource("2_1qb1y")
