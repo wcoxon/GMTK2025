@@ -16,6 +16,8 @@ public partial class PlayerView : Node3D
 
     [Export] ScaleTime pauseButton; // we want to simulate pushing these buttons rather than fucking with the timescale directly, so the UI updates correctly
     [Export] ScaleTime playButton;
+    [Export] ScaleTime fastSpeedButton;
+    [Export] ScaleTime turboSpeedButton;
 
     public Vector3 cameraVelocity;
     public const float cameraAcceleration = 9.0f;
@@ -43,6 +45,20 @@ public partial class PlayerView : Node3D
         playButton.ButtonPressed = true;
 
         setWorldSpeed(playButton.newTimeScale);
+    }
+
+    public void FastForwardWorldSpeed()
+    {
+        fastSpeedButton.ButtonPressed = true;
+
+        setWorldSpeed(fastSpeedButton.newTimeScale);
+    }
+
+    public void TurboWorldSpeed()
+    {
+        turboSpeedButton.ButtonPressed = true;
+
+        setWorldSpeed(turboSpeedButton.newTimeScale);
     }
 
     Town selectedTown = null;
@@ -75,6 +91,33 @@ public partial class PlayerView : Node3D
         if (@event is InputEventMouseMotion mouseMotion && Input.IsMouseButtonPressed(MouseButton.Right))
         {
             Translate(new Vector3(mouseMotion.Relative.X, 0, mouseMotion.Relative.Y) * -0.05f); // 0.05 being pan sensitivity
+        }
+
+        if (@event.IsActionPressed("speed0"))
+        {
+            if (worldSpeed == 0)
+            {
+                PlayWorldSpeed();
+            }
+            else
+            {
+                PauseWorldSpeed();
+            }
+        }
+
+        if (@event.IsActionPressed("speed1"))
+        {
+            PlayWorldSpeed();
+        }
+
+        if (@event.IsActionPressed("speed2"))
+        {
+            FastForwardWorldSpeed();
+        }
+
+        if (@event.IsActionPressed("speed3"))
+        {
+            TurboWorldSpeed();
         }
     }
 
