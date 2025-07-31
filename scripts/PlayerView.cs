@@ -15,6 +15,9 @@ public partial class PlayerView : Node3D
     [Export] ScaleTime pauseButton; // we want to simulate pushing these buttons rather than fucking with the timescale directly, so the UI updates correctly
     [Export] ScaleTime playButton;
 
+    public Vector3 cameraVelocity;
+    public const float cameraAcceleration = 9.0f;
+    [Export] public float maxSpeed = 6.0f;
 
     public static PlayerView instance; // this class gonna be a singleton
 
@@ -59,6 +62,7 @@ public partial class PlayerView : Node3D
     public override void _Ready()
     {
         instance = this;
+        cameraVelocity = new Vector3(0,0,0);
     }
 
     // drag mouse to pan camera, should do some easing on it, maybe place a grabber on the surface
@@ -70,6 +74,34 @@ public partial class PlayerView : Node3D
             Translate(new Vector3(mouseMotion.Relative.X, 0, mouseMotion.Relative.Y) * -0.05f); // 0.05 being pan sensitivity
         }
     }
+
+    public override void _PhysicsProcess(double delta)
+    {
+        Vector3 velocity = new Vector3(cameraVelocity.X, 0, cameraVelocity.Z);
+
+        Vector2 inputVector = Input.GetVector("left", "right", "up", "down");
+        Vector3 inputDirection = new Vector3(inputVector.X, 0, inputVector.Y);
+
+        if (inputDirection != Vector3.Zero)
+        {
+
+            //accelerate in input direction
+            velocity += inputDirection * cameraAcceleration * (float)delta;
+
+            //limit speed
+            velocity = velocity.Normalized() * Mathf.Min(velocity.Length(), maxSpeed);
+        }
+        else
+        {
+            //decelerate towards 0
+            velocity = velocity.Normalized() * Mathf.Max(velocity.Length() - cameraAcceleration * (float)delta, 0);
+        }
+
+        cameraVelocity = velocity;
+        
+        Translate(cameraVelocity); // 0.05 being pan sensitivity
+    }
+
 
     public void plotJourney()
     {
