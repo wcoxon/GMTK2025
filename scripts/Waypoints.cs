@@ -93,6 +93,7 @@ public partial class Waypoints : Node3D
 
     public void OnMouseExited()
     {
+        GD.Print("mouseoff");
         if (!active)
             return;
         curDot.Visible = false;

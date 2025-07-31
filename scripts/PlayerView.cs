@@ -3,6 +3,13 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 
+public enum GameState {
+    TOWN,
+    PLANNING,
+    TRAVELLING
+
+}
+
 public partial class PlayerView : Node3D
 {
     // this will hand logic for the actual player interfacing stuff like moving the camera
@@ -14,10 +21,15 @@ public partial class PlayerView : Node3D
 
     [Export] Waypoints waypoints;
 
+#region UI stuff
     [Export] ScaleTime pauseButton; // we want to simulate pushing these buttons rather than fucking with the timescale directly, so the UI updates correctly
     [Export] ScaleTime playButton;
     [Export] ScaleTime fastSpeedButton;
     [Export] ScaleTime turboSpeedButton;
+    [Export] Panel timeControlPanel;
+
+#endregion
+    public GameState gameState;
 
     public Vector3 cameraVelocity;
     public const float cameraAcceleration = 9.0f;
@@ -61,6 +73,30 @@ public partial class PlayerView : Node3D
         setWorldSpeed(turboSpeedButton.newTimeScale);
     }
 
+    public void ChangeState(GameState newState)
+    {
+        gameState = newState;
+
+        OnStateChanged();
+    }
+
+    public void OnStateChanged() // ok honestly it would make more sense to make a state machine at this point but I've spent too long not doing that and it feels like a sunk cost
+    {
+        switch (gameState) {
+            case GameState.TOWN:
+                timeControlPanel.Hide();
+            break;
+
+        case GameState.PLANNING:
+
+            break;
+
+        case GameState.TRAVELLING:
+                timeControlPanel.Show();
+            break;
+        }       
+    }
+
     Town selectedTown = null;
     public Town SelectedTown
     {
@@ -81,7 +117,9 @@ public partial class PlayerView : Node3D
     {
         waypoints.lastDot = player.lastTown;
         instance = this;
-        cameraVelocity = new Vector3(0,0,0);
+        cameraVelocity = new Vector3(0, 0, 0);
+
+        ChangeState(GameState.TOWN);
     }
 
     // drag mouse to pan camera, should do some easing on it, maybe place a grabber on the surface
@@ -93,32 +131,48 @@ public partial class PlayerView : Node3D
             Translate(new Vector3(mouseMotion.Relative.X, 0, mouseMotion.Relative.Y) * -0.05f); // 0.05 being pan sensitivity
         }
 
-        if (@event.IsActionPressed("speed0"))
+        switch (gameState)
         {
-            if (worldSpeed == 0)
-            {
-                PlayWorldSpeed();
-            }
-            else
-            {
-                PauseWorldSpeed();
-            }
+            case GameState.TOWN:
+
+                break;
+
+            case GameState.PLANNING:
+
+                break;
+
+            case GameState.TRAVELLING:
+
+                if (@event.IsActionPressed("speed0"))
+                {
+                    if (worldSpeed == 0)
+                    {
+                        PlayWorldSpeed();
+                    }
+                    else
+                    {
+                        PauseWorldSpeed();
+                    }
+                }
+
+                if (@event.IsActionPressed("speed1"))
+                {
+                    PlayWorldSpeed();
+                }
+
+                if (@event.IsActionPressed("speed2"))
+                {
+                    FastForwardWorldSpeed();
+                }
+
+                if (@event.IsActionPressed("speed3"))
+                {
+                    TurboWorldSpeed();
+                }
+                break;
         }
 
-        if (@event.IsActionPressed("speed1"))
-        {
-            PlayWorldSpeed();
-        }
-
-        if (@event.IsActionPressed("speed2"))
-        {
-            FastForwardWorldSpeed();
-        }
-
-        if (@event.IsActionPressed("speed3"))
-        {
-            TurboWorldSpeed();
-        }
+        
     }
 
     public override void _PhysicsProcess(double delta)
@@ -144,7 +198,7 @@ public partial class PlayerView : Node3D
         }
 
         cameraVelocity = velocity;
-        
+
         Translate(cameraVelocity); // 0.05 being pan sensitivity
     }
 

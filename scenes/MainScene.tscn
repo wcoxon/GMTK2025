@@ -33,15 +33,16 @@ font_size = 26
 
 [node name="Map" parent="." instance=ExtResource("1_5opw3")]
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("player", "townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton")]
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("player", "townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel")]
 script = ExtResource("2_6fa14")
 player = NodePath("../Map/Traveller")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/Panel")
 waypoints = NodePath("../Waypoints")
-pauseButton = NodePath("../CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/TimeScale0")
-playButton = NodePath("../CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/TimeScale1")
-fastSpeedButton = NodePath("../CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/TimeScale2")
-turboSpeedButton = NodePath("../CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/TimeScale4")
+pauseButton = NodePath("../CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer/TimeScale0")
+playButton = NodePath("../CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer/TimeScale1")
+fastSpeedButton = NodePath("../CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer/TimeScale2")
+turboSpeedButton = NodePath("../CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer/TimeScale4")
+timeControlPanel = NodePath("../CanvasLayer/HSplitContainer/Control/TimePanel")
 maxSpeed = 1.0
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
@@ -141,7 +142,7 @@ text = "Plot journey"
 layout_mode = 2
 mouse_filter = 2
 
-[node name="Panel" type="Panel" parent="CanvasLayer/HSplitContainer/Control"]
+[node name="TimePanel" type="Panel" parent="CanvasLayer/HSplitContainer/Control"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -155,7 +156,7 @@ offset_bottom = -40.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HSplitContainer/Control/Panel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HSplitContainer/Control/TimePanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -164,7 +165,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="TimeScale0" type="Button" parent="CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer"]
+[node name="TimeScale0" type="Button" parent="CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_1wiy7")
 toggle_mode = true
@@ -172,7 +173,7 @@ button_group = ExtResource("4_ygjfp")
 text = "x0"
 script = ExtResource("4_k24pf")
 
-[node name="TimeScale1" type="Button" parent="CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer"]
+[node name="TimeScale1" type="Button" parent="CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_1wiy7")
 toggle_mode = true
@@ -182,7 +183,7 @@ text = "x1"
 script = ExtResource("4_k24pf")
 newTimeScale = 1
 
-[node name="TimeScale2" type="Button" parent="CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer"]
+[node name="TimeScale2" type="Button" parent="CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_1wiy7")
 toggle_mode = true
@@ -191,7 +192,7 @@ text = "x2"
 script = ExtResource("4_k24pf")
 newTimeScale = 2
 
-[node name="TimeScale4" type="Button" parent="CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer"]
+[node name="TimeScale4" type="Button" parent="CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_1wiy7")
 toggle_mode = true
@@ -200,7 +201,7 @@ text = "x4"
 script = ExtResource("4_k24pf")
 newTimeScale = 4
 
-[node name="Label" type="Label" parent="CanvasLayer/HSplitContainer/Control/Panel"]
+[node name="Label" type="Label" parent="CanvasLayer/HSplitContainer/Control/TimePanel"]
 layout_mode = 0
 offset_left = 27.0
 offset_top = -33.0
@@ -244,4 +245,4 @@ lastDot = NodePath("../Map/Town2")
 
 [connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/Panel" to="Waypoints" method="OnMouseExited"]
 [connection signal="pressed" from="CanvasLayer/HSplitContainer/Panel/VBoxContainer/embark" to="Player" method="plotJourney"]
-[connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/Control/Panel" to="Waypoints" method="OnMouseExited"]
+[connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/Control/TimePanel" to="Waypoints" method="OnMouseExited"]

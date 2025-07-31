@@ -20,11 +20,13 @@ public partial class PlayerTraveller : Traveller
         // generally update visuals, ease camera over to town, play sound, and yeah like open some ui
         GD.Print("Entering " + town.TownName);
         PlayerView.instance.PauseWorldSpeed();
+        PlayerView.instance.ChangeState(GameState.TOWN);
     }
 
     public override void onDeparture()
     {
         // start travelling
         PlayerView.instance.PlayWorldSpeed();
+        PlayerView.instance.ChangeState(GameState.TRAVELLING);
     }
 }
