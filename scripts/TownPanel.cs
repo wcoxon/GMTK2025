@@ -7,7 +7,7 @@ public partial class TownPanel : Panel
     // populates UI contents with information about given town
 
     Town target;
-    
+
     [Export] Label nameLabel;
     [Export] Label populationLabel;
     [Export] BoxContainer stockContainer;
@@ -29,6 +29,15 @@ public partial class TownPanel : Panel
                 stockContainer.GetChild<Label>(labelIndex).Text = $"{stockItem.Key} : {stockItem.Value}";
                 labelIndex++;
             }
+        }
+    }
+
+    public enum EmbarkMode { Planning, Embarking };
+    public EmbarkMode Embarkmode
+    {
+        set
+        {
+            GetNode<Button>("VBoxContainer/embark").Text = value == EmbarkMode.Planning ? "Plot journey" : "Embark";
         }
     }
 }

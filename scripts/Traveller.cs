@@ -2,7 +2,8 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public enum Item {
+public enum Item
+{
     BROTH,
     PLASTICS,
     EVIL_WATER
@@ -23,23 +24,30 @@ public partial class Traveller : Node3D
 
     int money = 0, health = 5;
 
-    Town target;
-    public Town Target
-    {
-        get => target;
-        set { target = value; }
-    }
+    [Export] public Town lastTown;
+
+    List<Node3D> journey_nodes = [];
+    List<Dashes> journey_dashes = [];
+    int journey_index;
 
     Path3D path;
 
     // inventory is items and quantities
     Dictionary<Item, int> inventory = new();
 
+    public void SetJourney(List<Node3D> nodes, List<Dashes> dashes)
+    {
+        journey_nodes = nodes;
+        journey_dashes = dashes;
+        journey_index = 0;
+    }
+
     public void travel(float delta)
     {
-        // this is a beeline to the traveller's destination, a stub
-        // when we have a Path3D being plotted beforehand, this function will instead offset the progress of a PathFollow3D
+        if (journey_index >= journey_nodes.Count)
+            return;  // No travelling to do.
 
+        var target = journey_nodes[journey_index];
         Vector3 disp = target.Position - Position;
 
         float travelSpeed = 1;
@@ -48,15 +56,21 @@ public partial class Traveller : Node3D
         if (disp.Length() < dist)
         {
             Position = target.Position;
-            onArrival();
+            journey_dashes[journey_index].QueueFree();
+            journey_index += 1;
+            if (target is Town town) onArrival(town);
+            else target.QueueFree();
             return;
         }
 
         Translate(disp.Normalized() * dist);
+        var dist_start = Position.DistanceTo(journey_dashes[journey_index].LineStart);
+        var dist_end = Position.DistanceTo(journey_dashes[journey_index].LineEnd);
+        journey_dashes[journey_index].SetProgression(dist_start / (dist_start + dist_end));
     }
 
-    virtual public void onArrival() { }
-    
-    virtual public void onDeparture() {}
+    virtual public void onArrival(Town town) { }
+
+    virtual public void onDeparture() { }
 
 }

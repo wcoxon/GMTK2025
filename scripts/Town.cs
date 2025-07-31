@@ -29,13 +29,23 @@ public partial class Town : Node3D
     public Godot.Collections.Dictionary<string, int> Stock { get => data.stock; } // we prob don't wanna use a string to denote items, this is just a stub, same for int quantity
 
     Dictionary<Item, float> deltaStock = new(); // store production and consumption here as change in items over time?
-    
+
     public void _on_area_3d_input_event(Node cam, InputEvent evt, Vector3 evtPos, Vector3 normal, int shapeIndex)
     {
+        // GetNode<Waypoints>("../../Waypoints").NodeWaypointPreview(this);
+
         if (evt is InputEventMouseButton mbEvent)
         {
             // if the area was clicked on, this town is selected (should use actions instead so u can look for isActionPressed)
             select();
+
+            // // Add waypoint on doubleclick
+            // if (mbEvent.Pressed
+            // 	&& mbEvent.DoubleClick
+            // 	&& mbEvent.ButtonIndex == MouseButton.Left)
+            // {
+            // 	GetNode<Waypoints>("../../Waypoints").NodeWaypoint(this);
+            // }
         }
     }
 
@@ -44,7 +54,8 @@ public partial class Town : Node3D
         PlayerView.instance.SelectedTown = this;
     }
 
-    void updateStock(float deltaTime){
+    void updateStock(float deltaTime)
+    {
         // produce or consume items over time based on deltaStock
     }
 }

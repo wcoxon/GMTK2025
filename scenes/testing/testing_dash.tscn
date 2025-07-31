@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp4q1jpt64gyr"]
+
+[ext_resource type="SphereMesh" uid="uid://bms04w6i6fbfm" path="res://scenes/testing/testing-dash.tres" id="1_mku31"]
+[ext_resource type="Script" uid="uid://c1lgiigtybkxp" path="res://scripts/Dashes.cs" id="2_pthyy"]
+
+[node name="dashes_preview" type="MultiMeshInstance3D"]
+script = ExtResource("2_pthyy")
+mesh = ExtResource("1_mku31")

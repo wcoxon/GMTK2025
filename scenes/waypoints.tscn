@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://durnjyano0ic4"]
+
+[ext_resource type="Script" uid="uid://c8kq8ardjabf1" path="res://scripts/Waypoints.cs" id="1_o7wve"]
+[ext_resource type="PackedScene" uid="uid://ce8fqoxlbn15x" path="res://scenes/testing/testing_dot.tscn" id="2_bwv6p"]
+[ext_resource type="PackedScene" uid="uid://bp4q1jpt64gyr" path="res://scenes/testing/testing_dash.tscn" id="3_koqve"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_3wc6k"]
+
+[node name="Waypoints" type="Node3D"]
+script = ExtResource("1_o7wve")
+dot = ExtResource("2_bwv6p")
+dashes = ExtResource("3_koqve")
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("WorldBoundaryShape3D_3wc6k")
+
+[connection signal="input_event" from="Area3D" to="." method="OnMapPressed"]

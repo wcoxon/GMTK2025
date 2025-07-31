@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cvlfxg610affe"]
+[gd_scene load_steps=14 format=3 uid="uid://cvlfxg610affe"]
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
 [ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/PlayerView.cs" id="2_6fa14"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://bxk7okto3l8y3" path="res://scripts/DateUI.cs" id="4_c2qql"]
 [ext_resource type="Script" uid="uid://dpgf4ygtataug" path="res://scripts/ScaleTime/ScaleTime.cs" id="4_k24pf"]
 [ext_resource type="ButtonGroup" uid="uid://br2jb0lwfyinh" path="res://scripts/ScaleTime/SpeedButtonGroup.tres" id="4_ygjfp"]
+[ext_resource type="PackedScene" uid="uid://durnjyano0ic4" path="res://scenes/waypoints.tscn" id="5_k24pf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qk1f2"]
 sky_top_color = Color(0.66796, 0.355097, 5.77569e-07, 1)
@@ -14,13 +15,13 @@ sky_horizon_color = Color(1, 0.410277, 0.7112, 1)
 sky_cover_modulate = Color(0.28384, 0.617826, 1.92523e-07, 1)
 ground_bottom_color = Color(0.665338, 0.448419, 0, 1)
 
-[sub_resource type="Sky" id="Sky_47t68"]
+[sub_resource type="Sky" id="Sky_611at"]
 sky_material = SubResource("ProceduralSkyMaterial_qk1f2")
 
 [sub_resource type="Environment" id="Environment_vyg74"]
 background_mode = 2
 background_color = Color(0.69, 0.46644, 0.1311, 1)
-sky = SubResource("Sky_47t68")
+sky = SubResource("Sky_611at")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_duute"]
 bg_color = Color(0.15188, 0.221635, 0.210282, 1)
@@ -32,12 +33,11 @@ font_size = 26
 
 [node name="Map" parent="." instance=ExtResource("1_5opw3")]
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("player", "townPanel", "pauseButton", "playButton")]
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("player", "townPanel", "waypoints")]
 script = ExtResource("2_6fa14")
 player = NodePath("../Map/Traveller")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/Panel")
-pauseButton = NodePath("../CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/TimeScale0")
-playButton = NodePath("../CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/TimeScale1")
+waypoints = NodePath("../Waypoints")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 0.47355, 0.880767, 0, -0.880767, 0.47355, 0, 15.0562, 8.77994)
@@ -231,5 +231,8 @@ offset_bottom = 0.303955
 max_value = 1.0
 step = 0.1
 value = 1.0
+
+[node name="Waypoints" parent="." node_paths=PackedStringArray("lastDot") instance=ExtResource("5_k24pf")]
+lastDot = NodePath("../Map/Town2")
 
 [connection signal="pressed" from="CanvasLayer/HSplitContainer/Panel/VBoxContainer/embark" to="Player" method="plotJourney"]

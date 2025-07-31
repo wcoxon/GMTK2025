@@ -1,0 +1,64 @@
+[gd_scene load_steps=10 format=3 uid="uid://b52qxc17lp42x"]
+
+[ext_resource type="PackedScene" uid="uid://b212emu5my3lk" path="res://scenes/town.tscn" id="1_mh6n1"]
+[ext_resource type="PackedScene" uid="uid://dylgmhbel8gcv" path="res://scenes/traveller.tscn" id="2_wv4en"]
+[ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/PlayerView.cs" id="2_ynebp"]
+[ext_resource type="PackedScene" uid="uid://durnjyano0ic4" path="res://scenes/waypoints.tscn" id="3_wv4en"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_m57gh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_poiku"]
+albedo_color = Color(0.1479, 0.51, 0.47379, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_mh6n1"]
+sky_top_color = Color(0.66796, 0.355097, 5.77569e-07, 1)
+sky_horizon_color = Color(1, 0.410277, 0.7112, 1)
+sky_cover_modulate = Color(0.28384, 0.617826, 1.92523e-07, 1)
+ground_bottom_color = Color(0.665338, 0.448419, 0, 1)
+
+[sub_resource type="Sky" id="Sky_47t68"]
+sky_material = SubResource("ProceduralSkyMaterial_mh6n1")
+
+[sub_resource type="Environment" id="Environment_wv4en"]
+background_mode = 2
+background_color = Color(0.69, 0.46644, 0.1311, 1)
+sky = SubResource("Sky_47t68")
+
+[node name="WaypointMovement" type="Node3D"]
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="SurfacePlane" type="MeshInstance3D" parent="Map"]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
+mesh = SubResource("PlaneMesh_m57gh")
+surface_material_override/0 = SubResource("StandardMaterial3D_poiku")
+
+[node name="Town" parent="Map" instance=ExtResource("1_mh6n1")]
+transform = Transform3D(0.950997, 0, -0.3092, 0, 1, 0, 0.3092, 0, 0.950997, 5.43591, 0, 7.28171)
+script = null
+
+[node name="Town2" parent="Map" instance=ExtResource("1_mh6n1")]
+transform = Transform3D(0.812165, 0, 0.583428, 0, 1, 0, -0.583428, 0, 0.812165, -7.94515, -9.53674e-07, -4.22497)
+script = null
+
+[node name="Town3" parent="Map" instance=ExtResource("1_mh6n1")]
+transform = Transform3D(-0.30207, 0, -0.953286, 0, 1, 0, 0.953286, 0, -0.30207, 7.07024, -9.53674e-07, -8.17452)
+script = null
+
+[node name="Traveller" parent="Map" instance=ExtResource("2_wv4en")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.77423, 0, -4.39215)
+script = null
+
+[node name="Waypoints" parent="Map" instance=ExtResource("3_wv4en")]
+
+[node name="Player" type="Node3D" parent="."]
+script = ExtResource("2_ynebp")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+transform = Transform3D(1, 0, 0, 0, 0.47355, 0.880767, 0, -0.880767, 0.47355, 0, 15.0562, 8.77994)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Player/Camera3D"]
+environment = SubResource("Environment_wv4en")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.0844432, 0.871412, -0.483229, 0.0410672, 0.481505, 0.87548, 0.995582, -0.0937732, 0.00487342, 0, 0, 0)

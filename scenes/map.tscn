@@ -30,5 +30,6 @@ data = ExtResource("3_54cpw")
 transform = Transform3D(-0.30207, 0, -0.953286, 0, 1, 0, 0.953286, 0, -0.30207, 7.07024, -9.53674e-07, -8.17452)
 data = ExtResource("4_1eu6x")
 
-[node name="Traveller" parent="." instance=ExtResource("2_h6b5g")]
+[node name="Traveller" parent="." node_paths=PackedStringArray("lastTown") instance=ExtResource("2_h6b5g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.77423, 0, -4.39215)
+lastTown = NodePath("../Town2")

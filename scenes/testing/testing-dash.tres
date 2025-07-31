@@ -1,0 +1,6 @@
+[gd_resource type="SphereMesh" format=3 uid="uid://bms04w6i6fbfm"]
+
+[resource]
+lightmap_size_hint = Vector2i(8, 9)
+radius = 0.05
+height = 0.3

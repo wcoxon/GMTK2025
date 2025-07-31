@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Diagnostics;
+using System.Linq;
 
 public partial class PlayerView : Node3D
 {
@@ -11,6 +12,7 @@ public partial class PlayerView : Node3D
     [Export] PlayerTraveller player; // player could instead assign itself to this on ready?
     [Export] TownPanel townPanel;
 
+    [Export] Waypoints waypoints;
 
     [Export] ScaleTime pauseButton; // we want to simulate pushing these buttons rather than fucking with the timescale directly, so the UI updates correctly
     [Export] ScaleTime playButton;
@@ -58,6 +60,7 @@ public partial class PlayerView : Node3D
 
     public override void _Ready()
     {
+        waypoints.lastDot = player.lastTown;
         instance = this;
     }
 
@@ -75,6 +78,17 @@ public partial class PlayerView : Node3D
     {
         // right now this part is a stub, this would be what initiates the waypoint placing thing
         // but rn you just beeline for the selected town
-        player.Target = SelectedTown;
+        // player.Target = SelectedTown;
+        waypoints.Active = !waypoints.Active;
+        townPanel.Embarkmode = waypoints.Active ? TownPanel.EmbarkMode.Embarking : TownPanel.EmbarkMode.Planning;
+        if (waypoints.Active)
+        {
+            waypoints.endDot = SelectedTown;
+        }
+        else
+        {
+            var (nodes, dashes) = waypoints.PopJourney();
+            player.SetJourney(nodes, dashes);
+        }
     }
 }
