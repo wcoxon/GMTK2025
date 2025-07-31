@@ -31,7 +31,7 @@ public partial class PlayerView : Node3D
 
 
     public Vector3 cameraVelocity = Vector3.Zero;
-    public const float cameraAcceleration = 9.0f;
+    public const float cameraAcceleration = 20.0f;
     [Export] public float maxSpeed = 6.0f;
     public float worldSpeed = 1; // this is for scaling delta time in the world simulation stuff
 
@@ -112,9 +112,11 @@ public partial class PlayerView : Node3D
                 break;
 
             case GameState.TRAVELLING:
-                        
-                if (worldSpeed == 0) PlayWorldSpeed();
-                else PauseWorldSpeed();
+
+                if (@event.IsActionPressed("speed0")){
+                    if (worldSpeed == 0) PlayWorldSpeed();
+                    else PauseWorldSpeed();
+                }        
                 if (@event.IsActionPressed("speed1")) PlayWorldSpeed();
                 if (@event.IsActionPressed("speed2")) FastForwardWorldSpeed();
                 if (@event.IsActionPressed("speed3")) TurboWorldSpeed();

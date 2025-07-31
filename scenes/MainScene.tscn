@@ -1,11 +1,11 @@
 [gd_scene load_steps=12 format=3 uid="uid://cvlfxg610affe"]
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
-[ext_resource type="Script" path="res://scripts/PlayerView.cs" id="2_6fa14"]
+[ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/PlayerView.cs" id="2_6fa14"]
 [ext_resource type="PackedScene" uid="uid://dpdvumg63k3xu" path="res://scenes/TownPanel.tscn" id="3_y7ipx"]
 [ext_resource type="Theme" uid="uid://b7sho3deipfsu" path="res://scripts/ScaleTime/SpeedButtonTheme.tres" id="4_1wiy7"]
-[ext_resource type="Script" path="res://scripts/DateUI.cs" id="4_c2qql"]
-[ext_resource type="Script" path="res://scripts/ScaleTime/ScaleTime.cs" id="4_k24pf"]
+[ext_resource type="Script" uid="uid://bxk7okto3l8y3" path="res://scripts/DateUI.cs" id="4_c2qql"]
+[ext_resource type="Script" uid="uid://dpgf4ygtataug" path="res://scripts/ScaleTime/ScaleTime.cs" id="4_k24pf"]
 [ext_resource type="ButtonGroup" uid="uid://br2jb0lwfyinh" path="res://scripts/ScaleTime/SpeedButtonGroup.tres" id="4_ygjfp"]
 [ext_resource type="PackedScene" uid="uid://durnjyano0ic4" path="res://scenes/waypoints.tscn" id="5_k24pf"]
 
@@ -27,7 +27,7 @@ sky = SubResource("Sky_611at")
 
 [node name="Map" parent="." instance=ExtResource("1_5opw3")]
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton")]
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel")]
 script = ExtResource("2_6fa14")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/Panel")
 waypoints = NodePath("../Waypoints")
@@ -36,7 +36,7 @@ playButton = NodePath("../CanvasLayer/HSplitContainer/Control/TimePanel/HBoxCont
 fastSpeedButton = NodePath("../CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer/TimeScale2")
 turboSpeedButton = NodePath("../CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer/TimeScale4")
 timeControlPanel = NodePath("../CanvasLayer/HSplitContainer/Control/TimePanel")
-maxSpeed = 1.0
+maxSpeed = 10.0
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 0.47355, 0.880767, 0, -0.880767, 0.47355, 0, 15.0562, 8.77994)
@@ -168,6 +168,5 @@ lastDot = NodePath("../Map/Town2")
 [connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/Panel" to="Waypoints" method="OnMouseExited"]
 [connection signal="pressed" from="CanvasLayer/HSplitContainer/Panel/VBoxContainer/plot" to="Player" method="plotJourney"]
 [connection signal="pressed" from="CanvasLayer/HSplitContainer/Panel/VBoxContainer/embark" to="Player" method="embark"]
-[connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/Control/Panel" to="Waypoints" method="OnMouseExited"]
 
 [editable path="CanvasLayer/HSplitContainer/Panel"]
