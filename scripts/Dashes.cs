@@ -38,6 +38,6 @@ public partial class Dashes : MultiMeshInstance3D
 
     public void SetProgression(double progression)
     {
-        Multimesh.VisibleInstanceCount = (int)(Multimesh.InstanceCount * (1 - progression));
+        Multimesh.VisibleInstanceCount = Multimesh.InstanceCount - (int) (progression * (Multimesh.InstanceCount + 1));
     }
 }

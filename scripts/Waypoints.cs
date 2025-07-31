@@ -83,9 +83,21 @@ public partial class Waypoints : Node3D
         curDot.Visible = true;
         curDot.Position = evtPos;
         if (lastDot != null)
+        {
+            curLine.Visible = true;
             curLine.SetLine(lastDot.Position, evtPos);
+        }
         if (endDot != null)
             endLine.SetLine(evtPos, endDot.Position);
+    }
+
+    public void OnMouseExited()
+    {
+        if (!active)
+            return;
+        curDot.Visible = false;
+        curLine.Visible = false;
+        endLine.SetLine(lastDot.Position, endDot.Position);
     }
 
     public Tuple<List<Node3D>, List<Dashes>> PopJourney()

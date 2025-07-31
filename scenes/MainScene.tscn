@@ -74,7 +74,9 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 9.0
 offset_top = 25.0
+offset_right = -9.0
 offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -238,4 +240,6 @@ value = 1.0
 [node name="Waypoints" parent="." node_paths=PackedStringArray("lastDot") instance=ExtResource("5_k24pf")]
 lastDot = NodePath("../Map/Town2")
 
+[connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/Panel" to="Waypoints" method="OnMouseExited"]
 [connection signal="pressed" from="CanvasLayer/HSplitContainer/Panel/VBoxContainer/embark" to="Player" method="plotJourney"]
+[connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/Control/Panel" to="Waypoints" method="OnMouseExited"]

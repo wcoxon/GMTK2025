@@ -116,6 +116,7 @@ public partial class PlayerView : Node3D
         if (waypoints.Active)
         {
             waypoints.endDot = SelectedTown;
+            waypoints.OnMouseExited();
         }
         else
         {

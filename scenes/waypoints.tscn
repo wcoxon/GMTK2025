@@ -18,3 +18,4 @@ transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
 shape = SubResource("WorldBoundaryShape3D_3wc6k")
 
 [connection signal="input_event" from="Area3D" to="." method="OnMapPressed"]
+[connection signal="mouse_exited" from="Area3D" to="." method="OnMouseExited"]
