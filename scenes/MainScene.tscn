@@ -1,11 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://cvlfxg610affe"]
+[gd_scene load_steps=12 format=3 uid="uid://cvlfxg610affe"]
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
-[ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/PlayerView.cs" id="2_6fa14"]
-[ext_resource type="Script" uid="uid://kj27sednfxyt" path="res://scripts/TownPanel.cs" id="3_3djmv"]
+[ext_resource type="Script" path="res://scripts/PlayerView.cs" id="2_6fa14"]
+[ext_resource type="PackedScene" uid="uid://dpdvumg63k3xu" path="res://scenes/TownPanel.tscn" id="3_y7ipx"]
 [ext_resource type="Theme" uid="uid://b7sho3deipfsu" path="res://scripts/ScaleTime/SpeedButtonTheme.tres" id="4_1wiy7"]
-[ext_resource type="Script" uid="uid://bxk7okto3l8y3" path="res://scripts/DateUI.cs" id="4_c2qql"]
-[ext_resource type="Script" uid="uid://dpgf4ygtataug" path="res://scripts/ScaleTime/ScaleTime.cs" id="4_k24pf"]
+[ext_resource type="Script" path="res://scripts/DateUI.cs" id="4_c2qql"]
+[ext_resource type="Script" path="res://scripts/ScaleTime/ScaleTime.cs" id="4_k24pf"]
 [ext_resource type="ButtonGroup" uid="uid://br2jb0lwfyinh" path="res://scripts/ScaleTime/SpeedButtonGroup.tres" id="4_ygjfp"]
 [ext_resource type="PackedScene" uid="uid://durnjyano0ic4" path="res://scenes/waypoints.tscn" id="5_k24pf"]
 
@@ -23,19 +23,12 @@ background_mode = 2
 background_color = Color(0.69, 0.46644, 0.1311, 1)
 sky = SubResource("Sky_611at")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_duute"]
-bg_color = Color(0.15188, 0.221635, 0.210282, 1)
-
-[sub_resource type="LabelSettings" id="LabelSettings_45b72"]
-font_size = 26
-
 [node name="Root" type="Node3D"]
 
 [node name="Map" parent="." instance=ExtResource("1_5opw3")]
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("player", "townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton")]
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton")]
 script = ExtResource("2_6fa14")
-player = NodePath("../Map/Traveller")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/Panel")
 waypoints = NodePath("../Waypoints")
 pauseButton = NodePath("../CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/TimeScale0")
@@ -63,79 +56,8 @@ grow_horizontal = 2
 grow_vertical = 2
 split_offset = 255
 
-[node name="Panel" type="Panel" parent="CanvasLayer/HSplitContainer" node_paths=PackedStringArray("nameLabel", "populationLabel", "stockContainer")]
+[node name="Panel" parent="CanvasLayer/HSplitContainer" instance=ExtResource("3_y7ipx")]
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_duute")
-script = ExtResource("3_3djmv")
-nameLabel = NodePath("VBoxContainer/TownName")
-populationLabel = NodePath("VBoxContainer/TownPop")
-stockContainer = NodePath("VBoxContainer/StocksContainer")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HSplitContainer/Panel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 9.0
-offset_top = 25.0
-offset_right = -9.0
-offset_bottom = -24.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 8
-
-[node name="TownName" type="Label" parent="CanvasLayer/HSplitContainer/Panel/VBoxContainer"]
-layout_mode = 2
-text = "TOWN NAME"
-label_settings = SubResource("LabelSettings_45b72")
-horizontal_alignment = 1
-
-[node name="TownPop" type="Label" parent="CanvasLayer/HSplitContainer/Panel/VBoxContainer"]
-layout_mode = 2
-text = "population: "
-
-[node name="StocksHeader" type="Label" parent="CanvasLayer/HSplitContainer/Panel/VBoxContainer"]
-layout_mode = 2
-text = "
-Stocks:"
-
-[node name="StocksContainer" type="VBoxContainer" parent="CanvasLayer/HSplitContainer/Panel/VBoxContainer"]
-layout_mode = 2
-
-[node name="row1" type="Label" parent="CanvasLayer/HSplitContainer/Panel/VBoxContainer/StocksContainer"]
-editor_description = "should prob make a prefab made up of 3 labels in row for this instead of doing it in 1 label btw
-"
-layout_mode = 2
-text = "	e-cigs : £5"
-horizontal_alignment = 2
-
-[node name="row2" type="Label" parent="CanvasLayer/HSplitContainer/Panel/VBoxContainer/StocksContainer"]
-layout_mode = 2
-text = "mysterious pebbles : £20"
-horizontal_alignment = 2
-
-[node name="row3" type="Label" parent="CanvasLayer/HSplitContainer/Panel/VBoxContainer/StocksContainer"]
-layout_mode = 2
-text = "cylinders : £12"
-horizontal_alignment = 2
-
-[node name="ProductionHeader" type="Label" parent="CanvasLayer/HSplitContainer/Panel/VBoxContainer"]
-layout_mode = 2
-text = "
-Production:"
-
-[node name="trade" type="Button" parent="CanvasLayer/HSplitContainer/Panel/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 10
-text = "Trade goods"
-
-[node name="rumours" type="Button" parent="CanvasLayer/HSplitContainer/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Investigate rumours"
-
-[node name="embark" type="Button" parent="CanvasLayer/HSplitContainer/Panel/VBoxContainer"]
-layout_mode = 2
-text = "Plot journey"
 
 [node name="Control" type="Control" parent="CanvasLayer/HSplitContainer"]
 layout_mode = 2
@@ -243,5 +165,8 @@ value = 1.0
 lastDot = NodePath("../Map/Town2")
 
 [connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/Panel" to="Waypoints" method="OnMouseExited"]
-[connection signal="pressed" from="CanvasLayer/HSplitContainer/Panel/VBoxContainer/embark" to="Player" method="plotJourney"]
+[connection signal="pressed" from="CanvasLayer/HSplitContainer/Panel/VBoxContainer/plot" to="Player" method="plotJourney"]
+[connection signal="pressed" from="CanvasLayer/HSplitContainer/Panel/VBoxContainer/embark" to="Player" method="embark"]
 [connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/Control/Panel" to="Waypoints" method="OnMouseExited"]
+
+[editable path="CanvasLayer/HSplitContainer/Panel"]

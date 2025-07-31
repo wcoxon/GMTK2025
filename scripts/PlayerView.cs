@@ -8,56 +8,29 @@ public partial class PlayerView : Node3D
     // this will hand logic for the actual player interfacing stuff like moving the camera
     // selecting town and controlling UI shit too, like updating ui when new town is selected
 
-    //refs to other stuff in the scene
-    public PlayerTraveller player; // player assigns itself to this on its _ready
+    public static PlayerView instance; // this class gonna be a singleton
 
+    //refs to other stuff in the scene
+    public PlayerTraveller player;
     [Export] TownPanel townPanel;
     [Export] Waypoints waypoints;
-    [Export] ScaleTime pauseButton; // we want to simulate pushing these buttons rather than fucking with the timescale directly, so the UI updates correctly
+    [Export] ScaleTime pauseButton;
     [Export] ScaleTime playButton;
     [Export] ScaleTime fastSpeedButton;
     [Export] ScaleTime turboSpeedButton;
 
+
     public Vector3 cameraVelocity = Vector3.Zero;
     public const float cameraAcceleration = 9.0f;
     [Export] public float maxSpeed = 6.0f;
-
-    public static PlayerView instance; // this class gonna be a singleton
-
     public float worldSpeed = 1; // this is for scaling delta time in the world simulation stuff
 
     public void setWorldSpeed(float timescale) => worldSpeed = timescale;
     public void PauseWorldSpeed() => pauseButton.ButtonPressed = true;
     public void PlayWorldSpeed() => playButton.ButtonPressed = true;
-    
+    public void FastForwardWorldSpeed() => fastSpeedButton.ButtonPressed = true;
+    public void TurboWorldSpeed() => turboSpeedButton.ButtonPressed = true;
 
-    public void PauseWorldSpeed()
-    {
-        pauseButton.ButtonPressed = true;
-
-        setWorldSpeed(pauseButton.newTimeScale);
-    }
-
-    public void PlayWorldSpeed()
-    {
-        playButton.ButtonPressed = true;
-
-        setWorldSpeed(playButton.newTimeScale);
-    }
-
-    public void FastForwardWorldSpeed()
-    {
-        fastSpeedButton.ButtonPressed = true;
-
-        setWorldSpeed(fastSpeedButton.newTimeScale);
-    }
-
-    public void TurboWorldSpeed()
-    {
-        turboSpeedButton.ButtonPressed = true;
-
-        setWorldSpeed(turboSpeedButton.newTimeScale);
-    }
 
     Town selectedTown;
     public Town SelectedTown
@@ -81,44 +54,26 @@ public partial class PlayerView : Node3D
         waypoints.lastDot = player.Town; // start path at current town
     }
 
-    // drag mouse to pan camera, should do some easing on it, maybe place a grabber on the surface
-    // if the mouse moves whilst pressed use relative motion to shift our XZ
     public override void _Input(InputEvent @event)
     {
         if (@event is InputEventMouseMotion mouseMotion && Input.IsMouseButtonPressed(MouseButton.Right))
         {
+            // drag mouse to pan camera, should do some easing on it, maybe place a grabber on the surface // if the mouse moves whilst pressed use relative motion to shift our XZ
             float dragScale = 0.05f;
-            Vector3 mouseDelta = mouseMotion.Relative.X*Vector3.Right + mouseMotion.Relative.Y*Vector3.Back; // should actually base this on camera direction kinda
+            Vector3 mouseDelta = mouseMotion.Relative.X*Vector3.Left + mouseMotion.Relative.Y*Vector3.Forward; // i should actually base this on camera direction kinda
             
             Translate(mouseDelta * dragScale);
         }
 
         if (@event.IsActionPressed("speed0"))
         {
-            if (worldSpeed == 0)
-            {
-                PlayWorldSpeed();
-            }
-            else
-            {
-                PauseWorldSpeed();
-            }
+            if (worldSpeed == 0) PlayWorldSpeed();
+            else PauseWorldSpeed();
         }
 
-        if (@event.IsActionPressed("speed1"))
-        {
-            PlayWorldSpeed();
-        }
-
-        if (@event.IsActionPressed("speed2"))
-        {
-            FastForwardWorldSpeed();
-        }
-
-        if (@event.IsActionPressed("speed3"))
-        {
-            TurboWorldSpeed();
-        }
+        if (@event.IsActionPressed("speed1")) PlayWorldSpeed();
+        if (@event.IsActionPressed("speed2")) FastForwardWorldSpeed();
+        if (@event.IsActionPressed("speed3")) TurboWorldSpeed();
     }
 
     public override void _PhysicsProcess(double delta)
