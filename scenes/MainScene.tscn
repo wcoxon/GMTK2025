@@ -31,10 +31,12 @@ font_size = 26
 
 [node name="Map" parent="." instance=ExtResource("1_5opw3")]
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("player", "townPanel")]
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("player", "townPanel", "pauseButton", "playButton")]
 script = ExtResource("2_6fa14")
 player = NodePath("../Map/Traveller")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/Panel")
+pauseButton = NodePath("../CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/TimeScale0")
+playButton = NodePath("../CanvasLayer/HSplitContainer/Control/Panel/HBoxContainer/TimeScale1")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 0.47355, 0.880767, 0, -0.880767, 0.47355, 0, 15.0562, 8.77994)

@@ -6,8 +6,8 @@ public partial class PlayerTraveller : Traveller
 
     public override void _Process(double delta)
     {
-        
-        
+
+
         // travel towards target town // in future this will move them along their path
         if (Target == null) return;
 
@@ -20,5 +20,13 @@ public partial class PlayerTraveller : Traveller
         // update knowledge of this town
         // enable trading and rumour prompts, oh and like plot journey
         // generally update visuals, ease camera over to town, play sound, and yeah like open some ui
+
+        PlayerView.instance.PauseWorldSpeed();
+    }
+    
+    public override void onDeparture()
+    {
+        // start travelling
+        PlayerView.instance.PlayWorldSpeed();
     }
 }

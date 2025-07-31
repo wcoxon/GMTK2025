@@ -35,25 +35,28 @@ public partial class Traveller : Node3D
     // inventory is items and quantities
     Dictionary<Item, int> inventory = new();
 
-    public void travel(float delta){
+    public void travel(float delta)
+    {
         // this is a beeline to the traveller's destination, a stub
         // when we have a Path3D being plotted beforehand, this function will instead offset the progress of a PathFollow3D
 
         Vector3 disp = target.Position - Position;
 
         float travelSpeed = 1;
-        float dist = travelSpeed * delta*PlayerView.instance.worldSpeed;
-        
+        float dist = travelSpeed * delta * PlayerView.instance.worldSpeed;
+
         if (disp.Length() < dist)
         {
             Position = target.Position;
             onArrival();
             return;
         }
-        
+
         Translate(disp.Normalized() * dist);
     }
 
-    virtual public void onArrival() {}
+    virtual public void onArrival() { }
+    
+    virtual public void onDeparture() {}
 
 }

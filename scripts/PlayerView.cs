@@ -12,6 +12,10 @@ public partial class PlayerView : Node3D
     [Export] TownPanel townPanel;
 
 
+    [Export] ScaleTime pauseButton; // we want to simulate pushing these buttons rather than fucking with the timescale directly, so the UI updates correctly
+    [Export] ScaleTime playButton;
+
+
     public static PlayerView instance; // this class gonna be a singleton
 
     public float worldSpeed = 1; // this is for scaling delta time in the world simulation stuff
@@ -20,6 +24,20 @@ public partial class PlayerView : Node3D
     {
         // just made this method so the speed buttons signals could connect to this to change speed
         worldSpeed = timescale;
+    }
+
+    public void PauseWorldSpeed()
+    {
+        pauseButton.ButtonPressed = true;
+
+        setWorldSpeed(pauseButton.newTimeScale);
+    }
+
+    public void PlayWorldSpeed()
+    {
+        playButton.ButtonPressed = true;
+
+        setWorldSpeed(playButton.newTimeScale);
     }
 
     Town selectedTown = null;
