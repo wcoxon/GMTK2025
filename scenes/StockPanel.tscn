@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://nscjafbhcguy"]
 
-[ext_resource type="Script" path="res://scripts/StockUI.cs" id="1_bqhdg"]
+[ext_resource type="Script" uid="uid://dynv65cwb3lgg" path="res://scripts/StockUI.cs" id="1_bqhdg"]
 
 [node name="Stock" type="Panel" node_paths=PackedStringArray("nameLabel", "quantityLabel")]
 anchors_preset = 15
@@ -10,10 +10,10 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 script = ExtResource("1_bqhdg")
-nameLabel = NodePath("HSplitContainer/ItemName")
-quantityLabel = NodePath("HSplitContainer/ItemQuantity")
+nameLabel = NodePath("HBoxContainer/ItemName")
+quantityLabel = NodePath("HBoxContainer/ItemQuantity")
 
-[node name="HSplitContainer" type="HSplitContainer" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -21,12 +21,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ItemName" type="Label" parent="HSplitContainer"]
+[node name="ItemName" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "NAME"
 
-[node name="ItemQuantity" type="Label" parent="HSplitContainer"]
+[node name="ItemQuantity" type="Label" parent="HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "QUANTITY"
