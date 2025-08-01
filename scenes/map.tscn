@@ -1,15 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://clc830lkjlhip"]
+[gd_scene load_steps=10 format=3 uid="uid://clc830lkjlhip"]
 
 [ext_resource type="PackedScene" uid="uid://b212emu5my3lk" path="res://scenes/town.tscn" id="1_2hyix"]
 [ext_resource type="PackedScene" uid="uid://dylgmhbel8gcv" path="res://scenes/traveller.tscn" id="2_h6b5g"]
 [ext_resource type="Resource" uid="uid://ch8lqqgiplsg3" path="res://data/GurgishamData.tres" id="2_qhcnf"]
 [ext_resource type="Resource" uid="uid://c0yvi6dd5l3sq" path="res://data/GumbusvilleData.tres" id="3_54cpw"]
 [ext_resource type="Resource" uid="uid://dn1lrvkia3voq" path="res://data/SloptonData.tres" id="4_1eu6x"]
+[ext_resource type="Script" uid="uid://ci2wymead70h5" path="res://scripts/Areas/EncounterArea.cs" id="6_2lpho"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_m57gh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_poiku"]
 albedo_color = Color(0.1479, 0.51, 0.47379, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_2lpho"]
+height = 3.0
+radius = 1.3916
 
 [node name="Map" type="Node3D"]
 
@@ -33,3 +38,15 @@ data = ExtResource("4_1eu6x")
 [node name="Traveller" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("2_h6b5g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.77423, 0, -4.39215)
 Town = NodePath("../Town")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_mask = 255
+input_ray_pickable = false
+script = ExtResource("6_2lpho")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0966797, 0)
+shape = SubResource("CylinderShape3D_2lpho")
+debug_color = Color(0.952941, 0, 0.54902, 1)
+
+[connection signal="body_entered" from="Area3D" to="Area3D" method="OnEncounterEntered"]

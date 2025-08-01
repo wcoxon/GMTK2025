@@ -1,7 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://dylgmhbel8gcv"]
+[gd_scene load_steps=4 format=3 uid="uid://dylgmhbel8gcv"]
 
-[ext_resource type="Script" path="res://scripts/PlayerTraveller.cs" id="1_maw3y"]
+[ext_resource type="Script" uid="uid://cinw4djg05slo" path="res://scripts/PlayerTraveller.cs" id="1_maw3y"]
 [ext_resource type="Texture2D" uid="uid://dp7fhv6yvmsb2" path="res://images/traderCutout.png" id="2_1qb1y"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ifkpq"]
+radius = 0.49112
+height = 1.41745
 
 [node name="Traveller" type="Node3D"]
 script = ExtResource("1_maw3y")
@@ -12,3 +16,10 @@ billboard = 1
 double_sided = false
 no_depth_test = true
 texture = ExtResource("2_1qb1y")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.481625, 0)
+shape = SubResource("CapsuleShape3D_ifkpq")
+debug_color = Color(0.667352, 0, 0.154832, 1)
