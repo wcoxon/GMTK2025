@@ -32,6 +32,12 @@ public partial class Town : Node3D
     public int[] Production { get => data.production; }
     public int[] Consumption { get => data.consumption; }
 
+    public override void _Ready()
+    {
+        // register for rumors.
+        RumorView.towns.Add(data.townName, this);
+    }
+
     public void _on_area_3d_input_event(Node cam, InputEvent evt, Vector3 evtPos, Vector3 normal, int shapeIndex)
     {
         if (evt is InputEventMouseButton mbEvent && Input.IsActionJustPressed("select"))
