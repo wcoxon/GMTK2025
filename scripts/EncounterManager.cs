@@ -56,6 +56,7 @@ public partial class EncounterManager : Node
 
     const string EVENT_DIRECTORY = "res://encounters/";
 
+    static RegEx empty_syntax = RegEx.CreateFromString("\\s*");
     static RegEx effect_syntax = RegEx.CreateFromString(
         "\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*(=|\\+=|-=)(.*)");
 
@@ -114,6 +115,7 @@ public partial class EncounterManager : Node
         var (names, values) = GetVariables();
         foreach (var effect in effects.Split([';', '\n']))
         {
+            if (effect.Trim().Length == 0) continue;
             var match = effect_syntax.Search(effect);
             var target = match.Strings[1];
             var opp = match.Strings[2];
@@ -125,7 +127,7 @@ public partial class EncounterManager : Node
             }
             else if (opp == "-=")
             {
-                value -= Execute(target, names, values);
+                value = Execute(target, names, values) - value;
             }
             var (provider, variable_name) = SplitPrefix(target);
             provider.UpdateVariable(variable_name, value);

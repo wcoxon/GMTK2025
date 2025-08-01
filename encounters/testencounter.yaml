@@ -1,6 +1,6 @@
 - name: burntpizza
-  class: test
-  location: gurgisham
+  class: testrumor
+  location: Gurgisham
   title: Burnt Pizza
   image: images/burntpizza.jpg
   description: >
@@ -13,11 +13,11 @@
     sunt in culpa qui officia deserunt mollit anim id est laborum."
   options:
   - text: Eat a classic burnt pizza in Gurgisham Central Square.
-    effect: player.health += 1; player.money -= 5
+    effect: player_health += 1; player_money -= 5
   - text: Complain to the manager about the pizza.
-    effect: player.health -= 1; towns.gurgisham.production.pizza -= 0.3
+    effect: player_health -= 1; # towns.gurgisham.production.pizza -= 0.3
   rumors:
   - text: Just been to Gurgisham, you gotta try one of their classic burnt pizzas.
-    location: gumbusville
+    location: Gumbusville
   - text: Those people in Gurgisham are crazy and then some, you'll never believe what they do with their pizzas!
-    location: slopton
+    location: Slopton
