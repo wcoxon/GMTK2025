@@ -1,14 +1,14 @@
 [gd_scene load_steps=13 format=3 uid="uid://cvlfxg610affe"]
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
-[ext_resource type="Script" path="res://scripts/PlayerView.cs" id="2_6fa14"]
+[ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/PlayerView.cs" id="2_6fa14"]
 [ext_resource type="PackedScene" uid="uid://dpdvumg63k3xu" path="res://scenes/TownPanel.tscn" id="3_y7ipx"]
 [ext_resource type="Theme" uid="uid://b7sho3deipfsu" path="res://scripts/ScaleTime/SpeedButtonTheme.tres" id="4_1wiy7"]
-[ext_resource type="Script" path="res://scripts/DateUI.cs" id="4_c2qql"]
-[ext_resource type="Script" path="res://scripts/ScaleTime/ScaleTime.cs" id="4_k24pf"]
+[ext_resource type="Script" uid="uid://bxk7okto3l8y3" path="res://scripts/DateUI.cs" id="4_c2qql"]
+[ext_resource type="Script" uid="uid://dpgf4ygtataug" path="res://scripts/ScaleTime/ScaleTime.cs" id="4_k24pf"]
 [ext_resource type="ButtonGroup" uid="uid://br2jb0lwfyinh" path="res://scripts/ScaleTime/SpeedButtonGroup.tres" id="4_ygjfp"]
 [ext_resource type="PackedScene" uid="uid://durnjyano0ic4" path="res://scenes/waypoints.tscn" id="5_k24pf"]
-[ext_resource type="PackedScene" uid="uid://c6yeey4j3upm4" path="res://scenes/inventory.tscn" id="8_pd1er"]
+[ext_resource type="PackedScene" path="res://scenes/inventory.tscn" id="8_pd1er"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qk1f2"]
 sky_top_color = Color(0.66796, 0.355097, 5.77569e-07, 1)
@@ -26,8 +26,6 @@ sky = SubResource("Sky_611at")
 
 [node name="Root" type="Node3D"]
 
-[node name="Map" parent="." instance=ExtResource("1_5opw3")]
-
 [node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI")]
 script = ExtResource("2_6fa14")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/TownPanel")
@@ -44,6 +42,8 @@ transform = Transform3D(1, 0, 0, 0, 0.47355, 0.880767, 0, -0.880767, 0.47355, 0,
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Player/Camera3D"]
 environment = SubResource("Environment_vyg74")
+
+[node name="Map" parent="." instance=ExtResource("1_5opw3")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.0844432, 0.871412, -0.483229, 0.0410672, 0.481505, 0.87548, 0.995582, -0.0937732, 0.00487342, 0, 0, 0)
