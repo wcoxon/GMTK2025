@@ -6,8 +6,4 @@
 script = ExtResource("1_n3ssh")
 townName = "Gumbusville"
 population = 12
-stock = {
-"Eye polish": 200,
-"chrome bugs": 135,
-"mirror": 1005
-}
+stock = null

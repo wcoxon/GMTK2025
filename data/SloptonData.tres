@@ -6,8 +6,4 @@
 script = ExtResource("1_mhphq")
 townName = "Slopton"
 population = 500
-stock = {
-"crystal candle": 459,
-"facts and wisdom on paper": 71,
-"sea shells": 125
-}
+stock = null

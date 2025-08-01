@@ -8,7 +8,6 @@ public enum GameState {
     TOWN,
     PLANNING,
     TRAVELLING
-
 }
 
 public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
@@ -27,13 +26,23 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     [Export] ScaleTime fastSpeedButton;
     [Export] ScaleTime turboSpeedButton;
     [Export] Panel timeControlPanel;
+    [Export] InventoryUI inventoryUI;
 
-    public GameState gameState;
+    GameState gameState;
+    public GameState State
+    {
+        get => gameState;
+        set
+        {
+            gameState = value;
+            OnStateChanged();
+        }
+    }
 
 
     public Vector3 cameraVelocity = Vector3.Zero;
-    public const float cameraAcceleration = 20.0f;
-    [Export] public float maxSpeed = 6.0f;
+    public const float cameraAcceleration = 200.0f;
+    [Export] public float maxSpeed = 20.0f;
     public float worldSpeed = 1; // this is for scaling delta time in the world simulation stuff
 
     public void setWorldSpeed(float timescale) => worldSpeed = timescale;
@@ -42,28 +51,78 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     public void FastForwardWorldSpeed() => fastSpeedButton.ButtonPressed = true;
     public void TurboWorldSpeed() => turboSpeedButton.ButtonPressed = true;
 
-    public void ChangeState(GameState newState)
-    {
-        gameState = newState;
+    //public void ChangeState(GameState newState)
+    //{
+    //    gameState = newState;
+//
+    //    OnStateChanged();
+    //}
+    private double tick;
 
-        OnStateChanged();
+    private int eightHourTicker;
+
+    private int dayTicker;
+
+    private void OnTick() //increment our other tickers, then set the tick to zero so we can tick again.
+    {
+        eightHourTicker += 1;
+
+        dayTicker += 1;
+
+        //GD.Print("Tick!");
+
+        if (eightHourTicker >= 8)
+        {
+            EmitSignal(SignalName.EightTicks);
+        }
+
+        if (dayTicker >= 24)
+        {
+            EmitSignal(SignalName.TwentyFourTicks);
+        }
+
+        tick = 0;
     }
+
+    private void OnEightTicks() //Reset our eight hour tracking variable, so we can check if it hit eight.
+    {
+        eightHourTicker = 0;
+
+        //GD.Print("8 Ticks!");
+
+    }
+
+    private void OnDay()
+    {
+        dayTicker = 0; //Reset our day tracking variable, so we can check if it hit twenty four.
+
+        GD.Print("Day Passed!");
+    }
+
+    [Signal]
+    public delegate void TickEventHandler();
+    [Signal]
+    public delegate void EightTicksEventHandler();
+    [Signal]
+    public delegate void TwentyFourTicksEventHandler();
+
 
     public void OnStateChanged() // ok honestly it would make more sense to make a state machine at this point but I've spent too long not doing that and it feels like a sunk cost
     {
-        switch (gameState) {
+        switch (gameState)
+        {
             case GameState.TOWN:
                 timeControlPanel.Hide();
-            break;
+                break;
 
-        case GameState.PLANNING:
+            case GameState.PLANNING:
 
-            break;
+                break;
 
-        case GameState.TRAVELLING:
+            case GameState.TRAVELLING:
                 timeControlPanel.Show();
-            break;
-        }       
+                break;
+        }
     }
 
     Town selectedTown;
@@ -73,6 +132,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         set
         {
             if (selectedTown is not null) selectedTown.Selected = false;
+            else townPanel.Visible = true;
 
             selectedTown = value;
             selectedTown.Selected = true;
@@ -83,52 +143,74 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
 
     public override void _Ready()
     {
-        cameraVelocity = new Vector3(0, 0, 0);
-
-        ChangeState(GameState.TOWN);
         instance = this; // global handle
+        EncounterManager.Instance.AddProvider(this);
+        
+        State = GameState.TOWN;
         player = GetNode<PlayerTraveller>("../Map/Traveller");
         waypoints.lastDot = player.Town; // start path at current town
-        EncounterManager.Instance.AddProvider(this);
-        EncounterManager.Instance.ApplyEffects("player_health += player_money");
-    }
 
+        tick = 0;
+        dayTicker = 0;
+        eightHourTicker = 0;
+
+        Tick += OnTick;
+
+        EightTicks += OnEightTicks;
+
+        TwentyFourTicks += OnDay;
+
+        PauseWorldSpeed();
+    }
     public override void _Input(InputEvent @event)
     {
         if (@event is InputEventMouseMotion mouseMotion && Input.IsMouseButtonPressed(MouseButton.Right))
         {
             // drag mouse to pan camera, should do some easing on it, maybe place a grabber on the surface // if the mouse moves whilst pressed use relative motion to shift our XZ
             float dragScale = 0.05f;
-            Vector3 mouseDelta = mouseMotion.Relative.X*Vector3.Left + mouseMotion.Relative.Y*Vector3.Forward; // i should actually base this on camera direction kinda
-            
+            Vector3 mouseDelta = mouseMotion.Relative.X * Vector3.Left + mouseMotion.Relative.Y * Vector3.Forward; // i should actually base this on camera direction kinda
+
             Translate(mouseDelta * dragScale);
+        }
+
+        if (@event.IsActionPressed("inventory"))
+        {
+            inventoryUI.Visible = !inventoryUI.Visible;
+            
+            if (inventoryUI.Visible) inventoryUI.displayInventory(player);
         }
 
         switch (gameState)
         {
             case GameState.TOWN:
-
                 break;
 
             case GameState.PLANNING:
-
                 break;
 
             case GameState.TRAVELLING:
 
-                if (@event.IsActionPressed("speed0")){
+                if (@event.IsActionPressed("speed0"))
+                {
                     if (worldSpeed == 0) PlayWorldSpeed();
                     else PauseWorldSpeed();
-                }        
+                }
                 if (@event.IsActionPressed("speed1")) PlayWorldSpeed();
                 if (@event.IsActionPressed("speed2")) FastForwardWorldSpeed();
                 if (@event.IsActionPressed("speed3")) TurboWorldSpeed();
                 break;
         }
-        
-
-
     }
+
+    public override void _Process(double delta)
+    {
+        tick += delta * worldSpeed / 3; // The same calculation is done in date, but we need it here in the singleton for signalling reasons.
+
+        if  (tick >= 1){
+            EmitSignal(SignalName.Tick);
+        }
+    }
+
 
     public override void _PhysicsProcess(double delta)
     {
@@ -159,8 +241,8 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     public void plotJourney()
     {
         waypoints.Active = true;
-        townPanel.Embarkmode = TownPanel.EmbarkMode.Planning; 
-        
+        townPanel.Embarkmode = TownPanel.EmbarkMode.Planning;
+
         waypoints.endDot = SelectedTown;
         waypoints.OnMouseExited(); // (since the mouse is off the map at this moment)
     }

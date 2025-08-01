@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dpdvumg63k3xu"]
+[gd_scene load_steps=5 format=3 uid="uid://dpdvumg63k3xu"]
 
 [ext_resource type="Script" path="res://scripts/TownPanel.cs" id="1_0baqy"]
+[ext_resource type="PackedScene" uid="uid://nscjafbhcguy" path="res://scenes/StockPanel.tscn" id="2_kguwn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_duute"]
 bg_color = Color(0.15188, 0.221635, 0.210282, 1)
@@ -52,23 +53,16 @@ Stocks:"
 
 [node name="StocksContainer" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
 
-[node name="row1" type="Label" parent="VBoxContainer/StocksContainer"]
-editor_description = "should prob make a prefab made up of 3 labels in row for this instead of doing it in 1 label btw
-"
+[node name="Control" parent="VBoxContainer/StocksContainer" instance=ExtResource("2_kguwn")]
 layout_mode = 2
-text = "	e-cigs : £5"
-horizontal_alignment = 2
 
-[node name="row2" type="Label" parent="VBoxContainer/StocksContainer"]
+[node name="Control2" parent="VBoxContainer/StocksContainer" instance=ExtResource("2_kguwn")]
 layout_mode = 2
-text = "mysterious pebbles : £20"
-horizontal_alignment = 2
 
-[node name="row3" type="Label" parent="VBoxContainer/StocksContainer"]
+[node name="Control3" parent="VBoxContainer/StocksContainer" instance=ExtResource("2_kguwn")]
 layout_mode = 2
-text = "cylinders : £12"
-horizontal_alignment = 2
 
 [node name="ProductionHeader" type="Label" parent="VBoxContainer"]
 layout_mode = 2

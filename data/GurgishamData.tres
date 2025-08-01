@@ -6,8 +6,4 @@
 script = ExtResource("1_sat8k")
 townName = "Gurgisham"
 population = 100
-stock = {
-"Erasers": 512,
-"Ruffage": 323,
-"precious poem": 1
-}
+stock = null

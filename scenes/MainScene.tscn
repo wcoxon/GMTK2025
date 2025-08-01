@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cvlfxg610affe"]
+[gd_scene load_steps=15 format=3 uid="uid://cvlfxg610affe"]
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
 [ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/PlayerView.cs" id="2_6fa14"]
@@ -9,6 +9,7 @@
 [ext_resource type="ButtonGroup" uid="uid://br2jb0lwfyinh" path="res://scripts/ScaleTime/SpeedButtonGroup.tres" id="4_ygjfp"]
 [ext_resource type="PackedScene" uid="uid://durnjyano0ic4" path="res://scenes/waypoints.tscn" id="5_k24pf"]
 [ext_resource type="PackedScene" uid="uid://bdrkqejd8htea" path="res://scenes/EncounterView.tscn" id="8_cfq0f"]
+[ext_resource type="PackedScene" uid="uid://c6yeey4j3upm4" path="res://scenes/inventory.tscn" id="8_pd1er"]
 [ext_resource type="PackedScene" uid="uid://xqt4l46rhnwy" path="res://scenes/RumorView.tscn" id="8_x537r"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qk1f2"]
@@ -27,23 +28,23 @@ sky = SubResource("Sky_611at")
 
 [node name="Root" type="Node3D"]
 
-[node name="Map" parent="." instance=ExtResource("1_5opw3")]
-
 [node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel")]
 script = ExtResource("2_6fa14")
-townPanel = NodePath("../CanvasLayer/HSplitContainer/Panel")
+townPanel = NodePath("../CanvasLayer/HSplitContainer/TownPanel")
 waypoints = NodePath("../Waypoints")
-pauseButton = NodePath("../CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer/TimeScale0")
-playButton = NodePath("../CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer/TimeScale1")
-fastSpeedButton = NodePath("../CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer/TimeScale2")
-turboSpeedButton = NodePath("../CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer/TimeScale4")
-timeControlPanel = NodePath("../CanvasLayer/HSplitContainer/Control/TimePanel")
+pauseButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer/TimeScale0")
+playButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer/TimeScale1")
+fastSpeedButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer/TimeScale2")
+turboSpeedButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer/TimeScale4")
+timeControlPanel = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 0.47355, 0.880767, 0, -0.880767, 0.47355, 0, 15.0562, 8.77994)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Player/Camera3D"]
 environment = SubResource("Environment_vyg74")
+
+[node name="Map" parent="." instance=ExtResource("1_5opw3")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.0844432, 0.871412, -0.483229, 0.0410672, 0.481505, 0.87548, 0.995582, -0.0937732, 0.00487342, 0, 0, 0)
@@ -58,14 +59,15 @@ grow_horizontal = 2
 grow_vertical = 2
 split_offset = 255
 
-[node name="Panel" parent="CanvasLayer/HSplitContainer" instance=ExtResource("3_y7ipx")]
+[node name="TownPanel" parent="CanvasLayer/HSplitContainer" instance=ExtResource("3_y7ipx")]
+visible = false
 layout_mode = 2
 
-[node name="Control" type="Control" parent="CanvasLayer/HSplitContainer"]
+[node name="HUD" type="Control" parent="CanvasLayer/HSplitContainer"]
 layout_mode = 2
 mouse_filter = 2
 
-[node name="TimePanel" type="Panel" parent="CanvasLayer/HSplitContainer/Control"]
+[node name="TimePanel" type="Panel" parent="CanvasLayer/HSplitContainer/HUD"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -79,7 +81,16 @@ offset_bottom = -40.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HSplitContainer/Control/TimePanel"]
+[node name="DateTime" type="Label" parent="CanvasLayer/HSplitContainer/HUD/TimePanel"]
+layout_mode = 0
+offset_left = 27.0
+offset_top = -33.0
+offset_right = 188.0
+offset_bottom = -2.0
+text = "DD-MM-YYYY"
+script = ExtResource("4_c2qql")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HSplitContainer/HUD/TimePanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -88,7 +99,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="TimeScale0" type="Button" parent="CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer"]
+[node name="TimeScale0" type="Button" parent="CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_1wiy7")
 toggle_mode = true
@@ -96,7 +107,7 @@ button_group = ExtResource("4_ygjfp")
 text = "x0"
 script = ExtResource("4_k24pf")
 
-[node name="TimeScale1" type="Button" parent="CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer"]
+[node name="TimeScale1" type="Button" parent="CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_1wiy7")
 toggle_mode = true
@@ -106,7 +117,7 @@ text = "x1"
 script = ExtResource("4_k24pf")
 newTimeScale = 1
 
-[node name="TimeScale2" type="Button" parent="CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer"]
+[node name="TimeScale2" type="Button" parent="CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_1wiy7")
 toggle_mode = true
@@ -115,7 +126,7 @@ text = "x2"
 script = ExtResource("4_k24pf")
 newTimeScale = 2
 
-[node name="TimeScale4" type="Button" parent="CanvasLayer/HSplitContainer/Control/TimePanel/HBoxContainer"]
+[node name="TimeScale4" type="Button" parent="CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer"]
 layout_mode = 2
 theme = ExtResource("4_1wiy7")
 toggle_mode = true
@@ -124,31 +135,21 @@ text = "x4"
 script = ExtResource("4_k24pf")
 newTimeScale = 4
 
-[node name="Label" type="Label" parent="CanvasLayer/HSplitContainer/Control/TimePanel"]
+[node name="inventory" parent="CanvasLayer/HSplitContainer/HUD" instance=ExtResource("8_pd1er")]
 layout_mode = 0
-offset_left = 27.0
-offset_top = -33.0
-offset_right = 188.0
-offset_bottom = -2.0
-text = "DD-MM-YYYY"
-script = ExtResource("4_c2qql")
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 449.0
+offset_bottom = 382.0
+grow_horizontal = 1
+grow_vertical = 1
 
-[node name="inventory" type="Panel" parent="CanvasLayer/HSplitContainer/Control"]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.359
-anchor_top = 0.459
-anchor_right = 0.359
-anchor_bottom = 0.459
-offset_left = -224.715
-offset_top = -174.432
-offset_right = 224.285
-offset_bottom = 207.568
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="HSlider" type="HSlider" parent="CanvasLayer/HSplitContainer/Control"]
+[node name="RecollectionBar" type="HSlider" parent="CanvasLayer/HSplitContainer/HUD"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.028
@@ -176,8 +177,8 @@ town = NodePath("../../Map/Town")
 [node name="Waypoints" parent="." node_paths=PackedStringArray("lastDot") instance=ExtResource("5_k24pf")]
 lastDot = NodePath("../Map/Town2")
 
-[connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/Panel" to="Waypoints" method="OnMouseExited"]
-[connection signal="pressed" from="CanvasLayer/HSplitContainer/Panel/VBoxContainer/plot" to="Player" method="plotJourney"]
-[connection signal="pressed" from="CanvasLayer/HSplitContainer/Panel/VBoxContainer/embark" to="Player" method="embark"]
+[connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/TownPanel" to="Waypoints" method="OnMouseExited"]
+[connection signal="pressed" from="CanvasLayer/HSplitContainer/TownPanel/VBoxContainer/plot" to="Player" method="plotJourney"]
+[connection signal="pressed" from="CanvasLayer/HSplitContainer/TownPanel/VBoxContainer/embark" to="Player" method="embark"]
 
-[editable path="CanvasLayer/HSplitContainer/Panel"]
+[editable path="CanvasLayer/HSplitContainer/TownPanel"]
