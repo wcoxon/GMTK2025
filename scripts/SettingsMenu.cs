@@ -4,7 +4,7 @@ using System;
 public partial class SettingsMenu : Control
 {
     public void returnToMainMenu() {
-        GetTree().ChangeSceneToFile("res://scenes/MainScene.tscn");
+        GetTree().ChangeSceneToFile("res://scenes/main_menu.tscn");
     }
     
     public void onSoundEffectsSliderChange() {

@@ -31,15 +31,15 @@ offset_right = -275.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="VBoxContainer"]
+[node name="NewGameButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "NEW GAME"
 
-[node name="Button2" type="Button" parent="VBoxContainer"]
+[node name="SettingsButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "SETTINGS (stub)"
+text = "SETTINGS"
 
-[node name="Button3" type="Button" parent="VBoxContainer"]
+[node name="QuitButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "QUIT"
 
@@ -66,5 +66,6 @@ grow_vertical = 2
 texture = ExtResource("5_8o6sb")
 expand_mode = 2
 
-[connection signal="pressed" from="VBoxContainer/Button" to="." method="newGame"]
-[connection signal="pressed" from="VBoxContainer/Button3" to="." method="quit"]
+[connection signal="pressed" from="VBoxContainer/NewGameButton" to="." method="newGame"]
+[connection signal="pressed" from="VBoxContainer/SettingsButton" to="." method="settings"]
+[connection signal="pressed" from="VBoxContainer/QuitButton" to="." method="quit"]
