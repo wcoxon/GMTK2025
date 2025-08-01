@@ -28,7 +28,7 @@ sky = SubResource("Sky_611at")
 
 [node name="Root" type="Node3D"]
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel")]
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI")]
 script = ExtResource("2_6fa14")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/TownPanel")
 waypoints = NodePath("../Waypoints")
@@ -37,6 +37,7 @@ playButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContaine
 fastSpeedButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer/TimeScale2")
 turboSpeedButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer/TimeScale4")
 timeControlPanel = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel")
+inventoryUI = NodePath("../CanvasLayer/HSplitContainer/HUD/inventory")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 0.47355, 0.880767, 0, -0.880767, 0.47355, 0, 15.0562, 8.77994)
