@@ -32,20 +32,10 @@ public partial class Town : Node3D
 
     public void _on_area_3d_input_event(Node cam, InputEvent evt, Vector3 evtPos, Vector3 normal, int shapeIndex)
     {
-        // GetNode<Waypoints>("../../Waypoints").NodeWaypointPreview(this);
-
         if (evt is InputEventMouseButton mbEvent)
         {
             // if the area was clicked on, this town is selected (should use actions instead so u can look for isActionPressed)
             select();
-
-            // // Add waypoint on doubleclick
-            // if (mbEvent.Pressed
-            // 	&& mbEvent.DoubleClick
-            // 	&& mbEvent.ButtonIndex == MouseButton.Left)
-            // {
-            // 	GetNode<Waypoints>("../../Waypoints").NodeWaypoint(this);
-            // }
         }
     }
 

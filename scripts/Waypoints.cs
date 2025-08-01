@@ -29,6 +29,7 @@ public partial class Waypoints : Node3D
         AddChild(curDot = dot.Instantiate<Node3D>());
         AddChild(curLine = dashes.Instantiate<Dashes>());
         AddChild(endLine = dashes.Instantiate<Dashes>());
+        curDot.Visible = false;
     }
 
     // public void NodeWaypointPreview(Node3D node)

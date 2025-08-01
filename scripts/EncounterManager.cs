@@ -8,24 +8,19 @@ using YamlDotNet.Serialization.NamingConventions;
 public partial class EncounterManager : Node
 {
     public static EncounterManager Instance { get; private set; }
+
+    public List<EncounterContent> encounters = [];
     public override void _Ready()
     {
         Instance = this;
 
         var dir = DirAccess.Open(EVENT_DIRECTORY);
         dir.ListDirBegin();
-        List<EncounterContent> event_contents = [];
 
         foreach (var filename in dir.GetFiles())
         {
             var file = FileAccess.Open(EVENT_DIRECTORY + filename, FileAccess.ModeFlags.Read);
-            event_contents.AddRange(deserializer.Deserialize<List<EncounterContent>>(file.GetAsText()));
-        }
-
-        foreach (var event_content in event_contents)
-        {
-            GD.Print(event_content.Name);
-            GD.Print(event_content.Options[0].Effect);
+            encounters.AddRange(deserializer.Deserialize<List<EncounterContent>>(file.GetAsText()));
         }
     }
 
@@ -46,6 +41,8 @@ public partial class EncounterManager : Node
         public string Name { get; set; } = "no-name";
         public string Class { get; set; } = "no-class";
         public string Location { get; set; } = "no-location";
+
+        public string Title { get; set; } = "no-title";
         public string Image { get; set; } = "";
         public string Description { get; set; } = "";
 

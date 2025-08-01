@@ -1,6 +1,7 @@
 - name: burntpizza
   class: test
   location: gurgisham
+  title: Burnt Pizza
   image: images/burntpizza.jpg
   description: >
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
