@@ -5,10 +5,10 @@ public partial class PlayerTraveller : Traveller
 {
     public override void _Ready()
     {
+        Money = 100;
+
         inventory[(int)Item.BROTH] = 5;
-        
         inventory[(int)Item.PLASTICS] = 15;
-        
         inventory[(int)Item.EVIL_WATER] = 120;
     }
 

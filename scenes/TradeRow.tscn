@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://co4hcp8xxoa5a"]
+
+[ext_resource type="Script" path="res://scenes/TradeRow.cs" id="1_cx6v5"]
+
+[node name="HBoxContainer" type="HBoxContainer" node_paths=PackedStringArray("itemName", "itemStock", "itemPrice", "tradeAmount")]
+script = ExtResource("1_cx6v5")
+itemName = NodePath("itemName")
+itemStock = NodePath("itemStock")
+itemPrice = NodePath("itemPrice")
+tradeAmount = NodePath("purchaseAmount")
+
+[node name="itemName" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ITEM"
+
+[node name="itemStock" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "STOCK"
+
+[node name="itemPrice" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PRICE"
+
+[node name="purchaseAmount" type="SpinBox" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 5.0

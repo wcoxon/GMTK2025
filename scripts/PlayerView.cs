@@ -28,6 +28,7 @@ public partial class PlayerView : Node3D
     [Export] ScaleTime turboSpeedButton;
     [Export] Panel timeControlPanel;
     [Export] InventoryUI inventoryUI;
+    [Export] TradeUI tradeUI;
 
     GameState gameState;
     public GameState State
@@ -55,7 +56,7 @@ public partial class PlayerView : Node3D
     //public void ChangeState(GameState newState)
     //{
     //    gameState = newState;
-//
+    //
     //    OnStateChanged();
     //}
     private double tick;
@@ -101,11 +102,11 @@ public partial class PlayerView : Node3D
     }
 
     [Signal]
-	public delegate void TickEventHandler();
+    public delegate void TickEventHandler();
     [Signal]
-	public delegate void EightTicksEventHandler();
+    public delegate void EightTicksEventHandler();
     [Signal]
-	public delegate void TwentyFourTicksEventHandler();
+    public delegate void TwentyFourTicksEventHandler();
 
 
     public void OnStateChanged() // ok honestly it would make more sense to make a state machine at this point but I've spent too long not doing that and it feels like a sunk cost
@@ -145,7 +146,7 @@ public partial class PlayerView : Node3D
     public override void _Ready()
     {
         instance = this; // global handle
-        
+
         State = GameState.TOWN;
         player = GetNode<PlayerTraveller>("../Map/Traveller");
         waypoints.lastDot = player.Town; // start path at current town
@@ -176,7 +177,7 @@ public partial class PlayerView : Node3D
         if (@event.IsActionPressed("inventory"))
         {
             inventoryUI.Visible = !inventoryUI.Visible;
-            
+
             if (inventoryUI.Visible) inventoryUI.displayInventory(player);
         }
 
@@ -206,7 +207,8 @@ public partial class PlayerView : Node3D
     {
         tick += delta * worldSpeed / 3; // The same calculation is done in date, but we need it here in the singleton for signalling reasons.
 
-        if  (tick >= 1){
+        if (tick >= 1)
+        {
             EmitSignal(SignalName.Tick);
         }
     }
@@ -256,5 +258,17 @@ public partial class PlayerView : Node3D
         player.SetJourney(nodes, dashes);
 
         player.onDeparture();
+    }
+
+
+    public void openTrade()
+    {
+        // make trade ui visible
+        // populate trade ui with town information
+        // trade ui should also handle the button press stuff i think
+        
+        tradeUI.Town = selectedTown; // i know you should only be able to trade with the town you're on it's just weird that it offers trade in the town panel for whatever you have selected :p
+        tradeUI.Visible = true;
+
     }
 }

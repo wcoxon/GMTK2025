@@ -12,6 +12,16 @@ public partial class Traveller : Node3D
     // a traveller has inventory, money, health, path, recollection?
 
     int money = 0;
+    public int Money
+    {
+        get => money;
+        set
+        {
+            money = value;
+            
+        }
+    }
+
     //[Export] public Godot.Collections.Dictionary<Item, int> inventory;
     public int[] inventory = new int[3]; 
     

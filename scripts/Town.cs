@@ -26,9 +26,9 @@ public partial class Town : Node3D
     [Export] TownData data;
 
     public string TownName { get => data.townName; }
-    public int Population { get => data.population; }
-    public int Wealth { get => data.wealth;  }
-    public int[] Stocks { get => data.stocks; }
+    public int Population { get => data.population; set => data.population = value; }
+    public int Wealth { get => data.wealth; set => data.wealth = value; }
+    public int[] Stocks { get => data.stocks; set => data.stocks = value; }
     public int[] Production { get => data.production; }
     public int[] Consumption { get => data.consumption; }
 
@@ -46,7 +46,7 @@ public partial class Town : Node3D
         PlayerView.instance.SelectedTown = this;
     }
 
-    int appraise(Item item)
+    public int appraise(Item item)
     {
         // price based on
         // how much of that item is in stock at this town

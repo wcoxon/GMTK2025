@@ -6,7 +6,7 @@
 script = ExtResource("1_mhphq")
 townName = "Slopton"
 population = 500
-wealth = 0
+wealth = 1200
 stocks = PackedInt32Array(650, 1012, 15)
-production = PackedInt32Array(0, 0, 0)
-consumption = PackedInt32Array(0, 0, 0)
+production = PackedInt32Array(0, 3, 3)
+consumption = PackedInt32Array(3, 2, 0)
