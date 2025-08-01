@@ -15,7 +15,7 @@ public partial class Traveller : Node3D
     //[Export] public Godot.Collections.Dictionary<Item, int> inventory;
     public int[] inventory = new int[3]; 
     
-    float moveSpeed = 1;
+    public float moveSpeed = 1;
 
     Town town;
     [Export] public Town Town

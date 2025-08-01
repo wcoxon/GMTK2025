@@ -6,4 +6,7 @@
 script = ExtResource("1_sat8k")
 townName = "Gurgisham"
 population = 100
+wealth = 0
 stocks = PackedInt32Array(6, 28, 115)
+production = PackedInt32Array(0, 0, 0)
+consumption = PackedInt32Array(0, 0, 0)
