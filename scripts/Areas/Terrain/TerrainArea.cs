@@ -19,7 +19,7 @@ public partial class TerrainArea : EncounterArea
 
         Traveller entering = Body.GetParent() as Traveller;
 
-        entering.moveSpeed *= moveSpeedModifier;
+        entering.moveSpeed += moveSpeedModifier;
 
     }
 
@@ -35,7 +35,7 @@ public partial class TerrainArea : EncounterArea
 
         Traveller entering = Body.GetParent() as Traveller;
 
-        entering.moveSpeed = 1.0f;
+        entering.moveSpeed -= moveSpeedModifier;
     }
 
 
