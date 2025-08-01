@@ -10,7 +10,7 @@ public partial class DateUI : Label
 
     public override void _Process(double delta)
     {
-        hour += delta * PlayerView.instance.worldSpeed/hourLength;
+        //hour += delta * PlayerView.instance.worldSpeed/hourLength;
 
         int day = (int)(hour / 24.0);
 

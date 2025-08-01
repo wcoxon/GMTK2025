@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -10,7 +11,7 @@ public enum GameState {
 
 }
 
-public partial class PlayerView : Node3D
+public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
 {
     // this will hand logic for the actual player interfacing stuff like moving the camera
     // selecting town and controlling UI shit too, like updating ui when new town is selected
@@ -88,6 +89,8 @@ public partial class PlayerView : Node3D
         instance = this; // global handle
         player = GetNode<PlayerTraveller>("../Map/Traveller");
         waypoints.lastDot = player.Town; // start path at current town
+        EncounterManager.Instance.AddProvider(this);
+        EncounterManager.Instance.ApplyEffects("player_health += player_money");
     }
 
     public override void _Input(InputEvent @event)
@@ -171,5 +174,25 @@ public partial class PlayerView : Node3D
         player.SetJourney(nodes, dashes);
 
         player.onDeparture();
+    }
+
+    public string VariablesPrefix()
+    {
+        return "player";
+    }
+
+    public List<(string, double)> GetVariables()
+    {
+        return [
+            ("health", 5),
+            ("money", 100)
+        ];
+    }
+
+    public void UpdateVariable(string name, double value)
+    {
+        if (name == "health") GD.Print("Set playerhealth to " + value);
+        else if (name == "money") GD.Print("Set money to " + value);
+        else throw new KeyNotFoundException("Player cannot assign to variable " + name);
     }
 }
