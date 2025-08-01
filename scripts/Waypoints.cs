@@ -31,28 +31,6 @@ public partial class Waypoints : Node3D
         AddChild(endLine = dashes.Instantiate<Dashes>());
     }
 
-    // public void NodeWaypointPreview(Node3D node)
-    // {
-    // 	curDot.Visible = false;
-    // 	if (lastDot != null)
-    // 	{
-    // 		curLine.SetLine(lastDot.Position, node.Position);
-    // 	}
-    // }
-
-    // public void NodeWaypoint(Node3D node)
-    // {
-    // 	if (lastDot != null)
-    // 	{
-    // 		var lineInstance = dashes.Instantiate<Dashes>();
-    // 		AddChild(lineInstance);
-    // 		lineInstance.SetLine(lastDot.Position, node.Position);
-    // 		lineInstance.SetProgression(0.5);
-    // 	}
-
-    // 	lastDot = node;
-    // }
-
     public void OnMapPressed(Node _cam, InputEvent evt, Vector3 evtPos, Vector3 _normal, int _shapeIndex)
     {
         if (!active) return;

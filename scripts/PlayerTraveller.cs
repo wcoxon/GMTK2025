@@ -3,6 +3,15 @@ using System;
 
 public partial class PlayerTraveller : Traveller
 {
+    public override void _Ready()
+    {
+        inventory[(int)Item.BROTH] = 5;
+        
+        inventory[(int)Item.PLASTICS] = 15;
+        
+        inventory[(int)Item.EVIL_WATER] = 120;
+    }
+
     public override void _Process(double delta)
     {
         travel((float)delta);
@@ -16,14 +25,14 @@ public partial class PlayerTraveller : Traveller
         // generally update visuals, ease camera over to town, play sound, and yeah like open some ui
 
         Town = town;
-        PlayerView.instance.PauseWorldSpeed();
-        PlayerView.instance.ChangeState(GameState.TOWN);
+        PlayerView.instance.State = GameState.TOWN;
         GD.Print($"{Name} Entering {Town.TownName}");
+        PlayerView.instance.PauseWorldSpeed();
     }
 
     public override void onDeparture()
     {
+        PlayerView.instance.State = GameState.TRAVELLING;
         PlayerView.instance.PlayWorldSpeed();
-        PlayerView.instance.ChangeState(GameState.TRAVELLING);
     }
 }

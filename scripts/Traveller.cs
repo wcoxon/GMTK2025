@@ -2,13 +2,6 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public enum Item
-{
-    BROTH,
-    PLASTICS,
-    EVIL_WATER
-}
-
 public partial class Traveller : Node3D
 {
     // generic agent to move between towns
@@ -18,7 +11,10 @@ public partial class Traveller : Node3D
     // player will activate state of entering the settlement.
     // a traveller has inventory, money, health, path, recollection?
 
-    int money = 0, health = 5;
+    int money = 0;
+    //[Export] public Godot.Collections.Dictionary<Item, int> inventory;
+    public int[] inventory = new int[3]; 
+    
     float moveSpeed = 1;
 
     Town town;
