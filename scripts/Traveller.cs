@@ -19,7 +19,7 @@ public partial class Traveller : Node3D
     // a traveller has inventory, money, health, path, recollection?
 
     int money = 0, health = 5;
-    float moveSpeed = 1;
+    public float moveSpeed = 1;
 
     Town town;
     [Export] public Town Town

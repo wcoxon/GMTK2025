@@ -41,6 +41,55 @@ public partial class PlayerView : Node3D
     public void FastForwardWorldSpeed() => fastSpeedButton.ButtonPressed = true;
     public void TurboWorldSpeed() => turboSpeedButton.ButtonPressed = true;
 
+    private double tick;
+
+    private int eightHourTicker;
+
+    private int dayTicker;
+
+    private void OnTick() //increment our other tickers, then set the tick to zero so we can tick again.
+    {
+        eightHourTicker += 1;
+
+        dayTicker += 1;
+
+        //GD.Print("Tick!");
+
+        if (eightHourTicker >= 8)
+        {
+            EmitSignal(SignalName.EightTicks);
+        }
+
+        if (dayTicker >= 24)
+        {
+            EmitSignal(SignalName.TwentyFourTicks);
+        }
+
+        tick = 0;
+    }
+
+    private void OnEightTicks() //Reset our eight hour tracking variable, so we can check if it hit eight.
+    {
+        eightHourTicker = 0;
+
+        //GD.Print("8 Ticks!");
+
+    }
+
+    private void OnDay()
+    {
+        dayTicker = 0; //Reset our day tracking variable, so we can check if it hit twenty four.
+
+        GD.Print("Day Passed!");
+    }
+
+    [Signal]
+	public delegate void TickEventHandler();
+    [Signal]
+	public delegate void EightTicksEventHandler();
+    [Signal]
+	public delegate void TwentyFourTicksEventHandler();
+
     public void ChangeState(GameState newState)
     {
         gameState = newState;
@@ -88,6 +137,18 @@ public partial class PlayerView : Node3D
         instance = this; // global handle
         player = GetNode<PlayerTraveller>("../Map/Traveller");
         waypoints.lastDot = player.Town; // start path at current town
+
+        tick = 0;
+        dayTicker = 0;
+        eightHourTicker = 0;
+
+        Tick += OnTick;
+
+        EightTicks += OnEightTicks;
+
+        TwentyFourTicks += OnDay;
+
+        PauseWorldSpeed();
     }
 
     public override void _Input(InputEvent @event)
@@ -122,10 +183,17 @@ public partial class PlayerView : Node3D
                 if (@event.IsActionPressed("speed3")) TurboWorldSpeed();
                 break;
         }
-        
-
-
     }
+
+    public override void _Process(double delta)
+    {
+        tick += delta * worldSpeed / 3; // The same calculation is done in date, but we need it here in the singleton for signalling reasons.
+
+        if  (tick >= 1){
+            EmitSignal(SignalName.Tick);
+        }
+    }
+
 
     public override void _PhysicsProcess(double delta)
     {

@@ -25,8 +25,6 @@ sky = SubResource("Sky_611at")
 
 [node name="Root" type="Node3D"]
 
-[node name="Map" parent="." instance=ExtResource("1_5opw3")]
-
 [node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel")]
 script = ExtResource("2_6fa14")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/Panel")
@@ -43,6 +41,8 @@ transform = Transform3D(1, 0, 0, 0, 0.47355, 0.880767, 0, -0.880767, 0.47355, 0,
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Player/Camera3D"]
 environment = SubResource("Environment_vyg74")
+
+[node name="Map" parent="." instance=ExtResource("1_5opw3")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.0844432, 0.871412, -0.483229, 0.0410672, 0.481505, 0.87548, 0.995582, -0.0937732, 0.00487342, 0, 0, 0)

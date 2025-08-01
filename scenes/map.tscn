@@ -1,11 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://clc830lkjlhip"]
+[gd_scene load_steps=13 format=3 uid="uid://clc830lkjlhip"]
 
 [ext_resource type="PackedScene" uid="uid://b212emu5my3lk" path="res://scenes/town.tscn" id="1_2hyix"]
 [ext_resource type="PackedScene" uid="uid://dylgmhbel8gcv" path="res://scenes/traveller.tscn" id="2_h6b5g"]
 [ext_resource type="Resource" uid="uid://ch8lqqgiplsg3" path="res://data/GurgishamData.tres" id="2_qhcnf"]
 [ext_resource type="Resource" uid="uid://c0yvi6dd5l3sq" path="res://data/GumbusvilleData.tres" id="3_54cpw"]
 [ext_resource type="Resource" uid="uid://dn1lrvkia3voq" path="res://data/SloptonData.tres" id="4_1eu6x"]
-[ext_resource type="Script" uid="uid://ci2wymead70h5" path="res://scripts/Areas/EncounterArea.cs" id="6_2lpho"]
+[ext_resource type="Script" uid="uid://c07l7rmmrq4w4" path="res://scripts/Areas/Terrain/TerrainArea.cs" id="6_2lpho"]
+[ext_resource type="Script" uid="uid://jmbhxi4mueuq" path="res://scripts/Areas/Spottable Encounters/BanditEncounter.cs" id="7_nakos"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_m57gh"]
 
@@ -15,6 +16,13 @@ albedo_color = Color(0.1479, 0.51, 0.47379, 1)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2lpho"]
 height = 3.0
 radius = 1.3916
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2lpho"]
+size = Vector3(11.7075, 1, 1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jh32y"]
+height = 2.90625
+radius = 2.21533
 
 [node name="Map" type="Node3D"]
 
@@ -49,4 +57,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0966797, 0)
 shape = SubResource("CylinderShape3D_2lpho")
 debug_color = Color(0.952941, 0, 0.54902, 1)
 
-[connection signal="body_entered" from="Area3D" to="Area3D" method="OnEncounterEntered"]
+[node name="Road" type="Area3D" parent="."]
+transform = Transform3D(0.800407, 0, -0.599457, 0, 1, 0, 0.599457, 0, 0.800407, 0, 0, 3.4057)
+input_ray_pickable = false
+script = ExtResource("6_2lpho")
+moveSpeedModifier = 2.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Road"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0319824, 0, 0)
+shape = SubResource("BoxShape3D_2lpho")
+debug_color = Color(0.817724, 0, 0.147719, 0.42)
+
+[node name="Bandits" type="Area3D" parent="."]
+script = ExtResource("7_nakos")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bandits"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3167, 0.453125, 0)
+shape = SubResource("CylinderShape3D_jh32y")
+debug_color = Color(0.521569, 0.0117647, 0.529412, 1)

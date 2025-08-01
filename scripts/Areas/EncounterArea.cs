@@ -8,14 +8,15 @@ public partial class EncounterArea : Area3D
     public override void _Ready()
     {
         BodyEntered += OnEncounterEntered;
+
+        BodyExited += OnEncounterExited;
     }
 
 
 
-    public void OnEncounterEntered(Node3D Body)
-    {
-        GD.Print("doodoo ass");
-    }
+    public virtual void OnEncounterEntered(Node3D Body){ }
+
+    public virtual void OnEncounterExited(Node3D Body) { }
 
 
 

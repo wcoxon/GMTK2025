@@ -17,9 +17,9 @@ double_sided = false
 no_depth_test = true
 texture = ExtResource("2_1qb1y")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.481625, 0)
 shape = SubResource("CapsuleShape3D_ifkpq")
 debug_color = Color(0.667352, 0, 0.154832, 1)
