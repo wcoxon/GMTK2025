@@ -24,11 +24,10 @@ public partial class TownPanel : Panel
             nameLabel.Text = target.TownName;
             populationLabel.Text = $"Population: {target.Population}";
 
-            int labelIndex = 0;
-            foreach (KeyValuePair<string, int> stockItem in target.Stock)
+            for(int stock = 0; stock < 3; stock++)
             {
-                stockContainer.GetChild<Label>(labelIndex).Text = $"{stockItem.Key} : {stockItem.Value}";
-                labelIndex++;
+                stockContainer.GetChild<StockUI>(stock).Item = (Item)stock;
+                stockContainer.GetChild<StockUI>(stock).itemQuantity = target.Stocks[stock];
             }
 
             // if player isn't on selected town, offer to plot to it

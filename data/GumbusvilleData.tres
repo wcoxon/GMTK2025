@@ -1,13 +1,12 @@
 [gd_resource type="Resource" load_steps=2 format=3 uid="uid://c0yvi6dd5l3sq"]
 
-[ext_resource type="Script" uid="uid://bu8blcnkgpmyl" path="res://scripts/TownData.cs" id="1_n3ssh"]
+[ext_resource type="Script" path="res://scripts/TownData.cs" id="1_n3ssh"]
 
 [resource]
 script = ExtResource("1_n3ssh")
 townName = "Gumbusville"
 population = 12
-stock = {
-"Eye polish": 200,
-"chrome bugs": 135,
-"mirror": 1005
-}
+wealth = 0
+stocks = PackedInt32Array(22, 151, 99)
+production = PackedInt32Array(0, 0, 0)
+consumption = PackedInt32Array(0, 0, 0)
