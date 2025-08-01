@@ -1,0 +1,41 @@
+[gd_scene load_steps=2 format=3 uid="uid://cs0fb7ln0xn8q"]
+
+[ext_resource type="Script" uid="uid://c2t6y6gwcx2n8" path="res://scripts/SettingsMenu.cs" id="1_05p07"]
+
+[node name="Settings" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_05p07")
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+columns = 2
+
+[node name="BackContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -160.0
+offset_right = 120.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 120
+theme_override_constants/margin_top = 80
+theme_override_constants/margin_right = 120
+theme_override_constants/margin_bottom = 80
+
+[node name="BackButton" type="Button" parent="BackContainer"]
+layout_mode = 2
+text = "Back"
+
+[connection signal="pressed" from="BackContainer/BackButton" to="." method="returnToMainMenu"]
