@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 
 public partial class Town : Node3D
 {
@@ -36,6 +35,11 @@ public partial class Town : Node3D
     {
         // register for rumors.
         RumorView.towns.Add(data.townName, this);
+        // data.price_multiplyers.CopyTo(data.prices, 0);
+        for (int i = 0; i < 3; i++)
+            data.prices[i] = PlayerView.instance.itemBaseValues[i] * data.price_multiplyers[i];
+        data.base_consumption.CopyTo(data.consumption, 0);
+        data.base_production.CopyTo(data.production, 0);
     }
 
     public void _on_area_3d_input_event(Node cam, InputEvent evt, Vector3 evtPos, Vector3 normal, int shapeIndex)
@@ -47,52 +51,43 @@ public partial class Town : Node3D
     }
 
     public void select() => PlayerView.instance.SelectedTown = this;
-    
+
     public int appraise(Item item)
     {
-        // price based on
-        // how much of that item is in stock at this town
-
-        // consumption, which itself is scaled by population
-
-        // that's kind of it? well for now let's say that's it
-
-        // so the consumption determines whether there's a shortage, since it defines the threshold of not enough and more than enough 
-
-
-        int itemIndex = (int)item;
-
-        float valueScale = 1;
-
-        valueScale *= Consumption[itemIndex] + 1;
-        valueScale /= Production[itemIndex] + 1;
-
-
-        return (int)(valueScale * PlayerView.instance.itemBaseValues[itemIndex]);
+        return (int)data.prices[(int)item];
     }
 
+    const double UPDATE_INTERVAL = 8 * 3; // Update every 8 hours.
+    private double next_update = UPDATE_INTERVAL; // Update
     public override void _PhysicsProcess(double delta)
     {
-        updateStock(delta);
-    }
-
-
-    void updateStock(double deltaRealTime)
-    {
-        // produce or consume items over time, call in physics process
-        double deltaSimTime = deltaRealTime * PlayerView.instance.worldSpeed;
-
-        // calculate how much of a day this equates to
-
-        // if 3 sim seconds is an hour, then a day is 24*3 sim seconds
-
-        double deltaSimDays = deltaSimTime / (24 * 3);
-
-        for (int item = 0; item < 3; item++)
+        next_update -= delta * PlayerView.instance.worldSpeed;
+        if (next_update < 0)
         {
-            Stocks[item] += (Production[item] - Consumption[item]) * (float)deltaSimDays;
+            updateStock();
+            next_update += UPDATE_INTERVAL;
         }
     }
 
-    
+    static float price_by_demand(float base_price, float demand, float base_demand, float demand_elasticity)
+    {
+        return base_price * Mathf.Pow(demand / base_demand, 1 / demand_elasticity);
+    }
+
+    static float supply_by_price(float base_supply, float price, float base_price, float supply_elasticity)
+    {
+        return base_supply * Mathf.Pow(price / base_price, supply_elasticity);
+    }
+
+    static RandomNumberGenerator rng = new RandomNumberGenerator();
+    void updateStock()
+    {
+        for (int item = 0; item < 3; item++)
+        {
+            data.production[item] = supply_by_price(data.base_production[item], data.prices[item], PlayerView.instance.itemBaseValues[item] * data.price_multiplyers[item], data.production_elasticity);
+            data.consumption[item] = data.stock_selloff[item] * data.stocks[item] + data.supply_selloff[item] * data.production[item];
+            data.prices[item] = price_by_demand(PlayerView.instance.itemBaseValues[item] * data.price_multiplyers[item], data.consumption[item], data.base_consumption[item], data.consumption_elasticity);
+            data.stocks[item] += Mathf.Max(-data.stocks[item], (data.production[item] - rng.Randfn(data.consumption[item], data.consumption[item]/10))/3);
+        }
+    }    
 }
