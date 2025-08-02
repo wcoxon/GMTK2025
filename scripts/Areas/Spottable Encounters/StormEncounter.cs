@@ -12,6 +12,8 @@ public partial class StormEncounter : MovingEncounter
     
     [Export(PropertyHint.Range, "0,1,0.05")] public float townDevastateChance = 0.75f;
 
+    [Export] public Vector3 originCoordinates;
+
     // we don't want to constantly be devastating towns. We'll do it once a day at most.
     private bool devastatedTownsToday;
 
@@ -22,7 +24,7 @@ public partial class StormEncounter : MovingEncounter
         base._Ready();
         devastatedTownsToday = false;
         PlayerView.instance.EightTicks += DoEveryEightTicks;
-        PlayerView.instance.TwentyFourTicks += DoOnTick;
+        PlayerView.instance.TwentyFourTicks += DoDaily;
 
         AreaEntered += OnAreaEntered;
         AreaExited += OnAreaExited;
@@ -97,15 +99,40 @@ public partial class StormEncounter : MovingEncounter
 
 
 
-    //change direction every eight hours.
+    //change direction slightly every eight hours.
     public void DoEveryEightTicks()
     {
-
+        GD.Print("Current Displacement: " + Displacement);
+        SlightlyChangeDirection();
+        GD.Print("New Displacement: " + Displacement);
     }
 
     public void DoDaily()
     {
-        devastatedTownsToday = false;
+        devastatedTownsToday = false; //we can destroy towns again!!
+
+        if (CheckMaxDistance(originCoordinates))
+        {
+            GD.Print("Too Far from Origin Coords!");
+
+            Position = originCoordinates;
+
+            GenerateRandomDisplacementVector();
+        }
+    }
+
+    private void SlightlyChangeDirection()
+    {
+        Vector3 newDisplacement = Displacement;
+
+        float xModifier = (float)GD.Randfn(0.0, 0.3);
+        float zModifier = (float)GD.Randfn(0.0, 0.3);
+
+        newDisplacement.X += xModifier;
+
+        newDisplacement.Z += zModifier;
+
+        Displacement = newDisplacement;
     }
 
     private void TryDevastateTown()

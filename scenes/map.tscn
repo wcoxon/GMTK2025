@@ -86,8 +86,10 @@ debug_color = Color(0.521569, 0.0117647, 0.529412, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.68113, 0, -0.00314903)
 input_ray_pickable = false
 script = ExtResource("8_jh32y")
+moveSpeedModifier = -0.5
 townDevastateChance = 0.1
 m_moveSpeed = 0.5
+maxDistanceBeforeRespawn = 40
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StormArea"]
 shape = SubResource("CylinderShape3D_nakos")

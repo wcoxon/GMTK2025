@@ -7,7 +7,7 @@ public partial class MovingEncounter : TickBasedEncounter
 
     [Export(PropertyHint.Range, "0,100")] public int maxDistanceBeforeRespawn = 10;
 
-    Vector3 Displacement { get; set; }
+    protected Vector3 Displacement { get; set; }
 
 
     public override void _Ready()
@@ -32,9 +32,9 @@ public partial class MovingEncounter : TickBasedEncounter
 
     protected void GenerateRandomDisplacementVector()
     {
-        float xValue = GD.RandRange(-1, 1);
+        float xValue = (float)GD.RandRange(-1.0, 1.0);
 
-        float zValue = GD.RandRange(-1, 1);
+        float zValue = (float)GD.RandRange(-1.0, 1.0);
 
         Displacement = new Vector3(xValue, 0, zValue);
     }
