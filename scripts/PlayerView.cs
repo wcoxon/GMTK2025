@@ -4,14 +4,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-public enum GameState {
+public enum GameState
+{
     TOWN,
     PLANNING,
-    TRAVELLING
+    TRAVELLING,
+    ENCOUNTERING
 }
 
-
-public partial class PlayerView : Node3D
+public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
 {
     // this will hand logic for the actual player interfacing stuff like moving the camera
     // selecting town and controlling UI shit too, like updating ui when new town is selected
@@ -29,6 +30,9 @@ public partial class PlayerView : Node3D
     [Export] Panel timeControlPanel;
     [Export] InventoryUI inventoryUI;
     [Export] TradeUI tradeUI;
+
+    [Export] public RumorView rumorView;
+    [Export] public EncounterView encounterView;
 
     GameState gameState;
     public GameState State
@@ -158,7 +162,8 @@ public partial class PlayerView : Node3D
     public override void _Ready()
     {
         instance = this; // global handle
-
+        EncounterManager.Instance.AddProvider(this);
+        
         State = GameState.TOWN;
         player = GetNode<PlayerTraveller>("../Map/Traveller");
         waypoints.lastDot = player.Town; // start path at current town
@@ -211,6 +216,9 @@ public partial class PlayerView : Node3D
                 if (@event.IsActionPressed("speed1")) PlayWorldSpeed();
                 if (@event.IsActionPressed("speed2")) FastForwardWorldSpeed();
                 if (@event.IsActionPressed("speed3")) TurboWorldSpeed();
+                break;
+
+            case GameState.ENCOUNTERING:
                 break;
         }
     }
@@ -284,5 +292,25 @@ public partial class PlayerView : Node3D
         tradeUI.Town = selectedTown; // i know you should only be able to trade with the town you're on it's just weird that it offers trade in the town panel for whatever you have selected :p
         tradeUI.Visible = true;
 
+    }
+
+    public string VariablesPrefix()
+    {
+        return "player";
+    }
+
+    public List<(string, double)> GetVariables()
+    {
+        return [
+            ("health", 5),
+            ("money", 100)
+        ];
+    }
+
+    public void UpdateVariable(string name, double value)
+    {
+        if (name == "health") GD.Print("Set playerhealth to " + value);
+        else if (name == "money") GD.Print("Set money to " + value);
+        else throw new KeyNotFoundException("Player cannot assign to variable " + name);
     }
 }

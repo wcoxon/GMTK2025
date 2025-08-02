@@ -3,7 +3,10 @@ using System;
 
 public partial class TerrainArea : EncounterArea
 {
-    [Export] public float moveSpeedModifier = 0.5f;
+    /// <summary>
+    /// additive, so positive number means you move faster, negative means you move slower. I'm pretty sure if it's below -1 shit's gonna break.
+    /// </summary>
+    [Export(PropertyHint.Range, "-0.9,1,0.1")] public float moveSpeedModifier = -0.5f;
 
     public override void OnEncounterEntered(Node3D Body)
     {
@@ -19,7 +22,7 @@ public partial class TerrainArea : EncounterArea
 
         Traveller entering = Body.GetParent() as Traveller;
 
-        entering.moveSpeed *= moveSpeedModifier;
+        entering.moveSpeed += moveSpeedModifier;
 
     }
 
@@ -35,7 +38,7 @@ public partial class TerrainArea : EncounterArea
 
         Traveller entering = Body.GetParent() as Traveller;
 
-        entering.moveSpeed = 1.0f;
+        entering.moveSpeed -= moveSpeedModifier;
     }
 
 

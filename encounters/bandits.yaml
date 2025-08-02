@@ -1,0 +1,16 @@
+- name: test_bandits
+  class: bandits
+  title: A group of old men attacks you!
+  chance: 0.5
+  description: >
+    Deep in the forrest you see a group of old men attacking you.
+  options:
+  - text: Attack back.
+    effect: player_health -= 1;
+  - text: Offer up money.
+    effect: player_money -= player_money/2;
+  rumors:
+  - text: I hear there's some old men going around these parts stabbing people.
+    location: Gumbusville
+  - text: I'd like to get home but I hear those old men are in the forests again.. Hm? You don't know them?
+    location: Slopton

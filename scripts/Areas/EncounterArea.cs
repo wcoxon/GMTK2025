@@ -4,6 +4,7 @@ using System.Diagnostics;
 
 public partial class EncounterArea : Area3D
 {
+    public EncounterManager.EncounterContent content;
 
     public override void _Ready()
     {

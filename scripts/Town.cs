@@ -32,6 +32,11 @@ public partial class Town : Node3D
     public float[] Production { get => data.production; } // per day
     public float[] Consumption { get => data.consumption; } // per day
 
+    public override void _Ready()
+    {
+        // register for rumors.
+        RumorView.towns.Add(data.townName, this);
+    }
 
     public void _on_area_3d_input_event(Node cam, InputEvent evt, Vector3 evtPos, Vector3 normal, int shapeIndex)
     {

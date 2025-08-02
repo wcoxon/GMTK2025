@@ -29,6 +29,7 @@ public partial class Waypoints : Node3D
         AddChild(curDot = dot.Instantiate<Node3D>());
         AddChild(curLine = dashes.Instantiate<Dashes>());
         AddChild(endLine = dashes.Instantiate<Dashes>());
+        curDot.Visible = false;
     }
 
     public void OnMapPressed(Node _cam, InputEvent evt, Vector3 evtPos, Vector3 _normal, int _shapeIndex)
@@ -76,14 +77,14 @@ public partial class Waypoints : Node3D
         endLine.SetLine(lastDot.Position, endDot.Position);
     }
 
-    public Tuple<List<Node3D>, List<Dashes>> PopJourney()
+    public (List<Node3D>, List<Dashes>) PopJourney()
     {
         journey_nodes.Add(endDot);
         var instance = dashes.Instantiate<Dashes>();
         AddChild(instance);
         instance.SetLine(lastDot.Position, endDot.Position);
         journey_dashes.Add(instance);
-        var ret = new Tuple<List<Node3D>, List<Dashes>>(journey_nodes, journey_dashes);
+        var ret = (journey_nodes, journey_dashes);
         journey_nodes = [];
         journey_dashes = [];
         lastDot = endDot;

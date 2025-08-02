@@ -11,7 +11,7 @@ public partial class MainMenu : Control
     }
     public void settings()
     {
-        // transition to settings menu scene (not implemented)
+        GetTree().ChangeSceneToFile("res://scenes/settings_menu.tscn");
     }
     public void quit()
     {

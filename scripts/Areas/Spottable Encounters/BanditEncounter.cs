@@ -1,11 +1,15 @@
 using Godot;
 using Godot.Collections;
 using System;
+using System.Runtime.Serialization;
 
 public partial class BanditEncounter : TickBasedEncounter
 {
-    [Export] public float encounterPercentage = 0.5f;
-
+    public override void _Ready()
+    {
+        base._Ready();
+        content = EncounterManager.Instance.GetFromClass("bandits")[0];
+    }
 
     public override void DoOnTick()
     {
@@ -23,7 +27,7 @@ public partial class BanditEncounter : TickBasedEncounter
 
             Traveller currentTraveller = Body.GetParent() as Traveller;
 
-            if (GD.Randf() > encounterPercentage)
+            if (GD.Randf() > content.Chance)
             {
                 BanditAttack(currentTraveller);
             }
@@ -43,7 +47,9 @@ public partial class BanditEncounter : TickBasedEncounter
     public void BanditAttack(Traveller victim)
     {
         GD.Print("Bandits! They Got You!!!" + victim);
+        if (victim is PlayerTraveller)
+        {
+            PlayerView.instance.encounterView.DisplayEncounter(content);
+        }
     }
-
-
 }

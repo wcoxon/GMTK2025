@@ -3,12 +3,12 @@ using System;
 
 public partial class InventoryUI : Panel
 {
-	[Export] VBoxContainer stocksContainer;
+    [Export] VBoxContainer stocksContainer;
 
-	public StockUI getStockUI(int index)
-	{
-		return stocksContainer.GetChild<StockUI>(index);
-	}
+    public StockUI getStockUI(int index)
+    {
+        return stocksContainer.GetChild<StockUI>(index);
+    }
 
 	public void displayInventory(Traveller traveller)
 	{
