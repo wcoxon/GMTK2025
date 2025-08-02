@@ -44,7 +44,6 @@ public partial class EncounterView : Panel
         }
 
         post_action = post;
-        PlayerView.instance.PauseWorldSpeed();
         last_state = PlayerView.instance.State;
         PlayerView.instance.State = GameState.ENCOUNTERING;
     }

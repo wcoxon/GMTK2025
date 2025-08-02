@@ -42,6 +42,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         get => gameState;
         set
         {
+            var oldGameState = gameState;
             gameState = value;
             switch (gameState)
             {
@@ -52,6 +53,14 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
                     if (townPanel.Town is not null) townPanel.updateActions();
                     break;
 
+                case GameState.ENCOUNTERING:
+                    if (oldGameState == GameState.TRAVELLING)
+                    {
+                        PauseWorldSpeed();
+                        timeControlPanel.Hide();
+                    }
+                    break;
+
                 case GameState.PLANNING:
                     waypoints.Active = true;
                     townPanel.Embarkmode = TownPanel.EmbarkMode.Planning; // notifies town UI to update to planning state
@@ -60,11 +69,14 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
                     break;
 
                 case GameState.TRAVELLING:
-                    waypoints.Active = false;
-                    townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking; // notifies town UI to update to embarking state
-                    var (nodes, dashes) = waypoints.PopJourney();
-                    player.SetJourney(nodes, dashes);
-                    player.onDeparture();
+                    if (oldGameState == GameState.PLANNING)
+                    {
+                        waypoints.Active = false;
+                        townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking; // notifies town UI to update to embarking state
+                        var (nodes, dashes) = waypoints.PopJourney();
+                        player.SetJourney(nodes, dashes);
+                        player.onDeparture();
+                    }
 
                     PlayWorldSpeed();
                     timeControlPanel.Show();
