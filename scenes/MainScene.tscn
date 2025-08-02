@@ -8,9 +8,9 @@
 [ext_resource type="Script" uid="uid://dpgf4ygtataug" path="res://scripts/ScaleTime/ScaleTime.cs" id="4_k24pf"]
 [ext_resource type="ButtonGroup" uid="uid://br2jb0lwfyinh" path="res://scripts/ScaleTime/SpeedButtonGroup.tres" id="4_ygjfp"]
 [ext_resource type="PackedScene" uid="uid://durnjyano0ic4" path="res://scenes/waypoints.tscn" id="5_k24pf"]
-[ext_resource type="PackedScene" path="res://scenes/EncounterView.tscn" id="8_cfq0f"]
-[ext_resource type="PackedScene" path="res://scenes/inventory.tscn" id="8_pd1er"]
-[ext_resource type="PackedScene" path="res://scenes/RumorView.tscn" id="8_x537r"]
+[ext_resource type="PackedScene" uid="uid://bdrkqejd8htea" path="res://scenes/EncounterView.tscn" id="8_cfq0f"]
+[ext_resource type="PackedScene" uid="uid://c6yeey4j3upm4" path="res://scenes/inventory.tscn" id="8_pd1er"]
+[ext_resource type="PackedScene" uid="uid://xqt4l46rhnwy" path="res://scenes/RumorView.tscn" id="8_x537r"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qk1f2"]
 sky_top_color = Color(0.66796, 0.355097, 5.77569e-07, 1)
@@ -28,7 +28,7 @@ sky = SubResource("Sky_611at")
 
 [node name="Root" type="Node3D"]
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI")]
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI", "rumorView", "encounterView")]
 script = ExtResource("2_6fa14")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/TownPanel")
 waypoints = NodePath("../Waypoints")
@@ -38,6 +38,8 @@ fastSpeedButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxCon
 turboSpeedButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer/TimeScale4")
 timeControlPanel = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel")
 inventoryUI = NodePath("../CanvasLayer/HSplitContainer/HUD/inventory")
+rumorView = NodePath("../CanvasLayer/RumorView")
+encounterView = NodePath("../CanvasLayer/EncounterView")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 0.47355, 0.880767, 0, -0.880767, 0.47355, 0, 15.0562, 8.77994)

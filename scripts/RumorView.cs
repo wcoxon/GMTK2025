@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using Godot.Collections;
 
@@ -10,14 +11,9 @@ public partial class RumorView : Control
     public override void _Ready()
     {
         // Display any encounter with class testnow immediately.
-        foreach (var encounter in EncounterManager.Instance.encounters)
-        {
-            if (encounter.Class == "testrumor")
-            {
-                DisplayRumor(encounter.Rumors[0]);
-                break;
-            }
-        }
+        var contents = EncounterManager.Instance.GetFromClass("testrumor");
+        if (contents.Any())
+            DisplayRumor(contents[0].Rumors[0]);
     }
 
     public override void _Process(double delta)

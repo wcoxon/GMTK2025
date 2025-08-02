@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://dpdvumg63k3xu"]
 
-[ext_resource type="Script" path="res://scripts/TownPanel.cs" id="1_0baqy"]
+[ext_resource type="Script" uid="uid://kj27sednfxyt" path="res://scripts/TownPanel.cs" id="1_0baqy"]
 [ext_resource type="PackedScene" uid="uid://nscjafbhcguy" path="res://scenes/StockPanel.tscn" id="2_kguwn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_duute"]

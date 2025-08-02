@@ -24,6 +24,17 @@ public partial class EncounterManager : Node
         }
     }
 
+    public List<EncounterContent> GetFromClass(string cls)
+    {
+        List<EncounterContent> ret = [];
+        foreach (var content in encounters)
+        {
+            if (content.Class == cls)
+                ret.Add(content);
+        }
+        return ret;
+    }
+
     public class EncounterOptionContent
     {
         public string Text { get; set; } = "<option>";
@@ -38,16 +49,25 @@ public partial class EncounterManager : Node
 
     public class EncounterContent
     {
+        // Internal name of the encounter.
         public string Name { get; set; } = "no-name";
+        // What class should handle these encounters.
         public string Class { get; set; } = "no-class";
+        // Where encounter will take place (implementation left for class)
         public string Location { get; set; } = "no-location";
-
+        // Title of encounter popup.
         public string Title { get; set; } = "no-title";
+        // Image in encounter popup.
         public string Image { get; set; } = "";
+        // Description in encounter popup.
         public string Description { get; set; } = "";
-
+        // Options in encounter popup.
         public List<EncounterOptionContent> Options { get; set; } = [];
+        // Rumors to spread while encounter is active.
         public List<EncounterRumorContent> Rumors { get; set; } = [];
+        // Chance for encounter to happen.
+        public double Chance { get; set; } = 1.0;
+
     }
 
     static IDeserializer deserializer = new DeserializerBuilder()
@@ -56,7 +76,6 @@ public partial class EncounterManager : Node
 
     const string EVENT_DIRECTORY = "res://encounters/";
 
-    static RegEx empty_syntax = RegEx.CreateFromString("\\s*");
     static RegEx effect_syntax = RegEx.CreateFromString(
         "\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*(=|\\+=|-=)(.*)");
 

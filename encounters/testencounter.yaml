@@ -1,5 +1,5 @@
 - name: burntpizza
-  class: testrumor
+  # class: testrumor
   location: Gurgisham
   title: Burnt Pizza
   image: images/burntpizza.jpg

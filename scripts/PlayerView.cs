@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-public enum GameState {
+public enum GameState
+{
     TOWN,
     PLANNING,
-    TRAVELLING
+    TRAVELLING,
+    ENCOUNTERING
 }
 
 public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
@@ -27,6 +29,9 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     [Export] ScaleTime turboSpeedButton;
     [Export] Panel timeControlPanel;
     [Export] InventoryUI inventoryUI;
+
+    [Export] public RumorView rumorView;
+    [Export] public EncounterView encounterView;
 
     GameState gameState;
     public GameState State
@@ -122,6 +127,10 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
             case GameState.TRAVELLING:
                 timeControlPanel.Show();
                 break;
+
+            case GameState.ENCOUNTERING:
+                timeControlPanel.Hide();
+                break;
         }
     }
 
@@ -198,6 +207,9 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
                 if (@event.IsActionPressed("speed1")) PlayWorldSpeed();
                 if (@event.IsActionPressed("speed2")) FastForwardWorldSpeed();
                 if (@event.IsActionPressed("speed3")) TurboWorldSpeed();
+                break;
+
+            case GameState.ENCOUNTERING:
                 break;
         }
     }
