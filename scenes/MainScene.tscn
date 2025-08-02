@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://cvlfxg610affe"]
+[gd_scene load_steps=17 format=3 uid="uid://cvlfxg610affe"]
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
 [ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/PlayerView.cs" id="2_6fa14"]
@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://bdrkqejd8htea" path="res://scenes/EncounterView.tscn" id="8_cfq0f"]
 [ext_resource type="PackedScene" uid="uid://c6yeey4j3upm4" path="res://scenes/inventory.tscn" id="8_pd1er"]
 [ext_resource type="PackedScene" uid="uid://xqt4l46rhnwy" path="res://scenes/RumorView.tscn" id="8_x537r"]
+[ext_resource type="Script" uid="uid://0n132a882k4r" path="res://scripts/NotificationManager.cs" id="11_o3jky"]
+[ext_resource type="PackedScene" uid="uid://c1jvgnt81ughl" path="res://scenes/notification.tscn" id="12_kp0ql"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qk1f2"]
 sky_top_color = Color(0.66796, 0.355097, 5.77569e-07, 1)
@@ -28,7 +30,7 @@ sky = SubResource("Sky_611at")
 
 [node name="Root" type="Node3D"]
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI", "rumorView", "encounterView")]
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI", "rumorView", "encounterView", "notificationManager")]
 script = ExtResource("2_6fa14")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/TownPanel")
 waypoints = NodePath("../Waypoints")
@@ -40,6 +42,7 @@ timeControlPanel = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel")
 inventoryUI = NodePath("../CanvasLayer/HSplitContainer/HUD/inventory")
 rumorView = NodePath("../CanvasLayer/RumorView")
 encounterView = NodePath("../CanvasLayer/EncounterView")
+notificationManager = NodePath("../CanvasLayer/NotificationManager")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 0.47355, 0.880767, 0, -0.880767, 0.47355, 0, 15.0562, 8.77994)
@@ -177,6 +180,19 @@ offset_top = 356.0
 offset_right = 553.0
 offset_bottom = 356.0
 town = NodePath("../../Map/Town")
+
+[node name="NotificationManager" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -184.0
+offset_top = 26.0
+offset_right = -144.0
+offset_bottom = 66.0
+grow_horizontal = 0
+script = ExtResource("11_o3jky")
+notification_scene = ExtResource("12_kp0ql")
 
 [node name="Waypoints" parent="." node_paths=PackedStringArray("lastDot") instance=ExtResource("5_k24pf")]
 lastDot = NodePath("../Map/Town2")

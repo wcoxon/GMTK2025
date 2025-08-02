@@ -33,6 +33,8 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     [Export] public RumorView rumorView;
     [Export] public EncounterView encounterView;
 
+    [Export] public NotificationManager notificationManager;
+
     GameState gameState;
     public GameState State
     {

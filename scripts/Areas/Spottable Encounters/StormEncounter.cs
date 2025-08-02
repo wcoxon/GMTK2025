@@ -190,6 +190,8 @@ public partial class StormEncounter : MovingEncounter
     public void StormDamageTraveller(Traveller victim)
     {
         GD.Print("Storm Damaged!" + victim);
+        if (victim is PlayerTraveller)
+            PlayerView.instance.notificationManager.AddNotification("Storm damaged you!");
     }
 
 }
