@@ -6,4 +6,7 @@
 script = ExtResource("1_n3ssh")
 townName = "Gumbusville"
 population = 12
-stock = null
+wealth = 0
+stocks = PackedInt32Array(0, 0, 0)
+production = PackedInt32Array(0, 0, 0)
+consumption = PackedInt32Array(0, 0, 0)
