@@ -25,7 +25,7 @@ public partial class RumorView : Control
         }
     }
 
-    public void DisplayRumor(EncounterManager.EncounterRumorContent rumor)
+    public void DisplayRumor(EncounterRumorContent rumor)
     {
         Visible = true;
         town = towns[rumor.Location];

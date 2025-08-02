@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cvlfxg610affe"]
+[gd_scene load_steps=21 format=3 uid="uid://cvlfxg610affe"]
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
 [ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/PlayerView.cs" id="2_6fa14"]
@@ -14,6 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://xqt4l46rhnwy" path="res://scenes/RumorView.tscn" id="8_x537r"]
 [ext_resource type="Script" uid="uid://0n132a882k4r" path="res://scripts/NotificationManager.cs" id="11_o3jky"]
 [ext_resource type="PackedScene" uid="uid://c1jvgnt81ughl" path="res://scenes/notification.tscn" id="12_kp0ql"]
+[ext_resource type="Script" uid="uid://6mnsy7hidovy" path="res://scripts/StoryTeller.cs" id="15_0cxu4"]
+[ext_resource type="PackedScene" uid="uid://fhoh6fiq15ei" path="res://scenes/encounters/bandits.tscn" id="16_0ehpd"]
+[ext_resource type="PackedScene" uid="uid://b25d8ekeapuhi" path="res://scenes/encounters/storm_area.tscn" id="17_8wjpf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qk1f2"]
 sky_top_color = Color(0.66796, 0.355097, 5.77569e-07, 1)
@@ -206,6 +209,11 @@ notification_scene = ExtResource("12_kp0ql")
 
 [node name="Waypoints" parent="." node_paths=PackedStringArray("lastDot") instance=ExtResource("5_k24pf")]
 lastDot = NodePath("../Map/Town2")
+
+[node name="StoryTeller" type="Node3D" parent="."]
+script = ExtResource("15_0cxu4")
+bandit_encounter = ExtResource("16_0ehpd")
+storm_encounter = ExtResource("17_8wjpf")
 
 [connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/TownPanel" to="Waypoints" method="OnMouseExited"]
 [connection signal="pressed" from="CanvasLayer/HSplitContainer/TownPanel/VBoxContainer/trade" to="Player" method="openTrade"]

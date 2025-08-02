@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 public partial class EncounterView : Panel
 {
-    private EncounterManager.EncounterContent content;
+    private EncounterContent content;
     private Action post_action;
 
     private GameState last_state;
@@ -18,7 +18,7 @@ public partial class EncounterView : Panel
             DisplayEncounter(contents[0]);
     }
 
-    public void DisplayEncounter(EncounterManager.EncounterContent content, Action post = null)
+    public void DisplayEncounter(EncounterContent content, Action post = null)
     {
         this.content = content;
         Visible = true;
