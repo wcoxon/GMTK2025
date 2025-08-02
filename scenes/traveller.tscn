@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dylgmhbel8gcv"]
 
-[ext_resource type="Script" path="res://scripts/PlayerTraveller.cs" id="1_maw3y"]
+[ext_resource type="Script" uid="uid://cinw4djg05slo" path="res://scripts/PlayerTraveller.cs" id="1_maw3y"]
 [ext_resource type="Texture2D" uid="uid://dp7fhv6yvmsb2" path="res://images/traderCutout.png" id="2_1qb1y"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ifkpq"]

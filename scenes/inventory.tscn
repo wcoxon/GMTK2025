@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c6yeey4j3upm4"]
 
-[ext_resource type="Script" path="res://scenes/InventoryUI.cs" id="1_5nd8q"]
+[ext_resource type="Script" uid="uid://do6w43vwwbhb7" path="res://scripts/UI/InventoryUI.cs" id="1_5nd8q"]
 [ext_resource type="PackedScene" uid="uid://nscjafbhcguy" path="res://scenes/StockPanel.tscn" id="2_adk4k"]
 
 [node name="inventory" type="Panel" node_paths=PackedStringArray("stocksContainer")]

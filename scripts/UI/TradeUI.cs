@@ -5,8 +5,7 @@ public partial class TradeUI : Panel
 {
 
 	[Export] VBoxContainer productsContainer;
-	[Export] Label fundsLabel;
-	[Export] Label costLabel;
+	[Export] Label fundsLabel, costLabel;
 
 	[Export] Button confirmButton;
 
@@ -21,8 +20,8 @@ public partial class TradeUI : Panel
 			updateUI();
 		}
 	}
-	int totalCost;
 
+	int totalCost; // dont like this
 
 	public void updateUI()
 	{
@@ -30,18 +29,20 @@ public partial class TradeUI : Panel
 		{
 			TradeRow row = productsContainer.GetChild<TradeRow>(item);
 
-			row.Stock = Town.Stocks[item];
+			row.Stock = (int)Town.Stocks[item];
+
+			int price = Town.appraise((Item)item);
+			row.Price = price;
+			row.PriceOffset = price - PlayerView.instance.itemBaseValues[item];
+
+			row.Transfer = 0;
+
 			row.PlayerStock = PlayerView.instance.player.inventory[item];
-
-			row.Price = Town.appraise((Item)item);
-
-			row.Quantity = 0;
 		}
 
 		fundsLabel.Text = $"\nYour Funds: {PlayerView.instance.player.Money} crumbs\nTown Funds: {Town.Wealth} crumbs\n ";
 
-		totalCost = 0;
-		costLabel.Text = $"Total Cost: {totalCost} crumbs";
+		updateCost(0);
 	}
 
 	public void updateCost(float dontuse)
@@ -50,40 +51,32 @@ public partial class TradeUI : Panel
 		for (int item = 0; item < 3; item++)
 		{
 			TradeRow row = productsContainer.GetChild<TradeRow>(item);
-			totalCost += Town.appraise((Item)item) * row.Quantity;
+			totalCost += Town.appraise((Item)item) * row.Transfer;
 		}
 		costLabel.Text = $"Total Cost: {totalCost} crumbs";
 
-		confirmButton.Disabled = totalCost > PlayerView.instance.player.Money || -totalCost > Town.Wealth;
-		
+		confirmButton.Disabled = totalCost > PlayerView.instance.player.Money || -totalCost > Town.Wealth; // disable transaction if insufficient funds on either party
 	}
 
 	public void confirmTrade()
 	{
-		// subtract player money
-		// add town money
-
+		// subtract player money, add town money
 		PlayerView.instance.player.Money -= totalCost;
 		Town.Wealth += totalCost;
 
-
-		// subtract town stock
-		// add player stock
-
+		// subtract town stock, add player stock
 		for (int item = 0; item < 3; item++)
 		{
 			TradeRow row = productsContainer.GetChild<TradeRow>(item);
 
-			Town.Stocks[item] -= row.Quantity;
-			PlayerView.instance.player.inventory[item] += row.Quantity;
+			Town.Stocks[item] -= row.Transfer;
+			PlayerView.instance.player.inventory[item] += row.Transfer;
 		}
 
 		// update ui
 		updateUI();
 	}
 
-	public void closeTrade()
-	{
-		Visible = false;
-	}
+	public void closeTrade() => Visible = false;
+	
 }

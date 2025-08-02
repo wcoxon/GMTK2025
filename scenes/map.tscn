@@ -5,8 +5,8 @@
 [ext_resource type="Resource" uid="uid://ch8lqqgiplsg3" path="res://data/GurgishamData.tres" id="2_qhcnf"]
 [ext_resource type="Resource" uid="uid://c0yvi6dd5l3sq" path="res://data/GumbusvilleData.tres" id="3_54cpw"]
 [ext_resource type="Resource" uid="uid://dn1lrvkia3voq" path="res://data/SloptonData.tres" id="4_1eu6x"]
-[ext_resource type="Script" path="res://scripts/Areas/Terrain/TerrainArea.cs" id="6_2lpho"]
-[ext_resource type="Script" path="res://scripts/Areas/Spottable Encounters/BanditEncounter.cs" id="7_nakos"]
+[ext_resource type="Script" uid="uid://c07l7rmmrq4w4" path="res://scripts/Areas/Terrain/TerrainArea.cs" id="6_2lpho"]
+[ext_resource type="Script" uid="uid://jmbhxi4mueuq" path="res://scripts/Areas/Spottable Encounters/BanditEncounter.cs" id="7_nakos"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_m57gh"]
 

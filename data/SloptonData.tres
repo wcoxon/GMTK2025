@@ -1,12 +1,12 @@
 [gd_resource type="Resource" load_steps=2 format=3 uid="uid://dn1lrvkia3voq"]
 
-[ext_resource type="Script" path="res://scripts/TownData.cs" id="1_mhphq"]
+[ext_resource type="Script" uid="uid://bu8blcnkgpmyl" path="res://scripts/TownData.cs" id="1_mhphq"]
 
 [resource]
 script = ExtResource("1_mhphq")
 townName = "Slopton"
 population = 500
 wealth = 1200
-stocks = PackedInt32Array(650, 1012, 15)
-production = PackedInt32Array(0, 3, 3)
-consumption = PackedInt32Array(3, 2, 0)
+stocks = PackedFloat32Array(24, 1111, 41)
+production = PackedFloat32Array(15, 112, 4)
+consumption = PackedFloat32Array(1, 123, 4)

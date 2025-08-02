@@ -14,7 +14,6 @@ public partial class InventoryUI : Panel
 	{
 		for (int item = 0; item < 3; item++) // 3 being number of item types, sry for magic number
 		{
-			getStockUI(item).Item = (Item)item;
 			getStockUI(item).itemQuantity = traveller.inventory[item];
 		}
 	}

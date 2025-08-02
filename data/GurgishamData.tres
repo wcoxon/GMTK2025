@@ -1,12 +1,12 @@
 [gd_resource type="Resource" load_steps=2 format=3 uid="uid://ch8lqqgiplsg3"]
 
-[ext_resource type="Script" path="res://scripts/TownData.cs" id="1_sat8k"]
+[ext_resource type="Script" uid="uid://bu8blcnkgpmyl" path="res://scripts/TownData.cs" id="1_sat8k"]
 
 [resource]
 script = ExtResource("1_sat8k")
 townName = "Gurgisham"
 population = 100
 wealth = 150
-stocks = PackedInt32Array(6, 28, 115)
-production = PackedInt32Array(1, 0, 1)
-consumption = PackedInt32Array(0, 1, 0)
+stocks = PackedFloat32Array(15, 1516, 3135)
+production = PackedFloat32Array(14, 0, 1)
+consumption = PackedFloat32Array(2, 1, 0)

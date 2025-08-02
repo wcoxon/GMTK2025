@@ -1,0 +1,64 @@
+[gd_scene load_steps=3 format=3 uid="uid://chrvyq6gyys51"]
+
+[ext_resource type="Script" uid="uid://dxp513j888anf" path="res://scripts/UI/MarketUI.cs" id="1_p05av"]
+[ext_resource type="Theme" uid="uid://csb5ulvi3vhod" path="res://themes/SmallTextTheme.tres" id="3_xy1cf"]
+
+[node name="Control" type="Panel" node_paths=PackedStringArray("nameLabel", "stockLabel", "productionLabel", "consumptionLabel", "priceLabel")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+script = ExtResource("1_p05av")
+nameLabel = NodePath("HBox/ItemName")
+stockLabel = NodePath("HBox/ItemQuantity")
+productionLabel = NodePath("HBox/Production")
+consumptionLabel = NodePath("HBox/Consumption")
+priceLabel = NodePath("HBox/Price")
+
+[node name="HBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemName" type="Label" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_xy1cf")
+text = "NAME"
+horizontal_alignment = 1
+
+[node name="ItemQuantity" type="Label" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_xy1cf")
+text = "QUANTITY"
+horizontal_alignment = 1
+
+[node name="Production" type="Label" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_xy1cf")
+text = "PROD"
+horizontal_alignment = 1
+
+[node name="Consumption" type="Label" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("3_xy1cf")
+text = "CONS"
+horizontal_alignment = 1
+
+[node name="Price" type="RichTextLabel" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme = ExtResource("3_xy1cf")
+bbcode_enabled = true
+text = "PRICE"
+fit_content = true
+horizontal_alignment = 1

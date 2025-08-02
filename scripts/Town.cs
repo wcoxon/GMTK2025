@@ -28,9 +28,9 @@ public partial class Town : Node3D
     public string TownName { get => data.townName; }
     public int Population { get => data.population; set => data.population = value; }
     public int Wealth { get => data.wealth; set => data.wealth = value; }
-    public int[] Stocks { get => data.stocks; set => data.stocks = value; }
-    public int[] Production { get => data.production; }
-    public int[] Consumption { get => data.consumption; }
+    public float[] Stocks { get => data.stocks; set => data.stocks = value; }
+    public float[] Production { get => data.production; } // per day
+    public float[] Consumption { get => data.consumption; } // per day
 
 
     public void _on_area_3d_input_event(Node cam, InputEvent evt, Vector3 evtPos, Vector3 normal, int shapeIndex)
@@ -41,11 +41,8 @@ public partial class Town : Node3D
         }
     }
 
-    public void select()
-    {
-        PlayerView.instance.SelectedTown = this;
-    }
-
+    public void select() => PlayerView.instance.SelectedTown = this;
+    
     public int appraise(Item item)
     {
         // price based on
@@ -55,15 +52,10 @@ public partial class Town : Node3D
 
         // that's kind of it? well for now let's say that's it
 
-        // so the consumption determines whether there's a shortage, since it defines the threshold of not enough and more than enough
+        // so the consumption determines whether there's a shortage, since it defines the threshold of not enough and more than enough 
 
-        // a 'shortage' is when ,, the amount consumed in a day is more than how much they have? what if they produce the amount they consume per day, then they're fine
-        // well then maybe the NET consumption per day gives them like 5 days until they run out that's a shortage
 
         int itemIndex = (int)item;
-        int netConsumption = Consumption[itemIndex] - Production[itemIndex];
-
-        // if net consumption is 0, there is no surplus or shortage of it, use some standard price ig
 
         float valueScale = 1;
 
@@ -71,12 +63,30 @@ public partial class Town : Node3D
         valueScale /= Production[itemIndex] + 1;
 
 
-        return (int)(valueScale * 5);
+        return (int)(valueScale * PlayerView.instance.itemBaseValues[itemIndex]);
     }
 
-    void updateStock(float deltaTime)
+    public override void _PhysicsProcess(double delta)
     {
-        // produce or consume items over time based on deltaStock
+        updateStock(delta);
+    }
+
+
+    void updateStock(double deltaRealTime)
+    {
+        // produce or consume items over time, call in physics process
+        double deltaSimTime = deltaRealTime * PlayerView.instance.worldSpeed;
+
+        // calculate how much of a day this equates to
+
+        // if 3 sim seconds is an hour, then a day is 24*3 sim seconds
+
+        double deltaSimDays = deltaSimTime / (24 * 3);
+
+        for (int item = 0; item < 3; item++)
+        {
+            Stocks[item] += (Production[item] - Consumption[item]) * (float)deltaSimDays;
+        }
     }
 
     

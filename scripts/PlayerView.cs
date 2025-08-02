@@ -37,7 +37,33 @@ public partial class PlayerView : Node3D
         set
         {
             gameState = value;
-            OnStateChanged();
+            switch (gameState)
+            {
+                case GameState.TOWN:
+                    PauseWorldSpeed();
+                    timeControlPanel.Hide();
+
+                    if (townPanel.Town is not null) townPanel.updateActions();
+                    break;
+
+                case GameState.PLANNING:
+                    waypoints.Active = true;
+                    townPanel.Embarkmode = TownPanel.EmbarkMode.Planning; // notifies town UI to update to planning state
+                    waypoints.endDot = SelectedTown;
+                    waypoints.OnMouseExited();
+                    break;
+
+                case GameState.TRAVELLING:
+                    waypoints.Active = false;
+                    townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking; // notifies town UI to update to embarking state
+                    var (nodes, dashes) = waypoints.PopJourney();
+                    player.SetJourney(nodes, dashes);
+                    player.onDeparture();
+
+                    PlayWorldSpeed();
+                    timeControlPanel.Show();
+                    break;
+            }
         }
     }
 
@@ -47,31 +73,22 @@ public partial class PlayerView : Node3D
     [Export] public float maxSpeed = 20.0f;
     public float worldSpeed = 1; // this is for scaling delta time in the world simulation stuff
 
+    public int[] itemBaseValues = [5, 12, 10]; // idfk where elseto put this i just wanna store each items base value somewhere :'(
+
     public void setWorldSpeed(float timescale) => worldSpeed = timescale;
     public void PauseWorldSpeed() => pauseButton.ButtonPressed = true;
     public void PlayWorldSpeed() => playButton.ButtonPressed = true;
     public void FastForwardWorldSpeed() => fastSpeedButton.ButtonPressed = true;
     public void TurboWorldSpeed() => turboSpeedButton.ButtonPressed = true;
 
-    //public void ChangeState(GameState newState)
-    //{
-    //    gameState = newState;
-    //
-    //    OnStateChanged();
-    //}
     private double tick;
-
     private int eightHourTicker;
-
     private int dayTicker;
 
     private void OnTick() //increment our other tickers, then set the tick to zero so we can tick again.
     {
         eightHourTicker += 1;
-
         dayTicker += 1;
-
-        //GD.Print("Tick!");
 
         if (eightHourTicker >= 8)
         {
@@ -89,43 +106,36 @@ public partial class PlayerView : Node3D
     private void OnEightTicks() //Reset our eight hour tracking variable, so we can check if it hit eight.
     {
         eightHourTicker = 0;
-
-        //GD.Print("8 Ticks!");
-
     }
 
     private void OnDay()
     {
         dayTicker = 0; //Reset our day tracking variable, so we can check if it hit twenty four.
-
         GD.Print("Day Passed!");
     }
 
-    [Signal]
-    public delegate void TickEventHandler();
-    [Signal]
-    public delegate void EightTicksEventHandler();
-    [Signal]
-    public delegate void TwentyFourTicksEventHandler();
+    [Signal] public delegate void TickEventHandler();
+    [Signal] public delegate void EightTicksEventHandler();
+    [Signal] public delegate void TwentyFourTicksEventHandler();
 
 
-    public void OnStateChanged() // ok honestly it would make more sense to make a state machine at this point but I've spent too long not doing that and it feels like a sunk cost
-    {
-        switch (gameState)
-        {
-            case GameState.TOWN:
-                timeControlPanel.Hide();
-                break;
-
-            case GameState.PLANNING:
-
-                break;
-
-            case GameState.TRAVELLING:
-                timeControlPanel.Show();
-                break;
-        }
-    }
+    //public void OnStateChanged() // ok honestly it would make more sense to make a state machine at this point but I've spent too long not doing that and it feels like a sunk cost // could we put this stuff in the property, like when you set the state it will implicitly update the ui and stuff to reflect this
+    //{
+    //    switch (gameState)
+    //    {
+    //        case GameState.TOWN:
+    //            timeControlPanel.Hide();
+    //            break;
+//
+    //        case GameState.PLANNING:
+//
+    //            break;
+//
+    //        case GameState.TRAVELLING:
+    //            timeControlPanel.Show();
+    //            break;
+    //    }
+    //}
 
     Town selectedTown;
     public Town SelectedTown
@@ -139,9 +149,11 @@ public partial class PlayerView : Node3D
             selectedTown = value;
             selectedTown.Selected = true;
 
-            townPanel.Target = selectedTown;
+            townPanel.Town = selectedTown;
         }
     }
+
+    
 
     public override void _Ready()
     {
@@ -218,8 +230,8 @@ public partial class PlayerView : Node3D
     {
         Vector3 velocity = new Vector3(cameraVelocity.X, 0, cameraVelocity.Z); // could we not edit cameraVelocity directly?
 
-        Vector2 inputVector = Input.GetVector("left", "right", "up", "down");
-        Vector3 inputDirection = new Vector3(inputVector.X, 0, inputVector.Y);
+        //Vector2 inputVector = Input.GetVector("left", "right", "up", "down");
+        Vector3 inputDirection = new Vector3(Input.GetAxis("left","right"), 0, Input.GetAxis("up","down"));
 
         if (inputDirection != Vector3.Zero)
         {
@@ -242,22 +254,24 @@ public partial class PlayerView : Node3D
 
     public void plotJourney()
     {
-        waypoints.Active = true;
-        townPanel.Embarkmode = TownPanel.EmbarkMode.Planning;
+        //waypoints.Active = true;
+        //townPanel.Embarkmode = TownPanel.EmbarkMode.Planning;
+        State = GameState.PLANNING;
 
-        waypoints.endDot = SelectedTown;
-        waypoints.OnMouseExited(); // (since the mouse is off the map at this moment)
+        //waypoints.endDot = SelectedTown;
+        //waypoints.OnMouseExited(); // (since the mouse is off the map at this moment)
     }
 
     public void embark()
     {
-        waypoints.Active = false;
-        townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking;
-
-        var (nodes, dashes) = waypoints.PopJourney();
-        player.SetJourney(nodes, dashes);
-
-        player.onDeparture();
+        State = GameState.TRAVELLING;
+        //waypoints.Active = false;
+        //townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking;
+        //
+        //var (nodes, dashes) = waypoints.PopJourney();
+        //player.SetJourney(nodes, dashes);
+        //
+        //player.onDeparture();
     }
 
 
