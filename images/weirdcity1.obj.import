@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bkcn3sjmiafwt"
+path="res://.godot/imported/weirdcity1.obj-657b7d0467b86ee7f980c3c68e38e962.mesh"
+
+[deps]
+
+files=["res://.godot/imported/weirdcity1.obj-657b7d0467b86ee7f980c3c68e38e962.mesh"]
+
+source_file="res://images/weirdcity1.obj"
+dest_files=["res://.godot/imported/weirdcity1.obj-657b7d0467b86ee7f980c3c68e38e962.mesh", "res://.godot/imported/weirdcity1.obj-657b7d0467b86ee7f980c3c68e38e962.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false

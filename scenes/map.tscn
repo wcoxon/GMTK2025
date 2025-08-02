@@ -1,18 +1,57 @@
-[gd_scene load_steps=15 format=3 uid="uid://clc830lkjlhip"]
+[gd_scene load_steps=32 format=3 uid="uid://clc830lkjlhip"]
 
 [ext_resource type="PackedScene" uid="uid://b212emu5my3lk" path="res://scenes/town.tscn" id="1_2hyix"]
 [ext_resource type="PackedScene" uid="uid://dylgmhbel8gcv" path="res://scenes/traveller.tscn" id="2_h6b5g"]
 [ext_resource type="Resource" uid="uid://ch8lqqgiplsg3" path="res://data/GurgishamData.tres" id="2_qhcnf"]
 [ext_resource type="Resource" uid="uid://c0yvi6dd5l3sq" path="res://data/GumbusvilleData.tres" id="3_54cpw"]
 [ext_resource type="Resource" uid="uid://dn1lrvkia3voq" path="res://data/SloptonData.tres" id="4_1eu6x"]
+[ext_resource type="ArrayMesh" uid="uid://dwqsxckirn075" path="res://images/weirdcity2.obj" id="4_c70he"]
+[ext_resource type="Material" uid="uid://diuq60p02iwus" path="res://shaders/outline/outlineMaterial.tres" id="5_mo32q"]
 [ext_resource type="Script" uid="uid://c07l7rmmrq4w4" path="res://scripts/Areas/Terrain/TerrainArea.cs" id="6_2lpho"]
+[ext_resource type="Shader" uid="uid://bpkjttjrw55ub" path="res://scenes/colorRamp.gdshader" id="6_6k6j1"]
 [ext_resource type="Script" uid="uid://jmbhxi4mueuq" path="res://scripts/Areas/Spottable Encounters/BanditEncounter.cs" id="7_nakos"]
 [ext_resource type="Script" uid="uid://dlrfvgmrkhwfr" path="res://scripts/Areas/Spottable Encounters/StormEncounter.cs" id="8_jh32y"]
+[ext_resource type="Texture2D" uid="uid://b0sise4bpjtb4" path="res://images/bandit/bandit1.png" id="8_n1psn"]
+[ext_resource type="Texture2D" uid="uid://b4w1324218ifi" path="res://images/bandit/bandit2.png" id="9_c00ee"]
+[ext_resource type="Texture2D" uid="uid://bg55824n1u04r" path="res://images/bandit/bandit3.png" id="10_p7tei"]
+[ext_resource type="Texture2D" uid="uid://y6rgiwyys76n" path="res://images/bandit/bandit4.png" id="11_c70he"]
+[ext_resource type="Texture2D" uid="uid://cjmvqcaw0fp8q" path="res://images/bandit/bandit5.png" id="12_mo32q"]
+[ext_resource type="Texture2D" uid="uid://dggaexxqmfq45" path="res://images/bandit/bandit6.png" id="13_6k6j1"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_m57gh"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_poiku"]
 albedo_color = Color(0.1479, 0.51, 0.47379, 1)
+
+[sub_resource type="Gradient" id="Gradient_m335s"]
+offsets = PackedFloat32Array(0.559078, 1)
+colors = PackedColorArray(0.47451, 0.0431373, 0.431373, 1, 0.705882, 1, 0.560784, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_sq6bu"]
+gradient = SubResource("Gradient_m335s")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4b7dj"]
+render_priority = 0
+next_pass = ExtResource("5_mo32q")
+shader = ExtResource("6_6k6j1")
+shader_parameter/ramp = SubResource("GradientTexture1D_sq6bu")
+
+[sub_resource type="PrismMesh" id="PrismMesh_2cfcp"]
+left_to_right = -0.5
+size = Vector3(2.145, 3, 3.035)
+
+[sub_resource type="Gradient" id="Gradient_y2ir2"]
+offsets = PackedFloat32Array(0.501441, 0.740634)
+colors = PackedColorArray(0, 0.35, 0.274167, 1, 0.91734, 0.742561, 3.85046e-07, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5u2yt"]
+gradient = SubResource("Gradient_y2ir2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_30iet"]
+render_priority = 0
+next_pass = ExtResource("5_mo32q")
+shader = ExtResource("6_6k6j1")
+shader_parameter/ramp = SubResource("GradientTexture1D_5u2yt")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2lpho"]
 height = 3.0
@@ -24,6 +63,44 @@ size = Vector3(11.7075, 1, 1)
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_jh32y"]
 height = 2.90625
 radius = 2.21533
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_m335s"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("8_n1psn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_c00ee")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_p7tei")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_c70he")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_mo32q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_6k6j1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_mo32q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_c70he")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_p7tei")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_c00ee")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_nakos"]
 height = 6.673
@@ -44,9 +121,17 @@ data = ExtResource("2_qhcnf")
 transform = Transform3D(0.812165, 0, 0.583428, 0, 1, 0, -0.583428, 0, 0.812165, -7.94515, -9.53674e-07, -4.22497)
 data = ExtResource("3_54cpw")
 
+[node name="MeshInstance" parent="Town2" index="0"]
+mesh = ExtResource("4_c70he")
+surface_material_override/0 = SubResource("ShaderMaterial_4b7dj")
+
 [node name="Town3" parent="." instance=ExtResource("1_2hyix")]
 transform = Transform3D(-0.30207, 0, -0.953286, 0, 1, 0, 0.953286, 0, -0.30207, 7.07024, -9.53674e-07, -8.17452)
 data = ExtResource("4_1eu6x")
+
+[node name="MeshInstance" parent="Town3" index="0"]
+mesh = SubResource("PrismMesh_2cfcp")
+surface_material_override/0 = SubResource("ShaderMaterial_30iet")
 
 [node name="Traveller" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("2_h6b5g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.77423, 0, -4.39215)
@@ -82,6 +167,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3167, 0.453125, 0)
 shape = SubResource("CylinderShape3D_jh32y")
 debug_color = Color(0.521569, 0.0117647, 0.529412, 1)
 
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Bandits"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.989954, 0)
+billboard = 1
+no_depth_test = true
+sprite_frames = SubResource("SpriteFrames_m335s")
+autoplay = "default"
+frame_progress = 0.150052
+
 [node name="StormArea" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.68113, 0, -0.00314903)
 input_ray_pickable = false
@@ -94,3 +187,7 @@ maxDistanceBeforeRespawn = 40
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StormArea"]
 shape = SubResource("CylinderShape3D_nakos")
 debug_color = Color(0.00392157, 0.0509804, 0.105882, 1)
+
+[editable path="Town"]
+[editable path="Town2"]
+[editable path="Town3"]

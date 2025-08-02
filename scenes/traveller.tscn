@@ -1,17 +1,42 @@
-[gd_scene load_steps=4 format=3 uid="uid://dylgmhbel8gcv"]
+[gd_scene load_steps=9 format=3 uid="uid://dylgmhbel8gcv"]
 
 [ext_resource type="Script" uid="uid://cinw4djg05slo" path="res://scripts/PlayerTraveller.cs" id="1_maw3y"]
 [ext_resource type="Texture2D" uid="uid://dp7fhv6yvmsb2" path="res://images/traderCutout.png" id="2_1qb1y"]
+[ext_resource type="Texture2D" uid="uid://7w8hu4tfa40t" path="res://images/2head/2head1.png" id="3_y0vvk"]
+[ext_resource type="Texture2D" uid="uid://3rei35ft2l27" path="res://images/2head/2head2.png" id="4_ntovc"]
+[ext_resource type="Texture2D" uid="uid://bfuf8y81h7v44" path="res://images/2head/2head3.png" id="5_siy0b"]
+[ext_resource type="Texture2D" uid="uid://bgbjajbspj48t" path="res://images/2head/2head4.png" id="6_dlimr"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ifkpq"]
 radius = 0.49112
 height = 1.41745
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_lifv0"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_y0vvk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_ntovc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_siy0b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_dlimr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
 
 [node name="Traveller" type="Node3D"]
 script = ExtResource("1_maw3y")
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875017, 0)
+visible = false
 billboard = 1
 double_sided = false
 no_depth_test = true
@@ -23,3 +48,12 @@ texture = ExtResource("2_1qb1y")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.481625, 0)
 shape = SubResource("CapsuleShape3D_ifkpq")
 debug_color = Color(0.667352, 0, 0.154832, 1)
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.778015, 0)
+billboard = 1
+no_depth_test = true
+sprite_frames = SubResource("SpriteFrames_lifv0")
+autoplay = "default"
+frame = 3
+frame_progress = 0.342272
