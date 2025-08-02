@@ -29,6 +29,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     [Export] ScaleTime turboSpeedButton;
     [Export] Panel timeControlPanel;
     [Export] InventoryUI inventoryUI;
+    [Export] TradeUI tradeUI;
 
     [Export] public RumorView rumorView;
     [Export] public EncounterView encounterView;
@@ -42,7 +43,33 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         set
         {
             gameState = value;
-            OnStateChanged();
+            switch (gameState)
+            {
+                case GameState.TOWN:
+                    PauseWorldSpeed();
+                    timeControlPanel.Hide();
+
+                    if (townPanel.Town is not null) townPanel.updateActions();
+                    break;
+
+                case GameState.PLANNING:
+                    waypoints.Active = true;
+                    townPanel.Embarkmode = TownPanel.EmbarkMode.Planning; // notifies town UI to update to planning state
+                    waypoints.endDot = SelectedTown;
+                    waypoints.OnMouseExited();
+                    break;
+
+                case GameState.TRAVELLING:
+                    waypoints.Active = false;
+                    townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking; // notifies town UI to update to embarking state
+                    var (nodes, dashes) = waypoints.PopJourney();
+                    player.SetJourney(nodes, dashes);
+                    player.onDeparture();
+
+                    PlayWorldSpeed();
+                    timeControlPanel.Show();
+                    break;
+            }
         }
     }
 
@@ -52,31 +79,22 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     [Export] public float maxSpeed = 20.0f;
     public float worldSpeed = 1; // this is for scaling delta time in the world simulation stuff
 
+    public int[] itemBaseValues = [5, 12, 10]; // idfk where elseto put this i just wanna store each items base value somewhere :'(
+
     public void setWorldSpeed(float timescale) => worldSpeed = timescale;
     public void PauseWorldSpeed() => pauseButton.ButtonPressed = true;
     public void PlayWorldSpeed() => playButton.ButtonPressed = true;
     public void FastForwardWorldSpeed() => fastSpeedButton.ButtonPressed = true;
     public void TurboWorldSpeed() => turboSpeedButton.ButtonPressed = true;
 
-    //public void ChangeState(GameState newState)
-    //{
-    //    gameState = newState;
-//
-    //    OnStateChanged();
-    //}
     private double tick;
-
     private int eightHourTicker;
-
     private int dayTicker;
 
     private void OnTick() //increment our other tickers, then set the tick to zero so we can tick again.
     {
         eightHourTicker += 1;
-
         dayTicker += 1;
-
-        //GD.Print("Tick!");
 
         if (eightHourTicker >= 8)
         {
@@ -94,47 +112,36 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     private void OnEightTicks() //Reset our eight hour tracking variable, so we can check if it hit eight.
     {
         eightHourTicker = 0;
-
-        //GD.Print("8 Ticks!");
-
     }
 
     private void OnDay()
     {
         dayTicker = 0; //Reset our day tracking variable, so we can check if it hit twenty four.
-
         GD.Print("Day Passed!");
     }
 
-    [Signal]
-    public delegate void TickEventHandler();
-    [Signal]
-    public delegate void EightTicksEventHandler();
-    [Signal]
-    public delegate void TwentyFourTicksEventHandler();
+    [Signal] public delegate void TickEventHandler();
+    [Signal] public delegate void EightTicksEventHandler();
+    [Signal] public delegate void TwentyFourTicksEventHandler();
 
 
-    public void OnStateChanged() // ok honestly it would make more sense to make a state machine at this point but I've spent too long not doing that and it feels like a sunk cost
-    {
-        switch (gameState)
-        {
-            case GameState.TOWN:
-                timeControlPanel.Hide();
-                break;
-
-            case GameState.PLANNING:
-
-                break;
-
-            case GameState.TRAVELLING:
-                timeControlPanel.Show();
-                break;
-
-            case GameState.ENCOUNTERING:
-                timeControlPanel.Hide();
-                break;
-        }
-    }
+    //public void OnStateChanged() // ok honestly it would make more sense to make a state machine at this point but I've spent too long not doing that and it feels like a sunk cost // could we put this stuff in the property, like when you set the state it will implicitly update the ui and stuff to reflect this
+    //{
+    //    switch (gameState)
+    //    {
+    //        case GameState.TOWN:
+    //            timeControlPanel.Hide();
+    //            break;
+//
+    //        case GameState.PLANNING:
+//
+    //            break;
+//
+    //        case GameState.TRAVELLING:
+    //            timeControlPanel.Show();
+    //            break;
+    //    }
+    //}
 
     Town selectedTown;
     public Town SelectedTown
@@ -148,9 +155,11 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
             selectedTown = value;
             selectedTown.Selected = true;
 
-            townPanel.Target = selectedTown;
+            townPanel.Town = selectedTown;
         }
     }
+
+    
 
     public override void _Ready()
     {
@@ -187,7 +196,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         if (@event.IsActionPressed("inventory"))
         {
             inventoryUI.Visible = !inventoryUI.Visible;
-            
+
             if (inventoryUI.Visible) inventoryUI.displayInventory(player);
         }
 
@@ -220,7 +229,8 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     {
         tick += delta * worldSpeed / 3; // The same calculation is done in date, but we need it here in the singleton for signalling reasons.
 
-        if  (tick >= 1){
+        if (tick >= 1)
+        {
             EmitSignal(SignalName.Tick);
         }
     }
@@ -230,8 +240,8 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     {
         Vector3 velocity = new Vector3(cameraVelocity.X, 0, cameraVelocity.Z); // could we not edit cameraVelocity directly?
 
-        Vector2 inputVector = Input.GetVector("left", "right", "up", "down");
-        Vector3 inputDirection = new Vector3(inputVector.X, 0, inputVector.Y);
+        //Vector2 inputVector = Input.GetVector("left", "right", "up", "down");
+        Vector3 inputDirection = new Vector3(Input.GetAxis("left","right"), 0, Input.GetAxis("up","down"));
 
         if (inputDirection != Vector3.Zero)
         {
@@ -254,22 +264,36 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
 
     public void plotJourney()
     {
-        waypoints.Active = true;
-        townPanel.Embarkmode = TownPanel.EmbarkMode.Planning;
+        //waypoints.Active = true;
+        //townPanel.Embarkmode = TownPanel.EmbarkMode.Planning;
+        State = GameState.PLANNING;
 
-        waypoints.endDot = SelectedTown;
-        waypoints.OnMouseExited(); // (since the mouse is off the map at this moment)
+        //waypoints.endDot = SelectedTown;
+        //waypoints.OnMouseExited(); // (since the mouse is off the map at this moment)
     }
 
     public void embark()
     {
-        waypoints.Active = false;
-        townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking;
+        State = GameState.TRAVELLING;
+        //waypoints.Active = false;
+        //townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking;
+        //
+        //var (nodes, dashes) = waypoints.PopJourney();
+        //player.SetJourney(nodes, dashes);
+        //
+        //player.onDeparture();
+    }
 
-        var (nodes, dashes) = waypoints.PopJourney();
-        player.SetJourney(nodes, dashes);
 
-        player.onDeparture();
+    public void openTrade()
+    {
+        // make trade ui visible
+        // populate trade ui with town information
+        // trade ui should also handle the button press stuff i think
+        
+        tradeUI.Town = selectedTown; // i know you should only be able to trade with the town you're on it's just weird that it offers trade in the town panel for whatever you have selected :p
+        tradeUI.Visible = true;
+
     }
 
     public string VariablesPrefix()

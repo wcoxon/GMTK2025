@@ -4,7 +4,8 @@
 [ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/PlayerView.cs" id="2_6fa14"]
 [ext_resource type="PackedScene" uid="uid://dpdvumg63k3xu" path="res://scenes/TownPanel.tscn" id="3_y7ipx"]
 [ext_resource type="Theme" uid="uid://b7sho3deipfsu" path="res://scripts/ScaleTime/SpeedButtonTheme.tres" id="4_1wiy7"]
-[ext_resource type="Script" uid="uid://bxk7okto3l8y3" path="res://scripts/DateUI.cs" id="4_c2qql"]
+[ext_resource type="PackedScene" uid="uid://dao5worh1gb0c" path="res://scenes/TradeUI.tscn" id="4_5hv5t"]
+[ext_resource type="Script" uid="uid://bxk7okto3l8y3" path="res://scripts/UI/DateUI.cs" id="4_c2qql"]
 [ext_resource type="Script" uid="uid://dpgf4ygtataug" path="res://scripts/ScaleTime/ScaleTime.cs" id="4_k24pf"]
 [ext_resource type="ButtonGroup" uid="uid://br2jb0lwfyinh" path="res://scripts/ScaleTime/SpeedButtonGroup.tres" id="4_ygjfp"]
 [ext_resource type="PackedScene" uid="uid://durnjyano0ic4" path="res://scenes/waypoints.tscn" id="5_k24pf"]
@@ -30,7 +31,7 @@ sky = SubResource("Sky_611at")
 
 [node name="Root" type="Node3D"]
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI", "rumorView", "encounterView", "notificationManager")]
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI", "tradeUI", "rumorView", "encounterView", "notificationManager")]
 script = ExtResource("2_6fa14")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/TownPanel")
 waypoints = NodePath("../Waypoints")
@@ -40,6 +41,7 @@ fastSpeedButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxCon
 turboSpeedButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer/TimeScale4")
 timeControlPanel = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel")
 inventoryUI = NodePath("../CanvasLayer/HSplitContainer/HUD/inventory")
+tradeUI = NodePath("../CanvasLayer/HSplitContainer/HUD/TradePanel")
 rumorView = NodePath("../CanvasLayer/RumorView")
 encounterView = NodePath("../CanvasLayer/EncounterView")
 notificationManager = NodePath("../CanvasLayer/NotificationManager")
@@ -72,6 +74,14 @@ layout_mode = 2
 [node name="HUD" type="Control" parent="CanvasLayer/HSplitContainer"]
 layout_mode = 2
 mouse_filter = 2
+
+[node name="TradePanel" parent="CanvasLayer/HSplitContainer/HUD" instance=ExtResource("4_5hv5t")]
+visible = false
+layout_mode = 1
+offset_left = 87.0
+offset_top = 116.0
+offset_right = -161.0
+offset_bottom = -168.0
 
 [node name="TimePanel" type="Panel" parent="CanvasLayer/HSplitContainer/HUD"]
 layout_mode = 1
@@ -198,6 +208,7 @@ notification_scene = ExtResource("12_kp0ql")
 lastDot = NodePath("../Map/Town2")
 
 [connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/TownPanel" to="Waypoints" method="OnMouseExited"]
+[connection signal="pressed" from="CanvasLayer/HSplitContainer/TownPanel/VBoxContainer/trade" to="Player" method="openTrade"]
 [connection signal="pressed" from="CanvasLayer/HSplitContainer/TownPanel/VBoxContainer/plot" to="Player" method="plotJourney"]
 [connection signal="pressed" from="CanvasLayer/HSplitContainer/TownPanel/VBoxContainer/embark" to="Player" method="embark"]
 

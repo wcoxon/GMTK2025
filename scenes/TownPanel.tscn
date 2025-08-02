@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://dpdvumg63k3xu"]
+[gd_scene load_steps=6 format=3 uid="uid://dpdvumg63k3xu"]
 
-[ext_resource type="Script" uid="uid://kj27sednfxyt" path="res://scripts/TownPanel.cs" id="1_0baqy"]
-[ext_resource type="PackedScene" uid="uid://nscjafbhcguy" path="res://scenes/StockPanel.tscn" id="2_kguwn"]
+[ext_resource type="Script" uid="uid://kj27sednfxyt" path="res://scripts/UI/TownPanel.cs" id="1_0baqy"]
+[ext_resource type="PackedScene" uid="uid://chrvyq6gyys51" path="res://scenes/MarketUI.tscn" id="2_1ecij"]
+[ext_resource type="Theme" uid="uid://csb5ulvi3vhod" path="res://themes/SmallTextTheme.tres" id="2_rkrow"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_duute"]
 bg_color = Color(0.15188, 0.221635, 0.210282, 1)
@@ -9,7 +10,7 @@ bg_color = Color(0.15188, 0.221635, 0.210282, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_45b72"]
 font_size = 26
 
-[node name="Panel" type="Panel" node_paths=PackedStringArray("nameLabel", "populationLabel", "stockContainer", "plotButton", "embarkButton")]
+[node name="Panel" type="Panel" node_paths=PackedStringArray("nameLabel", "populationLabel", "wealthLabel", "stockContainer", "tradeButton", "rumourButton", "plotButton", "embarkButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -19,7 +20,10 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_duute")
 script = ExtResource("1_0baqy")
 nameLabel = NodePath("VBoxContainer/TownName")
 populationLabel = NodePath("VBoxContainer/TownPop")
+wealthLabel = NodePath("VBoxContainer/TownWealth")
 stockContainer = NodePath("VBoxContainer/StocksContainer")
+tradeButton = NodePath("VBoxContainer/trade")
+rumourButton = NodePath("VBoxContainer/rumours")
 plotButton = NodePath("VBoxContainer/plot")
 embarkButton = NodePath("VBoxContainer/embark")
 
@@ -46,25 +50,70 @@ horizontal_alignment = 1
 layout_mode = 2
 text = "population: "
 
+[node name="TownWealth" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Wealth: "
+
 [node name="StocksHeader" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 text = "
-Stocks:"
+Market"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_rkrow")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_rkrow")
+text = "#"
+horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_rkrow")
+text = "Pro."
+horizontal_alignment = 1
+
+[node name="Label6" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_rkrow")
+text = "Con."
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_rkrow")
+text = "£"
+horizontal_alignment = 1
 
 [node name="StocksContainer" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Control" parent="VBoxContainer/StocksContainer" instance=ExtResource("2_kguwn")]
+[node name="Control" parent="VBoxContainer/StocksContainer" instance=ExtResource("2_1ecij")]
 layout_mode = 2
+ItemName = "Broth"
 
-[node name="Control2" parent="VBoxContainer/StocksContainer" instance=ExtResource("2_kguwn")]
+[node name="Control2" parent="VBoxContainer/StocksContainer" instance=ExtResource("2_1ecij")]
 layout_mode = 2
+ItemName = "Plast"
 
-[node name="Control3" parent="VBoxContainer/StocksContainer" instance=ExtResource("2_kguwn")]
+[node name="Control3" parent="VBoxContainer/StocksContainer" instance=ExtResource("2_1ecij")]
 layout_mode = 2
+ItemName = "EvWa"
 
 [node name="ProductionHeader" type="Label" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 text = "
 Production:"
@@ -84,6 +133,7 @@ disabled = true
 text = "Plot journey"
 
 [node name="embark" type="Button" parent="VBoxContainer"]
+visible = false
 layout_mode = 2
 disabled = true
 text = "Embark"

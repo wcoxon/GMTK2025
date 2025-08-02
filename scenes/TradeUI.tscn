@@ -1,0 +1,137 @@
+[gd_scene load_steps=5 format=3 uid="uid://dao5worh1gb0c"]
+
+[ext_resource type="Script" uid="uid://c0hsnpgpsni0t" path="res://scripts/UI/TradeUI.cs" id="1_bf4hf"]
+[ext_resource type="PackedScene" uid="uid://co4hcp8xxoa5a" path="res://scenes/TradeRow.tscn" id="2_3fybu"]
+[ext_resource type="Theme" uid="uid://du1snnt30dprh" path="res://themes/HeaderTextTheme.tres" id="2_l7dv1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fvdhh"]
+bg_color = Color(0.27, 0.0315, 0, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="TradePanel" type="Panel" node_paths=PackedStringArray("productsContainer", "fundsLabel", "costLabel", "confirmButton")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 151.0
+offset_top = 58.0
+offset_right = -151.0
+offset_bottom = -196.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_fvdhh")
+script = ExtResource("1_bf4hf")
+productsContainer = NodePath("TradeContainer/ProductsContainer")
+fundsLabel = NodePath("TradeContainer/SummaryContainer/PlayerFunds")
+costLabel = NodePath("TradeContainer/SummaryContainer/TotalCost")
+confirmButton = NodePath("TradeContainer/SummaryContainer/Button2")
+
+[node name="TradeContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 22.0
+offset_top = 19.0
+offset_right = -21.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TradeContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TradeContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_l7dv1")
+text = "ITEM"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="TradeContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_l7dv1")
+text = "THEIR STOCK"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="TradeContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_l7dv1")
+text = "PRICE"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="TradeContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_l7dv1")
+text = "OFFER"
+horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="TradeContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_l7dv1")
+text = "YOUR STOCK"
+horizontal_alignment = 1
+
+[node name="ProductsContainer" type="VBoxContainer" parent="TradeContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HBoxContainer" parent="TradeContainer/ProductsContainer" instance=ExtResource("2_3fybu")]
+layout_mode = 2
+ItemName = "Broth"
+
+[node name="HBoxContainer2" parent="TradeContainer/ProductsContainer" instance=ExtResource("2_3fybu")]
+layout_mode = 2
+ItemName = "Plastics"
+
+[node name="HBoxContainer3" parent="TradeContainer/ProductsContainer" instance=ExtResource("2_3fybu")]
+layout_mode = 2
+ItemName = "Evil Water"
+
+[node name="SummaryContainer" type="HBoxContainer" parent="TradeContainer"]
+layout_mode = 2
+size_flags_vertical = 0
+alignment = 1
+
+[node name="Button" type="Button" parent="TradeContainer/SummaryContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "CLOSE"
+
+[node name="PlayerFunds" type="Label" parent="TradeContainer/SummaryContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "YOUR FUNDS"
+horizontal_alignment = 1
+
+[node name="TotalCost" type="Label" parent="TradeContainer/SummaryContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "TOTAL COST"
+horizontal_alignment = 1
+
+[node name="Button2" type="Button" parent="TradeContainer/SummaryContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+text = "TRADE"
+
+[connection signal="value_changed" from="TradeContainer/ProductsContainer/HBoxContainer/purchaseAmount" to="." method="updateCost"]
+[connection signal="value_changed" from="TradeContainer/ProductsContainer/HBoxContainer2/purchaseAmount" to="." method="updateCost"]
+[connection signal="value_changed" from="TradeContainer/ProductsContainer/HBoxContainer3/purchaseAmount" to="." method="updateCost"]
+[connection signal="pressed" from="TradeContainer/SummaryContainer/Button" to="." method="closeTrade"]
+[connection signal="pressed" from="TradeContainer/SummaryContainer/Button2" to="." method="confirmTrade"]
+
+[editable path="TradeContainer/ProductsContainer/HBoxContainer"]
+[editable path="TradeContainer/ProductsContainer/HBoxContainer2"]
+[editable path="TradeContainer/ProductsContainer/HBoxContainer3"]
