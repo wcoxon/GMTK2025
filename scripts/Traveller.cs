@@ -30,7 +30,6 @@ public partial class Traveller : Node3D
         {
             town = value;
             Position = town.Position;
-            onArrival(town);
         }
     }
 
@@ -63,7 +62,7 @@ public partial class Traveller : Node3D
             journey_dashes[journey_index].QueueFree();
             journey_index += 1;
 
-            if (nextWaypoint is Town t) Town = t; // enter town
+            if (nextWaypoint is Town t) onArrival(t); // enter town
             else nextWaypoint.QueueFree();
 
             return;

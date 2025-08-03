@@ -14,8 +14,7 @@ public partial class PlayerTraveller : Traveller
 
     public override void _Ready()
     {
-        Town = Town;
-        base._Ready();
+        onArrival(Town);
 
         Money = 100;
 
@@ -38,7 +37,7 @@ public partial class PlayerTraveller : Traveller
         // enable trading and rumour prompts, oh and like plot journey
         // generally update visuals, ease camera over to town, play sound, and yeah like open some ui
 
-        //Town = town;
+        Town = town;
         PlayerView.Instance.State = GameState.TOWN; // notifies player to enter town state
         //GD.Print($"{Name} Entering {Town.TownName}");
         PlayerView.Instance.Music = Town.Theme;
