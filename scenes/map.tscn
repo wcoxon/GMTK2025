@@ -218,7 +218,7 @@ Data = ExtResource("3_54cpw")
 surface_material_override/0 = SubResource("ShaderMaterial_m335s")
 
 [node name="slopton" parent="." instance=ExtResource("1_2hyix")]
-transform = Transform3D(-0.30207, 0, -0.953286, 0, 1, 0, 0.953286, 0, -0.30207, -0.447289, -9.53674e-07, -0.501136)
+transform = Transform3D(-0.30207, 0, -0.953286, 0, 1, 0, 0.953286, 0, -0.30207, -0.382752, 9.53675e-07, 8.67168)
 Data = ExtResource("4_1eu6x")
 
 [node name="MeshInstance" parent="slopton" index="0"]

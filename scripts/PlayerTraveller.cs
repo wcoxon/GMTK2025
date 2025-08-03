@@ -14,6 +14,8 @@ public partial class PlayerTraveller : Traveller
 
     public override void _Ready()
     {
+        base._Ready();
+        
         onArrival(Town);
 
         Money = 100;

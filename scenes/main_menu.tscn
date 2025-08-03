@@ -31,6 +31,11 @@ offset_right = -275.0
 grow_horizontal = 2
 grow_vertical = 2
 
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "SLOPTOPOLIS"
+horizontal_alignment = 1
+
 [node name="NewGameButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "NEW GAME"
@@ -44,6 +49,7 @@ layout_mode = 2
 text = "QUIT"
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
