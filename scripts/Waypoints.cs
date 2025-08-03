@@ -44,6 +44,12 @@ public partial class Waypoints : Node3D
             var instance = dot.Instantiate<Node3D>();
             instance.Position = evtPos;
             AddChild(instance);
+            // make it monitorable for mouse 
+            Area3D instancearea = instance.GetNode<Area3D>("Area3D");
+            instancearea.InputRayPickable = true;
+            
+            instancearea.Connect(Area3D.SignalName.InputEvent, Callable.From<Camera3D,InputEvent,Vector3,Vector3,int>((a,b,c,d,e) => onDotPressed(a,b,c,d,e,instance)));
+            // connect its input event to delete on right click function
 
             if (lastDot != null)
             {
@@ -69,6 +75,29 @@ public partial class Waypoints : Node3D
             endLine.SetLine(evtPos, endDot.Position);
     }
 
+    public void onDotPressed(Camera3D _cam, InputEvent @event, Vector3 evtPos, Vector3 _normal, int _shapeIndex, Node3D instance)
+    {
+        // remove waypoint
+        // remove dash line
+        // update other dash line to other waypoint
+        if (!Input.IsActionJustPressed("drag")) return;
+
+        int waypointIndex = journey_nodes.IndexOf(instance);
+
+        Vector3 prev = journey_dashes[waypointIndex].LineStart;
+        Vector3 next = journey_dashes[waypointIndex+1].LineEnd;
+        
+        journey_dashes[waypointIndex].QueueFree();
+        journey_dashes.RemoveAt(waypointIndex);
+        journey_nodes.Remove(instance);
+
+        
+        journey_dashes[waypointIndex].SetLine(prev, journey_nodes[waypointIndex].Position);
+
+        instance.QueueFree();
+
+    }
+
     public void OnMouseExited()
     {
         if (!active) return;
@@ -76,6 +105,8 @@ public partial class Waypoints : Node3D
         curLine.Visible = false;
         endLine.SetLine(lastDot.Position, endDot.Position);
     }
+
+
 
     public (List<Node3D>, List<Dashes>) PopJourney()
     {

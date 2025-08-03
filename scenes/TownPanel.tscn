@@ -10,7 +10,7 @@ bg_color = Color(0.15188, 0.221635, 0.210282, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_45b72"]
 font_size = 26
 
-[node name="Panel" type="Panel" node_paths=PackedStringArray("nameLabel", "populationLabel", "wealthLabel", "stockContainer", "tradeButton", "rumourButton", "plotButton", "embarkButton")]
+[node name="Panel" type="Panel" node_paths=PackedStringArray("nameLabel", "populationLabel", "wealthLabel", "stockContainer", "tradeButton", "rumourButton", "plotButton", "embarkButton", "cancelButton")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -26,6 +26,7 @@ tradeButton = NodePath("VBoxContainer/trade")
 rumourButton = NodePath("VBoxContainer/rumours")
 plotButton = NodePath("VBoxContainer/plot")
 embarkButton = NodePath("VBoxContainer/embark")
+cancelButton = NodePath("VBoxContainer/cancel")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -137,3 +138,9 @@ visible = false
 layout_mode = 2
 disabled = true
 text = "Embark"
+
+[node name="cancel" type="Button" parent="VBoxContainer"]
+visible = false
+layout_mode = 2
+disabled = true
+text = "Cancel"

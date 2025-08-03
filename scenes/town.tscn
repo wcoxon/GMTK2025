@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d03wi68dgsdwa" path="res://scripts/Town.cs" id="1_2sgm5"]
 [ext_resource type="Material" uid="uid://diuq60p02iwus" path="res://shaders/outline/outlineMaterial.tres" id="2_j0xxs"]
 [ext_resource type="ArrayMesh" uid="uid://bkcn3sjmiafwt" path="res://images/weirdcity1.obj" id="2_ms2es"]
-[ext_resource type="Shader" uid="uid://bpkjttjrw55ub" path="res://scenes/colorRamp.gdshader" id="3_ms2es"]
+[ext_resource type="Shader" uid="uid://bpkjttjrw55ub" path="res://shaders/colorRamp.gdshader" id="3_ms2es"]
 
 [sub_resource type="Gradient" id="Gradient_ms2es"]
 offsets = PackedFloat32Array(0.501441, 1)
@@ -19,7 +19,7 @@ shader = ExtResource("3_ms2es")
 shader_parameter/ramp = SubResource("GradientTexture1D_eruj1")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_uaiv0"]
-radius = 1.0
+radius = 4.196
 
 [node name="Town" type="Node3D" node_paths=PackedStringArray("mesh")]
 script = ExtResource("1_2sgm5")
@@ -36,3 +36,5 @@ surface_material_override/0 = SubResource("ShaderMaterial_eruj1")
 shape = SubResource("SphereShape3D_uaiv0")
 
 [connection signal="input_event" from="Area" to="." method="_on_area_3d_input_event"]
+[connection signal="mouse_entered" from="Area" to="." method="hover"]
+[connection signal="mouse_exited" from="Area" to="." method="unhover"]

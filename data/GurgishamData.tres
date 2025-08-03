@@ -2,7 +2,7 @@
 
 [ext_resource type="ArrayMesh" uid="uid://bkcn3sjmiafwt" path="res://images/weirdcity1.obj" id="1_mhceb"]
 [ext_resource type="Script" uid="uid://bu8blcnkgpmyl" path="res://scripts/TownData.cs" id="1_sat8k"]
-[ext_resource type="AudioStream" uid="uid://cxppvxnbjsc6j" path="res://Audio/K.mp3" id="3_tfo1x"]
+[ext_resource type="AudioStream" uid="uid://ds36fviykex6u" path="res://Audio/K.wav" id="3_mhceb"]
 
 [resource]
 script = ExtResource("1_sat8k")
@@ -10,7 +10,7 @@ townName = "Gurgisham"
 population = 100
 wealth = 150
 mesh = ExtResource("1_mhceb")
-theme = ExtResource("3_tfo1x")
+theme = ExtResource("3_mhceb")
 stocks = PackedFloat32Array(15, 1516, 3135)
 production = PackedFloat32Array(14, 0, 1)
 consumption = PackedFloat32Array(2, 1, 0)

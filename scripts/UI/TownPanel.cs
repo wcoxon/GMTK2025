@@ -14,6 +14,7 @@ public partial class TownPanel : Panel
     [Export] Button rumourButton;
     [Export] Button plotButton;
     [Export] Button embarkButton;
+    [Export] Button cancelButton;
 
     Town town;
     public Town Town
@@ -46,13 +47,21 @@ public partial class TownPanel : Panel
             {
                 case EmbarkMode.Planning: // transition to plonning state
                     plotButton.Disabled = true;
+
                     embarkButton.Visible = true;
+                    cancelButton.Visible = true;
+
                     embarkButton.Disabled = false;
+                    cancelButton.Disabled = false;
                     break;
                 case EmbarkMode.Embarking: // transition out of planning state into travelling
-                    plotButton.Disabled = true;
+                    plotButton.Disabled = false;
+
                     embarkButton.Disabled = true;
+                    cancelButton.Disabled = true;
+
                     embarkButton.Visible = false;
+                    cancelButton.Visible = false;
                     break;
             }
         }

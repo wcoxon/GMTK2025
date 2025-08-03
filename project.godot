@@ -18,7 +18,6 @@ config/icon="res://images/icon.svg"
 [autoload]
 
 EncounterManager="*res://scripts/EncounterManager.cs"
-Player="*res://scripts/PlayerView.cs"
 
 [dotnet]
 

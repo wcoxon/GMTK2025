@@ -5,6 +5,7 @@ public partial class PlayerTraveller : Traveller
 {
     public override void _Ready()
     {
+        Town = Town;
         Money = 100;
 
         inventory[(int)Item.BROTH] = 5;
@@ -26,15 +27,12 @@ public partial class PlayerTraveller : Traveller
 
         //Town = town;
         PlayerView.Instance.State = GameState.TOWN; // notifies player to enter town state
-        GD.Print($"{Name} Entering {Town.TownName}");
+        //GD.Print($"{Name} Entering {Town.TownName}");
         PlayerView.Instance.Music = Town.Theme;
-        //PlayerView.instance.PauseWorldSpeed();
     }
 
     public override void onDeparture()
     {
         PlayerView.Instance.Music = null;
-        //PlayerView.instance.State = GameState.TRAVELLING;
-        //PlayerView.instance.PlayWorldSpeed();
     }
 }

@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://cvlfxg610affe"]
+[gd_scene load_steps=28 format=3 uid="uid://cvlfxg610affe"]
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
+[ext_resource type="Script" uid="uid://65fhx2ltcthw" path="res://scenes/playerAssigner.cs" id="1_08o8g"]
 [ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/PlayerView.cs" id="2_6fa14"]
 [ext_resource type="AudioStream" uid="uid://dojjif4v2wcke" path="res://Audio/gtyg.mp3" id="2_kp0ql"]
 [ext_resource type="PackedScene" uid="uid://dpdvumg63k3xu" path="res://scenes/TownPanel.tscn" id="3_y7ipx"]
@@ -13,6 +14,14 @@
 [ext_resource type="PackedScene" uid="uid://bdrkqejd8htea" path="res://scenes/EncounterView.tscn" id="8_cfq0f"]
 [ext_resource type="PackedScene" uid="uid://c6yeey4j3upm4" path="res://scenes/inventory.tscn" id="8_pd1er"]
 [ext_resource type="PackedScene" uid="uid://xqt4l46rhnwy" path="res://scenes/RumorView.tscn" id="8_x537r"]
+[ext_resource type="Texture2D" uid="uid://dra0jq2a8piq7" path="res://images/Lips/lips1.png" id="15_0ehpd"]
+[ext_resource type="Texture2D" uid="uid://c070i0erkypv4" path="res://images/Lips/lips2.png" id="16_8wjpf"]
+[ext_resource type="Texture2D" uid="uid://lc8wgbtkyb6m" path="res://images/Lips/lips3.png" id="17_25dfr"]
+[ext_resource type="Texture2D" uid="uid://bb6ydbcrpvilm" path="res://images/eyebox/eyebox1.png" id="18_mkg2b"]
+[ext_resource type="Texture2D" uid="uid://16ohxvt2ursq" path="res://images/eyebox/eyebox2.png" id="19_1ns3k"]
+[ext_resource type="Texture2D" uid="uid://bot8uc4qlj660" path="res://images/eyebox/eyebox3.png" id="20_a7pbh"]
+[ext_resource type="Texture2D" uid="uid://c3hqjn5prv47e" path="res://images/eyebox/eyebox4.png" id="21_ye0jt"]
+[ext_resource type="Texture2D" uid="uid://bvjvnd2ddtt8r" path="res://images/eyebox/eyebox5.png" id="22_7wwop"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qk1f2"]
 sky_top_color = Color(0.66796, 0.355097, 5.77569e-07, 1)
@@ -28,7 +37,61 @@ background_mode = 2
 background_color = Color(0.69, 0.46644, 0.1311, 1)
 sky = SubResource("Sky_611at")
 
-[node name="Root" type="Node3D"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_kjvyo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_0ehpd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_8wjpf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_25dfr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_8wjpf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jcw2p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("18_mkg2b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_1ns3k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_a7pbh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_ye0jt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_7wwop")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_ye0jt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_a7pbh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_1ns3k")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="Root" type="Node3D" node_paths=PackedStringArray("Player")]
+script = ExtResource("1_08o8g")
+Player = NodePath("Player")
 
 [node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI", "tradeUI", "musicPlayer", "rumorView", "encounterView")]
 script = ExtResource("2_6fa14")
@@ -189,20 +252,33 @@ value = 1.0
 [node name="EncounterView" parent="CanvasLayer" instance=ExtResource("8_cfq0f")]
 visible = false
 
-[node name="RumorView" parent="CanvasLayer" node_paths=PackedStringArray("town") instance=ExtResource("8_x537r")]
+[node name="RumorView" parent="CanvasLayer" instance=ExtResource("8_x537r")]
 visible = false
 offset_left = 553.0
 offset_top = 356.0
 offset_right = 553.0
 offset_bottom = 356.0
-town = NodePath("../../Map/Town")
 
-[node name="Waypoints" parent="." node_paths=PackedStringArray("lastDot") instance=ExtResource("5_k24pf")]
-lastDot = NodePath("../Map/Town2")
+[node name="Waypoints" parent="." instance=ExtResource("5_k24pf")]
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.8023, 0.848907, -3.14997)
+billboard = 1
+no_depth_test = true
+sprite_frames = SubResource("SpriteFrames_kjvyo")
+autoplay = "default"
+
+[node name="AnimatedSprite3D2" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.4884, 0.848907, -2.65339)
+billboard = 1
+no_depth_test = true
+sprite_frames = SubResource("SpriteFrames_jcw2p")
+autoplay = "default"
 
 [connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/TownPanel" to="Waypoints" method="OnMouseExited"]
 [connection signal="pressed" from="CanvasLayer/HSplitContainer/TownPanel/VBoxContainer/trade" to="Player" method="openTrade"]
 [connection signal="pressed" from="CanvasLayer/HSplitContainer/TownPanel/VBoxContainer/plot" to="Player" method="plotJourney"]
 [connection signal="pressed" from="CanvasLayer/HSplitContainer/TownPanel/VBoxContainer/embark" to="Player" method="embark"]
+[connection signal="pressed" from="CanvasLayer/HSplitContainer/TownPanel/VBoxContainer/cancel" to="Player" method="cancelPlot"]
 
 [editable path="CanvasLayer/HSplitContainer/TownPanel"]

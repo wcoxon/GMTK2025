@@ -130,6 +130,7 @@ text = "TRADE"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_cn8ec")
+volume_db = -14.715
 bus = &"Sound Effects"
 
 [connection signal="value_changed" from="TradeContainer/ProductsContainer/HBoxContainer/purchaseAmount" to="." method="updateCost"]

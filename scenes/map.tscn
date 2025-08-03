@@ -1,14 +1,15 @@
-[gd_scene load_steps=32 format=3 uid="uid://clc830lkjlhip"]
+[gd_scene load_steps=34 format=3 uid="uid://clc830lkjlhip"]
 
 [ext_resource type="PackedScene" uid="uid://b212emu5my3lk" path="res://scenes/town.tscn" id="1_2hyix"]
+[ext_resource type="Texture2D" uid="uid://cgm6q7yr2424h" path="res://images/island/islandAlbedo.png" id="1_mo32q"]
+[ext_resource type="Texture2D" uid="uid://cfcln7e38g3js" path="res://images/island/islandnormal.png" id="2_6k6j1"]
 [ext_resource type="PackedScene" uid="uid://dylgmhbel8gcv" path="res://scenes/traveller.tscn" id="2_h6b5g"]
 [ext_resource type="Resource" uid="uid://ch8lqqgiplsg3" path="res://data/GurgishamData.tres" id="2_qhcnf"]
 [ext_resource type="Resource" uid="uid://c0yvi6dd5l3sq" path="res://data/GumbusvilleData.tres" id="3_54cpw"]
 [ext_resource type="Resource" uid="uid://dn1lrvkia3voq" path="res://data/SloptonData.tres" id="4_1eu6x"]
-[ext_resource type="ArrayMesh" uid="uid://dwqsxckirn075" path="res://images/weirdcity2.obj" id="4_c70he"]
-[ext_resource type="Material" uid="uid://diuq60p02iwus" path="res://shaders/outline/outlineMaterial.tres" id="5_mo32q"]
+[ext_resource type="Shader" uid="uid://coipnidx8prg6" path="res://shaders/outline/outline.gdshader" id="4_p7tei"]
 [ext_resource type="Script" uid="uid://c07l7rmmrq4w4" path="res://scripts/Areas/Terrain/TerrainArea.cs" id="6_2lpho"]
-[ext_resource type="Shader" uid="uid://bpkjttjrw55ub" path="res://scenes/colorRamp.gdshader" id="6_6k6j1"]
+[ext_resource type="Shader" uid="uid://bpkjttjrw55ub" path="res://shaders/colorRamp.gdshader" id="6_6k6j1"]
 [ext_resource type="Script" uid="uid://jmbhxi4mueuq" path="res://scripts/Areas/Spottable Encounters/BanditEncounter.cs" id="7_nakos"]
 [ext_resource type="Script" uid="uid://dlrfvgmrkhwfr" path="res://scripts/Areas/Spottable Encounters/StormEncounter.cs" id="8_jh32y"]
 [ext_resource type="Texture2D" uid="uid://b0sise4bpjtb4" path="res://images/bandit/bandit1.png" id="8_n1psn"]
@@ -19,39 +20,48 @@
 [ext_resource type="Texture2D" uid="uid://dggaexxqmfq45" path="res://images/bandit/bandit6.png" id="13_6k6j1"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_m57gh"]
+size = Vector2(5, 5)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_poiku"]
-albedo_color = Color(0.1479, 0.51, 0.47379, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m335s"]
+albedo_texture = ExtResource("1_mo32q")
+metallic_specular = 0.0
+normal_enabled = true
+normal_scale = 0.36
+normal_texture = ExtResource("2_6k6j1")
 
-[sub_resource type="Gradient" id="Gradient_m335s"]
-offsets = PackedFloat32Array(0.559078, 1)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c70he"]
+render_priority = 0
+shader = ExtResource("4_p7tei")
+
+[sub_resource type="Gradient" id="Gradient_mo32q"]
+offsets = PackedFloat32Array(0.501441, 1)
 colors = PackedColorArray(0.47451, 0.0431373, 0.431373, 1, 0.705882, 1, 0.560784, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_sq6bu"]
-gradient = SubResource("Gradient_m335s")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_6k6j1"]
+gradient = SubResource("Gradient_mo32q")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4b7dj"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m335s"]
 render_priority = 0
-next_pass = ExtResource("5_mo32q")
+next_pass = SubResource("ShaderMaterial_c70he")
 shader = ExtResource("6_6k6j1")
-shader_parameter/ramp = SubResource("GradientTexture1D_sq6bu")
+shader_parameter/ramp = SubResource("GradientTexture1D_6k6j1")
 
-[sub_resource type="PrismMesh" id="PrismMesh_2cfcp"]
-left_to_right = -0.5
-size = Vector3(2.145, 3, 3.035)
-
-[sub_resource type="Gradient" id="Gradient_y2ir2"]
-offsets = PackedFloat32Array(0.501441, 0.740634)
-colors = PackedColorArray(0, 0.35, 0.274167, 1, 0.91734, 0.742561, 3.85046e-07, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_5u2yt"]
-gradient = SubResource("Gradient_y2ir2")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_30iet"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p7tei"]
 render_priority = 0
-next_pass = ExtResource("5_mo32q")
+shader = ExtResource("4_p7tei")
+
+[sub_resource type="Gradient" id="Gradient_c70he"]
+offsets = PackedFloat32Array(0.527378, 1)
+colors = PackedColorArray(0, 0.41579, 0.236598, 1, 0.936613, 0.568974, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mo32q"]
+gradient = SubResource("Gradient_c70he")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6k6j1"]
+render_priority = 0
+next_pass = SubResource("ShaderMaterial_p7tei")
 shader = ExtResource("6_6k6j1")
-shader_parameter/ramp = SubResource("GradientTexture1D_5u2yt")
+shader_parameter/ramp = SubResource("GradientTexture1D_mo32q")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_2lpho"]
 height = 3.0
@@ -61,8 +71,7 @@ radius = 1.3916
 size = Vector3(11.7075, 1, 1)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_jh32y"]
-height = 2.90625
-radius = 2.21533
+radius = 1.4
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_m335s"]
 animations = [{
@@ -111,31 +120,29 @@ radius = 10.009
 [node name="SurfacePlane" type="MeshInstance3D" parent="."]
 transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 0, 0)
 mesh = SubResource("PlaneMesh_m57gh")
-surface_material_override/0 = SubResource("StandardMaterial3D_poiku")
-
-[node name="Town" parent="." instance=ExtResource("1_2hyix")]
-transform = Transform3D(0.950997, 0, -0.3092, 0, 1, 0, 0.3092, 0, 0.950997, 5.43591, 0, 7.28171)
-Data = ExtResource("2_qhcnf")
-
-[node name="Town2" parent="." instance=ExtResource("1_2hyix")]
-transform = Transform3D(0.812165, 0, 0.583428, 0, 1, 0, -0.583428, 0, 0.812165, -7.94515, -9.53674e-07, -4.22497)
-Data = ExtResource("3_54cpw")
-
-[node name="MeshInstance" parent="Town2" index="0"]
-mesh = ExtResource("4_c70he")
-surface_material_override/0 = SubResource("ShaderMaterial_4b7dj")
-
-[node name="Town3" parent="." instance=ExtResource("1_2hyix")]
-transform = Transform3D(-0.30207, 0, -0.953286, 0, 1, 0, 0.953286, 0, -0.30207, 7.07024, -9.53674e-07, -8.17452)
-Data = ExtResource("4_1eu6x")
-
-[node name="MeshInstance" parent="Town3" index="0"]
-mesh = SubResource("PrismMesh_2cfcp")
-surface_material_override/0 = SubResource("ShaderMaterial_30iet")
+surface_material_override/0 = SubResource("StandardMaterial3D_m335s")
 
 [node name="Traveller" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("2_h6b5g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.77423, 0, -4.39215)
-Town = NodePath("../Town")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.16845, 0, 4.20806)
+Town = NodePath("../gumbusville")
+
+[node name="gurgisham" parent="." instance=ExtResource("1_2hyix")]
+transform = Transform3D(0.950997, 0, -0.3092, 0, 1, 0, 0.3092, 0, 0.950997, 19.3902, -1.90735e-06, -12.3092)
+Data = ExtResource("2_qhcnf")
+
+[node name="gumbusville" parent="." instance=ExtResource("1_2hyix")]
+transform = Transform3D(0.812165, 0, 0.583428, 0, 1, 0, -0.583428, 0, 0.812165, -22.1166, -9.53674e-07, -18.0026)
+Data = ExtResource("3_54cpw")
+
+[node name="MeshInstance" parent="gumbusville" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_m335s")
+
+[node name="slopton" parent="." instance=ExtResource("1_2hyix")]
+transform = Transform3D(-0.30207, 0, -0.953286, 0, 1, 0, 0.953286, 0, -0.30207, -0.447289, -9.53674e-07, -0.501136)
+Data = ExtResource("4_1eu6x")
+
+[node name="MeshInstance" parent="slopton" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_6k6j1")
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_mask = 255
@@ -163,7 +170,7 @@ input_ray_pickable = false
 script = ExtResource("7_nakos")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Bandits"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.3167, 0.453125, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0126405, 0.453125, 0)
 shape = SubResource("CylinderShape3D_jh32y")
 debug_color = Color(0.521569, 0.0117647, 0.529412, 1)
 
@@ -188,6 +195,6 @@ maxDistanceBeforeRespawn = 40
 shape = SubResource("CylinderShape3D_nakos")
 debug_color = Color(0.00392157, 0.0509804, 0.105882, 1)
 
-[editable path="Town"]
-[editable path="Town2"]
-[editable path="Town3"]
+[editable path="gurgisham"]
+[editable path="gumbusville"]
+[editable path="slopton"]

@@ -13,12 +13,15 @@ public partial class Town : Node3D
     //refs, replace with selection in _Ready later probab
     [Export] MeshInstance3D mesh;
 
-
+    bool selected;
     public bool Selected
     {
+        get => selected;
         set
         {
-            mesh.SetInstanceShaderParameter("width", value ? 0.3 : 0);
+            selected = value;
+            mesh.SetInstanceShaderParameter("colour", new Color(1, 0, 0));
+            mesh.SetInstanceShaderParameter("width", selected ? 0.3 : 0);
         }
     }
 
@@ -30,6 +33,7 @@ public partial class Town : Node3D
         get => data;
         set
         {
+            GD.Print("well");
             data = value;
 
             mesh.Mesh = data.mesh;
@@ -48,6 +52,7 @@ public partial class Town : Node3D
     {
         // register for rumors.
         RumorView.towns.Add(data.townName, this);
+        
     }
 
     public void _on_area_3d_input_event(Node cam, InputEvent evt, Vector3 evtPos, Vector3 normal, int shapeIndex)
@@ -58,6 +63,17 @@ public partial class Town : Node3D
         }
     }
 
+    public void hover()
+    {
+        if (Selected) return;
+        mesh.SetInstanceShaderParameter("colour", new Color(1,0.5f,0.8f));
+        mesh.SetInstanceShaderParameter("width", 0.1);
+    }
+    public void unhover()
+    {
+        if (Selected) return;
+        mesh.SetInstanceShaderParameter("width",0);
+    }
     public void select() => PlayerView.Instance.SelectedTown = this;
     
     public int appraise(Item item)
