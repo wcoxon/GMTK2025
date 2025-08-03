@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://fhoh6fiq15ei"]
+
+[ext_resource type="Script" uid="uid://jmbhxi4mueuq" path="res://scripts/Areas/Spottable Encounters/BanditEncounter.cs" id="1_1rb5j"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_jh32y"]
+height = 2.90625
+radius = 2.21533
+
+[node name="Bandits" type="Area3D"]
+input_ray_pickable = false
+script = ExtResource("1_1rb5j")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_jh32y")
+debug_color = Color(0.521569, 0.0117647, 0.529412, 1)

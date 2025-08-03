@@ -1,0 +1,15 @@
+- name: test_storm
+  class: storm
+  title: A storm damages you!
+  chance: 0.1
+  duration: 2 #days
+  description: >
+    A raging storm has damaged you.
+  options:
+  - text: Okay.
+    effect: player_health -= 1;
+  rumors:
+  - text: I saw a storm nearby. Be careful!
+    location: Gumbusville
+  - text: I saw a storm type shit.
+    location: Slopton

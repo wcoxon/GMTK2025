@@ -18,6 +18,12 @@
 [ext_resource type="PackedScene" uid="uid://bdrkqejd8htea" path="res://scenes/EncounterView.tscn" id="8_cfq0f"]
 [ext_resource type="PackedScene" uid="uid://c6yeey4j3upm4" path="res://scenes/inventory.tscn" id="8_pd1er"]
 [ext_resource type="PackedScene" uid="uid://xqt4l46rhnwy" path="res://scenes/RumorView.tscn" id="8_x537r"]
+[ext_resource type="Script" uid="uid://0n132a882k4r" path="res://scripts/NotificationManager.cs" id="11_o3jky"]
+[ext_resource type="PackedScene" uid="uid://c1jvgnt81ughl" path="res://scenes/notification.tscn" id="12_kp0ql"]
+[ext_resource type="Script" uid="uid://cwcfik42lryqy" path="res://scripts/StatsView.cs" id="14_8wjpf"]
+[ext_resource type="Script" uid="uid://6mnsy7hidovy" path="res://scripts/StoryTeller.cs" id="15_0cxu4"]
+[ext_resource type="PackedScene" uid="uid://fhoh6fiq15ei" path="res://scenes/encounters/bandits.tscn" id="16_0ehpd"]
+[ext_resource type="PackedScene" uid="uid://b25d8ekeapuhi" path="res://scenes/encounters/storm_area.tscn" id="17_8wjpf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qk1f2"]
 sky_top_color = Color(0.66796, 0.355097, 5.77569e-07, 1)
@@ -39,7 +45,8 @@ ambient_light_color = Color(0.605274, 0.605274, 0.605274, 1)
 script = ExtResource("1_08o8g")
 Player = NodePath("Player")
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI", "tradeUI", "musicPlayer", "rumorView", "encounterView")]
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI", "tradeUI","musicPlayer", "rumorView", "encounterView", "notificationManager")]
+
 script = ExtResource("2_6fa14")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/TownPanel")
 waypoints = NodePath("../Waypoints")
@@ -54,6 +61,7 @@ musicPlayer = NodePath("Camera3D/MusicPlayer")
 travelMusic = Array[AudioStream]([ExtResource("3_8wjpf"), ExtResource("2_kp0ql"), ExtResource("5_25dfr"), ExtResource("6_kjvyo"), ExtResource("7_2phbr")])
 rumorView = NodePath("../CanvasLayer/RumorView")
 encounterView = NodePath("../CanvasLayer/EncounterView")
+notificationManager = NodePath("../CanvasLayer/NotificationManager")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 0.47355, 0.880767, 0, -0.880767, 0.47355, 0, 15.0562, 8.77994)
@@ -206,7 +214,58 @@ offset_top = 356.0
 offset_right = 553.0
 offset_bottom = 356.0
 
-[node name="Waypoints" parent="." instance=ExtResource("5_k24pf")]
+[node name="NotificationManager" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -184.0
+offset_top = 26.0
+offset_right = -144.0
+offset_bottom = 66.0
+grow_horizontal = 0
+script = ExtResource("11_o3jky")
+notification_scene = ExtResource("12_kp0ql")
+
+[node name="StatsView" type="Panel" parent="CanvasLayer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -97.0
+offset_top = -106.0
+offset_right = 91.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("14_8wjpf")
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/StatsView"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/StatsView/MarginContainer"]
+layout_mode = 2
+text = "Crumbs: {0}
+Health: {1}"
+horizontal_alignment = 1
+
+[node name="Waypoints" parent="." node_paths=PackedStringArray("lastDot") instance=ExtResource("5_k24pf")]
+lastDot = NodePath("../Map/Town2")
+
+[node name="StoryTeller" type="Node3D" parent="."]
+script = ExtResource("15_0cxu4")
+bandit_encounter = ExtResource("16_0ehpd")
+storm_encounter = ExtResource("17_8wjpf")
 
 [connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/TownPanel" to="Waypoints" method="OnMouseExited"]
 [connection signal="pressed" from="CanvasLayer/HSplitContainer/TownPanel/VBoxContainer/trade" to="Player" method="openTrade"]

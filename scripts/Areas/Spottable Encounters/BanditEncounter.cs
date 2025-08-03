@@ -21,7 +21,7 @@ public partial class BanditEncounter : TickBasedEncounter
         {
             if (Body.GetParent() is not Traveller)
             {
-                GD.Print(Body + " inside the Bandit zone isn't actually a damn Traveller.");
+                //GD.Print(Body + " inside the Bandit zone isn't actually a damn Traveller.");
                 return;
             }
 
@@ -33,7 +33,7 @@ public partial class BanditEncounter : TickBasedEncounter
             }
             else
             {
-                GD.Print("Bandits tried to attack, but lost the coin toss.");
+                //GD.Print("Bandits tried to attack, but lost the coin toss.");
             }
         }
 

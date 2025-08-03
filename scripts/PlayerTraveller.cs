@@ -3,9 +3,20 @@ using System;
 
 public partial class PlayerTraveller : Traveller
 {
+    int health = 1;
+    public int Health
+    {
+        get => health; set
+        {
+            health = value;
+        }
+    }
+
     public override void _Ready()
     {
         Town = Town;
+        base._Ready();
+
         Money = 100;
 
         inventory[(int)Item.BROTH] = 5;
@@ -16,6 +27,8 @@ public partial class PlayerTraveller : Traveller
     public override void _Process(double delta)
     {
         travel((float)delta);
+        if (health == 0)
+            PlayerView.instance.OnDeath();
     }
 
     public override void onArrival(Town town)
@@ -34,5 +47,27 @@ public partial class PlayerTraveller : Traveller
     public override void onDeparture()
     {
         PlayerView.Instance.Music = null;
+    }
+
+    public void GetRumour(Rumour newRumour)
+    {
+        if (newRumour is EncounterRumour)
+        {
+            EncounterRumour rumourToAdd = newRumour as EncounterRumour;
+
+            if (rumourToAdd.encounterObject.Visible) // if it's already visible, you already know about it, so whatever.
+            {
+                return;
+            }
+
+            knownRumours.Add(rumourToAdd);
+        }
+        else if (newRumour is PriceRumour)
+        {
+            //reveal the stat for the right item I think. this is probably not going to be implemented for the jam.
+        }
+
+        
+
     }
 }

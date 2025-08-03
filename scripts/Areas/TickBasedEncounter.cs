@@ -11,10 +11,16 @@ public partial class TickBasedEncounter : EncounterArea
         PlayerView.Instance.Tick += DoOnTick;
     }
 
+    public override void _ExitTree()
+    {
+        base._ExitTree();
+        PlayerView.instance.Tick -= DoOnTick;
+    }
+
 
     public virtual void DoOnTick()
     {
-        
+
     }
 
 }

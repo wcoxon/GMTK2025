@@ -45,12 +45,15 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     [Export] public RumorView rumorView;
     [Export] public EncounterView encounterView;
 
+    [Export] public NotificationManager notificationManager;
+
     GameState gameState;
     public GameState State
     {
         get => gameState;
         set
         {
+            var oldGameState = gameState;
             gameState = value;
             switch (gameState)
             {
@@ -62,6 +65,14 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
                     if (townPanel.Town is not null) townPanel.updateActions();
                     break;
 
+                case GameState.ENCOUNTERING:
+                    if (oldGameState == GameState.TRAVELLING)
+                    {
+                        PauseWorldSpeed();
+                        timeControlPanel.Hide();
+                    }
+                    break;
+
                 case GameState.PLANNING:
                     waypoints.Active = true;
                     townPanel.Embarkmode = TownPanel.EmbarkMode.Planning; // notifies town UI to update to planning state
@@ -70,12 +81,14 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
                     break;
 
                 case GameState.TRAVELLING:
-                    waypoints.Active = false;
-                    townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking; // notifies town UI to update to embarking state
-                    townPanel.updateActions();
-                    var (nodes, dashes) = waypoints.PopJourney();
-                    player.SetJourney(nodes, dashes);
-                    player.onDeparture();
+                    if (oldGameState == GameState.PLANNING)
+                    {
+                        waypoints.Active = false;
+                        townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking; // notifies town UI to update to embarking state
+                        var (nodes, dashes) = waypoints.PopJourney();
+                        player.SetJourney(nodes, dashes);
+                        player.onDeparture();
+                    }
 
                     PlayWorldSpeed();
                     timeControlPanel.Show();
@@ -101,6 +114,8 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     private double tick;
     private int eightHourTicker;
     private int dayTicker;
+
+    public int currentDate;
 
     private void OnTick() //increment our other tickers, then set the tick to zero so we can tick again.
     {
@@ -129,6 +144,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     {
         dayTicker = 0; //Reset our day tracking variable, so we can check if it hit twenty four.
         GD.Print("Day Passed!");
+        currentDate += 1;
     }
 
     [Signal] public delegate void TickEventHandler();
@@ -152,13 +168,13 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         }
     }
 
-    
+
 
     public override void _Ready()
     {
         Instance = this; // global handle
         EncounterManager.Instance.AddProvider(this);
-        
+
         State = GameState.TOWN;
         player = GetNode<PlayerTraveller>("../Map/Traveller");
         Position = player.Position;
@@ -167,6 +183,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         tick = 0;
         dayTicker = 0;
         eightHourTicker = 0;
+        currentDate = 0;
 
         Tick += OnTick;
 
@@ -244,7 +261,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         Vector3 velocity = new Vector3(cameraVelocity.X, 0, cameraVelocity.Z); // could we not edit cameraVelocity directly?
 
         //Vector2 inputVector = Input.GetVector("left", "right", "up", "down");
-        Vector3 inputDirection = new Vector3(Input.GetAxis("left","right"), 0, Input.GetAxis("up","down"));
+        Vector3 inputDirection = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("up", "down"));
 
         if (inputDirection != Vector3.Zero)
         {
@@ -299,15 +316,33 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     public List<(string, double)> GetVariables()
     {
         return [
-            ("health", 5),
-            ("money", 100)
+            ("health", player.Health),
+            ("money", player.Money)
         ];
     }
 
     public void UpdateVariable(string name, double value)
     {
-        if (name == "health") GD.Print("Set playerhealth to " + value);
-        else if (name == "money") GD.Print("Set money to " + value);
+        if (name == "health")
+        {
+            GD.Print("Set playerhealth to " + value);
+            player.Health = (int)value;
+        }
+        else if (name == "money")
+        {
+            GD.Print("Set money to " + value);
+            player.Money = (int)value;
+        }
         else throw new KeyNotFoundException("Player cannot assign to variable " + name);
+    }
+
+    public void OnDeath()
+    {
+        player.Health = 3;
+        player.Money = Math.Min(50, player.Money / 3);
+        notificationManager.AddNotification("You passed out! Returning back to last town.");
+        gameState = GameState.TOWN;
+        //player.ResetJourney();
+        player.Position = player.Town.Position;
     }
 }

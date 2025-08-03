@@ -4,6 +4,42 @@ using System.Collections.Generic;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
+public class EncounterOptionContent
+{
+    public string Text { get; set; } = "<option>";
+    public string Effect { get; set; } = "";
+}
+
+public class EncounterRumorContent
+{
+    public string Text { get; set; } = "hrm...";
+    public string Location { get; set; } = "";
+}
+
+public class EncounterContent
+{
+    // Internal name of the encounter.
+    public string Name { get; set; } = "no-name";
+    // What class should handle these encounters.
+    public string Class { get; set; } = "no-class";
+    // Where encounter will take place (implementation left for class)
+    public string Location { get; set; } = "no-location";
+    // Title of encounter popup.
+    public string Title { get; set; } = "no-title";
+    // Image in encounter popup.
+    public string Image { get; set; } = "";
+    // Description in encounter popup.
+    public string Description { get; set; } = "";
+    // Options in encounter popup.
+    public List<EncounterOptionContent> Options { get; set; } = [];
+    // Rumors to spread while encounter is active.
+    public List<EncounterRumorContent> Rumors { get; set; } = [];
+    // Chance for encounter to happen.
+    public double Chance { get; set; } = 1.0;
+    // Duration of encounter in days.
+    public double Duration { get; set; } = 1.0;
+
+}
 
 public partial class EncounterManager : Node
 {
@@ -22,6 +58,10 @@ public partial class EncounterManager : Node
             var file = FileAccess.Open(EVENT_DIRECTORY + filename, FileAccess.ModeFlags.Read);
             encounters.AddRange(deserializer.Deserialize<List<EncounterContent>>(file.GetAsText()));
         }
+        foreach (var enc in encounters)
+        {
+            GD.Print(enc.Location);
+        }
     }
 
     public List<EncounterContent> GetFromClass(string cls)
@@ -33,41 +73,6 @@ public partial class EncounterManager : Node
                 ret.Add(content);
         }
         return ret;
-    }
-
-    public class EncounterOptionContent
-    {
-        public string Text { get; set; } = "<option>";
-        public string Effect { get; set; } = "";
-    }
-
-    public class EncounterRumorContent
-    {
-        public string Text { get; set; } = "hrm...";
-        public string Location { get; set; } = "no-location";
-    }
-
-    public class EncounterContent
-    {
-        // Internal name of the encounter.
-        public string Name { get; set; } = "no-name";
-        // What class should handle these encounters.
-        public string Class { get; set; } = "no-class";
-        // Where encounter will take place (implementation left for class)
-        public string Location { get; set; } = "no-location";
-        // Title of encounter popup.
-        public string Title { get; set; } = "no-title";
-        // Image in encounter popup.
-        public string Image { get; set; } = "";
-        // Description in encounter popup.
-        public string Description { get; set; } = "";
-        // Options in encounter popup.
-        public List<EncounterOptionContent> Options { get; set; } = [];
-        // Rumors to spread while encounter is active.
-        public List<EncounterRumorContent> Rumors { get; set; } = [];
-        // Chance for encounter to happen.
-        public double Chance { get; set; } = 1.0;
-
     }
 
     static IDeserializer deserializer = new DeserializerBuilder()
