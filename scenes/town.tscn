@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d03wi68dgsdwa" path="res://scripts/Town.cs" id="1_2sgm5"]
 [ext_resource type="Material" uid="uid://diuq60p02iwus" path="res://shaders/outline/outlineMaterial.tres" id="2_j0xxs"]
 [ext_resource type="ArrayMesh" uid="uid://bkcn3sjmiafwt" path="res://images/weirdcity1.obj" id="2_ms2es"]
-[ext_resource type="Shader" uid="uid://bpkjttjrw55ub" path="res://shaders/colorRamp.gdshader" id="3_ms2es"]
+[ext_resource type="Shader" path="res://shaders/colorRamp.gdshader" id="3_ms2es"]
 
 [sub_resource type="Gradient" id="Gradient_ms2es"]
 offsets = PackedFloat32Array(0.501441, 1)

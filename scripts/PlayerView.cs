@@ -195,6 +195,8 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
 
         PauseWorldSpeed();
 
+        allTowns = [];
+
     
     }
     public override void _Input(InputEvent @event)
