@@ -11,6 +11,8 @@ public partial class RumourDetector : Area3D
         AreaEntered += OnEncounterDetected;
 
         m_TravellerSpotter = this.GetParent() as Traveller;
+
+        GD.Print(m_TravellerSpotter.Name);
     }
 
 
@@ -28,7 +30,21 @@ public partial class RumourDetector : Area3D
 
         EncounterRumour newRumour = new(spottedContent.Rumors[0].Text, PlayerView.instance.currentDate, spottedContent.Duration, spottedEncounter.Position, spottedEncounter);
 
+        GD.Print(newRumour.rumourText);
+
+        GD.Print(newRumour.dayRecieved);
+
+        GD.Print(newRumour.duration);
+
+        GD.Print(newRumour.position);
+
+        GD.Print(newRumour.encounterObject);
+
+        GD.Print(m_TravellerSpotter.Name);
+
+
         m_TravellerSpotter.knownRumours.Add(newRumour);
+        
 
         if (m_TravellerSpotter is PlayerTraveller) //if the player spots the rumour, make it visible
         {

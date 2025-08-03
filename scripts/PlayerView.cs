@@ -346,7 +346,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         player.Money = Math.Min(50, player.Money / 3);
         notificationManager.AddNotification("You passed out! Returning back to last town.");
         gameState = GameState.TOWN;
-        player.ResetJourney();
+        //player.ResetJourney();
         player.Position = player.Town.Position;
     }
 }

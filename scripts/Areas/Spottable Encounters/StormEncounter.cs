@@ -5,12 +5,9 @@ using System.Collections.Generic;
 
 public partial class StormEncounter : MovingEncounter
 {
-    [Export(PropertyHint.Range, "-0.9,1,0.1")] public float moveSpeedModifier = 0.5f;
-
-    /// we Roll a random float and trigger the event if it's UNDER these values. Higher number = higher chance.
-    [Export(PropertyHint.Range, "0,1,0.05")] public float travellerHitChance = 0.6f;
+    [Export(PropertyHint.Range, "-0.9,1,0.1")] public float moveSpeedModifier = 0.3f;
     
-    [Export(PropertyHint.Range, "0,1,0.05")] public float townDevastateChance = 0.75f;
+    [Export(PropertyHint.Range, "0,1,0.05")] public float townDevastateChance = 0.15f;
 
     [Export] public Vector3 originCoordinates;
 
@@ -22,6 +19,9 @@ public partial class StormEncounter : MovingEncounter
     public override void _Ready()
     {
         base._Ready();
+
+        content = EncounterManager.Instance.GetFromClass("storm")[0];
+
         devastatedTownsToday = false;
         PlayerView.instance.EightTicks += DoEveryEightTicks;
         PlayerView.instance.TwentyFourTicks += DoDaily;
@@ -78,7 +78,7 @@ public partial class StormEncounter : MovingEncounter
 
             Traveller currentTraveller = Body.GetParent() as Traveller;
 
-            if (GD.Randf() > travellerHitChance)
+            if (GD.Randf() > content.Chance)
             {
                 GD.Print("Storm tried to damage, but lost the coin toss.");
             }
@@ -192,6 +192,8 @@ public partial class StormEncounter : MovingEncounter
         GD.Print("Storm Damaged!" + victim);
         if (victim is PlayerTraveller)
             PlayerView.instance.notificationManager.AddNotification("Storm damaged you!");
+            PlayerView.instance.encounterView.DisplayEncounter(content);
+
     }
 
 }

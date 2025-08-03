@@ -14,6 +14,8 @@ public partial class PlayerTraveller : Traveller
 
     public override void _Ready()
     {
+        base._Ready();
+
         Money = 100;
 
         inventory[(int)Item.BROTH] = 5;

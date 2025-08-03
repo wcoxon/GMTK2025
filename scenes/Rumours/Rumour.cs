@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Reflection.Metadata.Ecma335;
 
-public partial class Rumour : Node
+public  abstract partial class Rumour : Node
 {
     public string rumourText; //what the thing says
     public double dayRecieved;

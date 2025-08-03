@@ -1,7 +1,7 @@
 - name: test_bandits
   class: bandits
   title: A group of old men attacks you!
-  chance: 0.5
+  chance: 0.3
   duration: 2 #days
   description: >
     Deep in the forrest you see a group of old men attacking you.

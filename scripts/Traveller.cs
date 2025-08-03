@@ -89,6 +89,10 @@ public partial class Traveller : Node3D
         base._Ready();
 
         PlayerView.instance.TwentyFourTicks += expireRumours;
+
+        knownRumours = new List<Rumour>();
+
+
     }
 
 
