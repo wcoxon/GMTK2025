@@ -9,6 +9,8 @@ public partial class BanditEncounter : TickBasedEncounter
     {
         base._Ready();
         content = EncounterManager.Instance.GetFromClass("bandits")[0];
+
+        Visible = false;
     }
 
     public override void DoOnTick()
@@ -27,7 +29,7 @@ public partial class BanditEncounter : TickBasedEncounter
 
             Traveller currentTraveller = Body.GetParent() as Traveller;
 
-            if (GD.Randf() > content.Chance)
+            if ((double)GD.Randf() > content.Chance)
             {
                 BanditAttack(currentTraveller);
             }

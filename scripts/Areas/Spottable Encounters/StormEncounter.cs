@@ -78,7 +78,7 @@ public partial class StormEncounter : MovingEncounter
 
             Traveller currentTraveller = Body.GetParent() as Traveller;
 
-            if (GD.Randf() > content.Chance)
+            if ((double)GD.Randf() > content.Chance)
             {
                 GD.Print("Storm tried to damage, but lost the coin toss.");
             }
