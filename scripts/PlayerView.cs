@@ -36,6 +36,8 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
 
     [Export] public NotificationManager notificationManager;
 
+    public List<Town> allTowns;
+
     GameState gameState;
     public GameState State
     {
@@ -197,6 +199,8 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         TwentyFourTicks += OnDay;
 
         PauseWorldSpeed();
+
+    
     }
     public override void _Input(InputEvent @event)
     {

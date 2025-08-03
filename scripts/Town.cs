@@ -43,6 +43,8 @@ public partial class Town : Node3D
             data.prices[i] = PlayerView.instance.itemBaseValues[i] * data.price_multiplyers[i];
         data.base_consumption.CopyTo(data.consumption, 0);
         data.base_production.CopyTo(data.production, 0);
+
+        PlayerView.instance.allTowns.Add(this);
     }
 
     public void _on_area_3d_input_event(Node cam, InputEvent evt, Vector3 evtPos, Vector3 normal, int shapeIndex)
