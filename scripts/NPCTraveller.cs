@@ -10,7 +10,7 @@ public partial class NPCTraveller : Traveller
     {
         base._Ready();
 
-        
+
     }
 
 
@@ -18,7 +18,6 @@ public partial class NPCTraveller : Traveller
 
     public void generateNewDestionationTown()
     {
-
         while (Town == destinationTown)
         {
             int randomItem = (int)GD.Randi() % PlayerView.Instance.allTowns.Count;
