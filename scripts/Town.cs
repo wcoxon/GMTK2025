@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Town : Node3D
 {
@@ -30,6 +31,8 @@ public partial class Town : Node3D
     public float[] Stocks { get => data.stocks; set => data.stocks = value; }
     public float[] Production { get => data.production; } // per day
     public float[] Consumption { get => data.consumption; } // per day
+
+    public List<Traveller> currentTravellers;
 
     public override void _Ready()
     {

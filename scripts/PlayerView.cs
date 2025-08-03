@@ -103,6 +103,8 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     private int eightHourTicker;
     private int dayTicker;
 
+    public int currentDate;
+
     private void OnTick() //increment our other tickers, then set the tick to zero so we can tick again.
     {
         eightHourTicker += 1;
@@ -130,6 +132,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     {
         dayTicker = 0; //Reset our day tracking variable, so we can check if it hit twenty four.
         GD.Print("Day Passed!");
+        currentDate += 1;
     }
 
     [Signal] public delegate void TickEventHandler();
@@ -185,6 +188,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         tick = 0;
         dayTicker = 0;
         eightHourTicker = 0;
+        currentDate = 0;
 
         Tick += OnTick;
 

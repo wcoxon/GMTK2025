@@ -35,4 +35,26 @@ public partial class PlayerTraveller : Traveller
         //PlayerView.instance.State = GameState.TRAVELLING;
         //PlayerView.instance.PlayWorldSpeed();
     }
+
+    public void GetRumour(Rumour newRumour)
+    {
+        if (newRumour is EncounterRumour)
+        {
+            EncounterRumour rumourToAdd = newRumour as EncounterRumour;
+
+            if (rumourToAdd.encounterObject.Visible) // if it's already visible, you already know about it, so whatever.
+            {
+                return;
+            }
+
+            knownRumours.Add(rumourToAdd);
+        }
+        else if (newRumour is PriceRumour)
+        {
+            //reveal the stat for the right item I think. this is probably not going to be implemented for the jam.
+        }
+
+        
+
+    }
 }

@@ -12,15 +12,18 @@ public partial class Traveller : Node3D
     // a traveller has inventory, money, health, path, recollection?
 
     int money = 0;
-    public int Money { get => money;  set => money = value; }
+    public int Money { get => money; set => money = value; }
 
     //[Export] public Godot.Collections.Dictionary<Item, int> inventory;
-    public int[] inventory = new int[3]; 
-    
+    public int[] inventory = new int[3];
+
     public float moveSpeed = 1;
 
+    public List<Rumour> knownRumours;
+
     Town town;
-    [Export] public Town Town
+    [Export]
+    public Town Town
     {
         get => town;
         set
@@ -71,8 +74,51 @@ public partial class Traveller : Node3D
         journey_dashes[journey_index].SetProgression(dist_start / (dist_start + dist_end));
     }
 
-    virtual public void onArrival(Town town) {}
+    virtual public void onArrival(Town town)
+    { 
+        town.currentTravellers.Add(this);
+    }
 
-    virtual public void onDeparture() {}
+    virtual public void onDeparture()
+    { 
+        town.currentTravellers.Remove(this);
+    }
+
+    public override void _Ready()
+    {
+        base._Ready();
+
+        PlayerView.instance.TwentyFourTicks += expireRumours;
+    }
+
+
+    /// <summary>
+    /// call this at the end of every day. Go through your rumours list, remove the stuff that's expired.
+    /// </summary>
+    public void expireRumours()
+    {
+        if (knownRumours == null)
+        {
+            return;
+        }
+
+        if (knownRumours.Count == 0)
+        {
+            return;
+        }
+
+        for (int i = knownRumours.Count - 1; i >= 0; i--)
+        { //go backwards through the rumours list
+            if (knownRumours[i].duration == 0)
+            {
+                knownRumours.RemoveAt(i);
+            }
+            else
+            {
+                knownRumours[i].duration -= 1;
+            }
+
+        }
+    }
 
 }
