@@ -1,11 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://dylgmhbel8gcv"]
+[gd_scene load_steps=10 format=3 uid="uid://dylgmhbel8gcv"]
 
 [ext_resource type="Script" uid="uid://cinw4djg05slo" path="res://scripts/PlayerTraveller.cs" id="1_maw3y"]
 [ext_resource type="Texture2D" uid="uid://dp7fhv6yvmsb2" path="res://images/traderCutout.png" id="2_1qb1y"]
-[ext_resource type="Texture2D" uid="uid://7w8hu4tfa40t" path="res://images/2head/2head1.png" id="3_y0vvk"]
-[ext_resource type="Texture2D" uid="uid://3rei35ft2l27" path="res://images/2head/2head2.png" id="4_ntovc"]
-[ext_resource type="Texture2D" uid="uid://bfuf8y81h7v44" path="res://images/2head/2head3.png" id="5_siy0b"]
-[ext_resource type="Texture2D" uid="uid://bgbjajbspj48t" path="res://images/2head/2head4.png" id="6_dlimr"]
+[ext_resource type="Texture2D" uid="uid://cyvjv056t8kqi" path="res://images/player/playerhomunc1.png" id="3_ntovc"]
+[ext_resource type="Texture2D" uid="uid://gxmphdk6v8dv" path="res://images/player/playerhomunc2.png" id="4_siy0b"]
+[ext_resource type="Texture2D" uid="uid://bld3djudcrrd6" path="res://images/player/playerhomunc3.png" id="5_dlimr"]
+[ext_resource type="Texture2D" uid="uid://buru4lcthumpn" path="res://images/player/playerhomunc4.png" id="6_lifv0"]
+[ext_resource type="Texture2D" uid="uid://c06dq2j0vlqpj" path="res://images/player/playerhomunc5.png" id="7_q7g8a"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ifkpq"]
 radius = 0.49112
@@ -15,16 +16,28 @@ height = 1.41745
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_y0vvk")
+"texture": ExtResource("3_ntovc")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_ntovc")
+"texture": ExtResource("4_siy0b")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_siy0b")
+"texture": ExtResource("5_dlimr")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_dlimr")
+"texture": ExtResource("4_siy0b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_ntovc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_lifv0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_q7g8a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_lifv0")
 }],
 "loop": true,
 "name": &"default",
@@ -55,5 +68,5 @@ billboard = 1
 no_depth_test = true
 sprite_frames = SubResource("SpriteFrames_lifv0")
 autoplay = "default"
-frame = 3
-frame_progress = 0.342272
+frame = 4
+frame_progress = 0.857472
