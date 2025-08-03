@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://clc830lkjlhip"]
+[gd_scene load_steps=48 format=3 uid="uid://clc830lkjlhip"]
 
 [ext_resource type="PackedScene" uid="uid://b212emu5my3lk" path="res://scenes/town.tscn" id="1_2hyix"]
 [ext_resource type="Texture2D" uid="uid://cgm6q7yr2424h" path="res://images/island/islandAlbedo.png" id="1_mo32q"]
@@ -9,7 +9,7 @@
 [ext_resource type="Resource" uid="uid://dn1lrvkia3voq" path="res://data/SloptonData.tres" id="4_1eu6x"]
 [ext_resource type="Shader" uid="uid://coipnidx8prg6" path="res://shaders/outline/outline.gdshader" id="4_p7tei"]
 [ext_resource type="Script" uid="uid://c07l7rmmrq4w4" path="res://scripts/Areas/Terrain/TerrainArea.cs" id="6_2lpho"]
-[ext_resource type="Shader" uid="uid://bpkjttjrw55ub" path="res://shaders/colorRamp.gdshader" id="6_6k6j1"]
+[ext_resource type="Shader" path="res://shaders/colorRamp.gdshader" id="6_6k6j1"]
 [ext_resource type="Script" uid="uid://jmbhxi4mueuq" path="res://scripts/Areas/Spottable Encounters/BanditEncounter.cs" id="7_nakos"]
 [ext_resource type="Script" uid="uid://dlrfvgmrkhwfr" path="res://scripts/Areas/Spottable Encounters/StormEncounter.cs" id="8_jh32y"]
 [ext_resource type="Texture2D" uid="uid://b0sise4bpjtb4" path="res://images/bandit/bandit1.png" id="8_n1psn"]
@@ -74,10 +74,6 @@ render_priority = 0
 next_pass = SubResource("ShaderMaterial_p7tei")
 shader = ExtResource("6_6k6j1")
 shader_parameter/ramp = SubResource("GradientTexture1D_mo32q")
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_2lpho"]
-height = 3.0
-radius = 1.3916
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2lpho"]
 size = Vector3(11.7075, 1, 1)
@@ -228,16 +224,6 @@ Data = ExtResource("4_1eu6x")
 [node name="MeshInstance" parent="slopton" index="0"]
 surface_material_override/0 = SubResource("ShaderMaterial_6k6j1")
 
-[node name="Area3D" type="Area3D" parent="."]
-collision_mask = 255
-input_ray_pickable = false
-script = ExtResource("6_2lpho")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0966797, 0)
-shape = SubResource("CylinderShape3D_2lpho")
-debug_color = Color(0.952941, 0, 0.54902, 1)
-
 [node name="Road" type="Area3D" parent="."]
 transform = Transform3D(0.800407, 0, -0.599457, 0, 1, 0, 0.599457, 0, 0.800407, 0, 0, 3.4057)
 input_ray_pickable = false
@@ -245,12 +231,12 @@ script = ExtResource("6_2lpho")
 moveSpeedModifier = 1.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Road"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0319824, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3152, 0, -3.08901)
 shape = SubResource("BoxShape3D_2lpho")
 debug_color = Color(0.817724, 0, 0.147719, 0.42)
 
 [node name="Bandits" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.88736, 0, -17.0132)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0545, 0, -4.20747)
 input_ray_pickable = false
 script = ExtResource("7_nakos")
 
