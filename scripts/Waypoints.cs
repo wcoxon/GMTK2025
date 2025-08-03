@@ -46,7 +46,6 @@ public partial class Waypoints : Node3D
 
         if (evt is InputEventMouseButton mbEvent
                 && mbEvent.Pressed
-                && mbEvent.DoubleClick
                 && mbEvent.ButtonIndex == MouseButton.Left)
         {
             var instance = dot.Instantiate<Node3D>();
