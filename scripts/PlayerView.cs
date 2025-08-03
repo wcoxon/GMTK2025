@@ -144,11 +144,11 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     //        case GameState.TOWN:
     //            timeControlPanel.Hide();
     //            break;
-//
+    //
     //        case GameState.PLANNING:
-//
+    //
     //            break;
-//
+    //
     //        case GameState.TRAVELLING:
     //            timeControlPanel.Show();
     //            break;
@@ -171,13 +171,13 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         }
     }
 
-    
+
 
     public override void _Ready()
     {
         instance = this; // global handle
         EncounterManager.Instance.AddProvider(this);
-        
+
         State = GameState.TOWN;
         player = GetNode<PlayerTraveller>("../Map/Traveller");
         waypoints.lastDot = player.Town; // start path at current town
@@ -253,7 +253,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         Vector3 velocity = new Vector3(cameraVelocity.X, 0, cameraVelocity.Z); // could we not edit cameraVelocity directly?
 
         //Vector2 inputVector = Input.GetVector("left", "right", "up", "down");
-        Vector3 inputDirection = new Vector3(Input.GetAxis("left","right"), 0, Input.GetAxis("up","down"));
+        Vector3 inputDirection = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("up", "down"));
 
         if (inputDirection != Vector3.Zero)
         {
@@ -302,7 +302,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         // make trade ui visible
         // populate trade ui with town information
         // trade ui should also handle the button press stuff i think
-        
+
         tradeUI.Town = selectedTown; // i know you should only be able to trade with the town you're on it's just weird that it offers trade in the town panel for whatever you have selected :p
         tradeUI.Visible = true;
 
@@ -316,15 +316,33 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     public List<(string, double)> GetVariables()
     {
         return [
-            ("health", 5),
-            ("money", 100)
+            ("health", player.Health),
+            ("money", player.Money)
         ];
     }
 
     public void UpdateVariable(string name, double value)
     {
-        if (name == "health") GD.Print("Set playerhealth to " + value);
-        else if (name == "money") GD.Print("Set money to " + value);
+        if (name == "health")
+        {
+            GD.Print("Set playerhealth to " + value);
+            player.Health = (int)value;
+        }
+        else if (name == "money")
+        {
+            GD.Print("Set money to " + value);
+            player.Money = (int)value;
+        }
         else throw new KeyNotFoundException("Player cannot assign to variable " + name);
+    }
+
+    public void OnDeath()
+    {
+        player.Health = 3;
+        player.Money = Math.Min(50, player.Money / 3);
+        notificationManager.AddNotification("You passed out! Returning back to last town.");
+        gameState = GameState.TOWN;
+        player.ResetJourney();
+        player.Position = player.Town.Position;
     }
 }
