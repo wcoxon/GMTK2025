@@ -103,14 +103,17 @@ size_flags_vertical = 3
 [node name="Control" parent="VBoxContainer/StocksContainer" instance=ExtResource("2_1ecij")]
 layout_mode = 2
 ItemName = "Broth"
+ItemDescription = "A thin, watery, brown liquid. A staple of Sloptopolis cuisine."
 
 [node name="Control2" parent="VBoxContainer/StocksContainer" instance=ExtResource("2_1ecij")]
 layout_mode = 2
 ItemName = "Plast"
+ItemDescription = "Miscellaneous plastics. Useful for various purposes."
 
 [node name="Control3" parent="VBoxContainer/StocksContainer" instance=ExtResource("2_1ecij")]
 layout_mode = 2
 ItemName = "EvWa"
+ItemDescription = "This water has a nefarious aura."
 
 [node name="ProductionHeader" type="Label" parent="VBoxContainer"]
 visible = false
