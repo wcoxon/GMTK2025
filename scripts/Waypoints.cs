@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 public partial class Waypoints : Node3D
 {
@@ -9,13 +10,20 @@ public partial class Waypoints : Node3D
     [Export] public PackedScene dashes;
 
     public Node3D curDot;
-    [Export] public Node3D lastDot;
+    [Export] Node3D lastDot;
+
+    Node3D firstDot;
     public Node3D endDot;
     private Dashes curLine;
     private Dashes endLine;
 
     private List<Node3D> journey_nodes = [];
     private List<Dashes> journey_dashes = [];
+
+    public void SetStart(Node3D point)
+    {
+        firstDot = lastDot = point;
+    }
 
     private bool active = false;
     public bool Active
@@ -85,14 +93,19 @@ public partial class Waypoints : Node3D
         int waypointIndex = journey_nodes.IndexOf(instance);
 
         Vector3 prev = journey_dashes[waypointIndex].LineStart;
-        Vector3 next = journey_dashes[waypointIndex+1].LineEnd;
+        Vector3 next = waypointIndex < journey_nodes.Count - 1 ? journey_dashes[waypointIndex+1].LineEnd : endDot.Position;
         
         journey_dashes[waypointIndex].QueueFree();
         journey_dashes.RemoveAt(waypointIndex);
         journey_nodes.Remove(instance);
 
-        
-        journey_dashes[waypointIndex].SetLine(prev, journey_nodes[waypointIndex].Position);
+        if (waypointIndex < journey_nodes.Count)
+            journey_dashes[waypointIndex].SetLine(prev, journey_nodes[waypointIndex].Position);
+        else
+        {
+            lastDot = journey_nodes.Count > 0 ? journey_nodes.Last() : firstDot;
+            endLine.SetLine(prev, next);
+        }
 
         instance.QueueFree();
 
@@ -118,7 +131,7 @@ public partial class Waypoints : Node3D
         var ret = (journey_nodes, journey_dashes);
         journey_nodes = [];
         journey_dashes = [];
-        lastDot = endDot;
+        firstDot = lastDot = endDot;
         return ret;
     }
 }

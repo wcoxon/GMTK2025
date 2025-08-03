@@ -161,7 +161,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         State = GameState.TOWN;
         player = GetNode<PlayerTraveller>("../Map/Traveller");
         Position = player.Position;
-        waypoints.lastDot = player.Town; // start path at current town
+        waypoints.SetStart(player.Town); // start path at current town
 
         tick = 0;
         dayTicker = 0;
