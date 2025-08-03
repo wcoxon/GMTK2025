@@ -14,6 +14,7 @@ public partial class TownPanel : Panel
     [Export] Button rumourButton;
     [Export] Button plotButton;
     [Export] Button embarkButton;
+    [Export] Button cancelButton;
 
     Town town;
     public Town Town
@@ -46,13 +47,21 @@ public partial class TownPanel : Panel
             {
                 case EmbarkMode.Planning: // transition to plonning state
                     plotButton.Disabled = true;
+
                     embarkButton.Visible = true;
+                    cancelButton.Visible = true;
+
                     embarkButton.Disabled = false;
+                    cancelButton.Disabled = false;
                     break;
                 case EmbarkMode.Embarking: // transition out of planning state into travelling
-                    plotButton.Disabled = true;
+                    plotButton.Disabled = false;
+
                     embarkButton.Disabled = true;
+                    cancelButton.Disabled = true;
+
                     embarkButton.Visible = false;
+                    cancelButton.Visible = false;
                     break;
             }
         }
@@ -80,15 +89,15 @@ public partial class TownPanel : Panel
             marketRow.Production = (int)town.Production[item];
             marketRow.Consumption = (int)town.Consumption[item];
             marketRow.Price = price;
-            marketRow.PriceOffset = price - PlayerView.instance.itemBaseValues[item];
+            marketRow.PriceOffset = price - PlayerView.Instance.itemBaseValues[item];
             
         }
     }
 
     public void updateActions()
     {
-        bool onTown = PlayerView.instance.State == GameState.TOWN;
-        bool onSelected = PlayerView.instance.player.Town == Town; // gotta be careful, travellers town is still last town whilst travelling, but you shouldn't be able to trade whilst travelling
+        bool onTown = PlayerView.Instance.State == GameState.TOWN;
+        bool onSelected = PlayerView.Instance.player.Town == Town; // gotta be careful, travellers town is still last town whilst travelling, but you shouldn't be able to trade whilst travelling
 
         
         tradeButton.Disabled = !(onTown && onSelected); // show trade if on selected town and in town state

@@ -13,17 +13,32 @@ public partial class Town : Node3D
     //refs, replace with selection in _Ready later probab
     [Export] MeshInstance3D mesh;
 
-
+    bool selected;
     public bool Selected
     {
+        get => selected;
         set
         {
-            mesh.SetInstanceShaderParameter("width", value ? 0.3 : 0);
+            selected = value;
+            mesh.SetInstanceShaderParameter("colour", new Color(1, 0, 0));
+            mesh.SetInstanceShaderParameter("width", selected ? 0.3 : 0);
         }
     }
 
     // scooping town data out of custom resource because then we can save town data onto resource files
-    [Export] TownData data;
+    TownData data;
+    [Export]
+    TownData Data
+    {
+        get => data;
+        set
+        {
+            GD.Print("well");
+            data = value;
+
+            mesh.Mesh = data.mesh;
+        }
+    }
 
     public string TownName { get => data.townName; }
     public int Population { get => data.population; set => data.population = value; }
@@ -31,6 +46,7 @@ public partial class Town : Node3D
     public float[] Stocks { get => data.stocks; set => data.stocks = value; }
     public float[] Production { get => data.production; } // per day
     public float[] Consumption { get => data.consumption; } // per day
+    public AudioStream Theme { get => data.theme; }
 
     public List<Traveller> currentTravellers;
 
@@ -40,7 +56,7 @@ public partial class Town : Node3D
         RumorView.towns.Add(data.townName, this);
         // data.price_multiplyers.CopyTo(data.prices, 0);
         for (int i = 0; i < 3; i++)
-            data.prices[i] = PlayerView.instance.itemBaseValues[i] * data.price_multiplyers[i];
+            data.prices[i] = PlayerView.Instance.itemBaseValues[i] * data.price_multiplyers[i];
         data.base_consumption.CopyTo(data.consumption, 0);
         data.base_production.CopyTo(data.production, 0);
 
@@ -55,8 +71,19 @@ public partial class Town : Node3D
         }
     }
 
-    public void select() => PlayerView.instance.SelectedTown = this;
-
+    public void hover()
+    {
+        if (Selected) return;
+        mesh.SetInstanceShaderParameter("colour", new Color(1,0.5f,0.8f));
+        mesh.SetInstanceShaderParameter("width", 0.1);
+    }
+    public void unhover()
+    {
+        if (Selected) return;
+        mesh.SetInstanceShaderParameter("width",0);
+    }
+    public void select() => PlayerView.Instance.SelectedTown = this;
+    
     public int appraise(Item item)
     {
         return (int)data.prices[(int)item];
@@ -66,7 +93,7 @@ public partial class Town : Node3D
     private double next_update = UPDATE_INTERVAL; // Update
     public override void _PhysicsProcess(double delta)
     {
-        next_update -= delta * PlayerView.instance.worldSpeed;
+        next_update -= delta * PlayerView.Instance.worldSpeed;
         if (next_update < 0)
         {
             updateStock();
@@ -89,9 +116,9 @@ public partial class Town : Node3D
     {
         for (int item = 0; item < 3; item++)
         {
-            data.production[item] = supply_by_price(data.base_production[item], data.prices[item], PlayerView.instance.itemBaseValues[item] * data.price_multiplyers[item], data.production_elasticity);
+            data.production[item] = supply_by_price(data.base_production[item], data.prices[item], PlayerView.Instance.itemBaseValues[item] * data.price_multiplyers[item], data.production_elasticity);
             data.consumption[item] = data.stock_selloff[item] * data.stocks[item] + data.supply_selloff[item] * data.production[item];
-            data.prices[item] = price_by_demand(PlayerView.instance.itemBaseValues[item] * data.price_multiplyers[item], data.consumption[item], data.base_consumption[item], data.consumption_elasticity);
+            data.prices[item] = price_by_demand(PlayerView.Instance.itemBaseValues[item] * data.price_multiplyers[item], data.consumption[item], data.base_consumption[item], data.consumption_elasticity);
             data.stocks[item] += Mathf.Max(-data.stocks[item], (data.production[item] - rng.Randfn(data.consumption[item], data.consumption[item]/10))/3);
         }
     }    

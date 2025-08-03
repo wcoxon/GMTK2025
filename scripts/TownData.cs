@@ -5,8 +5,12 @@ using System.Collections.Generic;
 public partial class TownData : Resource
 {
     [Export] public string townName;
-    [Export] public int population;
-    [Export] public int wealth;
+    [Export] public int population, wealth;
+
+    [Export] public Mesh mesh;
+    [Export] public AudioStream theme;
+
+    
     [Export] public float[] stocks = new float[3]; // quantities of items
     [Export] public float[] base_production = new float[3]; // items produced per day
     [Export] public float[] base_consumption = new float[3]; // items consumed per day

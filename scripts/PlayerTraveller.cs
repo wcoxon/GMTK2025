@@ -14,6 +14,7 @@ public partial class PlayerTraveller : Traveller
 
     public override void _Ready()
     {
+        Town = Town;
         base._Ready();
 
         Money = 100;
@@ -27,7 +28,7 @@ public partial class PlayerTraveller : Traveller
     {
         travel((float)delta);
         if (health == 0)
-            PlayerView.instance.OnDeath();
+            PlayerView.Instance.OnDeath();
     }
 
     public override void onArrival(Town town)
@@ -37,16 +38,15 @@ public partial class PlayerTraveller : Traveller
         // enable trading and rumour prompts, oh and like plot journey
         // generally update visuals, ease camera over to town, play sound, and yeah like open some ui
 
-        Town = town;
-        PlayerView.instance.State = GameState.TOWN; // notifies player to enter town state
-        GD.Print($"{Name} Entering {Town.TownName}");
-        //PlayerView.instance.PauseWorldSpeed();
+        //Town = town;
+        PlayerView.Instance.State = GameState.TOWN; // notifies player to enter town state
+        //GD.Print($"{Name} Entering {Town.TownName}");
+        PlayerView.Instance.Music = Town.Theme;
     }
 
     public override void onDeparture()
     {
-        //PlayerView.instance.State = GameState.TRAVELLING;
-        //PlayerView.instance.PlayWorldSpeed();
+        PlayerView.Instance.Music = null;
     }
 
     public void GetRumour(Rumour newRumour)

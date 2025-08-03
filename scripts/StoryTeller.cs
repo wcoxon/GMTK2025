@@ -101,7 +101,7 @@ public partial class StoryTeller : Node3D
 
     public override void _Process(double delta)
     {
-        var world_dt = delta * PlayerView.instance.worldSpeed / (3 * 24) * 10;
+        var world_dt = delta * PlayerView.Instance.worldSpeed / (3 * 24) * 10;
         next_storm -= world_dt;
         next_bandits -= world_dt;
         if (ActiveStorm == null && next_storm <= 0)
@@ -110,7 +110,7 @@ public partial class StoryTeller : Node3D
             StartBandits();
         foreach (var enc in ActiveEncounters)
             {
-                enc.duration -= delta * PlayerView.instance.worldSpeed / (3 * 24);
+                enc.duration -= delta * PlayerView.Instance.worldSpeed / (3 * 24);
                 if (enc.duration < 0)
                 {
                     GD.Print("Stopped encounter: " + enc.content.Name);

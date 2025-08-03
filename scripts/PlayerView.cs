@@ -17,7 +17,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     // this will hand logic for the actual player interfacing stuff like moving the camera
     // selecting town and controlling UI shit too, like updating ui when new town is selected
 
-    public static PlayerView instance; // this class gonna be a singleton
+    public static PlayerView Instance; // this class gonna be a singleton
 
     //refs to other stuff in the scene
     public PlayerTraveller player;
@@ -30,6 +30,17 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     [Export] Panel timeControlPanel;
     [Export] InventoryUI inventoryUI;
     [Export] TradeUI tradeUI;
+    [Export] AudioStreamPlayer musicPlayer;
+    [Export] AudioStream[] travelMusic;
+    int trackIndex;
+    public AudioStream Music
+    {
+        set
+        {
+            musicPlayer.Stream = value ?? travelMusic[trackIndex++ % travelMusic.Length];
+            musicPlayer.Play();
+        }
+    }
 
     [Export] public RumorView rumorView;
     [Export] public EncounterView encounterView;
@@ -51,6 +62,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
                 case GameState.TOWN:
                     PauseWorldSpeed();
                     timeControlPanel.Hide();
+                    townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking;
 
                     if (townPanel.Town is not null) townPanel.updateActions();
                     break;
@@ -142,24 +154,6 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     [Signal] public delegate void TwentyFourTicksEventHandler();
 
 
-    //public void OnStateChanged() // ok honestly it would make more sense to make a state machine at this point but I've spent too long not doing that and it feels like a sunk cost // could we put this stuff in the property, like when you set the state it will implicitly update the ui and stuff to reflect this
-    //{
-    //    switch (gameState)
-    //    {
-    //        case GameState.TOWN:
-    //            timeControlPanel.Hide();
-    //            break;
-    //
-    //        case GameState.PLANNING:
-    //
-    //            break;
-    //
-    //        case GameState.TRAVELLING:
-    //            timeControlPanel.Show();
-    //            break;
-    //    }
-    //}
-
     Town selectedTown;
     public Town SelectedTown
     {
@@ -180,12 +174,13 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
 
     public override void _Ready()
     {
-        instance = this; // global handle
+        Instance = this; // global handle
         EncounterManager.Instance.AddProvider(this);
 
         State = GameState.TOWN;
         player = GetNode<PlayerTraveller>("../Map/Traveller");
-        waypoints.lastDot = player.Town; // start path at current town
+        Position = player.Position;
+        waypoints.SetStart(player.Town); // start path at current town
 
         tick = 0;
         dayTicker = 0;
@@ -218,6 +213,15 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
             inventoryUI.Visible = !inventoryUI.Visible;
 
             if (inventoryUI.Visible) inventoryUI.displayInventory(player);
+        }
+
+        if (@event.IsActionPressed("zoomIn"))
+        {
+            Scale -= Vector3.One*0.1f;
+        }
+        if (@event.IsActionPressed("zoomOut"))
+        {
+            Scale += Vector3.One*0.1f;
         }
 
         switch (gameState)
@@ -284,24 +288,16 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
 
     public void plotJourney()
     {
-        //waypoints.Active = true;
-        //townPanel.Embarkmode = TownPanel.EmbarkMode.Planning;
         State = GameState.PLANNING;
-
-        //waypoints.endDot = SelectedTown;
-        //waypoints.OnMouseExited(); // (since the mouse is off the map at this moment)
     }
-
+    public void cancelPlot()
+    {
+        State = GameState.TOWN;
+        waypoints.Active = false;
+    }
     public void embark()
     {
         State = GameState.TRAVELLING;
-        //waypoints.Active = false;
-        //townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking;
-        //
-        //var (nodes, dashes) = waypoints.PopJourney();
-        //player.SetJourney(nodes, dashes);
-        //
-        //player.onDeparture();
     }
 
 

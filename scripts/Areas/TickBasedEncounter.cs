@@ -8,13 +8,13 @@ public partial class TickBasedEncounter : EncounterArea
     {
         base._Ready();
 
-        PlayerView.instance.Tick += DoOnTick;
+        PlayerView.Instance.Tick += DoOnTick;
     }
 
     public override void _ExitTree()
     {
         base._ExitTree();
-        PlayerView.instance.Tick -= DoOnTick;
+        PlayerView.Instance.Tick -= DoOnTick;
     }
 
 
