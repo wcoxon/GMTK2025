@@ -1,10 +1,31 @@
-[gd_scene load_steps=7 format=3 uid="uid://cstlo8wngb4vj"]
+[gd_scene load_steps=13 format=3 uid="uid://cstlo8wngb4vj"]
 
 [ext_resource type="Script" uid="uid://djqex4bafycgk" path="res://scripts/MainMenu.cs" id="1_d61ab"]
 [ext_resource type="PackedScene" uid="uid://cvlfxg610affe" path="res://scenes/MainScene.tscn" id="2_j424i"]
 [ext_resource type="Texture2D" uid="uid://cbhavnovy7mwk" path="res://images/ZLlogo.png" id="3_lttq2"]
+[ext_resource type="Script" uid="uid://b6wt10pxfmkhn" path="res://scenes/menubk.cs" id="3_oa1go"]
+[ext_resource type="FontFile" uid="uid://clh4frvcwdwot" path="res://images/AURORA-PRO.otf" id="3_rtw2f"]
 [ext_resource type="Script" uid="uid://2uwacw4rurxh" path="res://scripts/LogoScreen.cs" id="4_4b1yf"]
 [ext_resource type="Texture2D" uid="uid://1l68a2526t6v" path="res://images/burntpizza.jpg" id="5_8o6sb"]
+
+[sub_resource type="Gradient" id="Gradient_tbmy8"]
+offsets = PackedFloat32Array(0, 0.30855, 0.698885, 0.921933)
+colors = PackedColorArray(1.73271e-06, 0.664297, 0.859526, 1, 0.855394, 0.0254511, 0.644289, 1, 0.47196, 0.537793, 1.92523e-07, 1, 0, 0.562669, 0.622458, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jk1qb"]
+noise_type = 3
+frequency = 0.0022
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5dd4i"]
+in_3d_space = true
+color_ramp = SubResource("Gradient_tbmy8")
+noise = SubResource("FastNoiseLite_jk1qb")
+
+[sub_resource type="LabelSettings" id="LabelSettings_oa1go"]
+font = ExtResource("3_rtw2f")
+font_size = 116
+outline_size = 52
+outline_color = Color(0.0555051, 0, 0.547012, 1)
 
 [sub_resource type="Curve" id="Curve_vj2p8"]
 _data = [Vector2(0.669879, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -7.17976, 0.0, 0, 0]
@@ -20,16 +41,35 @@ grow_vertical = 2
 script = ExtResource("1_d61ab")
 gameScene = ExtResource("2_j424i")
 
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.007
+anchor_bottom = 1.006
+offset_right = -0.0640869
+offset_bottom = 0.112
+texture = SubResource("NoiseTexture2D_5dd4i")
+script = ExtResource("3_oa1go")
+noise = SubResource("NoiseTexture2D_5dd4i")
+
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 324.0
-offset_top = 319.0
+offset_top = 148.0
 offset_right = -275.0
+offset_bottom = -203.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+text = "SLOPTOPOLIS"
+label_settings = SubResource("LabelSettings_oa1go")
+horizontal_alignment = 1
 
 [node name="NewGameButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -44,6 +84,7 @@ layout_mode = 2
 text = "QUIT"
 
 [node name="TextureRect" type="TextureRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
