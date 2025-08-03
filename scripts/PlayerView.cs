@@ -296,6 +296,13 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     {
         State = GameState.TOWN;
         waypoints.Active = false;
+        var (nodes, dashes) = waypoints.PopJourney();
+        foreach (var node in nodes)
+            if (!(node is Town))
+                node.QueueFree();
+        foreach (var dash in dashes)
+            dash.QueueFree();
+        waypoints.SetStart(player.Town); // Reset starting point back to current town.
     }
     public void embark()
     {
