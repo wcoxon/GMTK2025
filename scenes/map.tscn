@@ -115,11 +115,11 @@ surface_material_override/0 = SubResource("StandardMaterial3D_poiku")
 
 [node name="Town" parent="." instance=ExtResource("1_2hyix")]
 transform = Transform3D(0.950997, 0, -0.3092, 0, 1, 0, 0.3092, 0, 0.950997, 5.43591, 0, 7.28171)
-data = ExtResource("2_qhcnf")
+Data = ExtResource("2_qhcnf")
 
 [node name="Town2" parent="." instance=ExtResource("1_2hyix")]
 transform = Transform3D(0.812165, 0, 0.583428, 0, 1, 0, -0.583428, 0, 0.812165, -7.94515, -9.53674e-07, -4.22497)
-data = ExtResource("3_54cpw")
+Data = ExtResource("3_54cpw")
 
 [node name="MeshInstance" parent="Town2" index="0"]
 mesh = ExtResource("4_c70he")
@@ -127,7 +127,7 @@ surface_material_override/0 = SubResource("ShaderMaterial_4b7dj")
 
 [node name="Town3" parent="." instance=ExtResource("1_2hyix")]
 transform = Transform3D(-0.30207, 0, -0.953286, 0, 1, 0, 0.953286, 0, -0.30207, 7.07024, -9.53674e-07, -8.17452)
-data = ExtResource("4_1eu6x")
+Data = ExtResource("4_1eu6x")
 
 [node name="MeshInstance" parent="Town3" index="0"]
 mesh = SubResource("PrismMesh_2cfcp")

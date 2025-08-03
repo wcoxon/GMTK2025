@@ -23,7 +23,18 @@ public partial class Town : Node3D
     }
 
     // scooping town data out of custom resource because then we can save town data onto resource files
-    [Export] TownData data;
+    TownData data;
+    [Export]
+    TownData Data
+    {
+        get => data;
+        set
+        {
+            data = value;
+
+            mesh.Mesh = data.mesh;
+        }
+    }
 
     public string TownName { get => data.townName; }
     public int Population { get => data.population; set => data.population = value; }
@@ -31,6 +42,7 @@ public partial class Town : Node3D
     public float[] Stocks { get => data.stocks; set => data.stocks = value; }
     public float[] Production { get => data.production; } // per day
     public float[] Consumption { get => data.consumption; } // per day
+    public AudioStream Theme { get => data.theme; }
 
     public override void _Ready()
     {
@@ -46,7 +58,7 @@ public partial class Town : Node3D
         }
     }
 
-    public void select() => PlayerView.instance.SelectedTown = this;
+    public void select() => PlayerView.Instance.SelectedTown = this;
     
     public int appraise(Item item)
     {
@@ -68,7 +80,7 @@ public partial class Town : Node3D
         valueScale /= Production[itemIndex] + 1;
 
 
-        return (int)(valueScale * PlayerView.instance.itemBaseValues[itemIndex]);
+        return (int)(valueScale * PlayerView.Instance.itemBaseValues[itemIndex]);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -80,7 +92,7 @@ public partial class Town : Node3D
     void updateStock(double deltaRealTime)
     {
         // produce or consume items over time, call in physics process
-        double deltaSimTime = deltaRealTime * PlayerView.instance.worldSpeed;
+        double deltaSimTime = deltaRealTime * PlayerView.Instance.worldSpeed;
 
         // calculate how much of a day this equates to
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
 [ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/PlayerView.cs" id="2_6fa14"]
-[ext_resource type="AudioStream" uid="uid://dojjif4v2wcke" path="res://gtyg.mp3" id="2_kp0ql"]
+[ext_resource type="AudioStream" uid="uid://dojjif4v2wcke" path="res://Audio/gtyg.mp3" id="2_kp0ql"]
 [ext_resource type="PackedScene" uid="uid://dpdvumg63k3xu" path="res://scenes/TownPanel.tscn" id="3_y7ipx"]
 [ext_resource type="Theme" uid="uid://b7sho3deipfsu" path="res://scripts/ScaleTime/SpeedButtonTheme.tres" id="4_1wiy7"]
 [ext_resource type="PackedScene" uid="uid://dao5worh1gb0c" path="res://scenes/TradeUI.tscn" id="4_5hv5t"]
@@ -30,7 +30,7 @@ sky = SubResource("Sky_611at")
 
 [node name="Root" type="Node3D"]
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI", "tradeUI", "rumorView", "encounterView")]
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI", "tradeUI", "musicPlayer", "rumorView", "encounterView")]
 script = ExtResource("2_6fa14")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/TownPanel")
 waypoints = NodePath("../Waypoints")
@@ -41,6 +41,8 @@ turboSpeedButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxCo
 timeControlPanel = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel")
 inventoryUI = NodePath("../CanvasLayer/HSplitContainer/HUD/inventory")
 tradeUI = NodePath("../CanvasLayer/HSplitContainer/HUD/TradePanel")
+musicPlayer = NodePath("Camera3D/MusicPlayer")
+travelMusic = ExtResource("2_kp0ql")
 rumorView = NodePath("../CanvasLayer/RumorView")
 encounterView = NodePath("../CanvasLayer/EncounterView")
 
@@ -50,15 +52,15 @@ transform = Transform3D(1, 0, 0, 0, 0.47355, 0.880767, 0, -0.880767, 0.47355, 0,
 [node name="WorldEnvironment" type="WorldEnvironment" parent="Player/Camera3D"]
 environment = SubResource("Environment_vyg74")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Player/Camera3D"]
-stream = ExtResource("2_kp0ql")
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="Player/Camera3D"]
+editor_description = "putting 1 player for music on the player so we don't risk multiple songs playing at once"
 autoplay = true
-parameters/looping = true
+bus = &"Music"
 
 [node name="Map" parent="." instance=ExtResource("1_5opw3")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.0844432, 0.871412, -0.483229, 0.0410672, 0.481505, 0.87548, 0.995582, -0.0937732, 0.00487342, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.245307, 0.969445, 0, -0.969445, 0.245307, 0, 0, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -100,7 +102,7 @@ offset_bottom = -40.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="DateTime" type="Label" parent="CanvasLayer/HSplitContainer/HUD/TimePanel"]
+[node name="DateTime" type="Label" parent="CanvasLayer/HSplitContainer/HUD/TimePanel" node_paths=PackedStringArray("sun")]
 layout_mode = 0
 offset_left = 27.0
 offset_top = -33.0
@@ -108,6 +110,7 @@ offset_right = 188.0
 offset_bottom = -2.0
 text = "DD-MM-YYYY"
 script = ExtResource("4_c2qql")
+sun = NodePath("../../../../../DirectionalLight3D")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HSplitContainer/HUD/TimePanel"]
 layout_mode = 1

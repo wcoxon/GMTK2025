@@ -24,14 +24,16 @@ public partial class PlayerTraveller : Traveller
         // enable trading and rumour prompts, oh and like plot journey
         // generally update visuals, ease camera over to town, play sound, and yeah like open some ui
 
-        Town = town;
-        PlayerView.instance.State = GameState.TOWN; // notifies player to enter town state
+        //Town = town;
+        PlayerView.Instance.State = GameState.TOWN; // notifies player to enter town state
         GD.Print($"{Name} Entering {Town.TownName}");
+        PlayerView.Instance.Music = Town.Theme;
         //PlayerView.instance.PauseWorldSpeed();
     }
 
     public override void onDeparture()
     {
+        PlayerView.Instance.Music = null;
         //PlayerView.instance.State = GameState.TRAVELLING;
         //PlayerView.instance.PlayWorldSpeed();
     }

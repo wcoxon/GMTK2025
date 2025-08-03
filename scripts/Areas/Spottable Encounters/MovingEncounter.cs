@@ -24,7 +24,7 @@ public partial class MovingEncounter : TickBasedEncounter
 
     public void MoveArea(float delta)
     {
-        float dist = m_moveSpeed * delta * PlayerView.instance.worldSpeed;
+        float dist = m_moveSpeed * delta * PlayerView.Instance.worldSpeed;
 
         Translate(Displacement.Normalized() * dist);
     }

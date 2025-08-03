@@ -1,12 +1,17 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dn1lrvkia3voq"]
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://dn1lrvkia3voq"]
 
 [ext_resource type="Script" uid="uid://bu8blcnkgpmyl" path="res://scripts/TownData.cs" id="1_mhphq"]
+[ext_resource type="AudioStream" uid="uid://dh0tyk18v2c16" path="res://Audio/gamejamsong_2shit.wav" id="2_6wyws"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_qlpui"]
 
 [resource]
 script = ExtResource("1_mhphq")
 townName = "Slopton"
 population = 500
 wealth = 1200
+mesh = SubResource("PrismMesh_qlpui")
+theme = ExtResource("2_6wyws")
 stocks = PackedFloat32Array(24, 1111, 41)
 production = PackedFloat32Array(15, 112, 4)
 consumption = PackedFloat32Array(1, 123, 4)

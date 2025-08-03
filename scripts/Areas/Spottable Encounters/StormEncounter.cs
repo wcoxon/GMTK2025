@@ -23,8 +23,8 @@ public partial class StormEncounter : MovingEncounter
     {
         base._Ready();
         devastatedTownsToday = false;
-        PlayerView.instance.EightTicks += DoEveryEightTicks;
-        PlayerView.instance.TwentyFourTicks += DoDaily;
+        PlayerView.Instance.EightTicks += DoEveryEightTicks;
+        PlayerView.Instance.TwentyFourTicks += DoDaily;
 
         AreaEntered += OnAreaEntered;
         AreaExited += OnAreaExited;

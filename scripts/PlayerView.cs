@@ -17,7 +17,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     // this will hand logic for the actual player interfacing stuff like moving the camera
     // selecting town and controlling UI shit too, like updating ui when new town is selected
 
-    public static PlayerView instance; // this class gonna be a singleton
+    public static PlayerView Instance; // this class gonna be a singleton
 
     //refs to other stuff in the scene
     public PlayerTraveller player;
@@ -30,6 +30,16 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     [Export] Panel timeControlPanel;
     [Export] InventoryUI inventoryUI;
     [Export] TradeUI tradeUI;
+    [Export] AudioStreamPlayer musicPlayer;
+    [Export] AudioStream travelMusic;
+    public AudioStream Music
+    {
+        set
+        {
+            musicPlayer.Stream = value ?? travelMusic;
+            musicPlayer.Play();
+        }
+    }
 
     [Export] public RumorView rumorView;
     [Export] public EncounterView encounterView;
@@ -161,7 +171,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
 
     public override void _Ready()
     {
-        instance = this; // global handle
+        Instance = this; // global handle
         EncounterManager.Instance.AddProvider(this);
         
         State = GameState.TOWN;

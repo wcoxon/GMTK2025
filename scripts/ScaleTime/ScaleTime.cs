@@ -9,6 +9,6 @@ public partial class ScaleTime : Button
 
     public override void _Toggled(bool toggledOn)
     {
-        if(toggledOn) PlayerView.instance.setWorldSpeed(newTimeScale);
+        if(toggledOn) PlayerView.Instance.setWorldSpeed(newTimeScale);
     }
 }

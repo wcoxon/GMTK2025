@@ -44,9 +44,9 @@ public partial class EncounterView : Panel
         }
 
         post_action = post;
-        PlayerView.instance.PauseWorldSpeed();
-        last_state = PlayerView.instance.State;
-        PlayerView.instance.State = GameState.ENCOUNTERING;
+        PlayerView.Instance.PauseWorldSpeed();
+        last_state = PlayerView.Instance.State;
+        PlayerView.Instance.State = GameState.ENCOUNTERING;
     }
 
     private void OnOptionPressed(int id)
@@ -58,8 +58,8 @@ public partial class EncounterView : Panel
             GetNode<Button>("MarginContainer/VSplitContainer/Option" + i).Visible = false;
         }
 
-        PlayerView.instance.State = last_state;
-        PlayerView.instance.PlayWorldSpeed();
+        PlayerView.Instance.State = last_state;
+        PlayerView.Instance.PlayWorldSpeed();
         if (post_action != null)
             post_action();
     }

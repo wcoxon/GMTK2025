@@ -1,12 +1,16 @@
-[gd_resource type="Resource" load_steps=2 format=3 uid="uid://c0yvi6dd5l3sq"]
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://c0yvi6dd5l3sq"]
 
+[ext_resource type="ArrayMesh" uid="uid://dwqsxckirn075" path="res://images/weirdcity2.obj" id="1_6hdax"]
 [ext_resource type="Script" uid="uid://bu8blcnkgpmyl" path="res://scripts/TownData.cs" id="1_n3ssh"]
+[ext_resource type="AudioStream" uid="uid://c1hdmyvtbduxr" path="res://Audio/gamejamsong2_3.wav" id="3_rgdnt"]
 
 [resource]
 script = ExtResource("1_n3ssh")
 townName = "Gumbusville"
 population = 12
 wealth = 100
+mesh = ExtResource("1_6hdax")
+theme = ExtResource("3_rgdnt")
 stocks = PackedFloat32Array(10, 150, 215)
 production = PackedFloat32Array(50, 90, 180)
 consumption = PackedFloat32Array(0, 95, 140)

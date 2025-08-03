@@ -3,7 +3,7 @@ using System;
 
 public partial class TradeUI : Panel
 {
-
+	[Export] AudioStreamPlayer confirmSound;
 	[Export] VBoxContainer productsContainer;
 	[Export] Label fundsLabel, costLabel;
 
@@ -33,14 +33,14 @@ public partial class TradeUI : Panel
 
 			int price = Town.appraise((Item)item);
 			row.Price = price;
-			row.PriceOffset = price - PlayerView.instance.itemBaseValues[item];
+			row.PriceOffset = price - PlayerView.Instance.itemBaseValues[item];
 
 			row.Transfer = 0;
 
-			row.PlayerStock = PlayerView.instance.player.inventory[item];
+			row.PlayerStock = PlayerView.Instance.player.inventory[item];
 		}
 
-		fundsLabel.Text = $"\nYour Funds: {PlayerView.instance.player.Money} crumbs\nTown Funds: {Town.Wealth} crumbs\n ";
+		fundsLabel.Text = $"\nYour Funds: {PlayerView.Instance.player.Money} crumbs\nTown Funds: {Town.Wealth} crumbs\n ";
 
 		updateCost(0);
 	}
@@ -55,13 +55,13 @@ public partial class TradeUI : Panel
 		}
 		costLabel.Text = $"Total Cost: {totalCost} crumbs";
 
-		confirmButton.Disabled = totalCost > PlayerView.instance.player.Money || -totalCost > Town.Wealth; // disable transaction if insufficient funds on either party
+		confirmButton.Disabled = totalCost > PlayerView.Instance.player.Money || -totalCost > Town.Wealth; // disable transaction if insufficient funds on either party
 	}
 
 	public void confirmTrade()
 	{
 		// subtract player money, add town money
-		PlayerView.instance.player.Money -= totalCost;
+		PlayerView.Instance.player.Money -= totalCost;
 		Town.Wealth += totalCost;
 
 		// subtract town stock, add player stock
@@ -70,8 +70,10 @@ public partial class TradeUI : Panel
 			TradeRow row = productsContainer.GetChild<TradeRow>(item);
 
 			Town.Stocks[item] -= row.Transfer;
-			PlayerView.instance.player.inventory[item] += row.Transfer;
+			PlayerView.Instance.player.inventory[item] += row.Transfer;
 		}
+
+		confirmSound.Play();
 
 		// update ui
 		updateUI();
