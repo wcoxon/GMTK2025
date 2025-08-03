@@ -1,31 +1,23 @@
-[gd_scene load_steps=33 format=3 uid="uid://cvlfxg610affe"]
+[gd_scene load_steps=22 format=3 uid="uid://cvlfxg610affe"]
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
 [ext_resource type="Script" uid="uid://65fhx2ltcthw" path="res://scenes/playerAssigner.cs" id="1_08o8g"]
 [ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/PlayerView.cs" id="2_6fa14"]
 [ext_resource type="AudioStream" uid="uid://dojjif4v2wcke" path="res://Audio/gtyg.mp3" id="2_kp0ql"]
+[ext_resource type="AudioStream" uid="uid://dsw7n1rj7h8v6" path="res://Audio/dsfsf.mp3" id="3_8wjpf"]
 [ext_resource type="PackedScene" uid="uid://dpdvumg63k3xu" path="res://scenes/TownPanel.tscn" id="3_y7ipx"]
 [ext_resource type="Theme" uid="uid://b7sho3deipfsu" path="res://scripts/ScaleTime/SpeedButtonTheme.tres" id="4_1wiy7"]
 [ext_resource type="PackedScene" uid="uid://dao5worh1gb0c" path="res://scenes/TradeUI.tscn" id="4_5hv5t"]
 [ext_resource type="Script" uid="uid://bxk7okto3l8y3" path="res://scripts/UI/DateUI.cs" id="4_c2qql"]
 [ext_resource type="Script" uid="uid://dpgf4ygtataug" path="res://scripts/ScaleTime/ScaleTime.cs" id="4_k24pf"]
 [ext_resource type="ButtonGroup" uid="uid://br2jb0lwfyinh" path="res://scripts/ScaleTime/SpeedButtonGroup.tres" id="4_ygjfp"]
+[ext_resource type="AudioStream" uid="uid://ccu7ddjj2sqx4" path="res://Audio/gygy.mp3" id="5_25dfr"]
 [ext_resource type="PackedScene" uid="uid://durnjyano0ic4" path="res://scenes/waypoints.tscn" id="5_k24pf"]
+[ext_resource type="AudioStream" uid="uid://ce756abk3ipcs" path="res://Audio/ssa.mp3" id="6_kjvyo"]
+[ext_resource type="AudioStream" uid="uid://ci12pk15nudvu" path="res://Audio/vcxvxcdv.mp3" id="7_2phbr"]
 [ext_resource type="PackedScene" uid="uid://bdrkqejd8htea" path="res://scenes/EncounterView.tscn" id="8_cfq0f"]
 [ext_resource type="PackedScene" uid="uid://c6yeey4j3upm4" path="res://scenes/inventory.tscn" id="8_pd1er"]
 [ext_resource type="PackedScene" uid="uid://xqt4l46rhnwy" path="res://scenes/RumorView.tscn" id="8_x537r"]
-[ext_resource type="Texture2D" uid="uid://dra0jq2a8piq7" path="res://images/Lips/lips1.png" id="15_0ehpd"]
-[ext_resource type="Texture2D" uid="uid://c070i0erkypv4" path="res://images/Lips/lips2.png" id="16_8wjpf"]
-[ext_resource type="Texture2D" uid="uid://lc8wgbtkyb6m" path="res://images/Lips/lips3.png" id="17_25dfr"]
-[ext_resource type="Texture2D" uid="uid://bb6ydbcrpvilm" path="res://images/eyebox/eyebox1.png" id="18_mkg2b"]
-[ext_resource type="Texture2D" uid="uid://16ohxvt2ursq" path="res://images/eyebox/eyebox2.png" id="19_1ns3k"]
-[ext_resource type="Texture2D" uid="uid://bot8uc4qlj660" path="res://images/eyebox/eyebox3.png" id="20_a7pbh"]
-[ext_resource type="Texture2D" uid="uid://c3hqjn5prv47e" path="res://images/eyebox/eyebox4.png" id="21_ye0jt"]
-[ext_resource type="Texture2D" uid="uid://bvjvnd2ddtt8r" path="res://images/eyebox/eyebox5.png" id="22_7wwop"]
-[ext_resource type="Texture2D" uid="uid://7w8hu4tfa40t" path="res://images/2head/2head1.png" id="23_7wwop"]
-[ext_resource type="Texture2D" uid="uid://3rei35ft2l27" path="res://images/2head/2head2.png" id="24_jcw2p"]
-[ext_resource type="Texture2D" uid="uid://bfuf8y81h7v44" path="res://images/2head/2head3.png" id="25_qavw1"]
-[ext_resource type="Texture2D" uid="uid://bgbjajbspj48t" path="res://images/2head/2head4.png" id="26_i7ifx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qk1f2"]
 sky_top_color = Color(0.66796, 0.355097, 5.77569e-07, 1)
@@ -37,81 +29,11 @@ ground_bottom_color = Color(0.665338, 0.448419, 0, 1)
 sky_material = SubResource("ProceduralSkyMaterial_qk1f2")
 
 [sub_resource type="Environment" id="Environment_vyg74"]
-background_mode = 2
-background_color = Color(0.69, 0.46644, 0.1311, 1)
+background_mode = 1
+background_color = Color(0.394563, 0.00115543, 0.582537, 1)
 sky = SubResource("Sky_611at")
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_kjvyo"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("15_0ehpd")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_8wjpf")
-}, {
-"duration": 1.0,
-"texture": ExtResource("17_25dfr")
-}, {
-"duration": 1.0,
-"texture": ExtResource("16_8wjpf")
-}],
-"loop": true,
-"name": &"default",
-"speed": 10.0
-}]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_jcw2p"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("18_mkg2b")
-}, {
-"duration": 1.0,
-"texture": ExtResource("19_1ns3k")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20_a7pbh")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_ye0jt")
-}, {
-"duration": 1.0,
-"texture": ExtResource("22_7wwop")
-}, {
-"duration": 1.0,
-"texture": ExtResource("21_ye0jt")
-}, {
-"duration": 1.0,
-"texture": ExtResource("20_a7pbh")
-}, {
-"duration": 1.0,
-"texture": ExtResource("19_1ns3k")
-}],
-"loop": true,
-"name": &"default",
-"speed": 10.0
-}]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_r3sjc"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("23_7wwop")
-}, {
-"duration": 1.0,
-"texture": ExtResource("24_jcw2p")
-}, {
-"duration": 1.0,
-"texture": ExtResource("25_qavw1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("26_i7ifx")
-}],
-"loop": true,
-"name": &"default",
-"speed": 10.0
-}]
+ambient_light_source = 3
+ambient_light_color = Color(0.605274, 0.605274, 0.605274, 1)
 
 [node name="Root" type="Node3D" node_paths=PackedStringArray("Player")]
 script = ExtResource("1_08o8g")
@@ -129,7 +51,7 @@ timeControlPanel = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel")
 inventoryUI = NodePath("../CanvasLayer/HSplitContainer/HUD/inventory")
 tradeUI = NodePath("../CanvasLayer/HSplitContainer/HUD/TradePanel")
 musicPlayer = NodePath("Camera3D/MusicPlayer")
-travelMusic = ExtResource("2_kp0ql")
+travelMusic = Array[AudioStream]([ExtResource("3_8wjpf"), ExtResource("2_kp0ql"), ExtResource("5_25dfr"), ExtResource("6_kjvyo"), ExtResource("7_2phbr")])
 rumorView = NodePath("../CanvasLayer/RumorView")
 encounterView = NodePath("../CanvasLayer/EncounterView")
 
@@ -147,7 +69,7 @@ bus = &"Music"
 [node name="Map" parent="." instance=ExtResource("1_5opw3")]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.245307, 0.969445, 0, -0.969445, 0.245307, 0, 0, 0)
+transform = Transform3D(0.60944, -0.194488, -0.768607, 0.792833, 0.1495, 0.590819, 0, -0.969445, 0.245307, 0, 0, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -259,6 +181,7 @@ grow_horizontal = 1
 grow_vertical = 1
 
 [node name="RecollectionBar" type="HSlider" parent="CanvasLayer/HSplitContainer/HUD"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.028
@@ -284,27 +207,6 @@ offset_right = 553.0
 offset_bottom = 356.0
 
 [node name="Waypoints" parent="." instance=ExtResource("5_k24pf")]
-
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.8023, 0.848907, -3.14997)
-billboard = 1
-no_depth_test = true
-sprite_frames = SubResource("SpriteFrames_kjvyo")
-autoplay = "default"
-
-[node name="AnimatedSprite3D2" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.4884, 0.848907, -2.65339)
-billboard = 1
-no_depth_test = true
-sprite_frames = SubResource("SpriteFrames_jcw2p")
-autoplay = "default"
-
-[node name="AnimatedSprite3D3" type="AnimatedSprite3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.9185, 0.848907, -2.65339)
-billboard = 1
-no_depth_test = true
-sprite_frames = SubResource("SpriteFrames_r3sjc")
-autoplay = "default"
 
 [connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/TownPanel" to="Waypoints" method="OnMouseExited"]
 [connection signal="pressed" from="CanvasLayer/HSplitContainer/TownPanel/VBoxContainer/trade" to="Player" method="openTrade"]

@@ -31,12 +31,13 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     [Export] InventoryUI inventoryUI;
     [Export] TradeUI tradeUI;
     [Export] AudioStreamPlayer musicPlayer;
-    [Export] AudioStream travelMusic;
+    [Export] AudioStream[] travelMusic;
+    int trackIndex;
     public AudioStream Music
     {
         set
         {
-            musicPlayer.Stream = value ?? travelMusic;
+            musicPlayer.Stream = value ?? travelMusic[trackIndex++ % travelMusic.Length];
             musicPlayer.Play();
         }
     }

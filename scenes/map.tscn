@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=3 uid="uid://clc830lkjlhip"]
+[gd_scene load_steps=49 format=3 uid="uid://clc830lkjlhip"]
 
 [ext_resource type="PackedScene" uid="uid://b212emu5my3lk" path="res://scenes/town.tscn" id="1_2hyix"]
 [ext_resource type="Texture2D" uid="uid://cgm6q7yr2424h" path="res://images/island/islandAlbedo.png" id="1_mo32q"]
@@ -18,6 +18,18 @@
 [ext_resource type="Texture2D" uid="uid://y6rgiwyys76n" path="res://images/bandit/bandit4.png" id="11_c70he"]
 [ext_resource type="Texture2D" uid="uid://cjmvqcaw0fp8q" path="res://images/bandit/bandit5.png" id="12_mo32q"]
 [ext_resource type="Texture2D" uid="uid://dggaexxqmfq45" path="res://images/bandit/bandit6.png" id="13_6k6j1"]
+[ext_resource type="Texture2D" uid="uid://dra0jq2a8piq7" path="res://images/Lips/lips1.png" id="19_4qxv8"]
+[ext_resource type="Texture2D" uid="uid://c070i0erkypv4" path="res://images/Lips/lips2.png" id="20_fq663"]
+[ext_resource type="Texture2D" uid="uid://lc8wgbtkyb6m" path="res://images/Lips/lips3.png" id="21_mniao"]
+[ext_resource type="Texture2D" uid="uid://bb6ydbcrpvilm" path="res://images/eyebox/eyebox1.png" id="22_yfm5w"]
+[ext_resource type="Texture2D" uid="uid://16ohxvt2ursq" path="res://images/eyebox/eyebox2.png" id="23_081xv"]
+[ext_resource type="Texture2D" uid="uid://bot8uc4qlj660" path="res://images/eyebox/eyebox3.png" id="24_12q1p"]
+[ext_resource type="Texture2D" uid="uid://c3hqjn5prv47e" path="res://images/eyebox/eyebox4.png" id="25_lhdcv"]
+[ext_resource type="Texture2D" uid="uid://bvjvnd2ddtt8r" path="res://images/eyebox/eyebox5.png" id="26_cgoaf"]
+[ext_resource type="Texture2D" uid="uid://7w8hu4tfa40t" path="res://images/2head/2head1.png" id="27_mwr4f"]
+[ext_resource type="Texture2D" uid="uid://3rei35ft2l27" path="res://images/2head/2head2.png" id="28_1qn5a"]
+[ext_resource type="Texture2D" uid="uid://bfuf8y81h7v44" path="res://images/2head/2head3.png" id="29_leq5k"]
+[ext_resource type="Texture2D" uid="uid://bgbjajbspj48t" path="res://images/2head/2head4.png" id="30_qcc5i"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_m57gh"]
 size = Vector2(5, 5)
@@ -115,6 +127,78 @@ animations = [{
 height = 6.673
 radius = 10.009
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_litwm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("19_4qxv8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_fq663")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_mniao")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_fq663")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g8nl4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("22_yfm5w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_081xv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_12q1p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_lhdcv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_cgoaf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_lhdcv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_12q1p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_081xv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vqsqp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("27_mwr4f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_1qn5a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_leq5k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_qcc5i")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
 [node name="Map" type="Node3D"]
 
 [node name="SurfacePlane" type="MeshInstance3D" parent="."]
@@ -166,6 +250,7 @@ shape = SubResource("BoxShape3D_2lpho")
 debug_color = Color(0.817724, 0, 0.147719, 0.42)
 
 [node name="Bandits" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.88736, 0, -17.0132)
 input_ray_pickable = false
 script = ExtResource("7_nakos")
 
@@ -194,6 +279,27 @@ maxDistanceBeforeRespawn = 40
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StormArea"]
 shape = SubResource("CylinderShape3D_nakos")
 debug_color = Color(0.00392157, 0.0509804, 0.105882, 1)
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.8023, 0.848907, -8.68057)
+billboard = 1
+no_depth_test = true
+sprite_frames = SubResource("SpriteFrames_litwm")
+autoplay = "default"
+
+[node name="AnimatedSprite3D2" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.4884, 0.848907, -2.65339)
+billboard = 1
+no_depth_test = true
+sprite_frames = SubResource("SpriteFrames_g8nl4")
+autoplay = "default"
+
+[node name="AnimatedSprite3D3" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.5958, 0.848907, 4.34674)
+billboard = 1
+no_depth_test = true
+sprite_frames = SubResource("SpriteFrames_vqsqp")
+autoplay = "default"
 
 [editable path="gurgisham"]
 [editable path="gumbusville"]
