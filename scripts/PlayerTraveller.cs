@@ -3,6 +3,15 @@ using System;
 
 public partial class PlayerTraveller : Traveller
 {
+    int health = 1;
+    public int Health
+    {
+        get => health; set
+        {
+            health = value;
+        }
+    }
+
     public override void _Ready()
     {
         Money = 100;
@@ -15,6 +24,8 @@ public partial class PlayerTraveller : Traveller
     public override void _Process(double delta)
     {
         travel((float)delta);
+        if (health == 0)
+            PlayerView.instance.OnDeath();
     }
 
     public override void onArrival(Town town)

@@ -13,8 +13,11 @@ public partial class Traveller : Node3D
 
     int money = 0;
     public int Money { get => money; set => money = value; }
+    public int Money { get => money; set => money = value; }
 
     //[Export] public Godot.Collections.Dictionary<Item, int> inventory;
+    public int[] inventory = new int[3];
+
     public int[] inventory = new int[3];
 
     public float moveSpeed = 1;
@@ -22,6 +25,8 @@ public partial class Traveller : Node3D
     public List<Rumour> knownRumours;
 
     Town town;
+    [Export]
+    public Town Town
     [Export]
     public Town Town
     {
