@@ -56,7 +56,7 @@ public partial class Town : Node3D
         RumorView.towns.Add(data.townName, this);
         // data.price_multiplyers.CopyTo(data.prices, 0);
         for (int i = 0; i < 3; i++)
-            data.prices[i] = PlayerView.instance.itemBaseValues[i] * data.price_multiplyers[i];
+            data.prices[i] = PlayerView.Instance.itemBaseValues[i] * data.price_multiplyers[i];
         data.base_consumption.CopyTo(data.consumption, 0);
         data.base_production.CopyTo(data.production, 0);
     }
@@ -91,7 +91,7 @@ public partial class Town : Node3D
     private double next_update = UPDATE_INTERVAL; // Update
     public override void _PhysicsProcess(double delta)
     {
-        next_update -= delta * PlayerView.instance.worldSpeed;
+        next_update -= delta * PlayerView.Instance.worldSpeed;
         if (next_update < 0)
         {
             updateStock();
@@ -114,9 +114,9 @@ public partial class Town : Node3D
     {
         for (int item = 0; item < 3; item++)
         {
-            data.production[item] = supply_by_price(data.base_production[item], data.prices[item], PlayerView.instance.itemBaseValues[item] * data.price_multiplyers[item], data.production_elasticity);
+            data.production[item] = supply_by_price(data.base_production[item], data.prices[item], PlayerView.Instance.itemBaseValues[item] * data.price_multiplyers[item], data.production_elasticity);
             data.consumption[item] = data.stock_selloff[item] * data.stocks[item] + data.supply_selloff[item] * data.production[item];
-            data.prices[item] = price_by_demand(PlayerView.instance.itemBaseValues[item] * data.price_multiplyers[item], data.consumption[item], data.base_consumption[item], data.consumption_elasticity);
+            data.prices[item] = price_by_demand(PlayerView.Instance.itemBaseValues[item] * data.price_multiplyers[item], data.consumption[item], data.base_consumption[item], data.consumption_elasticity);
             data.stocks[item] += Mathf.Max(-data.stocks[item], (data.production[item] - rng.Randfn(data.consumption[item], data.consumption[item]/10))/3);
         }
     }    

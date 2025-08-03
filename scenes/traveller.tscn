@@ -1,15 +1,13 @@
-
-[gd_scene load_steps=10 format=3 uid="uid://dylgmhbel8gcv"]
+[gd_scene load_steps=12 format=3 uid="uid://dylgmhbel8gcv"]
 
 [ext_resource type="Script" uid="uid://cinw4djg05slo" path="res://scripts/PlayerTraveller.cs" id="1_maw3y"]
 [ext_resource type="Texture2D" uid="uid://dp7fhv6yvmsb2" path="res://images/traderCutout.png" id="2_1qb1y"]
+[ext_resource type="Script" uid="uid://uohxx3rhtgsr" path="res://scenes/Rumours/RumourDetector.cs" id="3_b0pw0"]
 [ext_resource type="Texture2D" uid="uid://cyvjv056t8kqi" path="res://images/player/playerhomunc1.png" id="3_ntovc"]
 [ext_resource type="Texture2D" uid="uid://gxmphdk6v8dv" path="res://images/player/playerhomunc2.png" id="4_siy0b"]
 [ext_resource type="Texture2D" uid="uid://bld3djudcrrd6" path="res://images/player/playerhomunc3.png" id="5_dlimr"]
 [ext_resource type="Texture2D" uid="uid://buru4lcthumpn" path="res://images/player/playerhomunc4.png" id="6_lifv0"]
 [ext_resource type="Texture2D" uid="uid://c06dq2j0vlqpj" path="res://images/player/playerhomunc5.png" id="7_q7g8a"]
-[ext_resource type="Script" uid="uid://uohxx3rhtgsr" path="res://scenes/Rumours/RumourDetector.cs" id="3_b0pw0"]
-
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ifkpq"]
 radius = 0.49112
@@ -46,6 +44,7 @@ animations = [{
 "name": &"default",
 "speed": 10.0
 }]
+
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_vjsxs"]
 height = 1.36621
 radius = 1.5
@@ -76,6 +75,7 @@ sprite_frames = SubResource("SpriteFrames_lifv0")
 autoplay = "default"
 frame = 4
 frame_progress = 0.857472
+
 [node name="DetectionRadius" type="Area3D" parent="."]
 input_ray_pickable = false
 script = ExtResource("3_b0pw0")

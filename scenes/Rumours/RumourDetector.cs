@@ -28,7 +28,7 @@ public partial class RumourDetector : Area3D
 
         EncounterContent spottedContent = spottedEncounter.content;
 
-        EncounterRumour newRumour = new(spottedContent.Rumors[0].Text, PlayerView.instance.currentDate, spottedContent.Duration, spottedEncounter.Position, spottedEncounter);
+        EncounterRumour newRumour = new(spottedContent.Rumors[0].Text, PlayerView.Instance.currentDate, spottedContent.Duration, spottedEncounter.Position, spottedEncounter);
 
         GD.Print(newRumour.rumourText);
 

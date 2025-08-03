@@ -28,7 +28,7 @@ public partial class PlayerTraveller : Traveller
     {
         travel((float)delta);
         if (health == 0)
-            PlayerView.instance.OnDeath();
+            PlayerView.Instance.OnDeath();
     }
 
     public override void onArrival(Town town)

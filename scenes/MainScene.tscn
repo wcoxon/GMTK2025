@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://cvlfxg610affe"]
+[gd_scene load_steps=28 format=3 uid="uid://cvlfxg610affe"]
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
 [ext_resource type="Script" uid="uid://65fhx2ltcthw" path="res://scenes/playerAssigner.cs" id="1_08o8g"]
@@ -45,8 +45,7 @@ ambient_light_color = Color(0.605274, 0.605274, 0.605274, 1)
 script = ExtResource("1_08o8g")
 Player = NodePath("Player")
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI", "tradeUI","musicPlayer", "rumorView", "encounterView", "notificationManager")]
-
+[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI", "tradeUI", "musicPlayer", "rumorView", "encounterView", "notificationManager")]
 script = ExtResource("2_6fa14")
 townPanel = NodePath("../CanvasLayer/HSplitContainer/TownPanel")
 waypoints = NodePath("../Waypoints")
@@ -259,8 +258,7 @@ text = "Crumbs: {0}
 Health: {1}"
 horizontal_alignment = 1
 
-[node name="Waypoints" parent="." node_paths=PackedStringArray("lastDot") instance=ExtResource("5_k24pf")]
-lastDot = NodePath("../Map/Town2")
+[node name="Waypoints" parent="." instance=ExtResource("5_k24pf")]
 
 [node name="StoryTeller" type="Node3D" parent="."]
 script = ExtResource("15_0cxu4")

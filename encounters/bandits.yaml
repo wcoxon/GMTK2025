@@ -1,17 +1,17 @@
 - name: test_bandits
   class: bandits
-  title: A group of old men attacks you!
+  title: A thieving scoundrel !
   chance: 0.3
   duration: 2 #days
   description: >
-    Deep in the forrest you see a group of old men attacking you.
+	A homunculus leaps out from behind a rock and demands your crumbs or your life! 
   options:
   - text: Attack back.
-    effect: player_health -= 1;
+	effect: player_health -= 1;
   - text: Offer up money.
-    effect: player_money -= player_money/2;
+	effect: player_money -= player_money/2;
   rumors:
-  - text: I hear there's some old men going around these parts stabbing people.
-    location: Gumbusville
+  - text: I saw this weird guy waving a rifle around..
+	location: Gumbusville
   - text: I'd like to get home but I hear those old men are in the forests again.. Hm? You don't know them?
-    location: Slopton
+	location: Slopton
