@@ -23,7 +23,10 @@ public partial class EncounterView : Panel
         this.content = content;
         Visible = true;
 
-        GetNode<RichTextLabel>("MarginContainer/VSplitContainer/Title").Text = content.Title;
+        GetNode<RichTextLabel>("MarginContainer/VSplitContainer/Title").Text = content.Title; // display encounter title
+
+
+        // load image if any
         if (content.Image != "")
         {
             var texture = ImageTexture.CreateFromImage(Image.LoadFromFile(content.Image));
@@ -34,7 +37,12 @@ public partial class EncounterView : Panel
         {
             GetNode<HBoxContainer>("MarginContainer/VSplitContainer/HBoxContainer").Visible = false;
         }
+
+        
+        // display encounter description
         GetNode<RichTextLabel>("MarginContainer/VSplitContainer/Description").Text = content.Description;
+
+        // display option buttons
         int i = 1;
         foreach (var option in content.Options)
         {
@@ -43,8 +51,10 @@ public partial class EncounterView : Panel
             button.Text = option.Text;
         }
 
+        // store action
         post_action = post;
-        PlayerView.Instance.PauseWorldSpeed();
+        
+        //PlayerView.Instance.PauseWorldSpeed(); // should pause anyway.. you know when you transition to encountering state?
         last_state = PlayerView.Instance.State;
         PlayerView.Instance.State = GameState.ENCOUNTERING;
     }
@@ -59,9 +69,8 @@ public partial class EncounterView : Panel
         }
 
         PlayerView.Instance.State = last_state;
-        PlayerView.Instance.PlayWorldSpeed();
-        if (post_action != null)
-            post_action();
+        //PlayerView.Instance.PlayWorldSpeed(); // should play anyway.. you know when you transition state
+        if (post_action != null) post_action();
     }
 
     public void _on_option_1_pressed()

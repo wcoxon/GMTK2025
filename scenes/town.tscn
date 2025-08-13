@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d03wi68dgsdwa" path="res://scripts/Town.cs" id="1_2sgm5"]
 [ext_resource type="Material" uid="uid://diuq60p02iwus" path="res://shaders/outline/outlineMaterial.tres" id="2_j0xxs"]
 [ext_resource type="ArrayMesh" uid="uid://bkcn3sjmiafwt" path="res://images/weirdcity1.obj" id="2_ms2es"]
-[ext_resource type="Shader" path="res://shaders/colorRamp.gdshader" id="3_ms2es"]
+[ext_resource type="Shader" uid="uid://bpkjttjrw55ub" path="res://shaders/colorRamp.gdshader" id="3_ms2es"]
 
 [sub_resource type="Gradient" id="Gradient_ms2es"]
 offsets = PackedFloat32Array(0.501441, 1)
@@ -21,9 +21,8 @@ shader_parameter/ramp = SubResource("GradientTexture1D_eruj1")
 [sub_resource type="SphereShape3D" id="SphereShape3D_uaiv0"]
 radius = 4.196
 
-[node name="Town" type="Node3D" node_paths=PackedStringArray("mesh")]
+[node name="Town" type="Node3D"]
 script = ExtResource("1_2sgm5")
-mesh = NodePath("MeshInstance")
 
 [node name="MeshInstance" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.497105, 0)

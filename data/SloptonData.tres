@@ -1,8 +1,23 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://dn1lrvkia3voq"]
+[gd_resource type="Resource" script_class="TownData" load_steps=9 format=3 uid="uid://dn1lrvkia3voq"]
 
+[ext_resource type="Material" uid="uid://diuq60p02iwus" path="res://shaders/outline/outlineMaterial.tres" id="1_efho2"]
 [ext_resource type="Script" uid="uid://bu8blcnkgpmyl" path="res://scripts/TownData.cs" id="1_mhphq"]
 [ext_resource type="ArrayMesh" uid="uid://mhaue4kk4ani" path="res://images/weirdtown3.obj" id="1_qlpui"]
+[ext_resource type="Shader" uid="uid://bpkjttjrw55ub" path="res://shaders/colorRamp.gdshader" id="1_vmhwk"]
 [ext_resource type="AudioStream" uid="uid://dh0tyk18v2c16" path="res://Audio/gamejamsong_2shit.wav" id="2_6wyws"]
+
+[sub_resource type="Gradient" id="Gradient_efho2"]
+offsets = PackedFloat32Array(0.522822, 0.746888)
+colors = PackedColorArray(0.858842, 1.58831e-06, 0.47417, 1, 1, 0.602608, 0.51854, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_sxmoh"]
+gradient = SubResource("Gradient_efho2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1otoo"]
+render_priority = 0
+next_pass = ExtResource("1_efho2")
+shader = ExtResource("1_vmhwk")
+shader_parameter/ramp = SubResource("GradientTexture1D_sxmoh")
 
 [resource]
 script = ExtResource("1_mhphq")
@@ -10,6 +25,7 @@ townName = "Slopton"
 population = 500
 wealth = 1200
 mesh = ExtResource("1_qlpui")
+material = SubResource("ShaderMaterial_1otoo")
 theme = ExtResource("2_6wyws")
 stocks = PackedFloat32Array(10, 10, 10)
 base_production = PackedFloat32Array(50, 50, 50)

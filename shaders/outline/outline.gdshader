@@ -13,4 +13,3 @@ void vertex() {
 void fragment() {
 	ALBEDO = colour.rgb;
 }
-

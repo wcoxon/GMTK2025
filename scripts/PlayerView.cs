@@ -23,33 +23,29 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     public PlayerTraveller player;
     [Export] TownPanel townPanel;
     [Export] Waypoints waypoints;
-    [Export] ScaleTime pauseButton;
-    [Export] ScaleTime playButton;
-    [Export] ScaleTime fastSpeedButton;
-    [Export] ScaleTime turboSpeedButton;
-    [Export] Panel timeControlPanel;
+    [Export] TimeController timeControlPanel;
     [Export] InventoryUI inventoryUI;
     [Export] TradeUI tradeUI;
     [Export] AudioStreamPlayer musicPlayer;
-    [Export] AudioStream[] travelMusic;
+
+    [Export] AudioStream[] travelPlaylist;
     int trackIndex;
     public AudioStream Music
     {
         set
         {
-            musicPlayer.Stream = value ?? travelMusic[trackIndex++ % travelMusic.Length];
+            musicPlayer.Stream = value ?? travelPlaylist[trackIndex++ % travelPlaylist.Length]; // play given track or play next travel song if null
             musicPlayer.Play();
         }
     }
 
     [Export] public RumorView rumorView;
     [Export] public EncounterView encounterView;
-
     [Export] public NotificationManager notificationManager;
 
     public List<Town> allTowns;
 
-    GameState gameState;
+    private GameState gameState;
     public GameState State
     {
         get => gameState;
@@ -60,7 +56,8 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
             switch (gameState)
             {
                 case GameState.TOWN:
-                    PauseWorldSpeed();
+                    GD.Print("setting state to town");
+                    timeControlPanel.Pause();
                     timeControlPanel.Hide();
                     townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking;
 
@@ -68,14 +65,16 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
                     break;
 
                 case GameState.ENCOUNTERING:
+                    GD.Print("setting state to encounter");
                     if (oldGameState == GameState.TRAVELLING)
                     {
-                        PauseWorldSpeed();
+                        timeControlPanel.Pause();
                         timeControlPanel.Hide();
                     }
                     break;
 
                 case GameState.PLANNING:
+                    GD.Print("setting state to plan");
                     waypoints.Active = true;
                     townPanel.Embarkmode = TownPanel.EmbarkMode.Planning; // notifies town UI to update to planning state
                     waypoints.endDot = SelectedTown;
@@ -83,6 +82,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
                     break;
 
                 case GameState.TRAVELLING:
+                    GD.Print("setting state to travel");
                     if (oldGameState == GameState.PLANNING)
                     {
                         waypoints.Active = false;
@@ -92,7 +92,8 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
                         player.onDeparture();
                     }
 
-                    PlayWorldSpeed();
+                    //PlayWorldSpeed();
+                    timeControlPanel.Speed1();
                     timeControlPanel.Show();
                     break;
             }
@@ -100,61 +101,43 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     }
 
 
-    public Vector3 cameraVelocity = Vector3.Zero;
+    public Vector3 velocity = Vector3.Zero;
     public const float cameraAcceleration = 200.0f;
     [Export] public float maxSpeed = 20.0f;
     public float worldSpeed = 1; // this is for scaling delta time in the world simulation stuff
 
     public int[] itemBaseValues = [5, 12, 10]; // idfk where elseto put this i just wanna store each items base value somewhere :'(
-
+    
     public void setWorldSpeed(float timescale) => worldSpeed = timescale;
-    public void PauseWorldSpeed() => pauseButton.ButtonPressed = true;
-    public void PlayWorldSpeed() => playButton.ButtonPressed = true;
-    public void FastForwardWorldSpeed() => fastSpeedButton.ButtonPressed = true;
-    public void TurboWorldSpeed() => turboSpeedButton.ButtonPressed = true;
 
     private double tick;
-    private int eightHourTicker;
-    private int dayTicker;
-
+    private int eightHourTicker, dayTicker;
     public int currentDate;
 
     private void OnTick() //increment our other tickers, then set the tick to zero so we can tick again.
     {
-        eightHourTicker += 1;
-        dayTicker += 1;
-
-        if (eightHourTicker >= 8)
-        {
-            EmitSignal(SignalName.EightTicks);
-        }
-
-        if (dayTicker >= 24)
-        {
-            EmitSignal(SignalName.TwentyFourTicks);
-        }
-
+        if (eightHourTicker++ >= 8) EmitSignal(SignalName.EightTicks);
+        if (dayTicker++ >= 24) EmitSignal(SignalName.TwentyFourTicks);
+        
         tick = 0;
     }
 
     private void OnEightTicks() //Reset our eight hour tracking variable, so we can check if it hit eight.
-    {
-        eightHourTicker = 0;
-    }
+    => eightHourTicker = 0;
+
 
     private void OnDay()
     {
         dayTicker = 0; //Reset our day tracking variable, so we can check if it hit twenty four.
-        GD.Print("Day Passed!");
         currentDate += 1;
+        GD.Print("Day Passed!");
     }
 
     [Signal] public delegate void TickEventHandler();
     [Signal] public delegate void EightTicksEventHandler();
     [Signal] public delegate void TwentyFourTicksEventHandler();
 
-
-    Town selectedTown;
+    private Town selectedTown;
     public Town SelectedTown
     {
         get => selectedTown;
@@ -178,7 +161,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         EncounterManager.Instance.AddProvider(this);
 
         State = GameState.TOWN;
-        player = GetNode<PlayerTraveller>("../Map/Traveller");
+        player = GetNode<PlayerTraveller>("../Map/PlayerTraveller");
         Position = player.Position;
         waypoints.SetStart(player.Town); // start path at current town
 
@@ -193,7 +176,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
 
         TwentyFourTicks += OnDay;
 
-        PauseWorldSpeed();
+        timeControlPanel.Pause();//PauseWorldSpeed();
 
         allTowns = [];
 
@@ -238,12 +221,13 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
 
                 if (@event.IsActionPressed("speed0"))
                 {
-                    if (worldSpeed == 0) PlayWorldSpeed();
-                    else PauseWorldSpeed();
+                    GD.Print("eah");
+                    if (worldSpeed == 0) timeControlPanel.Speed1();
+                    else timeControlPanel.Pause();
                 }
-                if (@event.IsActionPressed("speed1")) PlayWorldSpeed();
-                if (@event.IsActionPressed("speed2")) FastForwardWorldSpeed();
-                if (@event.IsActionPressed("speed3")) TurboWorldSpeed();
+                if (@event.IsActionPressed("speed1")) timeControlPanel.Speed1();
+                if (@event.IsActionPressed("speed2")) timeControlPanel.Speed2();
+                if (@event.IsActionPressed("speed3")) timeControlPanel.Speed4();
                 break;
 
             case GameState.ENCOUNTERING:
@@ -253,18 +237,17 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
 
     public override void _Process(double delta)
     {
-        tick += delta * worldSpeed / 3; // The same calculation is done in date, but we need it here in the singleton for signalling reasons.
+        tick += delta * worldSpeed / 3; // The same calculation is done in date, but we need it here in the singleton for signalling reasons. /// nooo magic number nooo why r u using a literal bro
+        /// maybe it was me that did this, rly bad
 
-        if (tick >= 1)
-        {
-            EmitSignal(SignalName.Tick);
-        }
+        if (tick >= 1) EmitSignal(SignalName.Tick);
+        
     }
 
 
     public override void _PhysicsProcess(double delta)
     {
-        Vector3 velocity = new Vector3(cameraVelocity.X, 0, cameraVelocity.Z); // could we not edit cameraVelocity directly?
+        //velocity = new Vector3(velocity.X, 0, velocity.Z); // could we not edit cameraVelocity directly?
 
         //Vector2 inputVector = Input.GetVector("left", "right", "up", "down");
         Vector3 inputDirection = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("up", "down"));
@@ -283,18 +266,17 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
             velocity = velocity.Normalized() * Mathf.Max(velocity.Length() - cameraAcceleration * (float)delta, 0);
         }
 
-        cameraVelocity = velocity;
+        //cameraVelocity = velocity;
 
-        Translate(cameraVelocity * (float)delta);
+        Translate(velocity * (float)delta);
     }
 
-    public void plotJourney()
-    {
-        State = GameState.PLANNING;
-    }
+    public void plotJourney() => State = GameState.PLANNING;
+    
     public void cancelPlot()
     {
-        State = GameState.TOWN;
+        State = GameState.TOWN; // honestly transitioning into town state should implicitly dispose of waypoint stuff
+
         waypoints.Active = false;
         var (nodes, dashes) = waypoints.PopJourney();
         foreach (var node in nodes)
@@ -304,28 +286,15 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
             dash.QueueFree();
         waypoints.SetStart(player.Town); // Reset starting point back to current town.
     }
-    public void embark()
-    {
-        State = GameState.TRAVELLING;
-    }
-
-
+    public void embark() => State = GameState.TRAVELLING;
+    
     public void openTrade()
     {
-        // make trade ui visible
-        // populate trade ui with town information
-        // trade ui should also handle the button press stuff i think
-
-        tradeUI.Town = selectedTown; // i know you should only be able to trade with the town you're on it's just weird that it offers trade in the town panel for whatever you have selected :p
+        tradeUI.Town = selectedTown;
         tradeUI.Visible = true;
-
     }
 
-    public string VariablesPrefix()
-    {
-        return "player";
-    }
-
+    public string VariablesPrefix() => "player";
     public List<(string, double)> GetVariables()
     {
         return [
@@ -354,8 +323,10 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         player.Health = 3;
         player.Money = Math.Min(50, player.Money / 3);
         notificationManager.AddNotification("You passed out! Returning back to last town.");
-        gameState = GameState.TOWN;
-        //player.ResetJourney();
+        //gameState = GameState.TOWN; // oh my god bro. transitioning the state without using the fucking property. that's why it didn't say so, fucks sake man.
+        State = GameState.TOWN;
+        cancelPlot();
         player.Position = player.Town.Position;
+
     }
 }

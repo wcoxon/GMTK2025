@@ -1,8 +1,23 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://c0yvi6dd5l3sq"]
+[gd_resource type="Resource" script_class="TownData" load_steps=9 format=3 uid="uid://c0yvi6dd5l3sq"]
 
+[ext_resource type="Shader" uid="uid://bpkjttjrw55ub" path="res://shaders/colorRamp.gdshader" id="1_0vqjm"]
+[ext_resource type="Material" uid="uid://diuq60p02iwus" path="res://shaders/outline/outlineMaterial.tres" id="1_5ibx0"]
 [ext_resource type="ArrayMesh" uid="uid://dwqsxckirn075" path="res://images/weirdcity2.obj" id="1_6hdax"]
 [ext_resource type="Script" uid="uid://bu8blcnkgpmyl" path="res://scripts/TownData.cs" id="1_n3ssh"]
 [ext_resource type="AudioStream" uid="uid://c1hdmyvtbduxr" path="res://Audio/gamejamsong2_3.wav" id="3_rgdnt"]
+
+[sub_resource type="Gradient" id="Gradient_5ibx0"]
+offsets = PackedFloat32Array(0.439834, 0.709544)
+colors = PackedColorArray(3.08037e-06, 0.538831, 0.315854, 1, 0.807972, 0.593576, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8q7b1"]
+gradient = SubResource("Gradient_5ibx0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_08uba"]
+render_priority = 0
+next_pass = ExtResource("1_5ibx0")
+shader = ExtResource("1_0vqjm")
+shader_parameter/ramp = SubResource("GradientTexture1D_8q7b1")
 
 [resource]
 script = ExtResource("1_n3ssh")
@@ -10,6 +25,7 @@ townName = "Gumbusville"
 population = 12
 wealth = 100
 mesh = ExtResource("1_6hdax")
+material = SubResource("ShaderMaterial_08uba")
 theme = ExtResource("3_rgdnt")
 stocks = PackedFloat32Array(300, 100, 200)
 base_production = PackedFloat32Array(70, 30, 10)

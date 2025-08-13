@@ -1,12 +1,99 @@
-[gd_scene load_steps=13 format=3 uid="uid://cstlo8wngb4vj"]
+[gd_scene load_steps=16 format=3 uid="uid://cstlo8wngb4vj"]
 
 [ext_resource type="Script" uid="uid://djqex4bafycgk" path="res://scripts/MainMenu.cs" id="1_d61ab"]
 [ext_resource type="PackedScene" uid="uid://cvlfxg610affe" path="res://scenes/MainScene.tscn" id="2_j424i"]
 [ext_resource type="Texture2D" uid="uid://cbhavnovy7mwk" path="res://images/ZLlogo.png" id="3_lttq2"]
-[ext_resource type="Script" uid="uid://b6wt10pxfmkhn" path="res://scenes/menubk.cs" id="3_oa1go"]
+[ext_resource type="Script" uid="uid://bpbcb113ovieo" path="res://scenes/menubk.cs" id="3_oa1go"]
 [ext_resource type="FontFile" uid="uid://clh4frvcwdwot" path="res://images/AURORA-PRO.otf" id="3_rtw2f"]
-[ext_resource type="Script" uid="uid://2uwacw4rurxh" path="res://scripts/LogoScreen.cs" id="4_4b1yf"]
+[ext_resource type="AudioStream" uid="uid://ds36fviykex6u" path="res://Audio/K.wav" id="3_tbmy8"]
 [ext_resource type="Texture2D" uid="uid://1l68a2526t6v" path="res://images/burntpizza.jpg" id="5_8o6sb"]
+[ext_resource type="Theme" uid="uid://d18vm3ggivwpn" path="res://themes/button_theme.tres" id="6_tbmy8"]
+
+[sub_resource type="Animation" id="Animation_oa1go"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("catlogo:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_rtw2f"]
+resource_name = "fadeout"
+length = 2.0
+step = 1.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("catlogo:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tbmy8"]
+_data = {
+&"RESET": SubResource("Animation_oa1go"),
+&"fadeout": SubResource("Animation_rtw2f")
+}
 
 [sub_resource type="Gradient" id="Gradient_tbmy8"]
 offsets = PackedFloat32Array(0, 0.30855, 0.698885, 0.921933)
@@ -27,10 +114,6 @@ font_size = 116
 outline_size = 52
 outline_color = Color(0.0555051, 0, 0.547012, 1)
 
-[sub_resource type="Curve" id="Curve_vj2p8"]
-_data = [Vector2(0.669879, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -7.17976, 0.0, 0, 0]
-point_count = 2
-
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -40,6 +123,17 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_d61ab")
 gameScene = ExtResource("2_j424i")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_tbmy8")
+autoplay = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Control")
+libraries = {
+&"": SubResource("AnimationLibrary_tbmy8")
+}
+autoplay = "fadeout"
 
 [node name="TextureRect2" type="TextureRect" parent="."]
 layout_mode = 1
@@ -67,12 +161,13 @@ grow_vertical = 2
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 6
-text = "SLOPTOPOLIS"
+text = "GLOPTOPIA"
 label_settings = SubResource("LabelSettings_oa1go")
 horizontal_alignment = 1
 
 [node name="NewGameButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("6_tbmy8")
 text = "NEW GAME"
 
 [node name="SettingsButton" type="Button" parent="VBoxContainer"]
@@ -83,20 +178,16 @@ text = "SETTINGS"
 layout_mode = 2
 text = "QUIT"
 
-[node name="TextureRect" type="TextureRect" parent="."]
-visible = false
+[node name="Control" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_lttq2")
-expand_mode = 2
-script = ExtResource("4_4b1yf")
-fadeRamp = SubResource("Curve_vj2p8")
 
-[node name="TextureRect" type="TextureRect" parent="TextureRect"]
+[node name="pizza" type="TextureRect" parent="Control"]
 show_behind_parent = true
 layout_mode = 1
 anchors_preset = 15
@@ -106,6 +197,18 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("5_8o6sb")
 expand_mode = 2
+
+[node name="catlogo" type="TextureRect" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(576, 317)
+texture = ExtResource("3_lttq2")
+expand_mode = 2
+stretch_mode = 3
 
 [connection signal="pressed" from="VBoxContainer/NewGameButton" to="." method="newGame"]
 [connection signal="pressed" from="VBoxContainer/SettingsButton" to="." method="settings"]

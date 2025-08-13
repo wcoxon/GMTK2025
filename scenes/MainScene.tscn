@@ -1,81 +1,51 @@
-[gd_scene load_steps=28 format=3 uid="uid://cvlfxg610affe"]
+[gd_scene load_steps=22 format=3 uid="uid://cvlfxg610affe"]
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
 [ext_resource type="Script" uid="uid://65fhx2ltcthw" path="res://scenes/playerAssigner.cs" id="1_08o8g"]
-[ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/PlayerView.cs" id="2_6fa14"]
-[ext_resource type="AudioStream" uid="uid://dojjif4v2wcke" path="res://Audio/gtyg.mp3" id="2_kp0ql"]
-[ext_resource type="AudioStream" uid="uid://dsw7n1rj7h8v6" path="res://Audio/dsfsf.mp3" id="3_8wjpf"]
+[ext_resource type="PackedScene" uid="uid://b7hxl7dg26i7j" path="res://scenes/player.tscn" id="2_25dfr"]
+[ext_resource type="AudioStream" uid="uid://dsw7n1rj7h8v6" path="res://Audio/dsfsf.mp3" id="3_2phbr"]
 [ext_resource type="PackedScene" uid="uid://dpdvumg63k3xu" path="res://scenes/TownPanel.tscn" id="3_y7ipx"]
-[ext_resource type="Theme" uid="uid://b7sho3deipfsu" path="res://scripts/ScaleTime/SpeedButtonTheme.tres" id="4_1wiy7"]
 [ext_resource type="PackedScene" uid="uid://dao5worh1gb0c" path="res://scenes/TradeUI.tscn" id="4_5hv5t"]
-[ext_resource type="Script" uid="uid://bxk7okto3l8y3" path="res://scripts/UI/DateUI.cs" id="4_c2qql"]
-[ext_resource type="Script" uid="uid://dpgf4ygtataug" path="res://scripts/ScaleTime/ScaleTime.cs" id="4_k24pf"]
-[ext_resource type="ButtonGroup" uid="uid://br2jb0lwfyinh" path="res://scripts/ScaleTime/SpeedButtonGroup.tres" id="4_ygjfp"]
-[ext_resource type="AudioStream" uid="uid://ccu7ddjj2sqx4" path="res://Audio/gygy.mp3" id="5_25dfr"]
+[ext_resource type="AudioStream" uid="uid://dojjif4v2wcke" path="res://Audio/gtyg.mp3" id="4_mkg2b"]
+[ext_resource type="AudioStream" uid="uid://ccu7ddjj2sqx4" path="res://Audio/gygy.mp3" id="5_1ns3k"]
 [ext_resource type="PackedScene" uid="uid://durnjyano0ic4" path="res://scenes/waypoints.tscn" id="5_k24pf"]
-[ext_resource type="AudioStream" uid="uid://ce756abk3ipcs" path="res://Audio/ssa.mp3" id="6_kjvyo"]
-[ext_resource type="AudioStream" uid="uid://ci12pk15nudvu" path="res://Audio/vcxvxcdv.mp3" id="7_2phbr"]
+[ext_resource type="AudioStream" uid="uid://ce756abk3ipcs" path="res://Audio/ssa.mp3" id="6_a7pbh"]
+[ext_resource type="AudioStream" uid="uid://ci12pk15nudvu" path="res://Audio/vcxvxcdv.mp3" id="7_ye0jt"]
 [ext_resource type="PackedScene" uid="uid://bdrkqejd8htea" path="res://scenes/EncounterView.tscn" id="8_cfq0f"]
 [ext_resource type="PackedScene" uid="uid://c6yeey4j3upm4" path="res://scenes/inventory.tscn" id="8_pd1er"]
 [ext_resource type="PackedScene" uid="uid://xqt4l46rhnwy" path="res://scenes/RumorView.tscn" id="8_x537r"]
+[ext_resource type="PackedScene" uid="uid://bovy050xv5534" path="res://scenes/UI/time_panel.tscn" id="10_xnxdc"]
 [ext_resource type="Script" uid="uid://0n132a882k4r" path="res://scripts/NotificationManager.cs" id="11_o3jky"]
 [ext_resource type="PackedScene" uid="uid://c1jvgnt81ughl" path="res://scenes/notification.tscn" id="12_kp0ql"]
-[ext_resource type="Script" uid="uid://cwcfik42lryqy" path="res://scripts/StatsView.cs" id="14_8wjpf"]
+[ext_resource type="PackedScene" uid="uid://ce3r73hprtho" path="res://scenes/UI/stats_view.tscn" id="12_xnxdc"]
 [ext_resource type="Script" uid="uid://6mnsy7hidovy" path="res://scripts/StoryTeller.cs" id="15_0cxu4"]
 [ext_resource type="PackedScene" uid="uid://fhoh6fiq15ei" path="res://scenes/encounters/bandits.tscn" id="16_0ehpd"]
 [ext_resource type="PackedScene" uid="uid://b25d8ekeapuhi" path="res://scenes/encounters/storm_area.tscn" id="17_8wjpf"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_qk1f2"]
-sky_top_color = Color(0.66796, 0.355097, 5.77569e-07, 1)
-sky_horizon_color = Color(1, 0.410277, 0.7112, 1)
-sky_cover_modulate = Color(0.28384, 0.617826, 1.92523e-07, 1)
-ground_bottom_color = Color(0.665338, 0.448419, 0, 1)
-
-[sub_resource type="Sky" id="Sky_611at"]
-sky_material = SubResource("ProceduralSkyMaterial_qk1f2")
-
-[sub_resource type="Environment" id="Environment_vyg74"]
-background_mode = 1
-background_color = Color(0.394563, 0.00115543, 0.582537, 1)
-sky = SubResource("Sky_611at")
-ambient_light_source = 3
-ambient_light_color = Color(0.605274, 0.605274, 0.605274, 1)
-
-[node name="Root" type="Node3D" node_paths=PackedStringArray("Player")]
+[node name="Root" type="Node3D"]
 script = ExtResource("1_08o8g")
-Player = NodePath("Player")
 
-[node name="Player" type="Node3D" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "pauseButton", "playButton", "fastSpeedButton", "turboSpeedButton", "timeControlPanel", "inventoryUI", "tradeUI", "musicPlayer", "rumorView", "encounterView", "notificationManager")]
-script = ExtResource("2_6fa14")
+[node name="Player" parent="." node_paths=PackedStringArray("townPanel", "waypoints", "timeControlPanel", "inventoryUI", "tradeUI", "rumorView", "encounterView", "notificationManager") instance=ExtResource("2_25dfr")]
 townPanel = NodePath("../CanvasLayer/HSplitContainer/TownPanel")
 waypoints = NodePath("../Waypoints")
-pauseButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer/TimeScale0")
-playButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer/TimeScale1")
-fastSpeedButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer/TimeScale2")
-turboSpeedButton = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer/TimeScale4")
 timeControlPanel = NodePath("../CanvasLayer/HSplitContainer/HUD/TimePanel")
-inventoryUI = NodePath("../CanvasLayer/HSplitContainer/HUD/inventory")
+inventoryUI = NodePath("../CanvasLayer/HSplitContainer/HUD/Inventory")
 tradeUI = NodePath("../CanvasLayer/HSplitContainer/HUD/TradePanel")
-musicPlayer = NodePath("Camera3D/MusicPlayer")
-travelMusic = Array[AudioStream]([ExtResource("3_8wjpf"), ExtResource("2_kp0ql"), ExtResource("5_25dfr"), ExtResource("6_kjvyo"), ExtResource("7_2phbr")])
+travelPlaylist = Array[AudioStream]([ExtResource("3_2phbr"), ExtResource("4_mkg2b"), ExtResource("5_1ns3k"), ExtResource("6_a7pbh"), ExtResource("7_ye0jt")])
 rumorView = NodePath("../CanvasLayer/RumorView")
 encounterView = NodePath("../CanvasLayer/EncounterView")
 notificationManager = NodePath("../CanvasLayer/NotificationManager")
 
-[node name="Camera3D" type="Camera3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 0.47355, 0.880767, 0, -0.880767, 0.47355, 0, 15.0562, 8.77994)
+[node name="Waypoints" parent="." instance=ExtResource("5_k24pf")]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="Player/Camera3D"]
-environment = SubResource("Environment_vyg74")
-
-[node name="MusicPlayer" type="AudioStreamPlayer" parent="Player/Camera3D"]
-editor_description = "putting 1 player for music on the player so we don't risk multiple songs playing at once"
-autoplay = true
-bus = &"Music"
+[node name="StoryTeller" type="Node3D" parent="."]
+script = ExtResource("15_0cxu4")
+bandit_encounter = ExtResource("16_0ehpd")
+storm_encounter = ExtResource("17_8wjpf")
 
 [node name="Map" parent="." instance=ExtResource("1_5opw3")]
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.60944, -0.194488, -0.768607, 0.792833, 0.1495, 0.590819, 0, -0.969445, 0.245307, 0, 0, 0)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -104,76 +74,15 @@ offset_top = 116.0
 offset_right = -161.0
 offset_bottom = -168.0
 
-[node name="TimePanel" type="Panel" parent="CanvasLayer/HSplitContainer/HUD"]
+[node name="TimePanel" parent="CanvasLayer/HSplitContainer/HUD" node_paths=PackedStringArray("sun") instance=ExtResource("10_xnxdc")]
 layout_mode = 1
-anchors_preset = 3
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -259.0
-offset_top = -80.0
-offset_right = -51.0
-offset_bottom = -40.0
-grow_horizontal = 0
-grow_vertical = 0
+offset_left = -233.0
+offset_top = -92.0
+offset_right = -25.0
+offset_bottom = -25.0
+sun = NodePath("../../../../Sun")
 
-[node name="DateTime" type="Label" parent="CanvasLayer/HSplitContainer/HUD/TimePanel" node_paths=PackedStringArray("sun")]
-layout_mode = 0
-offset_left = 27.0
-offset_top = -33.0
-offset_right = 188.0
-offset_bottom = -2.0
-text = "DD-MM-YYYY"
-script = ExtResource("4_c2qql")
-sun = NodePath("../../../../../DirectionalLight3D")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/HSplitContainer/HUD/TimePanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-alignment = 1
-
-[node name="TimeScale0" type="Button" parent="CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("4_1wiy7")
-toggle_mode = true
-button_group = ExtResource("4_ygjfp")
-text = "x0"
-script = ExtResource("4_k24pf")
-
-[node name="TimeScale1" type="Button" parent="CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("4_1wiy7")
-toggle_mode = true
-button_pressed = true
-button_group = ExtResource("4_ygjfp")
-text = "x1"
-script = ExtResource("4_k24pf")
-newTimeScale = 1
-
-[node name="TimeScale2" type="Button" parent="CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("4_1wiy7")
-toggle_mode = true
-button_group = ExtResource("4_ygjfp")
-text = "x2"
-script = ExtResource("4_k24pf")
-newTimeScale = 2
-
-[node name="TimeScale4" type="Button" parent="CanvasLayer/HSplitContainer/HUD/TimePanel/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("4_1wiy7")
-toggle_mode = true
-button_group = ExtResource("4_ygjfp")
-text = "x4"
-script = ExtResource("4_k24pf")
-newTimeScale = 4
-
-[node name="inventory" parent="CanvasLayer/HSplitContainer/HUD" instance=ExtResource("8_pd1er")]
+[node name="Inventory" parent="CanvasLayer/HSplitContainer/HUD" instance=ExtResource("8_pd1er")]
 layout_mode = 0
 anchors_preset = 0
 anchor_left = 0.0
@@ -187,21 +96,8 @@ offset_bottom = 382.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="RecollectionBar" type="HSlider" parent="CanvasLayer/HSplitContainer/HUD"]
-visible = false
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.028
-anchor_top = 0.903
-anchor_right = 0.658
-anchor_bottom = 0.927
-offset_left = 0.219999
-offset_top = -0.144043
-offset_right = -0.330017
-offset_bottom = 0.303955
-max_value = 1.0
-step = 0.1
-value = 1.0
+[node name="StatsView" parent="CanvasLayer/HSplitContainer/HUD" instance=ExtResource("12_xnxdc")]
+layout_mode = 0
 
 [node name="EncounterView" parent="CanvasLayer" instance=ExtResource("8_cfq0f")]
 visible = false
@@ -225,45 +121,6 @@ offset_bottom = 66.0
 grow_horizontal = 0
 script = ExtResource("11_o3jky")
 notification_scene = ExtResource("12_kp0ql")
-
-[node name="StatsView" type="Panel" parent="CanvasLayer"]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -97.0
-offset_top = -106.0
-offset_right = 91.0
-offset_bottom = -34.0
-grow_horizontal = 2
-grow_vertical = 0
-script = ExtResource("14_8wjpf")
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/StatsView"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/StatsView/MarginContainer"]
-layout_mode = 2
-text = "Crumbs: {0}
-Health: {1}"
-horizontal_alignment = 1
-
-[node name="Waypoints" parent="." instance=ExtResource("5_k24pf")]
-
-[node name="StoryTeller" type="Node3D" parent="."]
-script = ExtResource("15_0cxu4")
-bandit_encounter = ExtResource("16_0ehpd")
-storm_encounter = ExtResource("17_8wjpf")
 
 [connection signal="mouse_entered" from="CanvasLayer/HSplitContainer/TownPanel" to="Waypoints" method="OnMouseExited"]
 [connection signal="pressed" from="CanvasLayer/HSplitContainer/TownPanel/VBoxContainer/trade" to="Player" method="openTrade"]

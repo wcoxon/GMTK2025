@@ -1,0 +1,76 @@
+[gd_scene load_steps=5 format=3 uid="uid://bovy050xv5534"]
+
+[ext_resource type="Script" uid="uid://canac80eqdtlo" path="res://scenes/UI/TimeController.cs" id="1_pxhwb"]
+[ext_resource type="Theme" uid="uid://b7sho3deipfsu" path="res://themes/SpeedButtonTheme.tres" id="2_pxhwb"]
+[ext_resource type="ButtonGroup" uid="uid://br2jb0lwfyinh" path="res://scripts/ScaleTime/SpeedButtonGroup.tres" id="3_gf6nt"]
+[ext_resource type="Script" uid="uid://dpgf4ygtataug" path="res://scripts/ScaleTime/ScaleTime.cs" id="4_qhhpu"]
+
+[node name="TimePanel" type="Panel"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -259.0
+offset_top = -107.0
+offset_right = -51.0
+offset_bottom = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+script = ExtResource("1_pxhwb")
+
+[node name="DateTime" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "DD-MM-YYYY"
+horizontal_alignment = 1
+
+[node name="TimeScales" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -34.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+
+[node name="TimeScale0" type="Button" parent="TimeScales"]
+layout_mode = 2
+theme = ExtResource("2_pxhwb")
+toggle_mode = true
+button_group = ExtResource("3_gf6nt")
+text = "x0"
+script = ExtResource("4_qhhpu")
+
+[node name="TimeScale1" type="Button" parent="TimeScales"]
+layout_mode = 2
+theme = ExtResource("2_pxhwb")
+toggle_mode = true
+button_pressed = true
+button_group = ExtResource("3_gf6nt")
+text = "x1"
+script = ExtResource("4_qhhpu")
+newTimeScale = 1
+
+[node name="TimeScale2" type="Button" parent="TimeScales"]
+layout_mode = 2
+theme = ExtResource("2_pxhwb")
+toggle_mode = true
+button_group = ExtResource("3_gf6nt")
+text = "x2"
+script = ExtResource("4_qhhpu")
+newTimeScale = 2
+
+[node name="TimeScale4" type="Button" parent="TimeScales"]
+layout_mode = 2
+theme = ExtResource("2_pxhwb")
+toggle_mode = true
+button_group = ExtResource("3_gf6nt")
+text = "x4"
+script = ExtResource("4_qhhpu")
+newTimeScale = 4
