@@ -27,9 +27,8 @@ public partial class PlayerTraveller : Traveller
 
     public override void _Process(double delta)
     {
-        travel((float)delta);
-        if (health == 0)
-            PlayerView.Instance.OnDeath();
+        if(PlayerView.Instance.State==GameState.TRAVEL) travel((float)delta);
+        if (health == 0) PlayerView.Instance.OnDeath(); // couldn't/shouldn't this just be checked when damaging health?
     }
 
     public override void onArrival(Town town)

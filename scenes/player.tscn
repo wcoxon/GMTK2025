@@ -3,9 +3,8 @@
 [ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/PlayerView.cs" id="1_tuyoq"]
 [ext_resource type="Environment" uid="uid://b6n8u3kn2ho72" path="res://shaders/environment.tres" id="2_g2els"]
 
-[node name="Player" type="Node3D" node_paths=PackedStringArray("musicPlayer")]
+[node name="Player" type="Node3D"]
 script = ExtResource("1_tuyoq")
-musicPlayer = NodePath("Camera/MusicPlayer")
 
 [node name="Camera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.47355, 0.880767, 0, -0.880767, 0.47355, 0, 15.0562, 8.77994)

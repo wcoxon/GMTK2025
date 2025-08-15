@@ -11,17 +11,18 @@ public partial class Town : Node3D
     [Export] TownData Data { get => data; set => data = value; }
 
     // properties exposing resource info
-    public string TownName { get => data.townName; }
+    public string TownName => data.townName; 
+    public float[] Production => data.production; 
+    public float[] Consumption => data.consumption; 
+    public AudioStream Theme => data.theme; 
+
     public int Population { get => data.population; set => data.population = value; }
     public int Wealth { get => data.wealth; set => data.wealth = value; }
     public float[] Stocks { get => data.stocks; set => data.stocks = value; }
-    public float[] Production { get => data.production; }
-    public float[] Consumption { get => data.consumption; }
-    public AudioStream Theme { get => data.theme; }
 
     public List<Traveller> currentTravellers = [];
     static RandomNumberGenerator rng = new();
-    static Color selectionColour = new(1, 0, 0),  hoverColour = new(1, 0.5f, 0.8f);
+    static Color selectionColour = new(1, 0, 0),  hoverColour = new(1, .5f, .8f);
 
     private bool selected;
     public bool Selected
