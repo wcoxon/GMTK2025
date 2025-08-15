@@ -44,12 +44,11 @@ public partial class Waypoints : Node3D
     {
         if (!active) return;
 
-        if (evt is InputEventMouseButton mbEvent
-                && mbEvent.Pressed
-                && mbEvent.ButtonIndex == MouseButton.Left)
+        if (evt is InputEventMouseButton mbEvent && mbEvent.Pressed && mbEvent.ButtonIndex == MouseButton.Left)
         {
             var instance = dot.Instantiate<Node3D>();
             instance.Position = evtPos;
+            instance.Position += Vector3.Up * getMapHeight(evtPos);
             AddChild(instance);
             // make it monitorable for mouse 
             Area3D instancearea = instance.GetNode<Area3D>("Area3D");
@@ -63,7 +62,7 @@ public partial class Waypoints : Node3D
                 var lineInstance = dashes.Instantiate<Dashes>();
 
                 AddChild(lineInstance);
-                lineInstance.SetLine(lastDot.Position, evtPos);
+                lineInstance.SetLine(lastDot.Position, instance.Position);
                 journey_dashes.Add(lineInstance);
             }
 
@@ -73,6 +72,9 @@ public partial class Waypoints : Node3D
 
         curDot.Visible = true;
         curDot.Position = evtPos;
+        curDot.Position += Vector3.Up * getMapHeight(evtPos);
+        
+
         if (lastDot != null)
         {
             curLine.Visible = true;
@@ -80,6 +82,42 @@ public partial class Waypoints : Node3D
         }
         if (endDot != null)
             endLine.SetLine(evtPos, endDot.Position);
+    }
+
+    float getMapHeight(Vector3 worldPos)
+    {
+        ShaderMaterial mapMaterial = GetNode<WorldMap>("../WorldMap").Surface.GetSurfaceOverrideMaterial(0) as ShaderMaterial;
+        Noise noise = mapMaterial.GetShaderParameter("heightMap").As<NoiseTexture2D>().Noise;
+        Gradient ramp = mapMaterial.GetShaderParameter("heightMap").As<NoiseTexture2D>().ColorRamp;
+
+        //ok so turn world coord into map UV
+        // the thing is like 15x15 units, so i guess we just map -7.5 -> 7.5 in world to 0 to 1
+        // which means like, divide by 15 and add 0.5 ig
+        // shit the texture is normalized too though. also ts aint working
+
+        Vector2 UV = new Vector2(worldPos.X, worldPos.Z)/75.0f + Vector2.One * 0.5f;
+
+        UV *= 256; // turns out we want to sample pixel tho
+
+        // shit it's like, the texture itself was offset by what, 0.5? 
+
+        // i think, uh i thiink that, our ramp is like our own range
+        // we go from 0 to 1 from 0.4 to 0.74
+        // so when the noise is 0.4 that's 0
+        // yeah but we get that from sampling the ramp, 
+        // yeah but what do we sample with? idk same noise value as what worked?
+        // what even worked
+        // ok so just multiplying the sample by 5, when i offset the shader's height sample by -0.5 so that it would be between 5 and -5
+        // which shows the raw noise is between 1 and -1, and that the texture is between 0 and 1, because making it -0.5 to 0.5 and *10 
+        // matches with making the raw noise *0.5 and *10
+        // so if we *0.5 + 0.5 we make our raw noise 0 to 1
+        // then sampling the ramp 
+
+
+        float noiseSample = noise.GetNoise2D(UV.X, UV.Y);
+        float textureSample = ramp.Sample(noiseSample*0.5f + 0.5f).R; //*0.5f+0.5f
+
+        return textureSample * 10;
     }
 
     public void onDotPressed(Camera3D _cam, InputEvent @event, Vector3 evtPos, Vector3 _normal, int _shapeIndex, Node3D instance)
@@ -92,8 +130,8 @@ public partial class Waypoints : Node3D
         int waypointIndex = journey_nodes.IndexOf(instance);
 
         Vector3 prev = journey_dashes[waypointIndex].LineStart;
-        Vector3 next = waypointIndex < journey_nodes.Count - 1 ? journey_dashes[waypointIndex+1].LineEnd : endDot.Position;
-        
+        Vector3 next = waypointIndex < journey_nodes.Count - 1 ? journey_dashes[waypointIndex + 1].LineEnd : endDot.Position;
+
         journey_dashes[waypointIndex].QueueFree();
         journey_dashes.RemoveAt(waypointIndex);
         journey_nodes.Remove(instance);

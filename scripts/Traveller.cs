@@ -2,6 +2,17 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
+
+struct Journey
+{
+
+    List<Node3D> nodes = [];
+    List<Dashes> dashes = [];
+    int index;
+    
+    public Journey(){}
+}
+
 public partial class Traveller : Node3D
 {
     // generic agent to move between towns
@@ -14,7 +25,6 @@ public partial class Traveller : Node3D
     int money = 0;
     public int Money { get => money; set => money = value; }
 
-    //[Export] public Godot.Collections.Dictionary<Item, int> inventory;
     public int[] inventory = new int[3];
 
     public float moveSpeed = 1;
@@ -75,12 +85,12 @@ public partial class Traveller : Node3D
     }
 
     virtual public void onArrival(Town town)
-    { 
+    {
         town.currentTravellers.Add(this);
     }
 
     virtual public void onDeparture()
-    { 
+    {
         town.currentTravellers.Remove(this);
     }
 
@@ -91,8 +101,6 @@ public partial class Traveller : Node3D
         PlayerView.Instance.TwentyFourTicks += expireRumours;
 
         knownRumours = new List<Rumour>();
-
-
     }
 
 

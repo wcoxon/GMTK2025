@@ -13,6 +13,7 @@ config_version=5
 config/name="GMTK2025"
 run/main_scene="uid://cvlfxg610affe"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
+run/max_fps=60
 config/icon="res://images/icon.svg"
 
 [autoload]

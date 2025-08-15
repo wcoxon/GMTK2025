@@ -24,54 +24,39 @@ public partial class TownPanel : Panel
         {
             town = value;
 
-            // update town UI
-            nameLabel.Text = town.TownName;
+            nameLabel.Text = town.TownName; // only update name when town changed
 
-            updateUI();
-
-            // if player isn't on selected town, offer to plot to it
-            //bool isOnTown = town == PlayerView.instance.player.Town;
-            //tradeButton.Disabled = !isOnTown;
-            //rumourButton.Disabled = !isOnTown;
-            //plotButton.Disabled = isOnTown;
-            updateActions();
+            updateUI(); // update stats UI
+            updateActions(); // update buttons
         }
     }
 
-    public enum EmbarkMode { Planning, Embarking };
-    public EmbarkMode Embarkmode // i wanna use player states or somehow unify them more. 
+    public void plan()
     {
-        set
-        {
-            switch (value)
-            {
-                case EmbarkMode.Planning: // transition to plonning state
-                    plotButton.Disabled = true;
+        plotButton.Disabled = true;
 
-                    embarkButton.Visible = true;
-                    cancelButton.Visible = true;
+        embarkButton.Visible = true;
+        cancelButton.Visible = true;
 
-                    embarkButton.Disabled = false;
-                    cancelButton.Disabled = false;
-                    break;
-                case EmbarkMode.Embarking: // transition out of planning state into travelling
-                    plotButton.Disabled = false;
-
-                    embarkButton.Disabled = true;
-                    cancelButton.Disabled = true;
-
-                    embarkButton.Visible = false;
-                    cancelButton.Visible = false;
-                    break;
-            }
-        }
+        embarkButton.Disabled = false;
+        cancelButton.Disabled = false;
     }
+    public void embark()
+    {
+        embarkButton.Disabled = true;
+        cancelButton.Disabled = true;
+
+        embarkButton.Visible = false;
+        cancelButton.Visible = false;
+
+        if (Town is not null) updateActions(); // i mean if town is null we should just like, hide ts anyway
+    }
+
 
     public override void _PhysicsProcess(double delta)
     {
-        if (Town is not null) updateUI();
+        if (Town is not null) updateUI(); // continuously update displayed stats
     }
-
 
     public void updateUI() // update info specifically, could rename to that tbf
     {
@@ -99,7 +84,6 @@ public partial class TownPanel : Panel
         bool onTown = PlayerView.Instance.State == GameState.TOWN;
         bool onSelected = PlayerView.Instance.player.Town == Town; // gotta be careful, travellers town is still last town whilst travelling, but you shouldn't be able to trade whilst travelling
 
-        
         tradeButton.Disabled = !(onTown && onSelected); // show trade if on selected town and in town state
         rumourButton.Disabled = !(onTown && onSelected); // show rumour if on selected town and in town state
         plotButton.Disabled = !(onTown && !onSelected); // show plan if off selected town and in town state

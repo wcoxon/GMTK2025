@@ -4,7 +4,7 @@ public partial class TimeController : Panel
 {
     Button button0, button1, button2, button4;
     Label timeDisplay;
-    [Export] DirectionalLight3D sun;
+    [Export] WorldMap world;
 
     double hour = 6; // number of ingame hours elapsed
     double hourLength = 60; // number of irl seconds for an hour to pass in game (at 1x worldspeed)
@@ -20,7 +20,7 @@ public partial class TimeController : Panel
 
         timeDisplay.Text = $"{(int)(hour - day * 24)}:{minute.ToString("00")}  {day - month * 30} - {month - year * 12} - {year}";
 
-        sun.Rotation = Vector3.Right * Mathf.Tau * (float)(hour + 6 - day) / 24.0f;
+        world.Sun.Rotation = Vector3.Right * Mathf.Tau * (float)(hour + 6 - day) / 24.0f;
 
     }
 
@@ -35,6 +35,8 @@ public partial class TimeController : Panel
 
         timeDisplay = GetNode<Label>("DateTime");
     }
+
+    
     public void Pause() => button0.ButtonPressed = true;
     public void Speed1() => button1.ButtonPressed = true;
     public void Speed2() => button2.ButtonPressed = true;

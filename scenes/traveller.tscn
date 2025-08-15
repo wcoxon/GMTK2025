@@ -16,14 +16,14 @@ radius = 1.5
 [node name="Traveller" type="Node3D"]
 script = ExtResource("1_maw3y")
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
+[node name="Body" type="CharacterBody3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.481625, 0)
 shape = SubResource("CapsuleShape3D_ifkpq")
 debug_color = Color(0.667352, 0, 0.154832, 1)
 
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+[node name="Sprite" type="AnimatedSprite3D" parent="."]
 offset = Vector2(7.385, 74.1)
 modulate = Color(1, 0.647722, 0.87945, 1)
 billboard = 1

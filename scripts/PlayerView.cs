@@ -1,34 +1,24 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 
-public enum GameState
-{
-    TOWN,
-    PLANNING,
-    TRAVELLING,
-    ENCOUNTERING
-}
+public enum GameState{ TOWN, PLAN, TRAVEL, ENCOUNTER }
 
 public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
 {
-    // this will hand logic for the actual player interfacing stuff like moving the camera
-    // selecting town and controlling UI shit too, like updating ui when new town is selected
-
-    public static PlayerView Instance; // this class gonna be a singleton
+    public static PlayerView Instance;
 
     //refs to other stuff in the scene
-    public PlayerTraveller player;
-    [Export] TownPanel townPanel;
-    [Export] Waypoints waypoints;
-    [Export] TimeController timeControlPanel;
-    [Export] InventoryUI inventoryUI;
-    [Export] TradeUI tradeUI;
-    [Export] AudioStreamPlayer musicPlayer;
+    public PlayerTraveller player; // i wanna rename to traveller and this class to player, then we can get player.instance.traveller ts
 
+    [Export] Waypoints waypoints;
+
+    //  UI ref
+    [Export] UIController UI;
+
+    //  audio ref
     [Export] AudioStream[] travelPlaylist;
+    AudioStreamPlayer musicPlayer;
     int trackIndex;
     public AudioStream Music
     {
@@ -39,72 +29,58 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         }
     }
 
+    [ExportGroup("Encounter")]
+    //  rumour shit refs
     [Export] public RumorView rumorView;
     [Export] public EncounterView encounterView;
     [Export] public NotificationManager notificationManager;
 
-    public List<Town> allTowns;
 
-    private GameState gameState;
+    public List<Town> allTowns = []; // store this on world map ?
+
+    private GameState state;
     public GameState State
     {
-        get => gameState;
+        get => state;
         set
         {
-            var oldGameState = gameState;
-            gameState = value;
-            switch (gameState)
+            //var oldGameState = gameState;
+            state = value;
+            switch (state)
             {
                 case GameState.TOWN:
-                    GD.Print("setting state to town");
-                    timeControlPanel.Pause();
-                    timeControlPanel.Hide();
-                    townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking;
+                    Position = player.Position; // focus on player
 
-                    if (townPanel.Town is not null) townPanel.updateActions();
+                    UI.townPanel.embark();
+                    UI.timeControlPanel.Pause();
                     break;
 
-                case GameState.ENCOUNTERING:
-                    GD.Print("setting state to encounter");
-                    if (oldGameState == GameState.TRAVELLING)
-                    {
-                        timeControlPanel.Pause();
-                        timeControlPanel.Hide();
-                    }
+                case GameState.ENCOUNTER:
+                    UI.timeControlPanel.Pause();
                     break;
 
-                case GameState.PLANNING:
-                    GD.Print("setting state to plan");
+                case GameState.PLAN:
+                    UI.townPanel.plan();
+
                     waypoints.Active = true;
-                    townPanel.Embarkmode = TownPanel.EmbarkMode.Planning; // notifies town UI to update to planning state
                     waypoints.endDot = SelectedTown;
-                    waypoints.OnMouseExited();
+                    waypoints.OnMouseExited(); // hides a bunch of shit that activation shows, sets the line to last and end waypoints
                     break;
 
-                case GameState.TRAVELLING:
-                    GD.Print("setting state to travel");
-                    if (oldGameState == GameState.PLANNING)
-                    {
-                        waypoints.Active = false;
-                        townPanel.Embarkmode = TownPanel.EmbarkMode.Embarking; // notifies town UI to update to embarking state
-                        var (nodes, dashes) = waypoints.PopJourney();
-                        player.SetJourney(nodes, dashes);
-                        player.onDeparture();
-                    }
+                case GameState.TRAVEL:
+                    player.onDeparture();
 
-                    //PlayWorldSpeed();
-                    timeControlPanel.Speed1();
-                    timeControlPanel.Show();
+                    UI.townPanel.embark();
+                    UI.timeControlPanel.Speed1();
                     break;
             }
         }
     }
 
-
     public Vector3 velocity = Vector3.Zero;
-    public const float cameraAcceleration = 200.0f;
-    [Export] public float maxSpeed = 20.0f;
-    public float worldSpeed = 1; // this is for scaling delta time in the world simulation stuff
+    const float acceleration = 200.0f, maxSpeed = 20.0f;
+
+    public float worldSpeed = 1;
 
     public int[] itemBaseValues = [5, 12, 10]; // idfk where elseto put this i just wanna store each items base value somewhere :'(
     
@@ -122,20 +98,17 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         tick = 0;
     }
 
-    private void OnEightTicks() //Reset our eight hour tracking variable, so we can check if it hit eight.
-    => eightHourTicker = 0;
+    private void OnEightTicks() => eightHourTicker = 0; //Reset our eight hour tracking variable, so we can check if it hit eight.
 
-
+    [Signal] public delegate void TickEventHandler();
+    [Signal] public delegate void EightTicksEventHandler();
+    [Signal] public delegate void TwentyFourTicksEventHandler();
     private void OnDay()
     {
         dayTicker = 0; //Reset our day tracking variable, so we can check if it hit twenty four.
         currentDate += 1;
         GD.Print("Day Passed!");
     }
-
-    [Signal] public delegate void TickEventHandler();
-    [Signal] public delegate void EightTicksEventHandler();
-    [Signal] public delegate void TwentyFourTicksEventHandler();
 
     private Town selectedTown;
     public Town SelectedTown
@@ -144,16 +117,20 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         set
         {
             if (selectedTown is not null) selectedTown.Selected = false;
-            else townPanel.Visible = true;
+            else UI.townPanel.Visible = true;
 
             selectedTown = value;
             selectedTown.Selected = true;
 
-            townPanel.Town = selectedTown;
+            UI.townPanel.Town = selectedTown;
         }
     }
 
-
+    public override void _EnterTree()
+    {
+        player = GetNode<PlayerTraveller>("../WorldMap/PlayerTraveller");
+        musicPlayer = GetNode<AudioStreamPlayer>("Camera/MusicPlayer");
+    }
 
     public override void _Ready()
     {
@@ -161,8 +138,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         EncounterManager.Instance.AddProvider(this);
 
         State = GameState.TOWN;
-        player = GetNode<PlayerTraveller>("../Map/PlayerTraveller");
-        Position = player.Position;
+
         waypoints.SetStart(player.Town); // start path at current town
 
         tick = 0;
@@ -171,16 +147,10 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         currentDate = 0;
 
         Tick += OnTick;
-
         EightTicks += OnEightTicks;
-
         TwentyFourTicks += OnDay;
 
-        timeControlPanel.Pause();//PauseWorldSpeed();
-
-        allTowns = [];
-
-    
+        UI.timeControlPanel.Pause();
     }
     public override void _Input(InputEvent @event)
     {
@@ -193,44 +163,26 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
             Translate(mouseDelta * dragScale);
         }
 
-        if (@event.IsActionPressed("inventory"))
-        {
-            inventoryUI.Visible = !inventoryUI.Visible;
+        if (@event.IsActionPressed("inventory"))  UI.ToggleInventory(player);
 
-            if (inventoryUI.Visible) inventoryUI.displayInventory(player);
-        }
+        if (@event.IsActionPressed("zoomIn")) Scale -= Vector3.One*0.1f;
+        if (@event.IsActionPressed("zoomOut")) Scale += Vector3.One*0.1f; // could use axis right
+        
 
-        if (@event.IsActionPressed("zoomIn"))
+        switch (State)
         {
-            Scale -= Vector3.One*0.1f;
-        }
-        if (@event.IsActionPressed("zoomOut"))
-        {
-            Scale += Vector3.One*0.1f;
-        }
-
-        switch (gameState)
-        {
-            case GameState.TOWN:
+            case GameState.ENCOUNTER:
                 break;
 
-            case GameState.PLANNING:
-                break;
-
-            case GameState.TRAVELLING:
-
+            default:
                 if (@event.IsActionPressed("speed0"))
                 {
-                    GD.Print("eah");
-                    if (worldSpeed == 0) timeControlPanel.Speed1();
-                    else timeControlPanel.Pause();
+                    if (worldSpeed == 0) UI.timeControlPanel.Speed1();
+                    else UI.timeControlPanel.Pause();
                 }
-                if (@event.IsActionPressed("speed1")) timeControlPanel.Speed1();
-                if (@event.IsActionPressed("speed2")) timeControlPanel.Speed2();
-                if (@event.IsActionPressed("speed3")) timeControlPanel.Speed4();
-                break;
-
-            case GameState.ENCOUNTERING:
+                if (@event.IsActionPressed("speed1")) UI.timeControlPanel.Speed1();
+                if (@event.IsActionPressed("speed2")) UI.timeControlPanel.Speed2();
+                if (@event.IsActionPressed("speed3")) UI.timeControlPanel.Speed4();
                 break;
         }
     }
@@ -241,21 +193,16 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         /// maybe it was me that did this, rly bad
 
         if (tick >= 1) EmitSignal(SignalName.Tick);
-        
     }
-
 
     public override void _PhysicsProcess(double delta)
     {
-        //velocity = new Vector3(velocity.X, 0, velocity.Z); // could we not edit cameraVelocity directly?
-
-        //Vector2 inputVector = Input.GetVector("left", "right", "up", "down");
         Vector3 inputDirection = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("up", "down"));
 
         if (inputDirection != Vector3.Zero)
         {
             //accelerate in input direction
-            velocity += inputDirection * cameraAcceleration * (float)delta;
+            velocity += inputDirection * acceleration * (float)delta;
 
             //limit speed
             velocity = velocity.Normalized() * Mathf.Min(velocity.Length(), maxSpeed);
@@ -263,16 +210,21 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         else
         {
             //decelerate towards 0
-            velocity = velocity.Normalized() * Mathf.Max(velocity.Length() - cameraAcceleration * (float)delta, 0);
+            velocity = velocity.Normalized() * Mathf.Max(velocity.Length() - acceleration * (float)delta, 0);
         }
-
-        //cameraVelocity = velocity;
 
         Translate(velocity * (float)delta);
     }
 
-    public void plotJourney() => State = GameState.PLANNING;
-    
+    public void plotJourney() => State = GameState.PLAN;
+    public void embark()
+    {
+        waypoints.Active = false;
+        var (nodes, dashes) = waypoints.PopJourney();
+        player.SetJourney(nodes, dashes);
+
+        State = GameState.TRAVEL;
+    }
     public void cancelPlot()
     {
         State = GameState.TOWN; // honestly transitioning into town state should implicitly dispose of waypoint stuff
@@ -286,14 +238,8 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
             dash.QueueFree();
         waypoints.SetStart(player.Town); // Reset starting point back to current town.
     }
-    public void embark() => State = GameState.TRAVELLING;
-    
-    public void openTrade()
-    {
-        tradeUI.Town = selectedTown;
-        tradeUI.Visible = true;
-    }
 
+    // idk what ts is about ngl
     public string VariablesPrefix() => "player";
     public List<(string, double)> GetVariables()
     {
@@ -302,7 +248,6 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
             ("money", player.Money)
         ];
     }
-
     public void UpdateVariable(string name, double value)
     {
         if (name == "health")
@@ -323,9 +268,8 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         player.Health = 3;
         player.Money = Math.Min(50, player.Money / 3);
         notificationManager.AddNotification("You passed out! Returning back to last town.");
-        //gameState = GameState.TOWN; // oh my god bro. transitioning the state without using the fucking property. that's why it didn't say so, fucks sake man.
+
         State = GameState.TOWN;
-        cancelPlot();
         player.Position = player.Town.Position;
 
     }

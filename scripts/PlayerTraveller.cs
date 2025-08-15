@@ -3,7 +3,7 @@ using System;
 
 public partial class PlayerTraveller : Traveller
 {
-    int health = 1;
+    int health = 300;
     public int Health
     {
         get => health; set
