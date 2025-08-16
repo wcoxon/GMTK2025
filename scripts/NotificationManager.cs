@@ -20,7 +20,7 @@ public partial class NotificationManager : Control
 
     public void OnNotificationRemoved()
     {
-        GD.Print(GetChildCount());
+        //GD.Print(GetChildCount());
         if (--active == 0)
             offset = 0;
     }

@@ -48,7 +48,7 @@ public partial class BanditEncounter : TickBasedEncounter
     /// <param name="victim">The Traveller to do a bandit attack to</param>
     public void BanditAttack(Traveller victim)
     {
-        GD.Print("Bandits! They Got You!!!" + victim);
+        //GD.Print("Bandits! They Got You!!!" + victim);
         if (victim is PlayerTraveller)
         {
             Player.Instance.encounterView.DisplayEncounter(content);

@@ -60,7 +60,7 @@ public partial class EncounterManager : Node
         }
         foreach (var enc in encounters)
         {
-            GD.Print(enc.Location);
+            //GD.Print(enc.Location);
         }
     }
 

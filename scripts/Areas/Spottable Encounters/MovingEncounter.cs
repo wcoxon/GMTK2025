@@ -43,7 +43,7 @@ public partial class MovingEncounter : TickBasedEncounter
     {
         float distanceToVec = Position.DistanceTo(positionFrom);
 
-        GD.Print("Distance Check: " + distanceToVec);
+        //GD.Print("Distance Check: " + distanceToVec);
 
         if (distanceToVec >= maxDistanceBeforeRespawn)
         {

@@ -3,23 +3,23 @@ using System;
 
 public partial class PlayerTraveller : Traveller
 {
-    int health = 300;
+    private int health = 300;
     public int Health
     {
-        get => health; set
+        get => health;
+        set
         {
             health = value;
+            if (health == 0) Player.Instance.OnDeath();
         }
     }
 
     public override void _Ready()
     {
         base._Ready();
-        
-        onArrival(Town);
 
+        // give the player some money and items to start with
         Money = 100;
-
         inventory[(int)Item.BROTH] = 5;
         inventory[(int)Item.PLASTICS] = 15;
         inventory[(int)Item.EVIL_WATER] = 120;
@@ -27,47 +27,30 @@ public partial class PlayerTraveller : Traveller
 
     public override void _Process(double delta)
     {
-        if(Player.Instance.State==GameState.TRAVEL) travel((float)delta);
-        if (health == 0) Player.Instance.OnDeath(); // couldn't/shouldn't this just be checked when damaging health?
+        if(Player.Instance.State == GameState.TRAVEL) travel(delta);
     }
 
     public override void onArrival(Town town)
     {
-        // stop from travelling
-        // update knowledge of this town
-        // enable trading and rumour prompts, oh and like plot journey
-        // generally update visuals, ease camera over to town, play sound, and yeah like open some ui
-        journey.path.Curve.ClearPoints();
         Town = town;
+        journey.clearJourney();
         Player.Instance.State = GameState.TOWN; // notifies player to enter town state
-        //GD.Print($"{Name} Entering {Town.TownName}");
-        Player.Instance.Music = Town.Theme;
     }
 
-    public override void onDeparture()
-    {
-        Player.Instance.Music = null;
-    }
 
+    // this rumour and encounter stuff is gonna be what i work on next i think
     public void GetRumour(Rumour newRumour)
     {
-        if (newRumour is EncounterRumour)
+        if (knownRumours.Contains(newRumour)) return;
+        if (newRumour is EncounterRumour rumourToAdd)
         {
-            EncounterRumour rumourToAdd = newRumour as EncounterRumour;
+            //if (rumourToAdd.encounterObject.Visible) return;
 
-            if (rumourToAdd.encounterObject.Visible) // if it's already visible, you already know about it, so whatever.
-            {
-                return;
-            }
-
-            knownRumours.Add(rumourToAdd);
+            knownRumours.Add(rumourToAdd); // what's even like the point in these if statements when we are adding to a list of Rumour anyway
         }
         else if (newRumour is PriceRumour)
         {
             //reveal the stat for the right item I think. this is probably not going to be implemented for the jam.
         }
-
-        
-
     }
 }

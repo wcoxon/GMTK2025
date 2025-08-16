@@ -16,7 +16,7 @@ public partial class TerrainArea : EncounterArea
 
         if (Body.GetParent() is not Traveller)
         {
-            GD.Print(Body + " entering the Terrain isn't actually a damn Traveller.");
+            //GD.Print(Body + " entering the Terrain isn't actually a damn Traveller.");
             return;
         }
 
@@ -32,7 +32,7 @@ public partial class TerrainArea : EncounterArea
 
         if (Body.GetParent() is not Traveller)
         {
-            GD.Print(Body + " exiting the Terrain isn't actually a damn Traveller.");
+            //GD.Print(Body + " exiting the Terrain isn't actually a damn Traveller.");
             return;
         }
 

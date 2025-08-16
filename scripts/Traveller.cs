@@ -1,7 +1,5 @@
 using Godot;
-using System;
 using System.Collections.Generic;
-
 
 public struct Journey
 {
@@ -10,9 +8,26 @@ public struct Journey
 
     public Town destination;
 
-    public Journey() { }
+    public Journey(){}
+
+    public void initJourney(Town origin, Town _destination)
+    {
+        clearJourney();
+
+        destination = _destination;
+
+        path.Curve.AddPoint(origin.Position);
+        path.Curve.AddPoint(destination.Position);
+    }
+
+    public void clearJourney()
+    {
+        follower.Progress = 0;
+        path.Curve.ClearPoints();
+    }
 }
 
+[Icon("res://images/burntpizza.jpg")]
 public partial class Traveller : Node3D
 {
     public float moveSpeed = 1;
@@ -28,6 +43,8 @@ public partial class Traveller : Node3D
         set
         {
             town = value;
+
+            if (town is null) return;
             Position = town.Position;
         }
     }
@@ -35,12 +52,25 @@ public partial class Traveller : Node3D
     public List<Rumour> knownRumours = new();
 
     public Journey journey = new();
-    
-    public void travel(float deltaTime)
-    {
-        deltaTime *= (float)Player.Instance.World.timeScale; // scale delta to simulated time elapsed
 
-        float deltaDistance = moveSpeed * deltaTime;
+    public override void _EnterTree()
+    {
+        journey.path = GetNode<Path3D>("Path3D");
+        journey.follower = journey.path.GetNode<PathFollow3D>("PathFollow3D");
+    }
+
+    public override void _Ready()
+    {
+        onArrival(Town);
+
+        Player.Instance.TwentyFourTicks += expireRumours;
+    }
+
+    public void travel(double deltaTime)
+    {
+        deltaTime *= Player.Instance.World.timeScale; // scale delta to simulated time elapsed
+
+        float deltaDistance = moveSpeed * (float)deltaTime;
 
         journey.follower.Progress += deltaDistance;
 
@@ -56,23 +86,12 @@ public partial class Traveller : Node3D
     virtual public void onArrival(Town town) => town.currentTravellers.Add(this);
     virtual public void onDeparture() => town.currentTravellers.Remove(this);
 
-    public override void _EnterTree()
-    {
-        journey.path = GetNode<Path3D>("Path3D");
-        journey.follower = journey.path.GetNode<PathFollow3D>("PathFollow3D");
-    }
-
-    public override void _Ready()
-    {
-        Player.Instance.TwentyFourTicks += expireRumours;
-    }
-
     // call this at the end of every day. Go through your rumours list, remove the stuff that's expired.
     public void expireRumours()
     {
         if (knownRumours is null) return; // would it ever even be null, not just empty but null?
         if (knownRumours.Count == 0) return;
-        
+
         for (int i = knownRumours.Count - 1; i >= 0; i--)
         {
             //go backwards through the rumours list

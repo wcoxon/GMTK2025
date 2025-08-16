@@ -53,11 +53,13 @@ public partial class Town : Node3D
         meshInstance = GetNode<MeshInstance3D>("MeshInstance");
         meshInstance.Mesh = data.mesh;
         meshInstance.SetSurfaceOverrideMaterial(0, data.material);
+
+        Player.Instance.World.Towns.Add(this);
     }
 
     public override void _Ready()
     {
-        Player.Instance.allTowns.Add(this);
+        //Player.Instance.World.Towns.Add(this);
         RumorView.towns.Add(data.townName, this);
         //is this necessary ^
 

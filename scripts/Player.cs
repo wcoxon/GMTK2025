@@ -37,7 +37,7 @@ public partial class Player : Node3D, EncounterManager.IVariableProvider
 
 
     public int[] itemBaseValues = [5, 12, 10]; // idfk where elseto put this i just wanna store each items base value somewhere :'(
-    public List<Town> allTowns = []; // store this on world map ?
+    //public List<Town> allTowns = []; // store this on world map ?
 
     
     public Vector3 velocity = Vector3.Zero;
@@ -55,6 +55,7 @@ public partial class Player : Node3D, EncounterManager.IVariableProvider
             {
                 case GameState.TOWN:
                     Position = traveller.Position; // focus on player
+                    Music = traveller.Town.Theme;
 
                     waypoints.ClearDots();
 
@@ -71,14 +72,12 @@ public partial class Player : Node3D, EncounterManager.IVariableProvider
 
                     waypoints.Active = true;
                     waypoints.editingJourney = traveller.journey;
-                    traveller.journey.follower.Progress = 0;
-                    traveller.journey.path.Curve.AddPoint(traveller.Town.Position);
-                    traveller.journey.path.Curve.AddPoint(selectedTown.Position);
-                    traveller.journey.destination = selectedTown; // this could be handled in a better spot ik
-                    
+                    traveller.journey.initJourney(traveller.Town, selectedTown);
                     break;
 
                 case GameState.TRAVEL:
+                    Music = null;
+
                     traveller.onDeparture();
 
                     UI.townPanel.embark();
@@ -109,7 +108,7 @@ public partial class Player : Node3D, EncounterManager.IVariableProvider
     {
         dayTicker = 0; //Reset our day tracking variable, so we can check if it hit twenty four.
         currentDate += 1;
-        GD.Print("Day Passed!");
+        //GD.Print("Day Passed!");
     }
 
     private Town selectedTown;
@@ -128,10 +127,8 @@ public partial class Player : Node3D, EncounterManager.IVariableProvider
         }
     }
 
-    //public World3D ?? what wait waht there's this thing here says its like a world with its own shit maybe time?
     public WorldMap World;
-    //public float WorldSpeed => (float)World.timeScale;
-    public void setWorldSpeed(float speed) => World.timeScale = speed; //worldSpeed = timescale;
+    public void setWorldSpeed(float speed) => World.timeScale = speed;
 
     public override void _EnterTree()
     {
@@ -237,8 +234,8 @@ public partial class Player : Node3D, EncounterManager.IVariableProvider
     {
         State = GameState.TOWN; // honestly transitioning into town state should implicitly dispose of waypoint stuff
 
+        traveller.journey.clearJourney();
         waypoints.Active = false;
-        traveller.journey.path.Curve.ClearPoints();
         waypoints.ClearDots();
     }
 
@@ -255,12 +252,12 @@ public partial class Player : Node3D, EncounterManager.IVariableProvider
     {
         if (name == "health")
         {
-            GD.Print("Set playerhealth to " + value);
+            //GD.Print("Set playerhealth to " + value);
             traveller.Health = (int)value;
         }
         else if (name == "money")
         {
-            GD.Print("Set money to " + value);
+            //GD.Print("Set money to " + value);
             traveller.Money = (int)value;
         }
         else throw new KeyNotFoundException("Player cannot assign to variable " + name);

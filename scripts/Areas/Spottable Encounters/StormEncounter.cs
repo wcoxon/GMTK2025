@@ -36,7 +36,7 @@ public partial class StormEncounter : MovingEncounter
 
         if (Body.GetParent() is not Traveller)
         {
-            GD.Print(Body + " entering the storm isn't actually a damn Traveller.");
+            //GD.Print(Body + " entering the storm isn't actually a damn Traveller.");
             return;
         }
 
@@ -51,7 +51,7 @@ public partial class StormEncounter : MovingEncounter
 
         if (Body.GetParent() is not Traveller)
         {
-            GD.Print(Body + " exiting the storm isn't actually a damn Traveller.");
+            //GD.Print(Body + " exiting the storm isn't actually a damn Traveller.");
             return;
         }
 
@@ -72,7 +72,7 @@ public partial class StormEncounter : MovingEncounter
         {
             if (Body.GetParent() is not Traveller)
             {
-                GD.Print(Body + " inside the storm zone isn't actually a damn Traveller.");
+                //GD.Print(Body + " inside the storm zone isn't actually a damn Traveller.");
                 return;
             }
 
@@ -80,7 +80,7 @@ public partial class StormEncounter : MovingEncounter
 
             if ((double)GD.Randf() > content.Chance)
             {
-                GD.Print("Storm tried to damage, but lost the coin toss.");
+                //GD.Print("Storm tried to damage, but lost the coin toss.");
             }
             else
             {
@@ -102,9 +102,9 @@ public partial class StormEncounter : MovingEncounter
     //change direction slightly every eight hours.
     public void DoEveryEightTicks()
     {
-        GD.Print("Current Displacement: " + Displacement);
+        //GD.Print("Current Displacement: " + Displacement);
         SlightlyChangeDirection();
-        GD.Print("New Displacement: " + Displacement);
+        //GD.Print("New Displacement: " + Displacement);
     }
 
     public void DoDaily()
@@ -113,7 +113,7 @@ public partial class StormEncounter : MovingEncounter
 
         if (CheckMaxDistance(originCoordinates))
         {
-            GD.Print("Too Far from Origin Coords!");
+            //GD.Print("Too Far from Origin Coords!");
 
             Position = originCoordinates;
 
@@ -139,7 +139,7 @@ public partial class StormEncounter : MovingEncounter
     {
         float randomRoll = GD.Randf();
 
-        GD.Print(randomRoll);
+        //GD.Print(randomRoll);
         if (randomRoll > townDevastateChance)
         {
             return;
@@ -180,7 +180,7 @@ public partial class StormEncounter : MovingEncounter
 
     public void DevastateTown(Town town)
     {
-        GD.Print(town + "Was Devastated by storm!");
+        //GD.Print(town + "Was Devastated by storm!");
     }
 
     /// <summary>
@@ -189,7 +189,7 @@ public partial class StormEncounter : MovingEncounter
     /// <param name="victim">The Traveller to do a bandit attack to</param>
     public void StormDamageTraveller(Traveller victim)
     {
-        GD.Print("Storm Damaged!" + victim);
+        //GD.Print("Storm Damaged!" + victim);
         if (victim is PlayerTraveller)
             Player.Instance.notificationManager.AddNotification("Storm damaged you!");
             Player.Instance.encounterView.DisplayEncounter(content);

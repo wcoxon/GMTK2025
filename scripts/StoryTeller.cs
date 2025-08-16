@@ -49,7 +49,7 @@ public partial class StoryTeller : Node3D
 
     void StartEncounter(EncounterContent content, Node3D handler)
     {
-        GD.Print("Started encounter: " + content.Name);
+        //GD.Print("Started encounter: " + content.Name);
         ActiveEncounters.Add(new ActiveEncounter
         {
             content = content,
@@ -112,7 +112,7 @@ public partial class StoryTeller : Node3D
             enc.duration -= delta * Player.Instance.World.timeScale / (3 * 24);
             if (enc.duration < 0)
             {
-                GD.Print("Stopped encounter: " + enc.content.Name);
+                //GD.Print("Stopped encounter: " + enc.content.Name);
                 if (enc.handler == ActiveBandits)
                     EndBandits();
                 else if (enc.handler == ActiveStorm)
