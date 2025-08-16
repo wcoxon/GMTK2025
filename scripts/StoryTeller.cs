@@ -101,27 +101,26 @@ public partial class StoryTeller : Node3D
 
     public override void _Process(double delta)
     {
-        var world_dt = delta * PlayerView.Instance.worldSpeed / (3 * 24) * 10;
+        var world_dt = delta * Player.Instance.World.timeScale / (3 * 24) * 10;
         next_storm -= world_dt;
         next_bandits -= world_dt;
-        if (ActiveStorm == null && next_storm <= 0)
-            StartStorm();
-        if (ActiveBandits == null && next_bandits <= 0)
-            StartBandits();
+        if (ActiveStorm == null && next_storm <= 0) StartStorm();
+        if (ActiveBandits == null && next_bandits <= 0) StartBandits();
+        
         foreach (var enc in ActiveEncounters)
+        {
+            enc.duration -= delta * Player.Instance.World.timeScale / (3 * 24);
+            if (enc.duration < 0)
             {
-                enc.duration -= delta * PlayerView.Instance.worldSpeed / (3 * 24);
-                if (enc.duration < 0)
-                {
-                    GD.Print("Stopped encounter: " + enc.content.Name);
-                    if (enc.handler == ActiveBandits)
+                GD.Print("Stopped encounter: " + enc.content.Name);
+                if (enc.handler == ActiveBandits)
                     EndBandits();
                 else if (enc.handler == ActiveStorm)
                     EndStorm();
                 else
                     ActiveEncounters.Remove(enc);
-                    break; // quick fix so that removing elements doesnt break the foreach, but skipping a frame is insignificant anyway to these durations.
-                }
+                break; // quick fix so that removing elements doesnt break the foreach, but skipping a frame is insignificant anyway to these durations.
             }
+        }
     }
 }

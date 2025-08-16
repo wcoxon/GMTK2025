@@ -74,15 +74,15 @@ public partial class TownPanel : Panel
             marketRow.Production = (int)town.Production[item];
             marketRow.Consumption = (int)town.Consumption[item];
             marketRow.Price = price;
-            marketRow.PriceOffset = price - PlayerView.Instance.itemBaseValues[item];
+            marketRow.PriceOffset = price - Player.Instance.itemBaseValues[item];
             
         }
     }
 
     public void updateActions()
     {
-        bool onTown = PlayerView.Instance.State == GameState.TOWN;
-        bool onSelected = PlayerView.Instance.player.Town == Town; // gotta be careful, travellers town is still last town whilst travelling, but you shouldn't be able to trade whilst travelling
+        bool onTown = Player.Instance.State == GameState.TOWN;
+        bool onSelected = Player.Instance.traveller.Town == Town; // gotta be careful, travellers town is still last town whilst travelling, but you shouldn't be able to trade whilst travelling
 
         tradeButton.Disabled = !(onTown && onSelected); // show trade if on selected town and in town state
         rumourButton.Disabled = !(onTown && onSelected); // show rumour if on selected town and in town state

@@ -10,7 +10,7 @@ public partial class UIController : CanvasLayer
     [Export] public InventoryUI inventoryUI;
     [Export] public TradeUI tradeUI;
 
-    
+
 
     public void OpenTrade()
     {
@@ -20,8 +20,7 @@ public partial class UIController : CanvasLayer
 
     public void ToggleInventory(Traveller subject)
     {
-        
-            inventoryUI.Visible = !inventoryUI.Visible;
-            if (inventoryUI.Visible) inventoryUI.displayInventory(subject);
+        inventoryUI.Visible = !inventoryUI.Visible;
+        if (inventoryUI.Visible) inventoryUI.displayInventory(subject);
     }
 }

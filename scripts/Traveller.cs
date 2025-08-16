@@ -3,47 +3,25 @@ using System;
 using System.Collections.Generic;
 
 
-struct Journey
+public struct Journey
 {
-    List<Node3D> nodes;
-    List<Dashes> dashes;
-    int index;
+    public Path3D path;
+    public PathFollow3D follower;
 
-    public Journey(List<Node3D> _nodes, List<Dashes> _dashes, int _index)
-    {
-        nodes = _nodes;
-        dashes = _dashes;
-        index = _index;
-    }
-    public Node3D nextWaypoint()
-    {
-        return nodes[index];
-    }
-    public void Pop()
-    {
-        dashes[index].QueueFree();
-        index++;
-    }
-    public void updateDash(Vector3 position)
-    {
-        var dist_start = position.DistanceTo(dashes[index].LineStart);
-        var dist_end = position.DistanceTo(dashes[index].LineEnd);
+    public Town destination;
 
-        dashes[index].SetProgression(dist_start / (dist_start + dist_end));
-    }
+    public Journey() { }
 }
-
-// ok how about yeah, make an activity class, then yeah in, no wait.. just don't call travel if you're not travelling,,
 
 public partial class Traveller : Node3D
 {
-    int money = 0;
+    public float moveSpeed = 1;
+    private int money = 0;
     public int Money { get => money; set => money = value; }
 
     public int[] inventory = new int[3];
-    public float moveSpeed = 1;
 
-    Town town;
+    private Town town;
     [Export] public Town Town
     {
         get => town;
@@ -56,39 +34,37 @@ public partial class Traveller : Node3D
 
     public List<Rumour> knownRumours = new();
 
-    Journey journey;
-
-    public void SetJourney(List<Node3D> nodes, List<Dashes> dashes) => journey = new(nodes, dashes, 0);
-
+    public Journey journey = new();
+    
     public void travel(float deltaTime)
     {
-        deltaTime *= PlayerView.Instance.worldSpeed; // scale delta to simulated time elapsed
+        deltaTime *= (float)Player.Instance.World.timeScale; // scale delta to simulated time elapsed
 
-        var nextWaypoint = journey.nextWaypoint();
-        Vector3 displacement = nextWaypoint.Position - Position;
         float deltaDistance = moveSpeed * deltaTime;
 
-        if (displacement.Length() < deltaDistance)
-        {
-            Position = nextWaypoint.Position; // this is technically flawed :nerd: you see the remaining progress isn't carried over
-            journey.Pop();
+        journey.follower.Progress += deltaDistance;
 
-            if (nextWaypoint is Town t) onArrival(t);
-            else nextWaypoint.QueueFree();
-        }
-        else
-        {
-            Translate(displacement.Normalized() * deltaDistance);
-            journey.updateDash(Position);
-        }
+        Position = journey.follower.Position;
+
+        //Position *= Vector3.Right + Vector3.Back;
+        //Position += Vector3.Up * PlayerView.Instance.world.getMapHeight(Position); // stupid like heightmap walk
+
+        if (journey.follower.ProgressRatio >= 1.0) onArrival(journey.destination);
+
     }
 
     virtual public void onArrival(Town town) => town.currentTravellers.Add(this);
     virtual public void onDeparture() => town.currentTravellers.Remove(this);
-    
+
+    public override void _EnterTree()
+    {
+        journey.path = GetNode<Path3D>("Path3D");
+        journey.follower = journey.path.GetNode<PathFollow3D>("PathFollow3D");
+    }
+
     public override void _Ready()
     {
-        PlayerView.Instance.TwentyFourTicks += expireRumours;
+        Player.Instance.TwentyFourTicks += expireRumours;
     }
 
     // call this at the end of every day. Go through your rumours list, remove the stuff that's expired.

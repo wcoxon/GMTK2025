@@ -20,9 +20,9 @@ public partial class NPCTraveller : Traveller
     {
         while (Town == destinationTown)
         {
-            int randomItem = (int)GD.Randi() % PlayerView.Instance.allTowns.Count;
+            int randomItem = (int)GD.Randi() % Player.Instance.allTowns.Count;
 
-            destinationTown = PlayerView.Instance.allTowns[randomItem];
+            destinationTown = Player.Instance.allTowns[randomItem];
         }
     }
 }

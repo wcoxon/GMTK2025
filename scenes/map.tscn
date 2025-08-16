@@ -193,13 +193,13 @@ rings = 4
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_m57gh"]
 size = Vector2(75, 75)
-subdivide_width = 128
-subdivide_depth = 128
+subdivide_width = 32
+subdivide_depth = 32
 
 [sub_resource type="Gradient" id="Gradient_4qxv8"]
 interpolation_mode = 2
-offsets = PackedFloat32Array(0, 0.0218182, 0.778182)
-colors = PackedColorArray(0.999999, 0.170558, 0.61271, 1, 2.74345e-06, 0.577734, 0.555273, 1, 0.618973, 0.481646, 0, 1)
+offsets = PackedFloat32Array(0, 0.134545, 1)
+colors = PackedColorArray(0.366133, 0.400076, 1, 1, 0, 0.41502, 0.299462, 1, 0.674316, 0.687264, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_fq663"]
 gradient = SubResource("Gradient_4qxv8")
@@ -215,7 +215,7 @@ noise = ExtResource("32_mniao")
 width = 256
 height = 256
 as_normal_map = true
-bump_strength = 10.7
+bump_strength = 32.0
 normalize = false
 color_ramp = ExtResource("31_fq663")
 noise = ExtResource("32_mniao")
@@ -232,7 +232,7 @@ script = ExtResource("1_4qxv8")
 
 [node name="PlayerTraveller" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("2_h6b5g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.16845, 0, 4.20806)
-Town = NodePath("../Gumbusville")
+Town = NodePath("../Telemodem4")
 
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.8023, 0.848907, -8.68057)
@@ -259,15 +259,15 @@ autoplay = "default"
 script = ExtResource("20_6ek7f")
 
 [node name="Telemodem4" parent="." instance=ExtResource("1_2hyix")]
-transform = Transform3D(0.950997, 0, -0.3092, 0, 1, 0, 0.3092, 0, 0.950997, 19.3902, 1.47344, -6.84057)
+transform = Transform3D(0.950997, 0, -0.3092, 0, 1, 0, 0.3092, 0, 0.950997, 19.1758, 9.31896, 4.71464)
 Data = ExtResource("5_fq663")
 
 [node name="Gumbusville" parent="." instance=ExtResource("1_2hyix")]
-transform = Transform3D(0.812165, 0, 0.583428, 0, 1, 0, -0.583428, 0, 0.812165, -22.1166, 1.68526, -13.2235)
+transform = Transform3D(0.812165, 0, 0.583428, 0, 1, 0, -0.583428, 0, 0.812165, -31.8401, 0.0125952, -16.0707)
 Data = ExtResource("6_mniao")
 
 [node name="Slopton" parent="." instance=ExtResource("1_2hyix")]
-transform = Transform3D(-0.30207, 0, -0.953286, 0, 1, 0, 0.953286, 0, -0.30207, 0.920134, 9.53675e-07, 29.9779)
+transform = Transform3D(-0.30207, 0, -0.953286, 0, 1, 0, 0.953286, 0, -0.30207, -21.6185, 1.99357, 26.6471)
 Data = ExtResource("8_4qxv8")
 
 [node name="Road" type="Area3D" parent="."]
@@ -326,4 +326,4 @@ mesh = SubResource("PlaneMesh_m57gh")
 surface_material_override/0 = SubResource("ShaderMaterial_4qxv8")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.15459, 0.242359, 0.957791, -0.987979, 0.0379222, 0.149867, -1.04475e-08, -0.969445, 0.245307, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.610242, 0.792215, 0, -0.792215, 0.610242, 0, 0, 0)

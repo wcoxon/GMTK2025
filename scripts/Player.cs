@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 public enum GameState{ TOWN, PLAN, TRAVEL, ENCOUNTER }
 
-public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
+public partial class Player : Node3D, EncounterManager.IVariableProvider
 {
-    public static PlayerView Instance;
+    public static Player Instance;
 
     //refs to other stuff in the scene
-    public PlayerTraveller player; // i wanna rename to traveller and this class to player, then we can get player.instance.traveller ts
+    public PlayerTraveller traveller;
 
     [Export] Waypoints waypoints;
 
@@ -36,7 +36,12 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     [Export] public NotificationManager notificationManager;
 
 
+    public int[] itemBaseValues = [5, 12, 10]; // idfk where elseto put this i just wanna store each items base value somewhere :'(
     public List<Town> allTowns = []; // store this on world map ?
+
+    
+    public Vector3 velocity = Vector3.Zero;
+    const float acceleration = 200.0f, maxSpeed = 20.0f;
 
     private GameState state;
     public GameState State
@@ -49,7 +54,9 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
             switch (state)
             {
                 case GameState.TOWN:
-                    Position = player.Position; // focus on player
+                    Position = traveller.Position; // focus on player
+
+                    waypoints.ClearDots();
 
                     UI.townPanel.embark();
                     UI.timeControlPanel.Pause();
@@ -63,12 +70,16 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
                     UI.townPanel.plan();
 
                     waypoints.Active = true;
-                    waypoints.endDot = SelectedTown;
-                    waypoints.OnMouseExited(); // hides a bunch of shit that activation shows, sets the line to last and end waypoints
+                    waypoints.editingJourney = traveller.journey;
+                    traveller.journey.follower.Progress = 0;
+                    traveller.journey.path.Curve.AddPoint(traveller.Town.Position);
+                    traveller.journey.path.Curve.AddPoint(selectedTown.Position);
+                    traveller.journey.destination = selectedTown; // this could be handled in a better spot ik
+                    
                     break;
 
                 case GameState.TRAVEL:
-                    player.onDeparture();
+                    traveller.onDeparture();
 
                     UI.townPanel.embark();
                     UI.timeControlPanel.Speed1();
@@ -77,18 +88,9 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         }
     }
 
-    public Vector3 velocity = Vector3.Zero;
-    const float acceleration = 200.0f, maxSpeed = 20.0f;
-
-    public float worldSpeed = 1;
-
-    public int[] itemBaseValues = [5, 12, 10]; // idfk where elseto put this i just wanna store each items base value somewhere :'(
-    
-    public void setWorldSpeed(float timescale) => worldSpeed = timescale;
-
     private double tick;
     private int eightHourTicker, dayTicker;
-    public int currentDate;
+    public int currentDate; // we have hour in the timecontroller thing but wtv im moving all this logic anw
 
     private void OnTick() //increment our other tickers, then set the tick to zero so we can tick again.
     {
@@ -126,21 +128,27 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         }
     }
 
+    //public World3D ?? what wait waht there's this thing here says its like a world with its own shit maybe time?
+    public WorldMap World;
+    //public float WorldSpeed => (float)World.timeScale;
+    public void setWorldSpeed(float speed) => World.timeScale = speed; //worldSpeed = timescale;
+
     public override void _EnterTree()
     {
-        player = GetNode<PlayerTraveller>("../WorldMap/PlayerTraveller");
+        Instance = this;
+
+        World = GetNode<WorldMap>("../WorldMap");
+        traveller = World.GetNode<PlayerTraveller>("PlayerTraveller");
+
         musicPlayer = GetNode<AudioStreamPlayer>("Camera/MusicPlayer");
     }
 
     public override void _Ready()
     {
-        Instance = this; // global handle
         EncounterManager.Instance.AddProvider(this);
 
         State = GameState.TOWN;
-
-        waypoints.SetStart(player.Town); // start path at current town
-
+        
         tick = 0;
         dayTicker = 0;
         eightHourTicker = 0;
@@ -163,21 +171,19 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
             Translate(mouseDelta * dragScale);
         }
 
-        if (@event.IsActionPressed("inventory"))  UI.ToggleInventory(player);
+        if (@event.IsActionPressed("inventory")) UI.ToggleInventory(traveller);
 
         if (@event.IsActionPressed("zoomIn")) Scale -= Vector3.One*0.1f;
-        if (@event.IsActionPressed("zoomOut")) Scale += Vector3.One*0.1f; // could use axis right
+        if (@event.IsActionPressed("zoomOut")) Scale += Vector3.One*0.1f;
         
-
         switch (State)
         {
-            case GameState.ENCOUNTER:
+            case GameState.ENCOUNTER: // no time controls when in an encounter
                 break;
-
             default:
                 if (@event.IsActionPressed("speed0"))
                 {
-                    if (worldSpeed == 0) UI.timeControlPanel.Speed1();
+                    if (World.timeScale == 0) UI.timeControlPanel.Speed1();
                     else UI.timeControlPanel.Pause();
                 }
                 if (@event.IsActionPressed("speed1")) UI.timeControlPanel.Speed1();
@@ -189,28 +195,31 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
 
     public override void _Process(double delta)
     {
-        tick += delta * worldSpeed / 3; // The same calculation is done in date, but we need it here in the singleton for signalling reasons. /// nooo magic number nooo why r u using a literal bro
-        /// maybe it was me that did this, rly bad
+        tick += delta * World.timeScale / 3; // The same calculation is done in date, but we need it here in the singleton for signalling reasons. /// nooo magic number nooo why r u using a literal bro/// maybe it was me that did this, rly bad
 
         if (tick >= 1) EmitSignal(SignalName.Tick);
+    }
+
+    Vector3 clampVector(Vector3 vector, float maxLength)
+    {
+        if (maxLength < 0) return Vector3.Zero;
+        return vector.Normalized() * Mathf.Min(vector.Length(), maxLength);
     }
 
     public override void _PhysicsProcess(double delta)
     {
         Vector3 inputDirection = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("up", "down"));
 
-        if (inputDirection != Vector3.Zero)
-        {
-            //accelerate in input direction
-            velocity += inputDirection * acceleration * (float)delta;
+        float deltaSpeed = acceleration * (float)delta; // calculate acceleration/deceleration
 
-            //limit speed
-            velocity = velocity.Normalized() * Mathf.Min(velocity.Length(), maxSpeed);
+        if (!inputDirection.IsZeroApprox())
+        {
+            velocity += inputDirection * deltaSpeed; // accelerate in input direction
+            velocity = clampVector(velocity, maxSpeed); // limit speed
         }
         else
         {
-            //decelerate towards 0
-            velocity = velocity.Normalized() * Mathf.Max(velocity.Length() - acceleration * (float)delta, 0);
+            velocity = clampVector(velocity, velocity.Length() - deltaSpeed); // decelerate towards 0
         }
 
         Translate(velocity * (float)delta);
@@ -220,8 +229,7 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     public void embark()
     {
         waypoints.Active = false;
-        var (nodes, dashes) = waypoints.PopJourney();
-        player.SetJourney(nodes, dashes);
+        traveller.journey.path.Curve.AddPoint(traveller.journey.destination.Position);
 
         State = GameState.TRAVEL;
     }
@@ -230,13 +238,8 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         State = GameState.TOWN; // honestly transitioning into town state should implicitly dispose of waypoint stuff
 
         waypoints.Active = false;
-        var (nodes, dashes) = waypoints.PopJourney();
-        foreach (var node in nodes)
-            if (!(node is Town))
-                node.QueueFree();
-        foreach (var dash in dashes)
-            dash.QueueFree();
-        waypoints.SetStart(player.Town); // Reset starting point back to current town.
+        traveller.journey.path.Curve.ClearPoints();
+        waypoints.ClearDots();
     }
 
     // idk what ts is about ngl
@@ -244,8 +247,8 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
     public List<(string, double)> GetVariables()
     {
         return [
-            ("health", player.Health),
-            ("money", player.Money)
+            ("health", traveller.Health),
+            ("money", traveller.Money)
         ];
     }
     public void UpdateVariable(string name, double value)
@@ -253,24 +256,24 @@ public partial class PlayerView : Node3D, EncounterManager.IVariableProvider
         if (name == "health")
         {
             GD.Print("Set playerhealth to " + value);
-            player.Health = (int)value;
+            traveller.Health = (int)value;
         }
         else if (name == "money")
         {
             GD.Print("Set money to " + value);
-            player.Money = (int)value;
+            traveller.Money = (int)value;
         }
         else throw new KeyNotFoundException("Player cannot assign to variable " + name);
     }
 
     public void OnDeath()
     {
-        player.Health = 3;
-        player.Money = Math.Min(50, player.Money / 3);
+        traveller.Health = 3;
+        traveller.Money = Math.Min(50, traveller.Money / 3);
         notificationManager.AddNotification("You passed out! Returning back to last town.");
 
         State = GameState.TOWN;
-        player.Position = player.Town.Position;
+        traveller.Position = traveller.Town.Position;
 
     }
 }

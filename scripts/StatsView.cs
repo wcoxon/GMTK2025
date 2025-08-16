@@ -13,7 +13,7 @@ public partial class StatsView : Panel
     }
     public override void _Process(double delta)
     {
-        var player = PlayerView.Instance.player;
+        var player = Player.Instance.traveller;
         label.Text = String.Format(format, player.Money, player.Health);
     }
 }

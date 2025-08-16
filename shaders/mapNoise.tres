@@ -2,7 +2,8 @@
 
 [resource]
 noise_type = 3
-seed = 4
+seed = 269
 frequency = 0.008
+offset = Vector3(1000, 769.23, 0)
 fractal_octaves = 4
 metadata/_preview_in_3d_space_ = true

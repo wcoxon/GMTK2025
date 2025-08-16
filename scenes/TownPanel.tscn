@@ -5,7 +5,14 @@
 [ext_resource type="Theme" uid="uid://csb5ulvi3vhod" path="res://themes/SmallTextTheme.tres" id="2_rkrow"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_duute"]
-bg_color = Color(0.15188, 0.221635, 0.210282, 1)
+bg_color = Color(6.257e-07, 0.635736, 0.29782, 0.521569)
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.847836, 0.499101, 1.92523e-07, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
 
 [sub_resource type="LabelSettings" id="LabelSettings_45b72"]
 font_size = 26

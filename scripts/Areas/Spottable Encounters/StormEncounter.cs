@@ -23,8 +23,8 @@ public partial class StormEncounter : MovingEncounter
         content = EncounterManager.Instance.GetFromClass("storm")[0];
 
         devastatedTownsToday = false;
-        PlayerView.Instance.EightTicks += DoEveryEightTicks;
-        PlayerView.Instance.TwentyFourTicks += DoDaily;
+        Player.Instance.EightTicks += DoEveryEightTicks;
+        Player.Instance.TwentyFourTicks += DoDaily;
 
         AreaEntered += OnAreaEntered;
         AreaExited += OnAreaExited;
@@ -191,8 +191,8 @@ public partial class StormEncounter : MovingEncounter
     {
         GD.Print("Storm Damaged!" + victim);
         if (victim is PlayerTraveller)
-            PlayerView.Instance.notificationManager.AddNotification("Storm damaged you!");
-            PlayerView.Instance.encounterView.DisplayEncounter(content);
+            Player.Instance.notificationManager.AddNotification("Storm damaged you!");
+            Player.Instance.encounterView.DisplayEncounter(content);
 
     }
 

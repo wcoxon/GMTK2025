@@ -35,7 +35,7 @@ public partial class Town : Node3D
             meshInstance.SetInstanceShaderParameter("width", selected ? 0.3 : 0);
         }
     }
-    public void select() => PlayerView.Instance.SelectedTown = this;
+    public void select() => Player.Instance.SelectedTown = this;
     bool Hovered
     {
         set
@@ -57,11 +57,11 @@ public partial class Town : Node3D
 
     public override void _Ready()
     {
-        PlayerView.Instance.allTowns.Add(this);
+        Player.Instance.allTowns.Add(this);
         RumorView.towns.Add(data.townName, this);
         //is this necessary ^
 
-        for (int i = 0; i < 3; i++) data.prices[i] = PlayerView.Instance.itemBaseValues[i] * data.price_multiplyers[i];
+        for (int i = 0; i < 3; i++) data.prices[i] = Player.Instance.itemBaseValues[i] * data.price_multiplyers[i];
 
         data.base_consumption.CopyTo(data.consumption, 0);
         data.base_production.CopyTo(data.production, 0);
@@ -79,7 +79,7 @@ public partial class Town : Node3D
     private double next_update = UPDATE_INTERVAL;
     public override void _PhysicsProcess(double delta)
     {
-        next_update -= delta * PlayerView.Instance.worldSpeed;
+        next_update -= delta * Player.Instance.World.timeScale;
         if (next_update > 0) return;
 
         updateStock();
@@ -92,10 +92,10 @@ public partial class Town : Node3D
     {
         for (int item = 0; item < 3; item++)
         {
-            Production[item] = supplyByPrice(data.base_production[item], data.prices[item], PlayerView.Instance.itemBaseValues[item] * data.price_multiplyers[item], data.production_elasticity);
+            Production[item] = supplyByPrice(data.base_production[item], data.prices[item], Player.Instance.itemBaseValues[item] * data.price_multiplyers[item], data.production_elasticity);
             Consumption[item] = data.stock_selloff[item] * data.stocks[item] + data.supply_selloff[item] * data.production[item];
 
-            data.prices[item] = priceByDemand(PlayerView.Instance.itemBaseValues[item] * data.price_multiplyers[item], data.consumption[item], data.base_consumption[item], data.consumption_elasticity);
+            data.prices[item] = priceByDemand(Player.Instance.itemBaseValues[item] * data.price_multiplyers[item], data.consumption[item], data.base_consumption[item], data.consumption_elasticity);
             // wait shouldn't the prices be entirely deterministic though ?
 
             Stocks[item] += Mathf.Max(-data.stocks[item], (data.production[item] - rng.Randfn(data.consumption[item], data.consumption[item] / 10)) / 3);

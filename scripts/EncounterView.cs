@@ -64,8 +64,8 @@ public partial class EncounterView : Panel
         // store action
         post_action = post;
 
-        last_state = PlayerView.Instance.State;
-        PlayerView.Instance.State = GameState.ENCOUNTER;
+        last_state = Player.Instance.State;
+        Player.Instance.State = GameState.ENCOUNTER;
     }
 
     private void OnOptionPressed(int id)
@@ -77,7 +77,7 @@ public partial class EncounterView : Panel
             GetNode<Button>("MarginContainer/VSplitContainer/Option" + i).Visible = false;
         }
 
-        PlayerView.Instance.State = last_state;
+        Player.Instance.State = last_state;
         //PlayerView.Instance.PlayWorldSpeed(); // should play anyway.. you know when you transition state
         if (post_action != null) post_action();
     }

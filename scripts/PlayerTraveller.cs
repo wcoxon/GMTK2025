@@ -27,8 +27,8 @@ public partial class PlayerTraveller : Traveller
 
     public override void _Process(double delta)
     {
-        if(PlayerView.Instance.State==GameState.TRAVEL) travel((float)delta);
-        if (health == 0) PlayerView.Instance.OnDeath(); // couldn't/shouldn't this just be checked when damaging health?
+        if(Player.Instance.State==GameState.TRAVEL) travel((float)delta);
+        if (health == 0) Player.Instance.OnDeath(); // couldn't/shouldn't this just be checked when damaging health?
     }
 
     public override void onArrival(Town town)
@@ -37,16 +37,16 @@ public partial class PlayerTraveller : Traveller
         // update knowledge of this town
         // enable trading and rumour prompts, oh and like plot journey
         // generally update visuals, ease camera over to town, play sound, and yeah like open some ui
-
+        journey.path.Curve.ClearPoints();
         Town = town;
-        PlayerView.Instance.State = GameState.TOWN; // notifies player to enter town state
+        Player.Instance.State = GameState.TOWN; // notifies player to enter town state
         //GD.Print($"{Name} Entering {Town.TownName}");
-        PlayerView.Instance.Music = Town.Theme;
+        Player.Instance.Music = Town.Theme;
     }
 
     public override void onDeparture()
     {
-        PlayerView.Instance.Music = null;
+        Player.Instance.Music = null;
     }
 
     public void GetRumour(Rumour newRumour)

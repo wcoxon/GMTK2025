@@ -20,7 +20,7 @@ public partial class RumorView : Control
     {
         if (Visible)
         {
-            var camera = PlayerView.Instance.GetNode<Camera3D>("Camera3D");
+            var camera = Player.Instance.GetNode<Camera3D>("Camera3D");
             SetPosition(camera.UnprojectPosition(town.Position), keepOffsets: true);
         }
     }

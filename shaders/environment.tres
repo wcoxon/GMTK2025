@@ -4,7 +4,7 @@
 sky_top_color = Color(0.66796, 0.355097, 5.77569e-07, 1)
 sky_horizon_color = Color(1, 0.410277, 0.7112, 1)
 sky_cover_modulate = Color(0.28384, 0.617826, 1.92523e-07, 1)
-ground_bottom_color = Color(0.31968, 0.2146, 0.74, 1)
+ground_bottom_color = Color(0.522153, 3.83602e-05, 0.424704, 1)
 ground_horizon_color = Color(0, 0, 0, 1)
 use_debanding = false
 

@@ -51,7 +51,7 @@ public partial class BanditEncounter : TickBasedEncounter
         GD.Print("Bandits! They Got You!!!" + victim);
         if (victim is PlayerTraveller)
         {
-            PlayerView.Instance.encounterView.DisplayEncounter(content);
+            Player.Instance.encounterView.DisplayEncounter(content);
         }
     }
 }

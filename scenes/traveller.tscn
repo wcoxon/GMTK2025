@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://dylgmhbel8gcv"]
+[gd_scene load_steps=8 format=3 uid="uid://dylgmhbel8gcv"]
 
 [ext_resource type="Script" uid="uid://cinw4djg05slo" path="res://scripts/PlayerTraveller.cs" id="1_maw3y"]
 [ext_resource type="SpriteFrames" uid="uid://g0qpcpv435u7" path="res://images/player/playerFrames.tres" id="2_vjsxs"]
@@ -12,6 +12,8 @@ height = 1.41745
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_vjsxs"]
 height = 1.36621
 radius = 1.5
+
+[sub_resource type="Curve3D" id="Curve3D_vjsxs"]
 
 [node name="Traveller" type="Node3D"]
 script = ExtResource("1_maw3y")
@@ -41,3 +43,10 @@ script = ExtResource("3_b0pw0")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionRadius"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.316895, 0)
 shape = SubResource("CylinderShape3D_vjsxs")
+
+[node name="Path3D" type="Path3D" parent="."]
+top_level = true
+curve = SubResource("Curve3D_vjsxs")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+loop = false
