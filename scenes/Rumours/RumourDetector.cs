@@ -8,45 +8,45 @@ public partial class RumourDetector : Area3D
 
     public override void _Ready()
     {
-        AreaEntered += OnEncounterDetected;
+        //AreaEntered += OnEncounterDetected;
 
-        m_TravellerSpotter = this.GetParent() as Traveller;
+        //m_TravellerSpotter = this.GetParent() as Traveller;
 
         //GD.Print(m_TravellerSpotter.Name);
     }
 
 
 
-    public void OnEncounterDetected(Area3D area)
-    {
-        if (area is not TickBasedEncounter) return;
-
-
-        TickBasedEncounter spottedEncounter = area as TickBasedEncounter;
-
-        EncounterContent spottedContent = spottedEncounter.content;
-
-        EncounterRumour newRumour = new(spottedContent.Rumors[0].Text, Player.Instance.currentDate, spottedContent.Duration, spottedEncounter.Position, spottedEncounter);
-
-        //GD.Print(newRumour.rumourText);
+    //public void OnEncounterDetected(Area3D area)
+    //{
+    //    if (area is not TickBasedEncounter) return;
 //
-        //GD.Print(newRumour.dayRecieved);
 //
-        //GD.Print(newRumour.duration);
+    //    TickBasedEncounter spottedEncounter = area as TickBasedEncounter;
 //
-        //GD.Print(newRumour.position);
+    //    EncounterContent spottedContent = spottedEncounter.content;
 //
-        //GD.Print(newRumour.encounterObject);
+    //    EncounterRumour newRumour = new(spottedContent.Rumors[0].Text, Player.Instance.currentDate, spottedContent.Duration, spottedEncounter.Position, spottedEncounter);
 //
-        //GD.Print(m_TravellerSpotter.Name);
-
-
-        m_TravellerSpotter.knownRumours.Add(newRumour);
-        
-
-        if (m_TravellerSpotter is PlayerTraveller) //if the player spots the rumour, make it visible
-        {
-            spottedEncounter.Visible = true;
-        }
-    }
+    //    //GD.Print(newRumour.rumourText);
+////
+    //    //GD.Print(newRumour.dayRecieved);
+////
+    //    //GD.Print(newRumour.duration);
+////
+    //    //GD.Print(newRumour.position);
+////
+    //    //GD.Print(newRumour.encounterObject);
+////
+    //    //GD.Print(m_TravellerSpotter.Name);
+//
+//
+    //    m_TravellerSpotter.knownRumours.Add(newRumour);
+    //    
+//
+    //    if (m_TravellerSpotter is PlayerTraveller) //if the player spots the rumour, make it visible
+    //    {
+    //        spottedEncounter.Visible = true;
+    //    }
+    //}
 }

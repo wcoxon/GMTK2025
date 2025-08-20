@@ -10,6 +10,9 @@ public partial class TownPanel : Panel
     [Export] Label populationLabel;
     [Export] Label wealthLabel;
     [Export] BoxContainer stockContainer;
+
+    [Export] AnimatedSprite2D[] visitorSprites;
+
     [Export] Button tradeButton;
     [Export] Button rumourButton;
     [Export] Button plotButton;
@@ -55,7 +58,7 @@ public partial class TownPanel : Panel
 
     public override void _PhysicsProcess(double delta)
     {
-        if (Town is not null) updateUI(); // continuously update displayed stats
+        if (Town is not null) updateUI(); // keep UI up to date with changing town stats
     }
 
     public void updateUI() // update info specifically, could rename to that tbf
@@ -75,7 +78,20 @@ public partial class TownPanel : Panel
             marketRow.Consumption = (int)town.Consumption[item];
             marketRow.Price = price;
             marketRow.PriceOffset = price - Player.Instance.itemBaseValues[item];
-            
+
+        }
+
+        for (int i = 0; i < visitorSprites.Length; i++)
+        {
+            if (i >= Town.currentTravellers.Count)
+            {
+                visitorSprites[i].SpriteFrames = null;
+                continue;
+            }
+
+            visitorSprites[i].SpriteFrames = Town.currentTravellers[i].Animation;
+            visitorSprites[i].Play();
+
         }
     }
 

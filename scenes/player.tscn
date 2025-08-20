@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://b7hxl7dg26i7j"]
+[gd_scene load_steps=4 format=3 uid="uid://b7hxl7dg26i7j"]
 
 [ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/Player.cs" id="1_tuyoq"]
 [ext_resource type="Environment" uid="uid://b6n8u3kn2ho72" path="res://shaders/environment.tres" id="2_g2els"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_g2els"]
+size = Vector3(1, 8.725, 1)
 
 [node name="Player" type="Node3D"]
 script = ExtResource("1_tuyoq")
@@ -16,3 +19,8 @@ environment = ExtResource("2_g2els")
 editor_description = "putting 1 player for music on the player so we don't risk multiple songs playing at once"
 autoplay = true
 bus = &"Music"
+
+[node name="Cursor" type="MeshInstance3D" parent="."]
+top_level = true
+visible = false
+mesh = SubResource("PrismMesh_g2els")

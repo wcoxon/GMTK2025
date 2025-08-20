@@ -1,0 +1,39 @@
+[gd_resource type="SpriteFrames" load_steps=6 format=3 uid="uid://bdj7aack52cw1"]
+
+[ext_resource type="Texture2D" uid="uid://bb6ydbcrpvilm" path="res://Assets/images/eyebox/eyebox1.png" id="1_0ca7k"]
+[ext_resource type="Texture2D" uid="uid://16ohxvt2ursq" path="res://Assets/images/eyebox/eyebox2.png" id="2_l3ao1"]
+[ext_resource type="Texture2D" uid="uid://bot8uc4qlj660" path="res://Assets/images/eyebox/eyebox3.png" id="3_l1ucq"]
+[ext_resource type="Texture2D" uid="uid://c3hqjn5prv47e" path="res://Assets/images/eyebox/eyebox4.png" id="4_53exp"]
+[ext_resource type="Texture2D" uid="uid://bvjvnd2ddtt8r" path="res://Assets/images/eyebox/eyebox5.png" id="5_mgc3f"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_0ca7k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_l3ao1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_l1ucq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_53exp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_mgc3f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_53exp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_l1ucq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_l3ao1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

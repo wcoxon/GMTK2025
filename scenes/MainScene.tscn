@@ -1,26 +1,23 @@
-[gd_scene load_steps=22 format=3 uid="uid://cvlfxg610affe"]
+[gd_scene load_steps=19 format=3 uid="uid://cvlfxg610affe"]
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
 [ext_resource type="PackedScene" uid="uid://b7hxl7dg26i7j" path="res://scenes/player.tscn" id="2_25dfr"]
-[ext_resource type="AudioStream" uid="uid://dsw7n1rj7h8v6" path="res://Audio/dsfsf.mp3" id="3_2phbr"]
-[ext_resource type="PackedScene" uid="uid://dpdvumg63k3xu" path="res://scenes/TownPanel.tscn" id="3_y7ipx"]
-[ext_resource type="PackedScene" uid="uid://dao5worh1gb0c" path="res://scenes/TradeUI.tscn" id="4_5hv5t"]
-[ext_resource type="AudioStream" uid="uid://dojjif4v2wcke" path="res://Audio/gtyg.mp3" id="4_mkg2b"]
-[ext_resource type="AudioStream" uid="uid://ccu7ddjj2sqx4" path="res://Audio/gygy.mp3" id="5_1ns3k"]
+[ext_resource type="AudioStream" uid="uid://dsw7n1rj7h8v6" path="res://Assets/Audio/dsfsf.mp3" id="3_2phbr"]
+[ext_resource type="PackedScene" uid="uid://dpdvumg63k3xu" path="res://scenes/UI/TownPanel.tscn" id="3_y7ipx"]
+[ext_resource type="PackedScene" uid="uid://dao5worh1gb0c" path="res://scenes/UI/TradeUI.tscn" id="4_5hv5t"]
+[ext_resource type="AudioStream" uid="uid://dojjif4v2wcke" path="res://Assets/Audio/gtyg.mp3" id="4_mkg2b"]
+[ext_resource type="AudioStream" uid="uid://ccu7ddjj2sqx4" path="res://Assets/Audio/gygy.mp3" id="5_1ns3k"]
 [ext_resource type="PackedScene" uid="uid://durnjyano0ic4" path="res://scenes/waypoints.tscn" id="5_k24pf"]
-[ext_resource type="AudioStream" uid="uid://ce756abk3ipcs" path="res://Audio/ssa.mp3" id="6_a7pbh"]
-[ext_resource type="AudioStream" uid="uid://ci12pk15nudvu" path="res://Audio/vcxvxcdv.mp3" id="7_ye0jt"]
-[ext_resource type="PackedScene" uid="uid://bdrkqejd8htea" path="res://scenes/EncounterView.tscn" id="8_cfq0f"]
-[ext_resource type="PackedScene" uid="uid://c6yeey4j3upm4" path="res://scenes/inventory.tscn" id="8_pd1er"]
-[ext_resource type="PackedScene" uid="uid://xqt4l46rhnwy" path="res://scenes/RumorView.tscn" id="8_x537r"]
+[ext_resource type="AudioStream" uid="uid://ce756abk3ipcs" path="res://Assets/Audio/ssa.mp3" id="6_a7pbh"]
+[ext_resource type="AudioStream" uid="uid://ci12pk15nudvu" path="res://Assets/Audio/vcxvxcdv.mp3" id="7_ye0jt"]
+[ext_resource type="PackedScene" uid="uid://bdrkqejd8htea" path="res://scenes/UI/EncounterView.tscn" id="8_cfq0f"]
+[ext_resource type="PackedScene" uid="uid://c6yeey4j3upm4" path="res://scenes/UI/inventory.tscn" id="8_pd1er"]
+[ext_resource type="PackedScene" uid="uid://xqt4l46rhnwy" path="res://scenes/UI/RumorView.tscn" id="8_x537r"]
 [ext_resource type="PackedScene" uid="uid://bovy050xv5534" path="res://scenes/UI/time_panel.tscn" id="10_xnxdc"]
-[ext_resource type="Script" uid="uid://0n132a882k4r" path="res://scripts/NotificationManager.cs" id="11_o3jky"]
-[ext_resource type="PackedScene" uid="uid://c1jvgnt81ughl" path="res://scenes/notification.tscn" id="12_kp0ql"]
+[ext_resource type="Script" uid="uid://0n132a882k4r" path="res://scripts/UI/NotificationManager.cs" id="11_o3jky"]
+[ext_resource type="PackedScene" uid="uid://c1jvgnt81ughl" path="res://scenes/UI/notification.tscn" id="12_kp0ql"]
 [ext_resource type="PackedScene" uid="uid://ce3r73hprtho" path="res://scenes/UI/stats_view.tscn" id="12_xnxdc"]
-[ext_resource type="Script" uid="uid://bod5bn1der1x6" path="res://scenes/UIController.cs" id="13_mkg2b"]
-[ext_resource type="Script" uid="uid://6mnsy7hidovy" path="res://scripts/StoryTeller.cs" id="15_0cxu4"]
-[ext_resource type="PackedScene" uid="uid://fhoh6fiq15ei" path="res://scenes/encounters/bandits.tscn" id="16_0ehpd"]
-[ext_resource type="PackedScene" uid="uid://b25d8ekeapuhi" path="res://scenes/encounters/storm_area.tscn" id="17_8wjpf"]
+[ext_resource type="Script" uid="uid://bod5bn1der1x6" path="res://scripts/UI/UIController.cs" id="13_mkg2b"]
 
 [node name="Root" type="Node3D"]
 
@@ -34,13 +31,6 @@ notificationManager = NodePath("../UICanvas/NotificationManager")
 
 [node name="Waypoints" parent="." node_paths=PackedStringArray("world") instance=ExtResource("5_k24pf")]
 world = NodePath("../WorldMap")
-
-[node name="StoryTeller" type="Node3D" parent="."]
-process_mode = 4
-visible = false
-script = ExtResource("15_0cxu4")
-bandit_encounter = ExtResource("16_0ehpd")
-storm_encounter = ExtResource("17_8wjpf")
 
 [node name="WorldMap" parent="." instance=ExtResource("1_5opw3")]
 
@@ -83,18 +73,17 @@ offset_right = -25.0
 offset_bottom = -25.0
 
 [node name="Inventory" parent="UICanvas/HSplitContainer/HUD" instance=ExtResource("8_pd1er")]
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 449.0
-offset_bottom = 382.0
-grow_horizontal = 1
-grow_vertical = 1
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -224.0
+offset_top = -184.0
+offset_right = 225.0
+offset_bottom = -2.0
 
 [node name="StatsView" parent="UICanvas/HSplitContainer/HUD" instance=ExtResource("12_xnxdc")]
 layout_mode = 0

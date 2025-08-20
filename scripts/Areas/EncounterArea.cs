@@ -1,24 +1,17 @@
 using Godot;
-using System;
-using System.Diagnostics;
 
 public partial class EncounterArea : Area3D
 {
-    public EncounterContent content;
+    [Export] public EncounterData data;
 
     public override void _Ready()
     {
         BodyEntered += OnEncounterEntered;
-
         BodyExited += OnEncounterExited;
     }
 
-
-
-    public virtual void OnEncounterEntered(Node3D Body){ }
-
+    public virtual void OnEncounterEntered(Node3D Body) { }
     public virtual void OnEncounterExited(Node3D Body) { }
-
-
-
+    
+    public virtual void chooseOption(int index) { }
 }

@@ -3,18 +3,18 @@ using System;
 
 public partial class InventoryUI : Panel
 {
-    [Export] VBoxContainer stocksContainer;
+    [Export] VBoxContainer rowsContainer;
 
-    public StockUI getStockUI(int index)
+    public StockUI getItemRow(int index)
     {
-        return stocksContainer.GetChild<StockUI>(index);
+        return rowsContainer.GetChild<StockUI>(index);
     }
 
 	public void displayInventory(Traveller traveller)
 	{
-		for (int item = 0; item < 3; item++) // 3 being number of item types, sry for magic number
+		for (int item = 0; item < 3; item++)
 		{
-			getStockUI(item).itemQuantity = traveller.inventory[item];
+			getItemRow(item).Quantity = traveller.inventory[item];
 		}
 	}
 	

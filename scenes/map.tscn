@@ -1,124 +1,19 @@
-[gd_scene load_steps=45 format=3 uid="uid://clc830lkjlhip"]
+[gd_scene load_steps=21 format=3 uid="uid://clc830lkjlhip"]
 
 [ext_resource type="PackedScene" uid="uid://b212emu5my3lk" path="res://scenes/town.tscn" id="1_2hyix"]
 [ext_resource type="Script" uid="uid://bbyde1g33rcwq" path="res://scripts/WorldMap.cs" id="1_4qxv8"]
-[ext_resource type="PackedScene" uid="uid://dylgmhbel8gcv" path="res://scenes/traveller.tscn" id="2_h6b5g"]
-[ext_resource type="Script" uid="uid://dchh7v4ibi2ls" path="res://scripts/NPCTraveller.cs" id="3_yfm5w"]
-[ext_resource type="SpriteFrames" uid="uid://bdj7aack52cw1" path="res://images/eyebox/EyeBoxFrames.tres" id="4_6ek7f"]
-[ext_resource type="Resource" uid="uid://ch8lqqgiplsg3" path="res://data/GurgishamData.tres" id="5_fq663"]
-[ext_resource type="SpriteFrames" uid="uid://3s0bsc7kidhl" path="res://images/Lips/KissaFrames.tres" id="5_mkblt"]
-[ext_resource type="Script" uid="uid://c07l7rmmrq4w4" path="res://scripts/Areas/Terrain/TerrainArea.cs" id="6_2lpho"]
-[ext_resource type="Resource" uid="uid://c0yvi6dd5l3sq" path="res://data/GumbusvilleData.tres" id="6_mniao"]
-[ext_resource type="Script" uid="uid://jmbhxi4mueuq" path="res://scripts/Areas/Spottable Encounters/BanditEncounter.cs" id="7_nakos"]
-[ext_resource type="Resource" uid="uid://dn1lrvkia3voq" path="res://data/SloptonData.tres" id="8_4qxv8"]
-[ext_resource type="Script" uid="uid://dlrfvgmrkhwfr" path="res://scripts/Areas/Spottable Encounters/StormEncounter.cs" id="8_jh32y"]
-[ext_resource type="Texture2D" uid="uid://b0sise4bpjtb4" path="res://images/bandit/bandit1.png" id="8_n1psn"]
-[ext_resource type="Texture2D" uid="uid://b4w1324218ifi" path="res://images/bandit/bandit2.png" id="9_c00ee"]
-[ext_resource type="Texture2D" uid="uid://bg55824n1u04r" path="res://images/bandit/bandit3.png" id="10_p7tei"]
-[ext_resource type="Texture2D" uid="uid://y6rgiwyys76n" path="res://images/bandit/bandit4.png" id="11_c70he"]
-[ext_resource type="SpriteFrames" uid="uid://c8i3wf0qgu4ag" path="res://images/2head/2HeadFrames.tres" id="11_y2ir2"]
-[ext_resource type="Texture2D" uid="uid://cjmvqcaw0fp8q" path="res://images/bandit/bandit5.png" id="12_mo32q"]
-[ext_resource type="Texture2D" uid="uid://dggaexxqmfq45" path="res://images/bandit/bandit6.png" id="13_6k6j1"]
-[ext_resource type="Script" uid="uid://duqmvq80jiqjm" path="res://scripts/ScaleTime/SyncedSprite.cs" id="20_6ek7f"]
-[ext_resource type="Shader" uid="uid://bpkjttjrw55ub" path="res://shaders/colorRamp.gdshader" id="28_4qxv8"]
-[ext_resource type="Shader" uid="uid://btrulmrs5845" path="res://shaders/mapShader.gdshader" id="29_6ek7f"]
-[ext_resource type="Gradient" uid="uid://64s1ndb6hm3q" path="res://shaders/mapramp.tres" id="31_fq663"]
-[ext_resource type="FastNoiseLite" uid="uid://birrq6p1kcr3w" path="res://shaders/mapNoise.tres" id="32_mniao"]
-
-[sub_resource type="Curve3D" id="Curve3D_y2ir2"]
-resource_local_to_scene = true
-
-[sub_resource type="Curve3D" id="Curve3D_5u2yt"]
-resource_local_to_scene = true
-
-[sub_resource type="Curve3D" id="Curve3D_30iet"]
-resource_local_to_scene = true
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_2lpho"]
-size = Vector3(11.7075, 1, 1)
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_jh32y"]
-radius = 1.4
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_m335s"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("8_n1psn")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_c00ee")
-}, {
-"duration": 1.0,
-"texture": ExtResource("10_p7tei")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_c70he")
-}, {
-"duration": 1.0,
-"texture": ExtResource("12_mo32q")
-}, {
-"duration": 1.0,
-"texture": ExtResource("13_6k6j1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("12_mo32q")
-}, {
-"duration": 1.0,
-"texture": ExtResource("11_c70he")
-}, {
-"duration": 1.0,
-"texture": ExtResource("10_p7tei")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_c00ee")
-}],
-"loop": true,
-"name": &"default",
-"speed": 10.0
-}]
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_nakos"]
-height = 6.673
-radius = 6.50928
-
-[sub_resource type="Curve" id="Curve_6ek7f"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.497653, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
-
-[sub_resource type="CurveTexture" id="CurveTexture_4qxv8"]
-curve = SubResource("Curve_6ek7f")
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fq663"]
-emission_shape_offset = Vector3(0, 2.655, 0)
-emission_shape = 6
-emission_ring_axis = Vector3(0, 1, 0)
-emission_ring_height = 1.0
-emission_ring_radius = 5.0
-emission_ring_inner_radius = 0.0
-emission_ring_cone_angle = 90.0
-gravity = Vector3(0, 0, 0)
-scale_curve = SubResource("CurveTexture_4qxv8")
-
-[sub_resource type="Gradient" id="Gradient_fq663"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.732984, 0.86911, 1)
-colors = PackedColorArray(1.82897e-06, 0.72963, 0.501899, 1, 1, 0.292659, 0.709331, 1, 1, 0.519264, 0.239415, 1, 0, 0.467836, 0.993585, 1)
-
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_mniao"]
-gradient = SubResource("Gradient_fq663")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yfm5w"]
-render_priority = 0
-shader = ExtResource("28_4qxv8")
-shader_parameter/ramp = SubResource("GradientTexture1D_mniao")
-
-[sub_resource type="SphereMesh" id="SphereMesh_mniao"]
-material = SubResource("ShaderMaterial_yfm5w")
-radius = 2.0
-height = 2.0
-radial_segments = 12
-rings = 4
+[ext_resource type="PackedScene" uid="uid://dylgmhbel8gcv" path="res://scenes/Travellers/traveller.tscn" id="2_h6b5g"]
+[ext_resource type="PackedScene" uid="uid://lvjy50hq77fl" path="res://scenes/Travellers/NPCTraveller.tscn" id="4_y2ir2"]
+[ext_resource type="Resource" uid="uid://ch8lqqgiplsg3" path="res://Resource Files/towns/GurgishamData.tres" id="5_fq663"]
+[ext_resource type="SpriteFrames" uid="uid://3s0bsc7kidhl" path="res://Assets/images/Lips/KissaFrames.tres" id="5_mkblt"]
+[ext_resource type="Resource" uid="uid://c0yvi6dd5l3sq" path="res://Resource Files/towns/GumbusvilleData.tres" id="6_mniao"]
+[ext_resource type="Resource" uid="uid://dn1lrvkia3voq" path="res://Resource Files/towns/SloptonData.tres" id="8_4qxv8"]
+[ext_resource type="PackedScene" uid="uid://di0ohibbt81v2" path="res://scenes/encounters/bandits.tscn" id="10_n1psn"]
+[ext_resource type="PackedScene" uid="uid://tuaesoo5gtw" path="res://scenes/encounters/storm.tscn" id="11_c00ee"]
+[ext_resource type="SpriteFrames" uid="uid://c8i3wf0qgu4ag" path="res://Assets/images/2head/2HeadFrames.tres" id="11_y2ir2"]
+[ext_resource type="Shader" uid="uid://btrulmrs5845" path="res://shaders/Map/mapShader.gdshader" id="29_6ek7f"]
+[ext_resource type="Gradient" uid="uid://64s1ndb6hm3q" path="res://shaders/Map/mapramp.tres" id="31_fq663"]
+[ext_resource type="FastNoiseLite" uid="uid://birrq6p1kcr3w" path="res://shaders/Map/mapNoise.tres" id="32_mniao"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_m57gh"]
 size = Vector2(75, 75)
@@ -161,63 +56,23 @@ script = ExtResource("1_4qxv8")
 
 [node name="PlayerTraveller" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("2_h6b5g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.16845, 0, 4.20806)
-Town = NodePath("../Telemodem4")
+Town = NodePath("../Slopton")
 
-[node name="NPCTraveller" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("2_h6b5g")]
+[node name="NPCTraveller" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("4_y2ir2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.16845, 0, -13.3013)
-script = ExtResource("3_yfm5w")
+Town = NodePath("../Slopton")
+
+[node name="NPCTraveller2" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("4_y2ir2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.16845, 0, -13.3013)
 Town = NodePath("../Gumbusville")
+Animation = ExtResource("11_y2ir2")
 
-[node name="Body" parent="NPCTraveller" index="0"]
-collision_layer = 0
+[node name="NPCTraveller3" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("4_y2ir2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.16845, 0, -13.3013)
+Town = NodePath("../Gumbusville")
+Animation = ExtResource("5_mkblt")
 
-[node name="Sprite" parent="NPCTraveller" index="1"]
-modulate = Color(1, 1, 1, 1)
-double_sided = false
-sprite_frames = ExtResource("4_6ek7f")
-animation = &"default"
-autoplay = "default"
-
-[node name="Path3D" parent="NPCTraveller" index="3"]
-curve = SubResource("Curve3D_y2ir2")
-
-[node name="NPCTraveller2" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("2_h6b5g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.16845, 0, -9.89165)
-script = ExtResource("3_yfm5w")
-Town = NodePath("../Slopton")
-
-[node name="Body" parent="NPCTraveller2" index="0"]
-collision_layer = 0
-
-[node name="Sprite" parent="NPCTraveller2" index="1"]
-modulate = Color(1, 1, 1, 1)
-double_sided = false
-sprite_frames = ExtResource("5_mkblt")
-animation = &"default"
-autoplay = "default"
-
-[node name="Path3D" parent="NPCTraveller2" index="3"]
-curve = SubResource("Curve3D_5u2yt")
-
-[node name="NPCTraveller3" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("2_h6b5g")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.16845, 0, -9.89165)
-script = ExtResource("3_yfm5w")
-Town = NodePath("../Slopton")
-
-[node name="Body" parent="NPCTraveller3" index="0"]
-collision_layer = 0
-
-[node name="Sprite" parent="NPCTraveller3" index="1"]
-modulate = Color(1, 1, 1, 1)
-double_sided = false
-sprite_frames = ExtResource("11_y2ir2")
-animation = &"default"
-autoplay = "default"
-
-[node name="Path3D" parent="NPCTraveller3" index="3"]
-curve = SubResource("Curve3D_30iet")
-
-[node name="Telemodem4" parent="." instance=ExtResource("1_2hyix")]
+[node name="Telemodem" parent="." instance=ExtResource("1_2hyix")]
 transform = Transform3D(0.950997, 0, -0.3092, 0, 1, 0, 0.3092, 0, 0.950997, 19.1758, 9.31896, 4.71464)
 Data = ExtResource("5_fq663")
 
@@ -229,56 +84,14 @@ Data = ExtResource("6_mniao")
 transform = Transform3D(-0.30207, 0, -0.953286, 0, 1, 0, 0.953286, 0, -0.30207, -21.6185, 1.99357, 26.6471)
 Data = ExtResource("8_4qxv8")
 
-[node name="Road" type="Area3D" parent="."]
-transform = Transform3D(0.800407, 0, -0.599457, 0, 1, 0, 0.599457, 0, 0.800407, -10.5671, 0, 2.36479)
-visible = false
-input_ray_pickable = false
-script = ExtResource("6_2lpho")
-moveSpeedModifier = 1.0
+[node name="Bandits" parent="." instance=ExtResource("10_n1psn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5218, 1.24986, -1.63281)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Road"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.3152, 0, -3.08901)
-shape = SubResource("BoxShape3D_2lpho")
-debug_color = Color(0.817724, 0, 0.147719, 0.42)
+[node name="Bandits2" parent="." instance=ExtResource("10_n1psn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5218, 2.41767, 21.1237)
 
-[node name="Bandits" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0545, 0, -4.20747)
-input_ray_pickable = false
-script = ExtResource("7_nakos")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Bandits"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0126405, 0.453125, 0)
-shape = SubResource("CylinderShape3D_jh32y")
-debug_color = Color(0.521569, 0.0117647, 0.529412, 1)
-
-[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="Bandits"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.989954, 0)
-billboard = 1
-no_depth_test = true
-sprite_frames = SubResource("SpriteFrames_m335s")
-autoplay = "default"
-frame_progress = 0.150052
-script = ExtResource("20_6ek7f")
-
-[node name="StormArea" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.15947, 0, -0.00314903)
-input_ray_pickable = false
-script = ExtResource("8_jh32y")
-moveSpeedModifier = -0.5
-townDevastateChance = 0.1
-m_moveSpeed = 0.5
-maxDistanceBeforeRespawn = 40
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StormArea"]
-shape = SubResource("CylinderShape3D_nakos")
-debug_color = Color(0.00392157, 0.0509804, 0.105882, 1)
-
-[node name="GPUParticles3D" type="GPUParticles3D" parent="StormArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1486, 0)
-lifetime = 2.0
-randomness = 0.25
-process_material = SubResource("ParticleProcessMaterial_fq663")
-draw_pass_1 = SubResource("SphereMesh_mniao")
+[node name="StormArea" parent="." instance=ExtResource("11_c00ee")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08288, 5.41955, -0.00314903)
 
 [node name="SurfacePlane" type="MeshInstance3D" parent="."]
 mesh = SubResource("PlaneMesh_m57gh")
@@ -286,7 +99,3 @@ surface_material_override/0 = SubResource("ShaderMaterial_4qxv8")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.610242, 0.792215, 0, -0.792215, 0.610242, 0, 0, 0)
-
-[editable path="NPCTraveller"]
-[editable path="NPCTraveller2"]
-[editable path="NPCTraveller3"]

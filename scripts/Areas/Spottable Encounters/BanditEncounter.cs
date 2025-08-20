@@ -1,57 +1,38 @@
 using Godot;
-using Godot.Collections;
 using System;
-using System.Runtime.Serialization;
 
-public partial class BanditEncounter : TickBasedEncounter
+public partial class BanditEncounter : EncounterArea
 {
-    public override void _Ready()
+
+    public override void OnEncounterEntered(Node3D Body)
     {
-        base._Ready();
-        content = EncounterManager.Instance.GetFromClass("bandits")[0];
+        Node other = Body.GetParent();
 
-        Visible = false;
-    }
+        if (other is PlayerTraveller) Player.Instance.encounterView.DisplayEncounter(this);
 
-    public override void DoOnTick()
-    {
-        base.DoOnTick();
-
-        Array<Node3D> overlappingBodies = GetOverlappingBodies();
-
-        foreach (Node3D Body in overlappingBodies)
-        {
-            if (Body.GetParent() is not Traveller)
-            {
-                //GD.Print(Body + " inside the Bandit zone isn't actually a damn Traveller.");
-                return;
-            }
-
-            Traveller currentTraveller = Body.GetParent() as Traveller;
-
-            if ((double)GD.Randf() > content.Chance)
-            {
-                BanditAttack(currentTraveller);
-            }
-            else
-            {
-                //GD.Print("Bandits tried to attack, but lost the coin toss.");
-            }
-        }
-
+        if (other is NPCTraveller npc) robItems(npc);
 
     }
 
-    /// <summary>
-    /// The method for actually resolving a bandit attack. Currently empty because players don't have inventories or items to take, or health.
-    /// </summary>
-    /// <param name="victim">The Traveller to do a bandit attack to</param>
-    public void BanditAttack(Traveller victim)
+    public override void chooseOption(int index)
     {
-        //GD.Print("Bandits! They Got You!!!" + victim);
-        if (victim is PlayerTraveller)
+        Show();
+        switch (index)
         {
-            Player.Instance.encounterView.DisplayEncounter(content);
+            case 0:
+                robItems(Player.Instance.traveller);
+                break;
+            case 1:
+                GD.Print("you run off unharmed");
+                break;
         }
+    }
+
+    public void robItems(Traveller victim)
+    {
+        
+        long itemIndex = GD.Randi() % 3;
+
+        victim.inventory[itemIndex] -= Mathf.Min(10, victim.inventory[itemIndex]);
     }
 }

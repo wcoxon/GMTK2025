@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://lvjy50hq77fl"]
+
+[ext_resource type="Script" uid="uid://dchh7v4ibi2ls" path="res://scripts/Travellers/NPCTraveller.cs" id="1_qr17c"]
+[ext_resource type="SpriteFrames" uid="uid://bdj7aack52cw1" path="res://Assets/images/eyebox/EyeBoxFrames.tres" id="2_o5eao"]
+[ext_resource type="Script" uid="uid://duqmvq80jiqjm" path="res://scripts/ScaleTime/SyncedSprite.cs" id="3_sdprx"]
+[ext_resource type="Script" uid="uid://uohxx3rhtgsr" path="res://scenes/Rumours/RumourDetector.cs" id="4_cjdsa"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ifkpq"]
+radius = 0.49112
+height = 1.41745
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vjsxs"]
+height = 1.36621
+radius = 1.5
+
+[sub_resource type="Curve3D" id="Curve3D_y2ir2"]
+resource_local_to_scene = true
+
+[node name="NPCTraveller" type="Node3D"]
+script = ExtResource("1_qr17c")
+Animation = ExtResource("2_o5eao")
+
+[node name="Body" type="CharacterBody3D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.481625, 0)
+shape = SubResource("CapsuleShape3D_ifkpq")
+debug_color = Color(0.667352, 0, 0.154832, 1)
+
+[node name="Sprite" type="AnimatedSprite3D" parent="."]
+offset = Vector2(7.385, 74.1)
+billboard = 1
+double_sided = false
+no_depth_test = true
+sprite_frames = ExtResource("2_o5eao")
+autoplay = "default"
+script = ExtResource("3_sdprx")
+
+[node name="DetectionRadius" type="Area3D" parent="."]
+visible = false
+input_ray_pickable = false
+script = ExtResource("4_cjdsa")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionRadius"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.316895, 0)
+shape = SubResource("CylinderShape3D_vjsxs")
+
+[node name="Path3D" type="Path3D" parent="."]
+top_level = true
+curve = SubResource("Curve3D_y2ir2")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+loop = false

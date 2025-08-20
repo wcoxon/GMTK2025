@@ -3,8 +3,13 @@ using System;
 using System.Collections.Generic;
 
 public enum GameState{ TOWN, PLAN, TRAVEL, ENCOUNTER }
-
-public partial class Player : Node3D, EncounterManager.IVariableProvider
+public enum Item
+{
+    BROTH,
+    PLASTICS,
+    EVIL_WATER
+}
+public partial class Player : Node3D
 {
     public static Player Instance;
 
@@ -39,10 +44,6 @@ public partial class Player : Node3D, EncounterManager.IVariableProvider
     public int[] itemBaseValues = [5, 12, 10]; // idfk where elseto put this i just wanna store each items base value somewhere :'(
     //public List<Town> allTowns = []; // store this on world map ?
 
-    
-    public Vector3 velocity = Vector3.Zero;
-    const float acceleration = 200.0f, maxSpeed = 20.0f;
-
     private GameState state;
     public GameState State
     {
@@ -65,6 +66,7 @@ public partial class Player : Node3D, EncounterManager.IVariableProvider
 
                 case GameState.ENCOUNTER:
                     UI.timeControlPanel.Pause();
+                    UI.timeControlPanel.disable();
                     break;
 
                 case GameState.PLAN:
@@ -77,6 +79,7 @@ public partial class Player : Node3D, EncounterManager.IVariableProvider
 
                 case GameState.TRAVEL:
                     Music = null;
+                    UI.timeControlPanel.enable();
 
                     traveller.onDeparture();
 
@@ -126,7 +129,10 @@ public partial class Player : Node3D, EncounterManager.IVariableProvider
             UI.townPanel.Town = selectedTown;
         }
     }
-
+    Camera3D camera;
+    MeshInstance3D cursor;
+    Plane dragPlane = new Plane(new Vector3(0, 1, 0), 0);
+    
     public WorldMap World;
     public void setWorldSpeed(float speed) => World.timeScale = speed;
 
@@ -137,13 +143,13 @@ public partial class Player : Node3D, EncounterManager.IVariableProvider
         World = GetNode<WorldMap>("../WorldMap");
         traveller = World.GetNode<PlayerTraveller>("PlayerTraveller");
 
-        musicPlayer = GetNode<AudioStreamPlayer>("Camera/MusicPlayer");
+        camera = GetNode<Camera3D>("Camera");
+        musicPlayer = camera.GetNode<AudioStreamPlayer>("MusicPlayer");
+        cursor = GetNode<MeshInstance3D>("Cursor");
     }
 
     public override void _Ready()
     {
-        EncounterManager.Instance.AddProvider(this);
-
         State = GameState.TOWN;
         
         tick = 0;
@@ -157,22 +163,26 @@ public partial class Player : Node3D, EncounterManager.IVariableProvider
 
         UI.timeControlPanel.Pause();
     }
+
     public override void _Input(InputEvent @event)
     {
-        if (@event is InputEventMouseMotion mouseMotion && Input.IsMouseButtonPressed(MouseButton.Right))
-        {
-            // drag mouse to pan camera, should do some easing on it, maybe place a grabber on the surface // if the mouse moves whilst pressed use relative motion to shift our XZ
-            float dragScale = 0.05f;
-            Vector3 mouseDelta = mouseMotion.Relative.X * Vector3.Left + mouseMotion.Relative.Y * Vector3.Forward; // i should actually base this on camera direction kinda
+        var mousePos = GetViewport().GetMousePosition();
 
-            Translate(mouseDelta * dragScale);
+        if (@event is InputEventMouseButton && Input.IsActionJustPressed("drag"))
+        {
+            cursor.Position = dragPlane.IntersectsRay(camera.ProjectRayOrigin(mousePos), camera.ProjectRayNormal(mousePos)) ?? Vector3.Zero;
         }
+        if (@event is InputEventMouseMotion && Input.IsActionPressed("drag"))
+        {
+            var newPosition = dragPlane.IntersectsRay(camera.ProjectRayOrigin(mousePos), camera.ProjectRayNormal(mousePos)) ?? Vector3.Zero;
+            var displace = newPosition - cursor.Position;
+            Position -= displace;
+        }
+
+        Scale += Vector3.One * Input.GetAxis("zoomIn", "zoomOut") * 0.1f;
 
         if (@event.IsActionPressed("inventory")) UI.ToggleInventory(traveller);
 
-        if (@event.IsActionPressed("zoomIn")) Scale -= Vector3.One*0.1f;
-        if (@event.IsActionPressed("zoomOut")) Scale += Vector3.One*0.1f;
-        
         switch (State)
         {
             case GameState.ENCOUNTER: // no time controls when in an encounter
@@ -186,47 +196,51 @@ public partial class Player : Node3D, EncounterManager.IVariableProvider
                 if (@event.IsActionPressed("speed1")) UI.timeControlPanel.Speed1();
                 if (@event.IsActionPressed("speed2")) UI.timeControlPanel.Speed2();
                 if (@event.IsActionPressed("speed3")) UI.timeControlPanel.Speed4();
+                if (Input.IsKeyPressed(Key.Key4)) UI.timeControlPanel.Speed16();
+                if (Input.IsKeyPressed(Key.Key5)) UI.timeControlPanel.Speed64();
                 break;
         }
     }
 
     public override void _Process(double delta)
     {
-        tick += delta * World.timeScale / 3; // The same calculation is done in date, but we need it here in the singleton for signalling reasons. /// nooo magic number nooo why r u using a literal bro/// maybe it was me that did this, rly bad
-
+        tick += delta * World.timeScale / 3; // could we have more continuous sim rather than large intervals
         if (tick >= 1) EmitSignal(SignalName.Tick);
-    }
-
-    Vector3 clampVector(Vector3 vector, float maxLength)
-    {
-        if (maxLength < 0) return Vector3.Zero;
-        return vector.Normalized() * Mathf.Min(vector.Length(), maxLength);
     }
 
     public override void _PhysicsProcess(double delta)
     {
         Vector3 inputDirection = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("up", "down"));
 
+        panPlayer(inputDirection,delta);
+    }
+
+    Vector3 velocity = Vector3.Zero;
+    float acceleration = 200.0f, maxSpeed = 20.0f;
+
+    void panPlayer(Vector3 direction, double delta)
+    {
         float deltaSpeed = acceleration * (float)delta; // calculate acceleration/deceleration
 
-        if (!inputDirection.IsZeroApprox())
+        if (!direction.IsZeroApprox())
         {
-            velocity += inputDirection * deltaSpeed; // accelerate in input direction
+            velocity += direction * deltaSpeed; // accelerate in input direction
             velocity = clampVector(velocity, maxSpeed); // limit speed
         }
-        else
-        {
-            velocity = clampVector(velocity, velocity.Length() - deltaSpeed); // decelerate towards 0
-        }
-
+        else velocity = clampVector(velocity, velocity.Length() - deltaSpeed); // decelerate towards 0
+        
         Translate(velocity * (float)delta);
+    }
+    Vector3 clampVector(Vector3 vector, float maxLength)
+    {
+        if (maxLength < 0) return Vector3.Zero;
+        return vector.Normalized() * Mathf.Min(vector.Length(), maxLength);
     }
 
     public void plotJourney() => State = GameState.PLAN;
     public void embark()
     {
         waypoints.Active = false;
-        traveller.journey.path.Curve.AddPoint(traveller.journey.destination.Position);
 
         State = GameState.TRAVEL;
     }
@@ -240,28 +254,28 @@ public partial class Player : Node3D, EncounterManager.IVariableProvider
     }
 
     // idk what ts is about ngl
-    public string VariablesPrefix() => "player";
-    public List<(string, double)> GetVariables()
-    {
-        return [
-            ("health", traveller.Health),
-            ("money", traveller.Money)
-        ];
-    }
-    public void UpdateVariable(string name, double value)
-    {
-        if (name == "health")
-        {
-            //GD.Print("Set playerhealth to " + value);
-            traveller.Health = (int)value;
-        }
-        else if (name == "money")
-        {
-            //GD.Print("Set money to " + value);
-            traveller.Money = (int)value;
-        }
-        else throw new KeyNotFoundException("Player cannot assign to variable " + name);
-    }
+    //public string VariablesPrefix() => "player";
+    //public List<(string, double)> GetVariables()
+    //{
+    //    return [
+    //        ("health", traveller.Health),
+    //        ("money", traveller.Money)
+    //    ];
+    //}
+    //public void UpdateVariable(string name, double value)
+    //{
+    //    if (name == "health")
+    //    {
+    //        //GD.Print("Set playerhealth to " + value);
+    //        traveller.Health = (int)value;
+    //    }
+    //    else if (name == "money")
+    //    {
+    //        //GD.Print("Set money to " + value);
+    //        traveller.Money = (int)value;
+    //    }
+    //    else throw new KeyNotFoundException("Player cannot assign to variable " + name);
+    //}
 
     public void OnDeath()
     {

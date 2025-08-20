@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="EncounterData" load_steps=3 format=3 uid="uid://c5oeveog4xh6y"]
+
+[ext_resource type="Texture2D" uid="uid://1l68a2526t6v" path="res://Assets/images/burntpizza.jpg" id="1_pj28u"]
+[ext_resource type="Script" uid="uid://20k6c8fay3m1" path="res://scripts/Custom Resources/EncounterData.cs" id="2_pwy7j"]
+
+[resource]
+script = ExtResource("2_pwy7j")
+Title = "GRUBBLE STORM!!!"
+Description = "watchout theres a storm you walked into,, you'll be slowed down by it until you get out the other side"
+Image = ExtResource("1_pj28u")
+Options = PackedStringArray("press on")
+metadata/_custom_type_script = "uid://20k6c8fay3m1"

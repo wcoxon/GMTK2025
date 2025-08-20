@@ -1,7 +1,42 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://d18vm3ggivwpn"]
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://d18vm3ggivwpn"]
 
-[ext_resource type="FontFile" uid="uid://clh4frvcwdwot" path="res://images/AURORA-PRO.otf" id="1_qnv5y"]
+[ext_resource type="FontFile" uid="uid://c85eqv0eybdcy" path="res://Assets/Fonts/cCupang.ttf" id="1_qnv5y"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kwhvy"]
+content_margin_top = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.1064, 0.11552, 0.38, 1)
+border_color = Color(0, 1, 0.15, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 2
+shadow_color = Color(1, 0, 0.966667, 0.956863)
+shadow_size = 1
+shadow_offset = Vector2(1, 5)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qnv5y"]
+content_margin_top = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0.0906666, 0, 0.68, 1)
+border_color = Color(0, 1, 0.15, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 2
+shadow_color = Color(1, 0, 0.966667, 0.956863)
+shadow_size = 1
+shadow_offset = Vector2(1, 5)
+anti_aliasing = false
 
 [resource]
 default_font = ExtResource("1_qnv5y")
 default_font_size = 24
+Button/colors/font_color = Color(1, 0.95, 0, 1)
+Button/styles/disabled = SubResource("StyleBoxFlat_kwhvy")
+Button/styles/normal = SubResource("StyleBoxFlat_qnv5y")

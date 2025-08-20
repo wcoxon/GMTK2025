@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="TownData" load_steps=9 format=3 uid="uid://c0yvi6dd5l3sq"]
+
+[ext_resource type="Material" uid="uid://diuq60p02iwus" path="res://shaders/outline/outlineMaterial.tres" id="1_06ule"]
+[ext_resource type="Shader" uid="uid://bpkjttjrw55ub" path="res://shaders/Color Ramp/colorRamp.gdshader" id="2_wwtet"]
+[ext_resource type="ArrayMesh" uid="uid://dwqsxckirn075" path="res://Assets/Models/weirdcity2.obj" id="3_rm7sx"]
+[ext_resource type="Script" uid="uid://bu8blcnkgpmyl" path="res://scripts/Custom Resources/TownData.cs" id="4_2o0i1"]
+[ext_resource type="AudioStream" uid="uid://c1hdmyvtbduxr" path="res://Assets/Audio/gamejamsong2_3.wav" id="5_78t4a"]
+
+[sub_resource type="Gradient" id="Gradient_5ibx0"]
+offsets = PackedFloat32Array(0.439834, 0.709544)
+colors = PackedColorArray(0.530157, 0.164461, 1, 1, 1, 0.659349, 0.684317, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8q7b1"]
+gradient = SubResource("Gradient_5ibx0")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_08uba"]
+render_priority = 0
+next_pass = ExtResource("1_06ule")
+shader = ExtResource("2_wwtet")
+shader_parameter/ramp = SubResource("GradientTexture1D_8q7b1")
+
+[resource]
+script = ExtResource("4_2o0i1")
+townName = "Glandville"
+population = 12
+wealth = 100
+mesh = ExtResource("3_rm7sx")
+material = SubResource("ShaderMaterial_08uba")
+theme = ExtResource("5_78t4a")
+stocks = PackedFloat32Array(300, 100, 200)
+base_production = PackedFloat32Array(70, 30, 10)
+base_consumption = PackedFloat32Array(40, 40, 40)
+price_multiplyers = PackedFloat32Array(1, 1, 1)
+supply_selloff = PackedFloat32Array(0.9, 0.8, 0.9)
+stock_selloff = PackedFloat32Array(0.3, 0.2, 0.4)
+production_elasticity = 2.0
+consumption_elasticity = -2.0

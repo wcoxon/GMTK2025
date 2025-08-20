@@ -1,0 +1,68 @@
+[gd_scene load_steps=12 format=3 uid="uid://tuaesoo5gtw"]
+
+[ext_resource type="Script" uid="uid://dlrfvgmrkhwfr" path="res://scripts/Areas/Spottable Encounters/StormEncounter.cs" id="1_7an72"]
+[ext_resource type="Resource" uid="uid://c5oeveog4xh6y" path="res://Resource Files/encounters/StormData.tres" id="2_76uwr"]
+[ext_resource type="Shader" uid="uid://bpkjttjrw55ub" path="res://shaders/Color Ramp/colorRamp.gdshader" id="3_fayjw"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nakos"]
+height = 13.9349
+radius = 7.43652
+
+[sub_resource type="Curve" id="Curve_6ek7f"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.497653, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_4qxv8"]
+curve = SubResource("Curve_6ek7f")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fq663"]
+emission_shape_offset = Vector3(0, 1, 0)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 5.0
+emission_ring_inner_radius = 0.0
+emission_ring_cone_angle = 90.0
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_4qxv8")
+
+[sub_resource type="Gradient" id="Gradient_fq663"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.732984, 0.86911, 1)
+colors = PackedColorArray(1.82897e-06, 0.72963, 0.501899, 1, 1, 0.292659, 0.709331, 1, 1, 0.519264, 0.239415, 1, 0, 0.467836, 0.993585, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mniao"]
+gradient = SubResource("Gradient_fq663")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yfm5w"]
+render_priority = 0
+shader = ExtResource("3_fayjw")
+shader_parameter/ramp = SubResource("GradientTexture1D_mniao")
+
+[sub_resource type="SphereMesh" id="SphereMesh_mniao"]
+material = SubResource("ShaderMaterial_yfm5w")
+radius = 2.0
+height = 2.0
+radial_segments = 12
+rings = 4
+
+[node name="StormArea" type="Area3D"]
+input_ray_pickable = false
+script = ExtResource("1_7an72")
+moveSpeedModifier = -0.5
+m_moveSpeed = 0.5
+maxDistanceBeforeRespawn = 40
+data = ExtResource("2_76uwr")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.19078, 0)
+shape = SubResource("CylinderShape3D_nakos")
+debug_color = Color(0.00392157, 0.0509804, 0.105882, 1)
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.1486, 0)
+amount = 16
+lifetime = 2.0
+randomness = 0.25
+process_material = SubResource("ParticleProcessMaterial_fq663")
+draw_pass_1 = SubResource("SphereMesh_mniao")

@@ -1,21 +1,9 @@
 using Godot;
-using System;
 
-public enum Item
-{
-    BROTH,
-    PLASTICS,
-    EVIL_WATER
-}
-
+// this is really an inventory row
 public partial class StockUI : Panel
 {
-	[Export] Label nameLabel;
-	[Export] Label stockLabel;
-
-	//string[] itemNames = ["Broth", "Plastics", "Evil Water"];
-
-	//public Item Item { set => ItemName = itemNames[(int)value]; }
+	[Export] Label nameLabel, quantityLabel;
 	public string ItemName { set => nameLabel.Text = value; }
-	public int itemQuantity { set => stockLabel.Text = value.ToString(); }
+	public int Quantity { set => quantityLabel.Text = value.ToString(); }
 }

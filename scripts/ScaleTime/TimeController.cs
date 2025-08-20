@@ -19,7 +19,12 @@ public partial class TimeController : Panel
         button16 = GetNode<Button>("TimeScales/TimeScale16");
         button64 = GetNode<Button>("TimeScales/TimeScale64");
     }
+
+    public void enable() => ProcessMode = ProcessModeEnum.Inherit;
+    public void disable() => ProcessMode = ProcessModeEnum.Disabled;
     
+    
+
     public void Pause() => button0.ButtonPressed = true;
     public void Speed1() => button1.ButtonPressed = true;
     public void Speed2() => button2.ButtonPressed = true;
