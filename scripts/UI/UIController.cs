@@ -9,8 +9,7 @@ public partial class UIController : CanvasLayer
     [Export] public TimeController timeControlPanel;
     [Export] public InventoryUI inventoryUI;
     [Export] public TradeUI tradeUI;
-
-
+    [Export] public DialogueUI dialogueUI;
 
     public void OpenTrade()
     {
@@ -22,5 +21,15 @@ public partial class UIController : CanvasLayer
     {
         inventoryUI.Visible = !inventoryUI.Visible;
         if (inventoryUI.Visible) inventoryUI.displayInventory(subject);
+    }
+
+    public void OpenInventory(Traveller subject)
+    {
+        inventoryUI.Visible = true;
+        inventoryUI.displayInventory(subject);
+    }
+    public void CloseInventory()
+    {
+        inventoryUI.Visible = false;
     }
 }

@@ -55,6 +55,49 @@ public partial class TownPanel : Panel
         if (Town is not null) updateActions(); // i mean if town is null we should just like, hide ts anyway
     }
 
+    public void getRumour()
+    {
+        // pick someone in the town
+        // pick a rumour/encounter to reveal
+        // show dialogue and remove rumour from npc
+
+        //if (Town.Visitors.Count == 1) return; // return if alone in town
+
+        Godot.Collections.Array<Traveller> shuffledVisitors = Town.Visitors;
+        shuffledVisitors.Shuffle(); // ouh this still shuffles the town visitors btw i should duplicate right
+
+        foreach (Traveller visitor in shuffledVisitors)
+        {
+            GD.Print($"visitor: {visitor.Name}");
+
+            foreach (Rumour rumour in visitor.knownRumours)
+            {
+                rumour.reveal(visitor);
+                visitor.knownRumours.Remove(rumour);
+                return;
+            }
+        }
+
+        // pick random visitor
+        //long visitorIndex = GD.Randi() % (Town.currentTravellers.Count - 1);
+        //if (visitorIndex >= Town.currentTravellers.IndexOf(Player.Instance.traveller)) visitorIndex++;
+        //NPCTraveller chosenVisitor = Town.currentTravellers[(int)visitorIndex] as NPCTraveller;
+        
+        //GD.Print($"visitor index: {visitorIndex}");
+        //GD.Print($" known rumours: {chosenVisitor.knownRumours.Count}");
+        //
+        //if (chosenVisitor.knownRumours.Count == 0) return; // return if visitor knows nothing
+        //
+        //// pick first rumour
+        //Rumour chosenRumour = chosenVisitor.knownRumours[0];
+        //
+        //chosenRumour.reveal(chosenVisitor);
+        //chosenVisitor.knownRumours.RemoveAt(0);
+
+        // show dialogue
+        //Player.Instance.UI.dialogueUI.revealEncounter(chosenVisitor, chosenEncounter);
+    }
+
 
     public override void _PhysicsProcess(double delta)
     {
@@ -83,13 +126,13 @@ public partial class TownPanel : Panel
 
         for (int i = 0; i < visitorSprites.Length; i++)
         {
-            if (i >= Town.currentTravellers.Count)
+            if (i >= Town.Visitors.Count)
             {
                 visitorSprites[i].SpriteFrames = null;
                 continue;
             }
 
-            visitorSprites[i].SpriteFrames = Town.currentTravellers[i].Animation;
+            visitorSprites[i].SpriteFrames = Town.Visitors[i].Animation;
             visitorSprites[i].Play();
 
         }

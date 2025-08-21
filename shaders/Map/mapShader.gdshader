@@ -18,11 +18,9 @@ void vertex() {
 void fragment() {
 	
 	float h = HEIGHT; // gonna do this so i reuse the sample instead of sampling twice
-	//vec3(h);
-	vec3 waterColour = vec3(0.0);//vec3(0.0,0.5,1.0);
+	
+	vec3 waterColour = vec3(0.0);
 	ALBEDO = h==0.0 ? waterColour : texture(gradient,vec2(h)).rgb;
 	
-	//ALBEDO = texture(gradient,vec2(h)).rgb;
-	//ALPHA = h==0.0 ? 0.0 : 1.0; // cool cutout effect ig
 	NORMAL_MAP = texture(normalMap,SAMPLEPOS).rgb;
 }

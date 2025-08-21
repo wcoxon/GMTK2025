@@ -20,7 +20,7 @@ public partial class Town : Node3D
     public int Wealth { get => data.wealth; set => data.wealth = value; }
     public float[] Stocks { get => data.stocks; set => data.stocks = value; }
 
-    public List<Traveller> currentTravellers = [];
+    public Godot.Collections.Array<Traveller> Visitors = [];
     static RandomNumberGenerator rng = new();
     static Color selectionColour = new(1, 0, 0),  hoverColour = new(1, .5f, .8f);
 

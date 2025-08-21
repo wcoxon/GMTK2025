@@ -3,14 +3,11 @@ using System;
 using System.Collections.Generic;
 
 public enum GameState{ TOWN, PLAN, TRAVEL, ENCOUNTER }
-public enum Item
-{
-    BROTH,
-    PLASTICS,
-    EVIL_WATER
-}
+public enum Item { BROTH, PLASTICS, EVIL_WATER }
 public partial class Player : Node3D
 {
+    public int[] itemBaseValues = [5, 12, 10]; // idfk where elseto put this i just wanna store each items base value somewhere :'(
+
     public static Player Instance;
 
     //refs to other stuff in the scene
@@ -19,7 +16,9 @@ public partial class Player : Node3D
     [Export] Waypoints waypoints;
 
     //  UI ref
-    [Export] UIController UI;
+    [Export] public UIController UI;
+
+    public PlayerMovementController MovementController;
 
     //  audio ref
     [Export] AudioStream[] travelPlaylist;
@@ -35,14 +34,10 @@ public partial class Player : Node3D
     }
 
     [ExportGroup("Encounter")]
-    //  rumour shit refs
+    //  rumour refs
     [Export] public RumorView rumorView;
     [Export] public EncounterView encounterView;
     [Export] public NotificationManager notificationManager;
-
-
-    public int[] itemBaseValues = [5, 12, 10]; // idfk where elseto put this i just wanna store each items base value somewhere :'(
-    //public List<Town> allTowns = []; // store this on world map ?
 
     private GameState state;
     public GameState State
@@ -55,7 +50,7 @@ public partial class Player : Node3D
             switch (state)
             {
                 case GameState.TOWN:
-                    Position = traveller.Position; // focus on player
+                    moveTo(traveller.Position); // focus on player
                     Music = traveller.Town.Theme;
 
                     waypoints.ClearDots();
@@ -111,7 +106,6 @@ public partial class Player : Node3D
     {
         dayTicker = 0; //Reset our day tracking variable, so we can check if it hit twenty four.
         currentDate += 1;
-        //GD.Print("Day Passed!");
     }
 
     private Town selectedTown;
@@ -129,23 +123,17 @@ public partial class Player : Node3D
             UI.townPanel.Town = selectedTown;
         }
     }
-    Camera3D camera;
-    MeshInstance3D cursor;
-    Plane dragPlane = new Plane(new Vector3(0, 1, 0), 0);
     
     public WorldMap World;
-    public void setWorldSpeed(float speed) => World.timeScale = speed;
 
     public override void _EnterTree()
     {
         Instance = this;
 
         World = GetNode<WorldMap>("../WorldMap");
+        MovementController = GetNode<PlayerMovementController>("PlayerMovementController");
         traveller = World.GetNode<PlayerTraveller>("PlayerTraveller");
-
-        camera = GetNode<Camera3D>("Camera");
-        musicPlayer = camera.GetNode<AudioStreamPlayer>("MusicPlayer");
-        cursor = GetNode<MeshInstance3D>("Cursor");
+        musicPlayer = GetNode<AudioStreamPlayer>("Camera/MusicPlayer");
     }
 
     public override void _Ready()
@@ -166,19 +154,6 @@ public partial class Player : Node3D
 
     public override void _Input(InputEvent @event)
     {
-        var mousePos = GetViewport().GetMousePosition();
-
-        if (@event is InputEventMouseButton && Input.IsActionJustPressed("drag"))
-        {
-            cursor.Position = dragPlane.IntersectsRay(camera.ProjectRayOrigin(mousePos), camera.ProjectRayNormal(mousePos)) ?? Vector3.Zero;
-        }
-        if (@event is InputEventMouseMotion && Input.IsActionPressed("drag"))
-        {
-            var newPosition = dragPlane.IntersectsRay(camera.ProjectRayOrigin(mousePos), camera.ProjectRayNormal(mousePos)) ?? Vector3.Zero;
-            var displace = newPosition - cursor.Position;
-            Position -= displace;
-        }
-
         Scale += Vector3.One * Input.GetAxis("zoomIn", "zoomOut") * 0.1f;
 
         if (@event.IsActionPressed("inventory")) UI.ToggleInventory(traveller);
@@ -187,6 +162,7 @@ public partial class Player : Node3D
         {
             case GameState.ENCOUNTER: // no time controls when in an encounter
                 break;
+
             default:
                 if (@event.IsActionPressed("speed0"))
                 {
@@ -208,75 +184,25 @@ public partial class Player : Node3D
         if (tick >= 1) EmitSignal(SignalName.Tick);
     }
 
-    public override void _PhysicsProcess(double delta)
-    {
-        Vector3 inputDirection = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("up", "down"));
-
-        panPlayer(inputDirection,delta);
-    }
-
-    Vector3 velocity = Vector3.Zero;
-    float acceleration = 200.0f, maxSpeed = 20.0f;
-
-    void panPlayer(Vector3 direction, double delta)
-    {
-        float deltaSpeed = acceleration * (float)delta; // calculate acceleration/deceleration
-
-        if (!direction.IsZeroApprox())
-        {
-            velocity += direction * deltaSpeed; // accelerate in input direction
-            velocity = clampVector(velocity, maxSpeed); // limit speed
-        }
-        else velocity = clampVector(velocity, velocity.Length() - deltaSpeed); // decelerate towards 0
-        
-        Translate(velocity * (float)delta);
-    }
-    Vector3 clampVector(Vector3 vector, float maxLength)
-    {
-        if (maxLength < 0) return Vector3.Zero;
-        return vector.Normalized() * Mathf.Min(vector.Length(), maxLength);
-    }
-
     public void plotJourney() => State = GameState.PLAN;
     public void embark()
     {
         waypoints.Active = false;
-
         State = GameState.TRAVEL;
     }
     public void cancelPlot()
     {
-        State = GameState.TOWN; // honestly transitioning into town state should implicitly dispose of waypoint stuff
-
-        traveller.journey.clearJourney();
         waypoints.Active = false;
+        traveller.journey.clearJourney();
         waypoints.ClearDots();
+
+        State = GameState.TOWN; // honestly transitioning into town state should implicitly dispose of waypoint stuff perhaps
     }
 
-    // idk what ts is about ngl
-    //public string VariablesPrefix() => "player";
-    //public List<(string, double)> GetVariables()
-    //{
-    //    return [
-    //        ("health", traveller.Health),
-    //        ("money", traveller.Money)
-    //    ];
-    //}
-    //public void UpdateVariable(string name, double value)
-    //{
-    //    if (name == "health")
-    //    {
-    //        //GD.Print("Set playerhealth to " + value);
-    //        traveller.Health = (int)value;
-    //    }
-    //    else if (name == "money")
-    //    {
-    //        //GD.Print("Set money to " + value);
-    //        traveller.Money = (int)value;
-    //    }
-    //    else throw new KeyNotFoundException("Player cannot assign to variable " + name);
-    //}
-
+    public void moveTo(Vector3 pos)
+    {
+        MovementController.targetPosition = pos;
+    }
     public void OnDeath()
     {
         traveller.Health = 3;

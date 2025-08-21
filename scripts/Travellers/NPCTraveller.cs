@@ -1,8 +1,12 @@
+using System.Collections.Generic;
 using Godot;
 
 public partial class NPCTraveller : Traveller
 {
     double timeToEmbark = 0;
+
+    //public List<EncounterArea> encounters = new();
+
     public override void _Ready() => base._Ready();
 
     public override void _Process(double delta)
@@ -16,7 +20,7 @@ public partial class NPCTraveller : Traveller
 
             // if countdown finished, depart
             if (timeToEmbark <= 0) onDeparture();
-            
+
         }
         else travel(simDelta);
     }
@@ -42,4 +46,15 @@ public partial class NPCTraveller : Traveller
         // create a journey from current town to randomly picked one
         journey.initJourney(Town, targetTown);
     }
+
+
+    public void ShowInventory()
+    {
+        Player.Instance.UI.OpenInventory(this);
+    }
+    public void HideInventory()
+    {
+        Player.Instance.UI.CloseInventory();
+    }
+
 }

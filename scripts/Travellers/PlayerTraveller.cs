@@ -42,18 +42,18 @@ public partial class PlayerTraveller : Traveller
 
 
     // this rumour and encounter stuff is gonna be what i work on next i think
-    public void GetRumour(Rumour newRumour)
-    {
-        if (knownRumours.Contains(newRumour)) return;
-        if (newRumour is EncounterRumour rumourToAdd)
-        {
-            //if (rumourToAdd.encounterObject.Visible) return;
-
-            knownRumours.Add(rumourToAdd); // what's even like the point in these if statements when we are adding to a list of Rumour anyway
-        }
-        else if (newRumour is PriceRumour)
-        {
-            //reveal the stat for the right item I think. this is probably not going to be implemented for the jam.
-        }
-    }
+    //public void GetRumour(Rumour newRumour)
+    //{
+    //    if (knownRumours.Contains(newRumour)) return;
+    //    if (newRumour is EncounterRumour rumourToAdd)
+    //    {
+    //        //if (rumourToAdd.encounterObject.Visible) return;
+//
+    //        knownRumours.Add(rumourToAdd); // what's even like the point in these if statements when we are adding to a list of Rumour anyway
+    //    }
+    //    else if (newRumour is PriceRumour)
+    //    {
+    //        //reveal the stat for the right item I think. this is probably not going to be implemented for the jam.
+    //    }
+    //}
 }

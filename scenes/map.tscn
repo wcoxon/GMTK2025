@@ -85,7 +85,7 @@ transform = Transform3D(-0.30207, 0, -0.953286, 0, 1, 0, 0.953286, 0, -0.30207, 
 Data = ExtResource("8_4qxv8")
 
 [node name="Bandits" parent="." instance=ExtResource("10_n1psn")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5218, 1.24986, -1.63281)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5317, 1.24986, -1.63281)
 
 [node name="Bandits2" parent="." instance=ExtResource("10_n1psn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5218, 2.41767, 21.1237)

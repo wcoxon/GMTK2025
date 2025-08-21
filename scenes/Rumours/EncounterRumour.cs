@@ -3,14 +3,19 @@ using System;
 
 public partial class EncounterRumour : Rumour
 {
-    public TickBasedEncounter encounterObject; //if the object instance expires before the rumour does it's gonna shit itself so check it's not null
+    public EncounterArea Encounter;
 
-    public EncounterRumour( string text, int currentDate, double lifespan, Vector3 encounterPosition, TickBasedEncounter encounterRef) : base(text,currentDate,lifespan,encounterPosition)
+    public EncounterRumour(EncounterArea encounter) : base()
     {
-        rumourText = text;
-        dayRecieved = currentDate;
-        duration = lifespan;
-        position = encounterPosition;
-        encounterObject = encounterRef;
+        Encounter = encounter;
     }
+
+    public override void reveal(Traveller revealer)
+    {
+        base.reveal(revealer);
+
+        Encounter.Show();
+        Player.Instance.UI.dialogueUI.revealEncounter(revealer, Encounter);
+    }
+
 }

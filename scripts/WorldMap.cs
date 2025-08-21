@@ -7,7 +7,7 @@ public partial class WorldMap : Node3D
     public DirectionalLight3D Sun;
     public MeshInstance3D Surface;
 
-    public List<Town> Towns = [];
+    public Godot.Collections.Array<Town> Towns = [];
 
     ShaderMaterial mapMaterial;
     Noise noise;

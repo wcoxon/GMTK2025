@@ -1,22 +1,30 @@
+using System.Collections.Generic;
+using System.Linq;
 using Godot;
-using System;
-using System.Reflection.Metadata.Ecma335;
 
-public  abstract partial class Rumour : Node
+public abstract partial class Rumour
 {
-    public string rumourText; //what the thing says
-    public double dayRecieved;
-    public double duration; //in whole days.
+    //public string rumourText;
 
-    public double expirationDay => dayRecieved + duration;
+    //public double dayRecieved;
+    //public double duration; //in whole days.
+    //public double expirationDay => dayRecieved + duration;
 
-    public Vector3 position; //position to display the rumour, dunno if we need this
+    public List<Traveller> ThoseWhoKnow = new();
 
-    public Rumour(string text, int currentDate, double lifespan, Vector3 encounterPosition)
+    public virtual void reveal(Traveller revealer){}
+
+    public void PurgeKnowledge()
     {
-        rumourText = text;
-        dayRecieved = currentDate;
-        duration = lifespan;
-        position = encounterPosition;
+        int knowersCount = ThoseWhoKnow.Count;
+        
+        for (int i = 0; i < knowersCount; i++)
+        {
+            Traveller knower = ThoseWhoKnow.Last();
+
+            GD.Print($"  purging knowledge from {knower.Name}..");
+            knower.knownRumours.Remove(this);
+            ThoseWhoKnow.Remove(knower);
+        }
     }
 }

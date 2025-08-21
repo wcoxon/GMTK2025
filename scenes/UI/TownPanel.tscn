@@ -247,3 +247,5 @@ layout_mode = 2
 theme = ExtResource("6_xx2x7")
 disabled = true
 text = "Cancel"
+
+[connection signal="pressed" from="VBoxContainer/rumours" to="." method="getRumour"]
