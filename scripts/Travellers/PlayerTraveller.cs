@@ -28,7 +28,7 @@ public partial class PlayerTraveller : Traveller
     public override void _Process(double delta)
     {
         double simDelta = delta * Player.Instance.World.timeScale;
-        
+
         if (Player.Instance.State == GameState.TRAVEL) travel(simDelta);
     }
 
@@ -40,20 +40,16 @@ public partial class PlayerTraveller : Traveller
         Player.Instance.State = GameState.TOWN; // notifies player to enter town state
     }
 
+    public override void AddRumour(Rumour rumour)
+    {
+        base.AddRumour(rumour);
+        Player.Instance.UI.rumoursUI.AddRumour(rumour);
+    }
+    public override void RemoveRumour(Rumour rumour)
+    {
+        base.RemoveRumour(rumour);
+        Player.Instance.UI.rumoursUI.removeRumour(rumour);
+    }
 
-    // this rumour and encounter stuff is gonna be what i work on next i think
-    //public void GetRumour(Rumour newRumour)
-    //{
-    //    if (knownRumours.Contains(newRumour)) return;
-    //    if (newRumour is EncounterRumour rumourToAdd)
-    //    {
-    //        //if (rumourToAdd.encounterObject.Visible) return;
-//
-    //        knownRumours.Add(rumourToAdd); // what's even like the point in these if statements when we are adding to a list of Rumour anyway
-    //    }
-    //    else if (newRumour is PriceRumour)
-    //    {
-    //        //reveal the stat for the right item I think. this is probably not going to be implemented for the jam.
-    //    }
-    //}
+
 }

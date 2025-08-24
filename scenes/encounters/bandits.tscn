@@ -1,58 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://di0ohibbt81v2"]
+[gd_scene load_steps=6 format=3 uid="uid://di0ohibbt81v2"]
 
 [ext_resource type="Script" uid="uid://ffd81nj6epp4" path="res://scripts/Areas/Spottable Encounters/BanditEncounter.cs" id="1_h4obl"]
 [ext_resource type="Resource" uid="uid://dhgjp6675mvkg" path="res://Resource Files/encounters/BanditData.tres" id="2_hl12l"]
-[ext_resource type="Texture2D" uid="uid://b0sise4bpjtb4" path="res://Assets/images/bandit/bandit1.png" id="3_tqfjh"]
-[ext_resource type="Texture2D" uid="uid://b4w1324218ifi" path="res://Assets/images/bandit/bandit2.png" id="4_6nf6y"]
-[ext_resource type="Texture2D" uid="uid://bg55824n1u04r" path="res://Assets/images/bandit/bandit3.png" id="5_o4uys"]
-[ext_resource type="Texture2D" uid="uid://y6rgiwyys76n" path="res://Assets/images/bandit/bandit4.png" id="6_io1ag"]
-[ext_resource type="Texture2D" uid="uid://cjmvqcaw0fp8q" path="res://Assets/images/bandit/bandit5.png" id="7_s52ey"]
-[ext_resource type="Texture2D" uid="uid://dggaexxqmfq45" path="res://Assets/images/bandit/bandit6.png" id="8_hbrwt"]
+[ext_resource type="SpriteFrames" uid="uid://d1wfokmvnnsbo" path="res://Assets/images/bandit/bandits.tres" id="3_d7pfn"]
 [ext_resource type="Script" uid="uid://duqmvq80jiqjm" path="res://scripts/ScaleTime/SyncedSprite.cs" id="9_recti"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_jh32y"]
 radius = 3.27148
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_m335s"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("3_tqfjh")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_6nf6y")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_o4uys")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_io1ag")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_s52ey")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_hbrwt")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_s52ey")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_io1ag")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_o4uys")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_6nf6y")
-}],
-"loop": true,
-"name": &"default",
-"speed": 10.0
-}]
-
 [node name="Bandits" type="Area3D"]
-visible = false
 input_ray_pickable = false
 script = ExtResource("1_h4obl")
 data = ExtResource("2_hl12l")
@@ -66,7 +22,7 @@ debug_color = Color(0.521569, 0.0117647, 0.529412, 1)
 offset = Vector2(0, 97.75)
 billboard = 1
 no_depth_test = true
-sprite_frames = SubResource("SpriteFrames_m335s")
+sprite_frames = ExtResource("3_d7pfn")
 autoplay = "default"
 frame = 8
 frame_progress = 0.57313

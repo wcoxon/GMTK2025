@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://4tkqk1pr6005" path="res://scripts/Player.cs" id="1_tuyoq"]
 [ext_resource type="Environment" uid="uid://b6n8u3kn2ho72" path="res://shaders/environment.tres" id="2_g2els"]
-[ext_resource type="Script" uid="uid://hmp0sockr8sj" path="res://scenes/PlayerMovementController.cs" id="3_qhqgy"]
+[ext_resource type="Script" uid="uid://hmp0sockr8sj" path="res://scripts/PlayerMovementController.cs" id="3_qhqgy"]
 
 [sub_resource type="PrismMesh" id="PrismMesh_g2els"]
 size = Vector3(1, 8.725, 1)

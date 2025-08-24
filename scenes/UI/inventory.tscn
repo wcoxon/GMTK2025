@@ -1,49 +1,73 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6yeey4j3upm4"]
+[gd_scene load_steps=4 format=3 uid="uid://c6yeey4j3upm4"]
 
 [ext_resource type="Script" uid="uid://do6w43vwwbhb7" path="res://scripts/UI/InventoryUI.cs" id="1_egg3t"]
+[ext_resource type="Theme" uid="uid://d18vm3ggivwpn" path="res://themes/button_theme.tres" id="1_lvvmf"]
 [ext_resource type="PackedScene" uid="uid://nscjafbhcguy" path="res://scenes/UI/StockPanel.tscn" id="2_lvvmf"]
 
 [node name="inventory" type="Panel" node_paths=PackedStringArray("rowsContainer")]
-anchors_preset = -1
-anchor_left = 0.359
-anchor_top = 0.459
-anchor_right = 0.359
-anchor_bottom = 0.459
-offset_left = -224.568
-offset_top = -89.432
-offset_right = 224.432
-offset_bottom = 83.568
+custom_minimum_size = Vector2(500, 300)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_lvvmf")
 script = ExtResource("1_egg3t")
-rowsContainer = NodePath("VBoxContainer")
+rowsContainer = NodePath("ItemRows")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="CloseButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -31.0
+offset_bottom = 34.0
+grow_horizontal = 0
+theme = ExtResource("1_lvvmf")
+text = "X"
+
+[node name="HeaderLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -89.5
+offset_right = 89.5
+offset_bottom = 33.0
+grow_horizontal = 2
+text = "INVENTORY"
+
+[node name="ItemRows" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 94.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Control" parent="VBoxContainer" instance=ExtResource("2_lvvmf")]
+[node name="Control" parent="ItemRows" instance=ExtResource("2_lvvmf")]
 layout_mode = 2
 
-[node name="ItemName" parent="VBoxContainer/Control/HBox" index="0"]
+[node name="ItemName" parent="ItemRows/Control/HBox" index="0"]
 text = "Broth"
 
-[node name="Control2" parent="VBoxContainer" instance=ExtResource("2_lvvmf")]
+[node name="Control2" parent="ItemRows" instance=ExtResource("2_lvvmf")]
 layout_mode = 2
 
-[node name="ItemName" parent="VBoxContainer/Control2/HBox" index="0"]
+[node name="ItemName" parent="ItemRows/Control2/HBox" index="0"]
 text = "Plastics"
 
-[node name="Control3" parent="VBoxContainer" instance=ExtResource("2_lvvmf")]
+[node name="Control3" parent="ItemRows" instance=ExtResource("2_lvvmf")]
 layout_mode = 2
 
-[node name="ItemName" parent="VBoxContainer/Control3/HBox" index="0"]
+[node name="ItemName" parent="ItemRows/Control3/HBox" index="0"]
 text = "Evil Water"
 
-[editable path="VBoxContainer/Control"]
-[editable path="VBoxContainer/Control2"]
-[editable path="VBoxContainer/Control3"]
+[connection signal="pressed" from="CloseButton" to="." method="Close"]
+
+[editable path="ItemRows/Control"]
+[editable path="ItemRows/Control2"]
+[editable path="ItemRows/Control3"]

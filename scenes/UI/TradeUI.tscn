@@ -1,21 +1,10 @@
 [gd_scene load_steps=6 format=3 uid="uid://dao5worh1gb0c"]
 
 [ext_resource type="Script" uid="uid://c0hsnpgpsni0t" path="res://scripts/UI/TradeUI.cs" id="1_bf4hf"]
+[ext_resource type="Theme" uid="uid://d18vm3ggivwpn" path="res://themes/button_theme.tres" id="1_v6ek4"]
 [ext_resource type="PackedScene" uid="uid://co4hcp8xxoa5a" path="res://scenes/UI/TradeRow.tscn" id="2_3fybu"]
 [ext_resource type="Theme" uid="uid://du1snnt30dprh" path="res://themes/HeaderTextTheme.tres" id="2_l7dv1"]
 [ext_resource type="AudioStream" uid="uid://dexswn45fjbmi" path="res://Assets/Audio/stinger.wav" id="4_cn8ec"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fvdhh"]
-bg_color = Color(0.27, 0.0315, 0, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0, 0, 0, 1)
-corner_radius_top_left = 16
-corner_radius_top_right = 16
-corner_radius_bottom_right = 16
-corner_radius_bottom_left = 16
 
 [node name="TradePanel" type="Panel" node_paths=PackedStringArray("confirmSound", "productsContainer", "fundsLabel", "costLabel", "confirmButton")]
 anchors_preset = 15
@@ -27,7 +16,7 @@ offset_right = -151.0
 offset_bottom = -196.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_fvdhh")
+theme = ExtResource("1_v6ek4")
 script = ExtResource("1_bf4hf")
 confirmSound = NodePath("AudioStreamPlayer")
 productsContainer = NodePath("TradeContainer/ProductsContainer")

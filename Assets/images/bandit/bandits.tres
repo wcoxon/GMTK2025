@@ -1,0 +1,46 @@
+[gd_resource type="SpriteFrames" load_steps=7 format=3 uid="uid://d1wfokmvnnsbo"]
+
+[ext_resource type="Texture2D" uid="uid://b0sise4bpjtb4" path="res://Assets/images/bandit/bandit1.png" id="1_2tsrc"]
+[ext_resource type="Texture2D" uid="uid://b4w1324218ifi" path="res://Assets/images/bandit/bandit2.png" id="2_kwxu2"]
+[ext_resource type="Texture2D" uid="uid://bg55824n1u04r" path="res://Assets/images/bandit/bandit3.png" id="3_2h06f"]
+[ext_resource type="Texture2D" uid="uid://y6rgiwyys76n" path="res://Assets/images/bandit/bandit4.png" id="4_tyw2u"]
+[ext_resource type="Texture2D" uid="uid://cjmvqcaw0fp8q" path="res://Assets/images/bandit/bandit5.png" id="5_6nq7a"]
+[ext_resource type="Texture2D" uid="uid://dggaexxqmfq45" path="res://Assets/images/bandit/bandit6.png" id="6_pm7xe"]
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_2tsrc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_kwxu2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_2h06f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_tyw2u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_6nq7a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_pm7xe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_6nq7a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_tyw2u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_2h06f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_kwxu2")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]

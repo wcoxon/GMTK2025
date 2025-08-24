@@ -15,10 +15,7 @@ public partial class WorldMap : Node3D
 
 
     public double timeScale = 1;
-    double time = 60*7; // world time, UI shows the time from the world which stores that now, // world should prob also increment time and all that
-                 // it just makes more sense, like time shouldn't stop when the UI isn't there you know, the time is part of the simulation not borrowed from something outside of it
-    
-    // ok let's say, an hour is 60 seconds at normal speed, making a minute 1 second i.e. time is in minutes
+    double time = 60*7; // world time in minutes
 
     public override void _Process(double delta)
     {
@@ -54,7 +51,6 @@ public partial class WorldMap : Node3D
         Sun = GetNode<DirectionalLight3D>("Sun");
         Surface = GetNode<MeshInstance3D>("SurfacePlane");
 
-
         mapMaterial = GetNode<WorldMap>("../WorldMap").Surface.GetSurfaceOverrideMaterial(0) as ShaderMaterial;
         noise = mapMaterial.GetShaderParameter("heightMap").As<NoiseTexture2D>().Noise;
         ramp = mapMaterial.GetShaderParameter("heightMap").As<NoiseTexture2D>().ColorRamp;
@@ -64,7 +60,7 @@ public partial class WorldMap : Node3D
     {
         Vector2 UV = new Vector2(worldPos.X, worldPos.Z)/75.0f + Vector2.One * 0.5f;
 
-        UV *= 256; 
+        UV *= 256;
 
 
         float noiseSample = noise.GetNoise2D(UV.X, UV.Y);

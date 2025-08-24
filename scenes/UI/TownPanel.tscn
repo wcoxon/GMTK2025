@@ -8,7 +8,7 @@
 [ext_resource type="Theme" uid="uid://d18vm3ggivwpn" path="res://themes/button_theme.tres" id="6_xx2x7"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_duute"]
-bg_color = Color(0.305416, 0.000847246, 0.485474, 1)
+bg_color = Color(0.205029, 0.000387188, 0.334935, 1)
 border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.847836, 0.499101, 1.92523e-07, 1)
@@ -28,22 +28,37 @@ outline_color = Color(0, 0, 0, 1)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 37.0
+offset_top = 31.0
+offset_right = -31.0
+offset_bottom = -32.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_duute")
 script = ExtResource("1_0baqy")
-nameLabel = NodePath("VBoxContainer/TownName")
-populationLabel = NodePath("VBoxContainer/TownPop")
-wealthLabel = NodePath("VBoxContainer/TownWealth")
-stockContainer = NodePath("VBoxContainer/StocksContainer")
-visitorSprites = [NodePath("VBoxContainer/VisitorsContainer/Panel/Control/AnimatedSprite2D"), NodePath("VBoxContainer/VisitorsContainer/Panel2/Control/AnimatedSprite2D"), NodePath("VBoxContainer/VisitorsContainer/Panel3/Control/AnimatedSprite2D"), NodePath("VBoxContainer/VisitorsContainer/Panel4/Control/AnimatedSprite2D")]
-tradeButton = NodePath("VBoxContainer/trade")
-rumourButton = NodePath("VBoxContainer/rumours")
-plotButton = NodePath("VBoxContainer/plot")
-embarkButton = NodePath("VBoxContainer/embark")
-cancelButton = NodePath("VBoxContainer/cancel")
+nameLabel = NodePath("TownStats/TownName")
+populationLabel = NodePath("TownStats/TownPop")
+wealthLabel = NodePath("TownStats/TownWealth")
+stockContainer = NodePath("TownStats/ScrollContainer/StocksContainer")
+visitorSprites = [NodePath("TownStats/VisitorsContainer/Panel/AnimatedSprite2D"), NodePath("TownStats/VisitorsContainer/Panel2/AnimatedSprite2D"), NodePath("TownStats/VisitorsContainer/Panel3/AnimatedSprite2D"), NodePath("TownStats/VisitorsContainer/Panel4/AnimatedSprite2D")]
+tradeButton = NodePath("TownStats/trade")
+rumourButton = NodePath("TownStats/rumours")
+plotButton = NodePath("TownStats/plot")
+embarkButton = NodePath("TownStats/embark")
+cancelButton = NodePath("TownStats/cancel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="CloseButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -31.0
+offset_bottom = 34.0
+grow_horizontal = 0
+theme = ExtResource("6_xx2x7")
+text = "X"
+
+[node name="TownStats" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -56,196 +71,168 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 8
 
-[node name="TownName" type="Label" parent="VBoxContainer"]
+[node name="TownName" type="Label" parent="TownStats"]
 layout_mode = 2
 text = "TOWN NAME"
 label_settings = SubResource("LabelSettings_45b72")
 horizontal_alignment = 1
 
-[node name="TownPop" type="Label" parent="VBoxContainer"]
+[node name="TownPop" type="Label" parent="TownStats"]
 layout_mode = 2
 theme = ExtResource("3_gfk46")
 text = "population: "
 
-[node name="TownWealth" type="Label" parent="VBoxContainer"]
+[node name="TownWealth" type="Label" parent="TownStats"]
 layout_mode = 2
 theme = ExtResource("3_gfk46")
 text = "Wealth: "
 
-[node name="StocksHeader" type="Label" parent="VBoxContainer"]
+[node name="VisitorsHeader" type="Label" parent="TownStats"]
+layout_mode = 2
+theme = ExtResource("3_gfk46")
+text = "Visitors:"
+
+[node name="VisitorsContainer" type="HBoxContainer" parent="TownStats"]
+layout_mode = 2
+
+[node name="Panel" type="CenterContainer" parent="TownStats/VisitorsContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TownStats/VisitorsContainer/Panel"]
+position = Vector2(32, 32)
+scale = Vector2(0.5, 0.5)
+autoplay = "default"
+
+[node name="Panel2" type="CenterContainer" parent="TownStats/VisitorsContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TownStats/VisitorsContainer/Panel2"]
+position = Vector2(32, 32)
+scale = Vector2(0.5, 0.5)
+autoplay = "default"
+
+[node name="Panel3" type="CenterContainer" parent="TownStats/VisitorsContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TownStats/VisitorsContainer/Panel3"]
+position = Vector2(32, 32)
+scale = Vector2(0.5, 0.5)
+autoplay = "default"
+
+[node name="Panel4" type="CenterContainer" parent="TownStats/VisitorsContainer"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="TownStats/VisitorsContainer/Panel4"]
+position = Vector2(32, 32)
+scale = Vector2(0.5, 0.5)
+autoplay = "default"
+
+[node name="StocksHeader" type="Label" parent="TownStats"]
 layout_mode = 2
 theme = ExtResource("3_gfk46")
 text = "
 Market"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Headers" type="HBoxContainer" parent="TownStats"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme = ExtResource("2_rkrow")
-horizontal_alignment = 1
-
-[node name="Label2" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="Label" type="Label" parent="TownStats/Headers"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_rkrow")
-text = "#"
+text = "Item"
 horizontal_alignment = 1
 
-[node name="Label5" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="Label2" type="Label" parent="TownStats/Headers"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_rkrow")
-text = "Pro."
+text = "Quantity"
 horizontal_alignment = 1
 
-[node name="Label6" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="Label5" type="Label" parent="TownStats/Headers"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_rkrow")
-text = "Con."
+text = "Production"
 horizontal_alignment = 1
 
-[node name="Label3" type="Label" parent="VBoxContainer/HBoxContainer"]
+[node name="Label6" type="Label" parent="TownStats/Headers"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_rkrow")
-text = "£"
+text = "Consumption"
 horizontal_alignment = 1
 
-[node name="StocksContainer" type="VBoxContainer" parent="VBoxContainer"]
+[node name="Label3" type="Label" parent="TownStats/Headers"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("2_rkrow")
+text = "Price"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TownStats"]
+custom_minimum_size = Vector2(0, 32)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Control" parent="VBoxContainer/StocksContainer" instance=ExtResource("2_1ecij")]
+[node name="StocksContainer" type="VBoxContainer" parent="TownStats/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Control" parent="TownStats/ScrollContainer/StocksContainer" instance=ExtResource("2_1ecij")]
 layout_mode = 2
 ItemName = "Broth"
 
-[node name="Control2" parent="VBoxContainer/StocksContainer" instance=ExtResource("2_1ecij")]
+[node name="Control2" parent="TownStats/ScrollContainer/StocksContainer" instance=ExtResource("2_1ecij")]
 layout_mode = 2
 ItemName = "Plast"
 
-[node name="Control3" parent="VBoxContainer/StocksContainer" instance=ExtResource("2_1ecij")]
+[node name="Control3" parent="TownStats/ScrollContainer/StocksContainer" instance=ExtResource("2_1ecij")]
 layout_mode = 2
 ItemName = "EvWa"
 
-[node name="VisitorsHeader" type="Label" parent="VBoxContainer"]
+[node name="trade" type="Button" parent="TownStats"]
 layout_mode = 2
-theme = ExtResource("3_gfk46")
-text = "Visitors"
-
-[node name="VisitorsContainer" type="GridContainer" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-columns = 2
-
-[node name="Panel" type="Panel" parent="VBoxContainer/VisitorsContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Control" type="Control" parent="VBoxContainer/VisitorsContainer/Panel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VBoxContainer/VisitorsContainer/Panel/Control"]
-scale = Vector2(0.5, 0.5)
-autoplay = "default"
-
-[node name="Panel2" type="Panel" parent="VBoxContainer/VisitorsContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Control" type="Control" parent="VBoxContainer/VisitorsContainer/Panel2"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VBoxContainer/VisitorsContainer/Panel2/Control"]
-scale = Vector2(0.5, 0.5)
-autoplay = "default"
-
-[node name="Panel3" type="Panel" parent="VBoxContainer/VisitorsContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Control" type="Control" parent="VBoxContainer/VisitorsContainer/Panel3"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VBoxContainer/VisitorsContainer/Panel3/Control"]
-scale = Vector2(0.5, 0.5)
-autoplay = "default"
-
-[node name="Panel4" type="Panel" parent="VBoxContainer/VisitorsContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Control" type="Control" parent="VBoxContainer/VisitorsContainer/Panel4"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="VBoxContainer/VisitorsContainer/Panel4/Control"]
-scale = Vector2(0.5, 0.5)
-autoplay = "default"
-
-[node name="trade" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 8
+size_flags_vertical = 10
 theme = ExtResource("6_xx2x7")
 text = "Trade goods"
 
-[node name="rumours" type="Button" parent="VBoxContainer"]
+[node name="rumours" type="Button" parent="TownStats"]
 layout_mode = 2
 theme = ExtResource("6_xx2x7")
 text = "Investigate rumours"
 
-[node name="plot" type="Button" parent="VBoxContainer"]
+[node name="plot" type="Button" parent="TownStats"]
+visible = false
 layout_mode = 2
 theme = ExtResource("6_xx2x7")
 disabled = true
 text = "Plot journey"
 
-[node name="embark" type="Button" parent="VBoxContainer"]
+[node name="embark" type="Button" parent="TownStats"]
 visible = false
 layout_mode = 2
 theme = ExtResource("6_xx2x7")
 disabled = true
 text = "Embark"
 
-[node name="cancel" type="Button" parent="VBoxContainer"]
+[node name="cancel" type="Button" parent="TownStats"]
 visible = false
 layout_mode = 2
 theme = ExtResource("6_xx2x7")
 disabled = true
 text = "Cancel"
 
-[connection signal="pressed" from="VBoxContainer/rumours" to="." method="getRumour"]
+[connection signal="pressed" from="CloseButton" to="." method="Close"]
+[connection signal="pressed" from="TownStats/trade" to="." method="Trade"]
+[connection signal="pressed" from="TownStats/rumours" to="." method="getRumour"]

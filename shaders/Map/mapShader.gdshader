@@ -16,11 +16,11 @@ void vertex() {
 }
 
 void fragment() {
-	
+
 	float h = HEIGHT; // gonna do this so i reuse the sample instead of sampling twice
-	
+
 	vec3 waterColour = vec3(0.0);
 	ALBEDO = h==0.0 ? waterColour : texture(gradient,vec2(h)).rgb;
-	
+
 	NORMAL_MAP = texture(normalMap,SAMPLEPOS).rgb;
 }

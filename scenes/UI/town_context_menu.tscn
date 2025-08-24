@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://cuwvgg42ysqv1"]
+
+[ext_resource type="Theme" uid="uid://d18vm3ggivwpn" path="res://themes/button_theme.tres" id="1_d3205"]
+[ext_resource type="Script" uid="uid://dnpfdrpm36ffd" path="res://scripts/UI/TownContextMenu.cs" id="1_n5385"]
+
+[node name="TownContextMenu" type="Panel"]
+custom_minimum_size = Vector2(193.705, 108.135)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -97.0
+offset_top = -117.0
+offset_right = 97.0
+offset_bottom = -8.86499
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(96.51, 114.845)
+theme = ExtResource("1_d3205")
+script = ExtResource("1_n5385")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "TOWN NAME"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "TOWN INFORMATION"
+
+[node name="Button2" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "VISIT"
+
+[connection signal="pressed" from="VBoxContainer/Button" to="." method="Inspect"]
+[connection signal="pressed" from="VBoxContainer/Button2" to="." method="Plot"]

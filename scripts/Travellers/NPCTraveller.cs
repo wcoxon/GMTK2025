@@ -5,8 +5,6 @@ public partial class NPCTraveller : Traveller
 {
     double timeToEmbark = 0;
 
-    //public List<EncounterArea> encounters = new();
-
     public override void _Ready() => base._Ready();
 
     public override void _Process(double delta)
@@ -47,14 +45,6 @@ public partial class NPCTraveller : Traveller
         journey.initJourney(Town, targetTown);
     }
 
-
-    public void ShowInventory()
-    {
-        Player.Instance.UI.OpenInventory(this);
-    }
-    public void HideInventory()
-    {
-        Player.Instance.UI.CloseInventory();
-    }
-
+    public void ShowInventory() => Player.Instance.UI.OpenInventory(this); // called on hover
+    public void HideInventory() => Player.Instance.UI.inventoryUI.Close(); // called on mouse exit
 }

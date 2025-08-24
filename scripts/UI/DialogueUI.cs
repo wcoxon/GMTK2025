@@ -11,19 +11,24 @@ public partial class DialogueUI : Control
         sprite = GetNode<AnimatedSprite2D>("SpriteControl/AnimatedSprite2D");
     }
 
+    public void revealEncounter(Traveller speaking, EncounterArea encounter)
+    {
+        openDialogue(speaking);
+        Player.Instance.moveTo(encounter.Position);
+    }
+
     public void openDialogue(Traveller speaking)
     {
-        Show();
+        Player.Instance.UI.townPanel.Hide();
+        Player.Instance.UI.OpenUI(this);
+
         nameLabel.Text = speaking.Name;
         sprite.SpriteFrames = speaking.Animation;
         sprite.Play();
     }
-    public void revealEncounter(Traveller speaking, EncounterArea encounter)
-    {
-        openDialogue(speaking);
-        
-        Player.Instance.moveTo(encounter.Position);
+    public void closeDialogue() {
+        Player.Instance.UI.townPanel.Show();
+        Player.Instance.UI.CloseUI(this);
     }
-    public void closeDialogue() => Hide();
     
 }

@@ -1,21 +1,30 @@
 using Godot;
 using System;
 
-public partial class InventoryUI : Panel
+public partial class InventoryUI : UIMenu
 {
-    [Export] VBoxContainer rowsContainer;
+	[Export] VBoxContainer rowsContainer;
 
-    public StockUI getItemRow(int index)
-    {
-        return rowsContainer.GetChild<StockUI>(index);
-    }
+	public override string getName() => "Inventory";
 
-	public void displayInventory(Traveller traveller)
+	public Traveller Subject
 	{
-		for (int item = 0; item < 3; item++)
+		set
 		{
-			getItemRow(item).Quantity = traveller.inventory[item];
+			for (int item = 0; item < 3; item++)
+			{
+				getItemRow(item).Quantity = value.inventory[item];
+			}
 		}
 	}
-	
+	public StockUI getItemRow(int index)
+	{
+		return rowsContainer.GetChild<StockUI>(index);
+	}
+	public override void Open()
+	{
+		base.Open();
+		Subject = Player.Instance.traveller;
+    }
+
 }

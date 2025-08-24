@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class TownPanel : Panel
+public partial class TownPanel : UIMenu
 {
     // populates UI contents with information about given town
 
@@ -27,75 +27,8 @@ public partial class TownPanel : Panel
         {
             town = value;
 
-            nameLabel.Text = town.TownName; // only update name when town changed
-
-            updateUI(); // update stats UI
-            updateActions(); // update buttons
+            Open();
         }
-    }
-
-    public void plan()
-    {
-        plotButton.Disabled = true;
-
-        embarkButton.Visible = true;
-        cancelButton.Visible = true;
-
-        embarkButton.Disabled = false;
-        cancelButton.Disabled = false;
-    }
-    public void embark()
-    {
-        embarkButton.Disabled = true;
-        cancelButton.Disabled = true;
-
-        embarkButton.Visible = false;
-        cancelButton.Visible = false;
-
-        if (Town is not null) updateActions(); // i mean if town is null we should just like, hide ts anyway
-    }
-
-    public void getRumour()
-    {
-        // pick someone in the town
-        // pick a rumour/encounter to reveal
-        // show dialogue and remove rumour from npc
-
-        //if (Town.Visitors.Count == 1) return; // return if alone in town
-
-        Godot.Collections.Array<Traveller> shuffledVisitors = Town.Visitors;
-        shuffledVisitors.Shuffle(); // ouh this still shuffles the town visitors btw i should duplicate right
-
-        foreach (Traveller visitor in shuffledVisitors)
-        {
-            GD.Print($"visitor: {visitor.Name}");
-
-            foreach (Rumour rumour in visitor.knownRumours)
-            {
-                rumour.reveal(visitor);
-                visitor.knownRumours.Remove(rumour);
-                return;
-            }
-        }
-
-        // pick random visitor
-        //long visitorIndex = GD.Randi() % (Town.currentTravellers.Count - 1);
-        //if (visitorIndex >= Town.currentTravellers.IndexOf(Player.Instance.traveller)) visitorIndex++;
-        //NPCTraveller chosenVisitor = Town.currentTravellers[(int)visitorIndex] as NPCTraveller;
-        
-        //GD.Print($"visitor index: {visitorIndex}");
-        //GD.Print($" known rumours: {chosenVisitor.knownRumours.Count}");
-        //
-        //if (chosenVisitor.knownRumours.Count == 0) return; // return if visitor knows nothing
-        //
-        //// pick first rumour
-        //Rumour chosenRumour = chosenVisitor.knownRumours[0];
-        //
-        //chosenRumour.reveal(chosenVisitor);
-        //chosenVisitor.knownRumours.RemoveAt(0);
-
-        // show dialogue
-        //Player.Instance.UI.dialogueUI.revealEncounter(chosenVisitor, chosenEncounter);
     }
 
 
@@ -146,5 +79,43 @@ public partial class TownPanel : Panel
         tradeButton.Disabled = !(onTown && onSelected); // show trade if on selected town and in town state
         rumourButton.Disabled = !(onTown && onSelected); // show rumour if on selected town and in town state
         plotButton.Disabled = !(onTown && !onSelected); // show plan if off selected town and in town state
+    }
+
+    public void Trade() => Player.Instance.UI.OpenTrade(Town);
+    public void getRumour()
+    {
+        // pick someone in the town
+        // pick a rumour/encounter to reveal
+        // show dialogue and remove rumour from npc
+
+        Godot.Collections.Array<Traveller> shuffledVisitors = Town.Visitors.Duplicate();
+        shuffledVisitors.Shuffle();
+
+        foreach (Traveller visitor in shuffledVisitors)
+        {
+            //GD.Print($"visitor: {visitor.Name}");
+            foreach (Rumour rumour in visitor.knownRumours)
+            {
+                if (Player.Instance.traveller.knownRumours.Contains(rumour)) continue;
+                rumour.reveal(visitor);
+                //visitor.knownRumours.Remove(rumour); // maybe purge knowledge of it,, rn you hear the same rumour from ppl who know it
+                //actually just don't show rumours the player knows, purging wouldn't prevent hearing about again after the purge
+
+                return;
+            }
+        }
+    }
+    
+    public override void Open()
+    {
+        nameLabel.Text = Town.TownName; // only update name when town changed
+        updateUI(); // update stats UI
+        updateActions(); // update buttons
+
+        Player.Instance.UI.OpenUI(this);
+    }
+    public override void Close()
+    {
+        Player.Instance.UI.CloseUI(this);
     }
 }

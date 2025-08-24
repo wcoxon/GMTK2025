@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class TradeUI : Panel
+public partial class TradeUI : UIMenu
 {
 	[Export] AudioStreamPlayer confirmSound;
 	[Export] VBoxContainer productsContainer;
@@ -78,7 +78,13 @@ public partial class TradeUI : Panel
 		// update ui
 		updateUI();
 	}
+    public override void Open()
+    {
+        base.Open();
+    }
 
-	public void closeTrade() => Visible = false;
-	
+	public override void Close()
+	{
+        base.Close();
+	}
 }

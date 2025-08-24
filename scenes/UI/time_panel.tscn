@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bovy050xv5534"]
+[gd_scene load_steps=6 format=3 uid="uid://bovy050xv5534"]
 
+[ext_resource type="Theme" uid="uid://d18vm3ggivwpn" path="res://themes/button_theme.tres" id="1_gf6nt"]
 [ext_resource type="Script" uid="uid://canac80eqdtlo" path="res://scripts/ScaleTime/TimeController.cs" id="1_pxhwb"]
 [ext_resource type="Theme" uid="uid://b7sho3deipfsu" path="res://themes/SpeedButtonTheme.tres" id="2_pxhwb"]
 [ext_resource type="ButtonGroup" uid="uid://br2jb0lwfyinh" path="res://scripts/ScaleTime/SpeedButtonGroup.tres" id="3_gf6nt"]
@@ -17,6 +18,7 @@ offset_right = -51.0
 offset_bottom = -40.0
 grow_horizontal = 0
 grow_vertical = 0
+theme = ExtResource("1_gf6nt")
 script = ExtResource("1_pxhwb")
 
 [node name="DateTime" type="Label" parent="."]

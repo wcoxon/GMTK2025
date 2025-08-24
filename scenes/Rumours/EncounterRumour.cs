@@ -9,6 +9,11 @@ public partial class EncounterRumour : Rumour
     {
         Encounter = encounter;
     }
+    public override void focus()
+    {
+        base.focus();
+        Player.Instance.moveTo(Encounter.Position);
+    }
 
     public override void reveal(Traveller revealer)
     {

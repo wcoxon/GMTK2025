@@ -1,5 +1,6 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://d18vm3ggivwpn"]
+[gd_resource type="Theme" load_steps=8 format=3 uid="uid://d18vm3ggivwpn"]
 
+[ext_resource type="FontFile" uid="uid://lekmux20shw5" path="res://Assets/Fonts/Comic Sandchez.ttf" id="1_kwhvy"]
 [ext_resource type="FontFile" uid="uid://c85eqv0eybdcy" path="res://Assets/Fonts/cCupang.ttf" id="1_qnv5y"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kwhvy"]
@@ -15,6 +16,23 @@ corner_radius_bottom_left = 5
 corner_detail = 2
 shadow_color = Color(1, 0, 0.966667, 0.956863)
 shadow_size = 1
+shadow_offset = Vector2(1, 5)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6abfs"]
+content_margin_top = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0.216667, 1, 1)
+border_width_left = 10
+border_color = Color(0, 1, 0.15, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 2
+shadow_color = Color(1, 0, 0.966667, 0.956863)
+shadow_size = 2
 shadow_offset = Vector2(1, 5)
 anti_aliasing = false
 
@@ -34,9 +52,52 @@ shadow_size = 1
 shadow_offset = Vector2(1, 5)
 anti_aliasing = false
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hguu3"]
+content_margin_top = 5.0
+content_margin_bottom = 5.0
+bg_color = Color(0, 0.459669, 0.891645, 1)
+border_color = Color(0, 1, 0.15, 1)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+corner_detail = 2
+shadow_color = Color(1, 0, 0.966667, 0.956863)
+shadow_offset = Vector2(1, 5)
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bpa63"]
+bg_color = Color(5.87195e-06, 0.759547, 0.440914, 1)
+skew = Vector2(0.14, 0.035)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+corner_detail = 2
+expand_margin_left = 10.0
+expand_margin_top = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
 [resource]
 default_font = ExtResource("1_qnv5y")
 default_font_size = 24
 Button/colors/font_color = Color(1, 0.95, 0, 1)
+Button/colors/font_hover_color = Color(0.75, 1, 0, 1)
+Button/colors/font_pressed_color = Color(0.266667, 1, 0, 1)
 Button/styles/disabled = SubResource("StyleBoxFlat_kwhvy")
+Button/styles/hover = SubResource("StyleBoxFlat_6abfs")
 Button/styles/normal = SubResource("StyleBoxFlat_qnv5y")
+Button/styles/pressed = SubResource("StyleBoxFlat_hguu3")
+Label/colors/font_color = Color(0.591351, 0.00180664, 0.788784, 1)
+Label/font_sizes/font_size = 31
+Label/fonts/font = ExtResource("1_kwhvy")
+Panel/styles/panel = SubResource("StyleBoxFlat_bpa63")
+RichTextLabel/colors/default_color = Color(0.495, 0, 0.66, 1)
+RichTextLabel/fonts/normal_font = ExtResource("1_qnv5y")

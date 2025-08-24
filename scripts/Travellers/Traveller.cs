@@ -31,6 +31,7 @@ public struct Journey
 public partial class Traveller : Node3D
 {
     CollisionShape3D collider;
+
     public float moveSpeed = 1;
     private int money = 0;
     public int Money { get => money; set => money = value; }
@@ -46,21 +47,29 @@ public partial class Traveller : Node3D
             Position = town?.Position ?? Position;
         }
     }
+
     SpriteFrames animation;
     [Export] public SpriteFrames Animation { get => animation; set => animation = value; }
 
+    
+    public Journey journey = new();
+
     public List<Rumour> knownRumours = new();
 
-    public void AddRumour(Rumour rumour)
+    public virtual void AddRumour(Rumour rumour)
     {
         if (knownRumours.Contains(rumour)) return;
-        //if (rumour.ThoseWhoKnow.Contains(this)) return;
 
         knownRumours.Add(rumour);
         rumour.ThoseWhoKnow.Add(this);
     }
+    public virtual void RemoveRumour(Rumour rumour)
+    {
+        if (!knownRumours.Contains(rumour)) return; // this shouldn't ever actually happen though
 
-    public Journey journey = new();
+        knownRumours.Remove(rumour);
+        rumour.ThoseWhoKnow.Remove(this);
+    }
 
     public override void _EnterTree()
     {
@@ -79,8 +88,6 @@ public partial class Traveller : Node3D
         inventory[2] = 120;
 
         onArrival(Town);
-
-        //Player.Instance.TwentyFourTicks += expireRumours;
     }
 
     public void travel(double simDelta)
@@ -106,17 +113,4 @@ public partial class Traveller : Node3D
         collider.Disabled = false;
         town.Visitors.Remove(this);
     }
-
-    // call this at the end of every day. Go through your rumours list, remove the stuff that's expired.
-    //public void expireRumours()
-    //{
-    //    if (knownRumours.Count == 0) return;
-//
-    //    for (int i = knownRumours.Count - 1; i >= 0; i--)
-    //    {
-    //        //go backwards through the rumours list
-    //        if (knownRumours[i].duration == 0) knownRumours.RemoveAt(i);
-    //        else knownRumours[i].duration -= 1;
-    //    }
-    //}
 }

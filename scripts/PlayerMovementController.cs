@@ -7,8 +7,7 @@ public partial class PlayerMovementController : Node3D
     MeshInstance3D cursor;
     Plane dragPlane = new Plane(new Vector3(0, 1, 0), 0);
 
-    public Vector3 targetPosition;// what if i used player position and camera position instead of target and player? well
-    // the issue there is just that you need that offset on the camera
+    public Vector3 targetPosition;
 
     public override void _EnterTree()
     {
@@ -42,9 +41,6 @@ public partial class PlayerMovementController : Node3D
     {
         Player.Instance.Position = Player.Instance.Position.Lerp(targetPosition, 0.3f);
     }
-
-
-
     public override void _PhysicsProcess(double delta)
     {
         Vector3 inputDirection = new Vector3(Input.GetAxis("left", "right"), 0, Input.GetAxis("up", "down"));

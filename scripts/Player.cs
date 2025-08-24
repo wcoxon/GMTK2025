@@ -55,7 +55,6 @@ public partial class Player : Node3D
 
                     waypoints.ClearDots();
 
-                    UI.townPanel.embark();
                     UI.timeControlPanel.Pause();
                     break;
 
@@ -65,7 +64,7 @@ public partial class Player : Node3D
                     break;
 
                 case GameState.PLAN:
-                    UI.townPanel.plan();
+                    UI.plottingUI.Open();
 
                     waypoints.Active = true;
                     waypoints.editingJourney = traveller.journey;
@@ -78,7 +77,6 @@ public partial class Player : Node3D
 
                     traveller.onDeparture();
 
-                    UI.townPanel.embark();
                     UI.timeControlPanel.Speed1();
                     break;
             }
@@ -115,12 +113,12 @@ public partial class Player : Node3D
         set
         {
             if (selectedTown is not null) selectedTown.Selected = false;
-            else UI.townPanel.Visible = true;
-
+            
             selectedTown = value;
-            selectedTown.Selected = true;
 
-            UI.townPanel.Town = selectedTown;
+            UI.townContextMenu.Open(selectedTown);
+
+            selectedTown.Selected = true;
         }
     }
     
@@ -156,7 +154,7 @@ public partial class Player : Node3D
     {
         Scale += Vector3.One * Input.GetAxis("zoomIn", "zoomOut") * 0.1f;
 
-        if (@event.IsActionPressed("inventory")) UI.ToggleInventory(traveller);
+        //if (@event.IsActionPressed("inventory")) UI.ToggleInventory(traveller);
 
         switch (State)
         {
@@ -187,22 +185,22 @@ public partial class Player : Node3D
     public void plotJourney() => State = GameState.PLAN;
     public void embark()
     {
-        waypoints.Active = false;
-        State = GameState.TRAVEL;
+        waypoints.Active = false; // deactivate waypoints
+
+        State = GameState.TRAVEL; // begin travelling
     }
     public void cancelPlot()
     {
-        waypoints.Active = false;
-        traveller.journey.clearJourney();
-        waypoints.ClearDots();
+        waypoints.Active = false; // deactivate waypoints
 
-        State = GameState.TOWN; // honestly transitioning into town state should implicitly dispose of waypoint stuff perhaps
+        traveller.journey.clearJourney(); // clear path
+        waypoints.ClearDots(); // remove placed waypoints
+
+        State = GameState.TOWN; // reenter town state
     }
 
-    public void moveTo(Vector3 pos)
-    {
-        MovementController.targetPosition = pos;
-    }
+    public void moveTo(Vector3 pos) => MovementController.targetPosition = pos;
+    
     public void OnDeath()
     {
         traveller.Health = 3;

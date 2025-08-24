@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://cvlfxg610affe"]
+[gd_scene load_steps=24 format=3 uid="uid://cvlfxg610affe"]
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
 [ext_resource type="PackedScene" uid="uid://b7hxl7dg26i7j" path="res://scenes/player.tscn" id="2_25dfr"]
@@ -12,99 +12,134 @@
 [ext_resource type="AudioStream" uid="uid://ci12pk15nudvu" path="res://Assets/Audio/vcxvxcdv.mp3" id="7_ye0jt"]
 [ext_resource type="PackedScene" uid="uid://bdrkqejd8htea" path="res://scenes/UI/EncounterView.tscn" id="8_cfq0f"]
 [ext_resource type="PackedScene" uid="uid://c6yeey4j3upm4" path="res://scenes/UI/inventory.tscn" id="8_pd1er"]
-[ext_resource type="PackedScene" uid="uid://xqt4l46rhnwy" path="res://scenes/UI/RumorView.tscn" id="8_x537r"]
 [ext_resource type="PackedScene" uid="uid://bovy050xv5534" path="res://scenes/UI/time_panel.tscn" id="10_xnxdc"]
 [ext_resource type="Script" uid="uid://0n132a882k4r" path="res://scripts/UI/NotificationManager.cs" id="11_o3jky"]
 [ext_resource type="PackedScene" uid="uid://c1jvgnt81ughl" path="res://scenes/UI/notification.tscn" id="12_kp0ql"]
 [ext_resource type="PackedScene" uid="uid://ce3r73hprtho" path="res://scenes/UI/stats_view.tscn" id="12_xnxdc"]
+[ext_resource type="Theme" uid="uid://d18vm3ggivwpn" path="res://themes/button_theme.tres" id="13_1ns3k"]
 [ext_resource type="Script" uid="uid://bod5bn1der1x6" path="res://scripts/UI/UIController.cs" id="13_mkg2b"]
 [ext_resource type="PackedScene" uid="uid://mc8jppn0igyl" path="res://scenes/UI/dialogue_panel.tscn" id="15_25dfr"]
+[ext_resource type="PackedScene" uid="uid://b3e7bqi6emii" path="res://scenes/UI/PlottingUI.tscn" id="16_kjvyo"]
+[ext_resource type="PackedScene" uid="uid://cuwvgg42ysqv1" path="res://scenes/UI/town_context_menu.tscn" id="20_kjvyo"]
+[ext_resource type="PackedScene" uid="uid://4a320obeyeip" path="res://scenes/UI/toolbar.tscn" id="21_2phbr"]
+[ext_resource type="PackedScene" uid="uid://bxoubiowv8scg" path="res://scenes/UI/rumours_panel.tscn" id="22_mkg2b"]
 
 [node name="Root" type="Node3D"]
 
-[node name="Player" parent="." node_paths=PackedStringArray("waypoints", "UI", "rumorView", "encounterView", "notificationManager") instance=ExtResource("2_25dfr")]
+[node name="Player" parent="." node_paths=PackedStringArray("waypoints", "UI", "encounterView", "notificationManager") instance=ExtResource("2_25dfr")]
 waypoints = NodePath("../Waypoints")
 UI = NodePath("../UICanvas")
 travelPlaylist = Array[AudioStream]([ExtResource("3_2phbr"), ExtResource("4_mkg2b"), ExtResource("5_1ns3k"), ExtResource("6_a7pbh"), ExtResource("7_ye0jt")])
-rumorView = NodePath("../UICanvas/RumorView")
 encounterView = NodePath("../UICanvas/EncounterView")
-notificationManager = NodePath("../UICanvas/NotificationManager")
+notificationManager = NodePath("../UICanvas/HUD/NotificationManager")
+
+[node name="WorldMap" parent="." instance=ExtResource("1_5opw3")]
 
 [node name="Waypoints" parent="." node_paths=PackedStringArray("world") instance=ExtResource("5_k24pf")]
 world = NodePath("../WorldMap")
 
-[node name="WorldMap" parent="." instance=ExtResource("1_5opw3")]
-
-[node name="UICanvas" type="CanvasLayer" parent="." node_paths=PackedStringArray("townPanel", "timeControlPanel", "inventoryUI", "tradeUI", "dialogueUI")]
+[node name="UICanvas" type="CanvasLayer" parent="." node_paths=PackedStringArray("townPanel", "timeControlPanel", "inventoryUI", "tradeUI", "dialogueUI", "townContextMenu", "plottingUI", "rumoursUI")]
 script = ExtResource("13_mkg2b")
-townPanel = NodePath("HSplitContainer/TownPanel")
-timeControlPanel = NodePath("HSplitContainer/HUD/TimePanel")
-inventoryUI = NodePath("HSplitContainer/HUD/Inventory")
-tradeUI = NodePath("HSplitContainer/HUD/TradePanel")
-dialogueUI = NodePath("DialoguePanel")
+townPanel = NodePath("TownPanel")
+timeControlPanel = NodePath("HUD/TimePanel")
+inventoryUI = NodePath("Inventory")
+tradeUI = NodePath("TradePanel")
+dialogueUI = NodePath("HUD/DialoguePanel")
+townContextMenu = NodePath("HUD/TownContextMenu")
+plottingUI = NodePath("PlottingUI")
+rumoursUI = NodePath("RumoursPanel")
 
-[node name="HSplitContainer" type="HSplitContainer" parent="UICanvas"]
+[node name="CharacterToolbar" parent="UICanvas" node_paths=PackedStringArray("Menus") instance=ExtResource("21_2phbr")]
+anchors_preset = 2
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 35.0
+offset_top = -87.0
+offset_right = 315.0
+offset_bottom = -35.0
+grow_horizontal = 1
+Menus = [NodePath("../Inventory"), NodePath("../RumoursPanel")]
+
+[node name="TownToolbar" parent="UICanvas" node_paths=PackedStringArray("Menus") instance=ExtResource("21_2phbr")]
+visible = false
+offset_left = -140.0
+offset_top = -93.0
+offset_right = 140.0
+offset_bottom = -41.0
+Menus = [NodePath("../TownPanel")]
+
+[node name="TownPanel" parent="UICanvas" instance=ExtResource("3_y7ipx")]
+visible = false
+offset_left = 62.0
+offset_top = 57.0
+offset_right = -81.0
+offset_bottom = -85.0
+
+[node name="EncounterView" parent="UICanvas" instance=ExtResource("8_cfq0f")]
+visible = false
+theme = ExtResource("13_1ns3k")
+
+[node name="RumoursPanel" parent="UICanvas" instance=ExtResource("22_mkg2b")]
+visible = false
+
+[node name="Inventory" parent="UICanvas" instance=ExtResource("8_pd1er")]
+visible = false
+offset_left = -249.0
+offset_top = -129.0
+offset_right = 251.0
+offset_bottom = 171.0
+
+[node name="PlottingUI" parent="UICanvas" instance=ExtResource("16_kjvyo")]
+visible = false
+anchors_preset = 7
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -116.0
+offset_right = 102.0
+offset_bottom = -45.0
+grow_vertical = 0
+
+[node name="TradePanel" parent="UICanvas" instance=ExtResource("4_5hv5t")]
+visible = false
+offset_left = 87.0
+offset_top = 124.0
+offset_right = -161.0
+offset_bottom = -141.0
+
+[node name="HUD" type="Control" parent="UICanvas"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-split_offset = 325
-
-[node name="TownPanel" parent="UICanvas/HSplitContainer" instance=ExtResource("3_y7ipx")]
-visible = false
-layout_mode = 2
-
-[node name="HUD" type="Control" parent="UICanvas/HSplitContainer"]
-layout_mode = 2
 mouse_filter = 2
 
-[node name="TradePanel" parent="UICanvas/HSplitContainer/HUD" instance=ExtResource("4_5hv5t")]
-visible = false
-layout_mode = 1
-offset_left = 87.0
-offset_top = 116.0
-offset_right = -161.0
-offset_bottom = -168.0
-
-[node name="TimePanel" parent="UICanvas/HSplitContainer/HUD" instance=ExtResource("10_xnxdc")]
+[node name="TimePanel" parent="UICanvas/HUD" instance=ExtResource("10_xnxdc")]
 layout_mode = 1
 offset_left = -233.0
 offset_top = -92.0
 offset_right = -25.0
 offset_bottom = -25.0
 
-[node name="Inventory" parent="UICanvas/HSplitContainer/HUD" instance=ExtResource("8_pd1er")]
+[node name="StatsView" parent="UICanvas/HUD" instance=ExtResource("12_xnxdc")]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 16.0
+offset_right = 206.0
+offset_bottom = 88.0
+
+[node name="DialoguePanel" parent="UICanvas/HUD" instance=ExtResource("15_25dfr")]
 visible = false
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -224.0
-offset_top = -184.0
-offset_right = 225.0
-offset_bottom = -2.0
 
-[node name="StatsView" parent="UICanvas/HSplitContainer/HUD" instance=ExtResource("12_xnxdc")]
-layout_mode = 0
-
-[node name="DialoguePanel" parent="UICanvas" instance=ExtResource("15_25dfr")]
+[node name="TownContextMenu" parent="UICanvas/HUD" instance=ExtResource("20_kjvyo")]
 visible = false
+layout_mode = 1
 
-[node name="EncounterView" parent="UICanvas" instance=ExtResource("8_cfq0f")]
+[node name="NotificationManager" type="Control" parent="UICanvas/HUD"]
 visible = false
-
-[node name="RumorView" parent="UICanvas" instance=ExtResource("8_x537r")]
-visible = false
-offset_left = 553.0
-offset_top = 356.0
-offset_right = 553.0
-offset_bottom = 356.0
-
-[node name="NotificationManager" type="Control" parent="UICanvas"]
-layout_mode = 3
+layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -116,10 +151,6 @@ grow_horizontal = 0
 script = ExtResource("11_o3jky")
 notification_scene = ExtResource("12_kp0ql")
 
-[connection signal="mouse_entered" from="UICanvas/HSplitContainer/TownPanel" to="Waypoints" method="OnMouseExited"]
-[connection signal="pressed" from="UICanvas/HSplitContainer/TownPanel/VBoxContainer/trade" to="UICanvas" method="OpenTrade"]
-[connection signal="pressed" from="UICanvas/HSplitContainer/TownPanel/VBoxContainer/plot" to="Player" method="plotJourney"]
-[connection signal="pressed" from="UICanvas/HSplitContainer/TownPanel/VBoxContainer/embark" to="Player" method="embark"]
-[connection signal="pressed" from="UICanvas/HSplitContainer/TownPanel/VBoxContainer/cancel" to="Player" method="cancelPlot"]
+[connection signal="mouse_entered" from="UICanvas/TownPanel" to="Waypoints" method="OnMouseExited"]
 
-[editable path="UICanvas/HSplitContainer/TownPanel"]
+[editable path="UICanvas/TownPanel"]
