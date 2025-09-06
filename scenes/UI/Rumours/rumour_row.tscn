@@ -1,17 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://cptdujo6ita6s"]
+[gd_scene load_steps=5 format=3 uid="uid://cptdujo6ita6s"]
 
 [ext_resource type="SpriteFrames" uid="uid://bdj7aack52cw1" path="res://Assets/images/eyebox/EyeBoxFrames.tres" id="1_04vn4"]
 [ext_resource type="Script" uid="uid://bwhgktr3difb0" path="res://scripts/UI/RumourRow.cs" id="1_5qynr"]
+[ext_resource type="Theme" uid="uid://cjcbo4rh5sarl" path="res://themes/WinXP/Body.tres" id="1_omsgq"]
 [ext_resource type="SpriteFrames" uid="uid://d1wfokmvnnsbo" path="res://Assets/images/bandit/bandits.tres" id="2_5qynr"]
 
-[node name="RumourRow" type="Button"]
+[node name="RumourRow" type="Button" node_paths=PackedStringArray("sourceSprite")]
 custom_minimum_size = Vector2(250, 64)
 offset_right = 250.0
 offset_bottom = 64.0
+theme = ExtResource("1_omsgq")
 script = ExtResource("1_5qynr")
+sourceSprite = NodePath("SpriteContainer/AnimatedSprite2D")
 
 [node name="SpriteContainer" type="CenterContainer" parent="."]
-visible = false
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 1
 anchors_preset = 4
@@ -24,11 +26,10 @@ grow_vertical = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpriteContainer"]
 position = Vector2(32, 32)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.25, 0.25)
 sprite_frames = ExtResource("1_04vn4")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
-visible = false
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 1
 anchors_preset = 6
@@ -44,7 +45,7 @@ grow_vertical = 2
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CenterContainer"]
 position = Vector2(32, 32)
-scale = Vector2(0.5, 0.5)
+scale = Vector2(0.25, 0.25)
 sprite_frames = ExtResource("2_5qynr")
 
 [connection signal="pressed" from="." to="." method="onClick"]

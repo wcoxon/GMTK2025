@@ -12,6 +12,8 @@ public abstract partial class Rumour
     public virtual void reveal(Traveller revealer)
     {
         Player.Instance.traveller.AddRumour(this);
+        
+        Player.Instance.UI.rumoursUI.AddRumour(this,revealer);
     }
 
     public void PurgeKnowledge()

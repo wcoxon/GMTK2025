@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://d18vm3ggivwpn" path="res://themes/button_theme.tres" id="1_lmj7x"]
 [ext_resource type="Script" uid="uid://b1lvfgd4834q7" path="res://scripts/UI/Toolbar.cs" id="2_xvmag"]
 
-[node name="Toolbar" type="Panel" node_paths=PackedStringArray("Menus")]
+[node name="Toolbar" type="Panel" node_paths=PackedStringArray("Windows")]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -17,7 +17,7 @@ grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("1_lmj7x")
 script = ExtResource("2_xvmag")
-Menus = []
+Windows = []
 
 [node name="ButtonContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
@@ -27,21 +27,3 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
-
-[node name="InventoryButton" type="Button" parent="ButtonContainer"]
-visible = false
-layout_mode = 2
-text = "Inventory"
-
-[node name="RumoursButton" type="Button" parent="ButtonContainer"]
-visible = false
-layout_mode = 2
-text = "Rumours"
-
-[node name="WorldButton" type="Button" parent="ButtonContainer"]
-visible = false
-layout_mode = 2
-text = "World"
-
-[connection signal="pressed" from="ButtonContainer/InventoryButton" to="." method="openInventory"]
-[connection signal="pressed" from="ButtonContainer/RumoursButton" to="." method="openRumours"]

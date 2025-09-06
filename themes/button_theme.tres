@@ -68,8 +68,7 @@ shadow_offset = Vector2(1, 5)
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bpa63"]
-bg_color = Color(5.87195e-06, 0.759547, 0.440914, 1)
-skew = Vector2(0.14, 0.035)
+bg_color = Color(1, 0.923, 0.58, 1)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4

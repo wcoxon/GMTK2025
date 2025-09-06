@@ -3,21 +3,13 @@ using System;
 
 public partial class RumourRow : Control
 {
-    // on click focus on rumour subject in world
-    Rumour rumour;
-    public Rumour Rumour
-    {
-        get => rumour;
-        set => rumour = value;
-    }
+    public Rumour Rumour {get;set;}
 
-    public void onClick()
-    {
-        // hide UI panels
-        // set player target to rumour position
+    [Export] public AnimatedSprite2D sourceSprite;
 
+    public void onClick() 
+    {
         Player.Instance.UI.closeAll();
-        rumour.focus();
-
+        Rumour.focus();
     }
 }

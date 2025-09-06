@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c1jvgnt81ughl"]
 
-[ext_resource type="Script" uid="uid://dtsneyjy5vfes" path="res://scripts/UI/Notification.cs" id="1_rnbxd"]
+[ext_resource type="Script" uid="uid://dtsneyjy5vfes" path="res://scripts/UI/Notification/Notification.cs" id="1_rnbxd"]
 
 [node name="Notification" type="Panel"]
 offset_right = 155.0

@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cuwvgg42ysqv1"]
 
-[ext_resource type="Theme" uid="uid://d18vm3ggivwpn" path="res://themes/button_theme.tres" id="1_d3205"]
+[ext_resource type="Theme" uid="uid://cjcbo4rh5sarl" path="res://themes/WinXP/Body.tres" id="1_d3205"]
 [ext_resource type="Script" uid="uid://dnpfdrpm36ffd" path="res://scripts/UI/TownContextMenu.cs" id="1_n5385"]
 
 [node name="TownContextMenu" type="Panel"]
@@ -35,7 +35,7 @@ horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "TOWN INFORMATION"
+text = "VIEW"
 
 [node name="Button2" type="Button" parent="VBoxContainer"]
 layout_mode = 2

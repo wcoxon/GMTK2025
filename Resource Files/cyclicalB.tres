@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="TownData" load_steps=9 format=3 uid="uid://cpyyuya48kbnv"]
+
+[ext_resource type="Material" uid="uid://diuq60p02iwus" path="res://shaders/outline/outlineMaterial.tres" id="1_ntgvt"]
+[ext_resource type="Shader" uid="uid://bpkjttjrw55ub" path="res://shaders/Color Ramp/colorRamp.gdshader" id="2_agmmg"]
+[ext_resource type="ArrayMesh" uid="uid://bkcn3sjmiafwt" path="res://Assets/Models/weirdcity1.obj" id="3_67ko6"]
+[ext_resource type="Script" uid="uid://bu8blcnkgpmyl" path="res://scripts/Custom Resources/TownData.cs" id="4_4qhgf"]
+[ext_resource type="AudioStream" uid="uid://ds36fviykex6u" path="res://Assets/Audio/K.wav" id="5_rq6s8"]
+
+[sub_resource type="Gradient" id="Gradient_7u3e2"]
+offsets = PackedFloat32Array(0.377593, 1)
+colors = PackedColorArray(0.16542, 0, 0.928379, 1, 2.88785e-06, 0.948284, 0.979826, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_tvf68"]
+gradient = SubResource("Gradient_7u3e2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xnxxt"]
+render_priority = 0
+next_pass = ExtResource("1_ntgvt")
+shader = ExtResource("2_agmmg")
+shader_parameter/ramp = SubResource("GradientTexture1D_tvf68")
+
+[resource]
+script = ExtResource("4_4qhgf")
+townName = "Modem"
+population = 100
+wealth = 150
+mesh = ExtResource("3_67ko6")
+material = SubResource("ShaderMaterial_xnxxt")
+theme = ExtResource("5_rq6s8")
+stocks = PackedFloat32Array(0, 0, 100)
+production = PackedFloat32Array(0, 50, 0)
+consumption = PackedFloat32Array(0, 0, 10)

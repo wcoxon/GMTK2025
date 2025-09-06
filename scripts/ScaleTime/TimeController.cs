@@ -2,7 +2,6 @@ using Godot;
 
 public partial class TimeController : Panel
 {
-
     Label timeDisplay;
     Button button0, button1, button2, button4, button16, button64;
 
@@ -20,11 +19,24 @@ public partial class TimeController : Panel
         button64 = GetNode<Button>("TimeScales/TimeScale64");
     }
 
-    public void enable() => ProcessMode = ProcessModeEnum.Inherit;
-    public void disable() => ProcessMode = ProcessModeEnum.Disabled;
+    public void enable(){
+        button0.Disabled =
+        button1.Disabled =
+        button2.Disabled =
+        button4.Disabled =
+        button16.Disabled =
+        button64.Disabled = false;
+    }
+    public void disable(){
+        button0.Disabled =
+        button1.Disabled =
+        button2.Disabled =
+        button4.Disabled =
+        button16.Disabled =
+        button64.Disabled = true;
+    }
     
     
-
     public void Pause() => button0.ButtonPressed = true;
     public void Speed1() => button1.ButtonPressed = true;
     public void Speed2() => button2.ButtonPressed = true;

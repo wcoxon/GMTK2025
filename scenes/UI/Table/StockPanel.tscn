@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://nscjafbhcguy"]
+
+[ext_resource type="Script" uid="uid://78lgfbj46w12" path="res://scripts/UI/Table/StockUI.cs" id="1_2nq1a"]
+[ext_resource type="Theme" uid="uid://cjcbo4rh5sarl" path="res://themes/WinXP/Body.tres" id="1_ub4xf"]
+
+[node name="Stock" type="HBoxContainer" node_paths=PackedStringArray("nameLabel", "quantityLabel")]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 39.0
+grow_horizontal = 2
+size_flags_vertical = 3
+theme = ExtResource("1_ub4xf")
+script = ExtResource("1_2nq1a")
+nameLabel = NodePath("ItemName")
+quantityLabel = NodePath("ItemQuantity")
+
+[node name="ItemName" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "NAME"
+
+[node name="ItemQuantity" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "QUANTITY"

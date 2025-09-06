@@ -82,10 +82,10 @@ public partial class Traveller : Node3D
 
     public override void _Ready()
     {
-        Money = 500;
-        inventory[0] = 530;
-        inventory[1] = 151;
-        inventory[2] = 120;
+        Money = 200;
+        inventory[0] = 10;
+        inventory[1] = 10;
+        inventory[2] = 10;
 
         onArrival(Town);
     }

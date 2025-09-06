@@ -17,4 +17,10 @@ public partial class MainMenu : Control
     {
         GetTree().Quit();
     }
+
+    [Export] FastNoiseLite noise;
+    public override void _PhysicsProcess(double delta)
+    {
+        noise.Offset += Vector3.Forward * (float)delta*100.0f;
+    }
 }

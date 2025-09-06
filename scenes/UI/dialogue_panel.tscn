@@ -1,30 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://mc8jppn0igyl"]
+[gd_scene load_steps=5 format=3 uid="uid://mc8jppn0igyl"]
 
 [ext_resource type="SpriteFrames" uid="uid://c8i3wf0qgu4ag" path="res://Assets/images/2head/2HeadFrames.tres" id="1_av17p"]
-[ext_resource type="Script" uid="uid://16ds3cb23d0p" path="res://scripts/UI/DialogueUI.cs" id="1_tibyt"]
-[ext_resource type="Theme" uid="uid://dth0pulm7dpk8" path="res://themes/TextTheme.tres" id="2_jbofw"]
+[ext_resource type="Script" uid="uid://16ds3cb23d0p" path="res://scripts/UI/Windows/DialogueUI.cs" id="1_tibyt"]
 [ext_resource type="Theme" uid="uid://d18vm3ggivwpn" path="res://themes/button_theme.tres" id="3_jbofw"]
 [ext_resource type="Texture2D" uid="uid://b86l3qqloof4k" path="res://Assets/images/pointer.png" id="5_lsnh0"]
-[ext_resource type="FontFile" uid="uid://c85eqv0eybdcy" path="res://Assets/Fonts/cCupang.ttf" id="6_rmy6i"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jbofw"]
-bg_color = Color(0.114, 0, 0.19, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.0500001, 1, 0, 1)
-corner_radius_top_left = 25
-corner_radius_top_right = 25
-corner_radius_bottom_right = 25
-corner_radius_bottom_left = 25
-
-[sub_resource type="LabelSettings" id="LabelSettings_6ycg7"]
-font = ExtResource("6_rmy6i")
-font_size = 32
-font_color = Color(0, 1, 0.95, 1)
-outline_size = 14
-outline_color = Color(0.797781, 0, 0.128527, 1)
 
 [node name="DialoguePanel" type="Control"]
 layout_mode = 3
@@ -81,7 +60,6 @@ offset_right = 289.0
 offset_bottom = 211.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_jbofw")
 
 [node name="NameLabel" type="Label" parent="Panel"]
 layout_mode = 0
@@ -90,7 +68,6 @@ offset_top = -40.0
 offset_right = 152.0
 offset_bottom = -2.0
 text = "NAME"
-label_settings = SubResource("LabelSettings_6ycg7")
 
 [node name="DialogueLabel" type="Label" parent="Panel"]
 layout_mode = 0
@@ -98,7 +75,6 @@ offset_left = 15.0
 offset_top = 12.0
 offset_right = 475.0
 offset_bottom = 91.0
-theme = ExtResource("2_jbofw")
 text = "Watch out for this over here..."
 
 [node name="Button" type="Button" parent="Panel"]

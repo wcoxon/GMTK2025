@@ -1,0 +1,85 @@
+[gd_scene load_steps=5 format=3 uid="uid://degyohtca0hlh"]
+
+[ext_resource type="Theme" uid="uid://cjcbo4rh5sarl" path="res://themes/WinXP/Body.tres" id="1_xwo0g"]
+[ext_resource type="Script" uid="uid://b4pms8qbak2uu" path="res://scripts/UI/Table/MarketTable.cs" id="2_2mygl"]
+[ext_resource type="PackedScene" uid="uid://chrvyq6gyys51" path="res://scenes/UI/Table/MarketUI.tscn" id="2_xwo0g"]
+[ext_resource type="Theme" uid="uid://du1snnt30dprh" path="res://themes/Table/HeaderTextTheme.tres" id="3_4hjvm"]
+
+[node name="Control" type="Panel" node_paths=PackedStringArray("rowContainer")]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("1_xwo0g")
+script = ExtResource("2_2mygl")
+rowContainer = NodePath("ScrollContainer/StocksContainer")
+
+[node name="Headers" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -5.0
+offset_bottom = 29.0
+grow_horizontal = 2
+theme = ExtResource("3_4hjvm")
+
+[node name="Label" type="Label" parent="Headers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Item"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Headers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Quantity"
+horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="Headers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Production"
+horizontal_alignment = 1
+
+[node name="Label6" type="Label" parent="Headers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Consumption"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Headers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Price"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 29.0
+offset_bottom = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="StocksContainer" type="VBoxContainer" parent="ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Control" parent="ScrollContainer/StocksContainer" instance=ExtResource("2_xwo0g")]
+layout_mode = 2
+
+[node name="Control2" parent="ScrollContainer/StocksContainer" instance=ExtResource("2_xwo0g")]
+layout_mode = 2
+ItemID = 1
+
+[node name="Control3" parent="ScrollContainer/StocksContainer" instance=ExtResource("2_xwo0g")]
+layout_mode = 2
+ItemID = 2

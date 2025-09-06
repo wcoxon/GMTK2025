@@ -31,9 +31,10 @@ public partial class TownContextMenu : Panel
 
     public void Inspect()
     {
-        Player.Instance.UI.townPanel.Town = town;
-        town = null;
-        Hide();
+        //Player.Instance.UI.townPanel.Town = town;
+        //town = null;
+        Player.Instance.UI.townPanel.Open(town);
+        Close();
     }
 
     public void Plot()
@@ -42,8 +43,15 @@ public partial class TownContextMenu : Panel
         // yeah like give this town to the plotting script and close this
 
         Player.Instance.plotJourney();
-        Hide();
+        //Hide();
+        Close();
 
+    }
+
+    void Close()
+    {
+        town = null;
+        Hide();
     }
 
 }

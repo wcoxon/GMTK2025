@@ -20,7 +20,7 @@ public partial class BanditEncounter : EncounterArea
 
         Node other = Body.GetParent();
 
-        if (other is PlayerTraveller) Player.Instance.encounterView.DisplayEncounter(this);
+        if (other is PlayerTraveller) Player.Instance.UI.encounterView.DisplayEncounter(this);
         if (other is NPCTraveller npc) robItems(npc);
     }
 
@@ -58,21 +58,14 @@ public partial class BanditEncounter : EncounterArea
     {
         // pick a new spot
         // move to new spot, 
-        // clear/outdate all knowledge of this encounter 
-
-        //  A: for each traveller, for each rumour on them, if about this then remove that rumour
-
-        //  B: observer pattern, 
-        //    store rumour, rumour stores knowers of it, rumour has method to wipe itself from its knowers
-        
-        GD.Print($"Respawning {Name}..");
+        // clear/outdate all knowledge of this encounter
 
         // pick 2 random towns
         // lerp between positions on random factor
 
-        Godot.Collections.Array<Town> test = Player.Instance.World.Towns;
-
+        Godot.Collections.Array<Town> test = Player.Instance.World.Towns.Duplicate();
         test.Shuffle();
+
         Position = test[0].Position.Lerp(test[1].Position, (float)GD.RandRange(0.1f, 0.9f));
     
 

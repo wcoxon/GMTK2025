@@ -18,18 +18,15 @@ public partial class PlayerTraveller : Traveller
     {
         base._Ready();
 
-        // give the player some money and items to start with
         Money = 100;
-        inventory[(int)Item.BROTH] = 50;
-        inventory[(int)Item.PLASTICS] = 15;
-        inventory[(int)Item.EVIL_WATER] = 120;
+        inventory = [50, 15, 210];
     }
 
     public override void _Process(double delta)
     {
         double simDelta = delta * Player.Instance.World.timeScale;
 
-        if (Player.Instance.State == GameState.TRAVEL) travel(simDelta);
+        if (Player.Instance.State == PlayerState.TRAVEL) travel(simDelta);
     }
 
     public override void onArrival(Town town)
@@ -37,13 +34,12 @@ public partial class PlayerTraveller : Traveller
         base.onArrival(town);
 
         journey.clearJourney();
-        Player.Instance.State = GameState.TOWN; // notifies player to enter town state
+        Player.Instance.State = PlayerState.TOWN; // notifies player to enter town state
     }
 
     public override void AddRumour(Rumour rumour)
     {
         base.AddRumour(rumour);
-        Player.Instance.UI.rumoursUI.AddRumour(rumour);
     }
     public override void RemoveRumour(Rumour rumour)
     {

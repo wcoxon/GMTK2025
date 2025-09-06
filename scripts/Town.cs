@@ -36,6 +36,7 @@ public partial class Town : Node3D
         }
     }
     public void select() => Player.Instance.SelectedTown = this;
+    
     bool Hovered
     {
         set
@@ -59,48 +60,64 @@ public partial class Town : Node3D
 
     public override void _Ready()
     {
-        //Player.Instance.World.Towns.Add(this);
-        RumorView.towns.Add(data.townName, this);
-        //is this necessary ^
 
-        for (int i = 0; i < 3; i++) data.prices[i] = Player.Instance.itemBaseValues[i] * data.price_multiplyers[i];
+        //for (int i = 0; i < 3; i++) data.prices[i] = Game.itemBaseValues[i] * data.price_multiplyers[i];
 
-        data.base_consumption.CopyTo(data.consumption, 0);
-        data.base_production.CopyTo(data.production, 0);
+        //data.base_consumption.CopyTo(data.consumption, 0);
+        //data.base_production.CopyTo(data.production, 0);
     }
-
     public void onInput(Node cam, InputEvent e, Vector3 evtPos, Vector3 normal, int shapeIndex)
     {
         if (e is InputEventMouseButton && Input.IsActionJustPressed("select")) select();
     }
-
-    public int appraise(Item item) => (int)data.prices[(int)item];
     
-    //ngl i don't like this at all sry
-    const double UPDATE_INTERVAL = 8 * 3; // Update every 8 hours. // assumes an hour is 3 seconds long without checking the source of that truth
-    private double next_update = UPDATE_INTERVAL;
+
+    public float netProduction(int itemID) => Production[itemID] - Consumption[itemID];
+    public int appraise(int itemID)
+    {
+        // ok infinite money on towns ig
+
+        // so no need to worry about towns balancing their wealths for now i think
+
+        
+        int priceOffset = -Mathf.Sign(netProduction(itemID));
+
+        return Game.itemBaseValues[itemID] + priceOffset;
+    }
+
     public override void _PhysicsProcess(double delta)
     {
-        next_update -= delta * Player.Instance.World.timeScale;
-        if (next_update > 0) return;
-
-        updateStock();
-        next_update += UPDATE_INTERVAL;
+        double simDelta = delta * Player.Instance.World.timeScale;
+        updateStock(simDelta);
     }
-    
-    static float priceByDemand(float base_price, float demand, float base_demand, float demand_elasticity) => base_price * Mathf.Pow(demand / base_demand, 1 / demand_elasticity);
-    static float supplyByPrice(float base_supply, float price, float base_price, float supply_elasticity) => base_supply * Mathf.Pow(price/base_price, supply_elasticity);
-    void updateStock()
+
+    public bool isFunctioning()
     {
         for (int item = 0; item < 3; item++)
         {
-            Production[item] = supplyByPrice(data.base_production[item], data.prices[item], Player.Instance.itemBaseValues[item] * data.price_multiplyers[item], data.production_elasticity);
-            Consumption[item] = data.stock_selloff[item] * data.stocks[item] + data.supply_selloff[item] * data.production[item];
-
-            data.prices[item] = priceByDemand(Player.Instance.itemBaseValues[item] * data.price_multiplyers[item], data.consumption[item], data.base_consumption[item], data.consumption_elasticity);
-            // wait shouldn't the prices be entirely deterministic though ?
-
-            Stocks[item] += Mathf.Max(-data.stocks[item], (data.production[item] - rng.Randfn(data.consumption[item], data.consumption[item] / 10)) / 3);
+            if (netProduction(item) < 0 && Stocks[item] <= 0) return false;
         }
+        return true;
+    }
+    void updateStock(double simDelta)
+    {
+        if (!isFunctioning())
+        {
+            meshInstance.Hide();
+            return;
+        }
+        meshInstance.Show();
+
+        for (int item = 0; item < 3; item++)
+        {
+            float netProduction = Production[item] - Consumption[item];
+
+            Stocks[item] += netProduction * (float)simDelta / 60; // production per hour or something
+            Stocks[item] = Mathf.Max(Stocks[item], 0); // make sure it doesn't go negative
+        }
+
+        // i could actually be like if the item goes to 0 set to dysfunctional
+        // and on traded with check for making functional again
+        // would save the for loop getter
     }
 }

@@ -69,7 +69,7 @@ Animation = ExtResource("11_y2ir2")
 
 [node name="NPCTraveller3" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("4_y2ir2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.16845, 0, -13.3013)
-Town = NodePath("../Gumbusville")
+Town = NodePath("../Telemodem")
 Animation = ExtResource("5_mkblt")
 
 [node name="Telemodem" parent="." instance=ExtResource("1_2hyix")]
@@ -86,11 +86,9 @@ Data = ExtResource("8_4qxv8")
 
 [node name="Bandits" parent="." instance=ExtResource("10_n1psn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -28.5317, 1.24986, -1.63281)
-visible = true
 
 [node name="Bandits2" parent="." instance=ExtResource("10_n1psn")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5218, 2.41767, 21.1237)
-visible = true
 
 [node name="StormArea" parent="." instance=ExtResource("11_c00ee")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08288, 5.41955, -0.00314903)

@@ -5,7 +5,7 @@
 
 [resource]
 script = ExtResource("2_pwy7j")
-Title = "GRUBBLE STORM!!!"
+Title = " STORM!!!"
 Description = "watchout theres a storm you walked into,, you'll be slowed down by it until you get out the other side"
 Image = ExtResource("1_pj28u")
 Options = PackedStringArray("press on")

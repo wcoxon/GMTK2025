@@ -1,13 +1,16 @@
-[gd_scene load_steps=16 format=3 uid="uid://cstlo8wngb4vj"]
+[gd_scene load_steps=15 format=3 uid="uid://cstlo8wngb4vj"]
 
 [ext_resource type="Script" uid="uid://djqex4bafycgk" path="res://scripts/Menus/MainMenu.cs" id="1_6778i"]
 [ext_resource type="PackedScene" uid="uid://cvlfxg610affe" path="res://scenes/MainScene.tscn" id="2_ujsui"]
 [ext_resource type="AudioStream" uid="uid://c00b8bgnwc15k" path="res://Assets/Audio/vcxvxcdv crop.wav" id="3_6778i"]
-[ext_resource type="Script" uid="uid://bpbcb113ovieo" path="res://scripts/Menus/menubk.cs" id="4_vxvkj"]
 [ext_resource type="FontFile" uid="uid://clh4frvcwdwot" path="res://Assets/Fonts/AURORA-PRO.otf" id="5_47qdy"]
 [ext_resource type="Theme" uid="uid://d18vm3ggivwpn" path="res://themes/button_theme.tres" id="6_dkvoy"]
 [ext_resource type="Texture2D" uid="uid://1l68a2526t6v" path="res://Assets/images/burntpizza.jpg" id="7_van0j"]
 [ext_resource type="Texture2D" uid="uid://cbhavnovy7mwk" path="res://Assets/images/ZLlogo.png" id="8_1prqp"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jk1qb"]
+noise_type = 3
+frequency = 0.0022
 
 [sub_resource type="Animation" id="Animation_oa1go"]
 length = 0.001
@@ -99,10 +102,6 @@ _data = {
 offsets = PackedFloat32Array(0, 0.30855, 0.698885, 0.921933)
 colors = PackedColorArray(1.73271e-06, 0.664297, 0.859526, 1, 0.855394, 0.0254511, 0.644289, 1, 0.47196, 0.537793, 1.92523e-07, 1, 0, 0.562669, 0.622458, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_jk1qb"]
-noise_type = 3
-frequency = 0.0022
-
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5dd4i"]
 in_3d_space = true
 color_ramp = SubResource("Gradient_tbmy8")
@@ -123,6 +122,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6778i")
 gameScene = ExtResource("2_ujsui")
+noise = SubResource("FastNoiseLite_jk1qb")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_6778i")
@@ -143,8 +143,6 @@ anchor_bottom = 1.006
 offset_right = -0.0640869
 offset_bottom = 0.112
 texture = SubResource("NoiseTexture2D_5dd4i")
-script = ExtResource("4_vxvkj")
-noise = SubResource("NoiseTexture2D_5dd4i")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
