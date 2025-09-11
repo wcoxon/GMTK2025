@@ -1,8 +1,11 @@
 using Godot;
 using System;
 
-public partial class EncounterView : UIWindow
+public partial class EncounterView : Control
 {
+
+    public UIWindow Window;
+
     private EncounterArea encounter;
 
     RichTextLabel titleLabel, descriptionLabel;
@@ -12,16 +15,21 @@ public partial class EncounterView : UIWindow
 
     public override void _EnterTree()
     {
-        titleLabel = GetNode<RichTextLabel>("MarginContainer/VSplitContainer/Title");
-        imageRect = GetNode<TextureRect>("MarginContainer/VSplitContainer/HBoxContainer/TextureRect");
-        imageContainer = GetNode<HBoxContainer>("MarginContainer/VSplitContainer/HBoxContainer");
-        descriptionLabel = GetNode<RichTextLabel>("MarginContainer/VSplitContainer/Description");
-        buttonContainer = GetNode<Control>("MarginContainer/VSplitContainer/OptionsContainer");
+
+        Window = GetNode<UIWindow>("Window");
+        titleLabel = Window.GetNode<RichTextLabel>("MarginContainer/VSplitContainer/Title");
+        imageRect = Window.GetNode<TextureRect>("MarginContainer/VSplitContainer/HBoxContainer/TextureRect");
+        imageContainer = Window.GetNode<HBoxContainer>("MarginContainer/VSplitContainer/HBoxContainer");
+        descriptionLabel = Window.GetNode<RichTextLabel>("MarginContainer/VSplitContainer/Description");
+        buttonContainer = Window.GetNode<Control>("MarginContainer/VSplitContainer/OptionsContainer");
     }
 
     public void DisplayEncounter(EncounterArea _encounter)
     {
-        Open();
+        Window.handleUI.closeButton.Disabled = true;
+        Window.handleUI.setTitle("Encounter");
+        Window.Open();
+        
 
         encounter = _encounter;
 
@@ -52,11 +60,12 @@ public partial class EncounterView : UIWindow
     private void OnOptionPressed(int index)
     {
         encounter.chooseOption(index);
-        Close();
-    }
-    public override void Close()
-    {
-        base.Close();
+        Window.Close();
         Player.Instance.State = PlayerState.TRAVEL;
     }
+    //public override void Close()
+    //{
+    //    base.Close();
+    //    Player.Instance.State = PlayerState.TRAVEL;
+    //}
 }

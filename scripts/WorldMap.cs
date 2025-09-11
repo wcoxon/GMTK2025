@@ -58,6 +58,7 @@ public partial class WorldMap : Node3D
 
     public float getMapHeight(Vector3 worldPos)
     {
+        return 0;
         Vector2 UV = new Vector2(worldPos.X, worldPos.Z)/75.0f + Vector2.One * 0.5f;
 
         UV *= 256;

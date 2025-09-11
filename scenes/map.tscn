@@ -56,24 +56,28 @@ script = ExtResource("1_4qxv8")
 
 [node name="PlayerTraveller" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("2_h6b5g")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.16845, 0, 4.20806)
+CharacterName = "Bindle (you)"
 Town = NodePath("../Slopton")
 
 [node name="NPCTraveller" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("4_y2ir2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.16845, 0, -13.3013)
+CharacterName = "Lert"
 Town = NodePath("../Slopton")
 
 [node name="NPCTraveller2" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("4_y2ir2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.16845, 0, -13.3013)
+CharacterName = "Pagglet"
 Town = NodePath("../Gumbusville")
 Animation = ExtResource("11_y2ir2")
 
 [node name="NPCTraveller3" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("4_y2ir2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.16845, 0, -13.3013)
+CharacterName = "Incerative Rob"
 Town = NodePath("../Telemodem")
 Animation = ExtResource("5_mkblt")
 
 [node name="Telemodem" parent="." instance=ExtResource("1_2hyix")]
-transform = Transform3D(0.950997, 0, -0.3092, 0, 1, 0, 0.3092, 0, 0.950997, 19.1758, 9.31896, 4.71464)
+transform = Transform3D(0.950997, 0, -0.3092, 0, 1, 0, 0.3092, 0, 0.950997, 19.1758, -0.294424, 4.71464)
 Data = ExtResource("5_fq663")
 
 [node name="Gumbusville" parent="." instance=ExtResource("1_2hyix")]
@@ -81,7 +85,7 @@ transform = Transform3D(0.812165, 0, 0.583428, 0, 1, 0, -0.583428, 0, 0.812165, 
 Data = ExtResource("6_mniao")
 
 [node name="Slopton" parent="." instance=ExtResource("1_2hyix")]
-transform = Transform3D(-0.30207, 0, -0.953286, 0, 1, 0, 0.953286, 0, -0.30207, -21.6185, 1.99357, 26.6471)
+transform = Transform3D(-0.30207, 0, -0.953286, 0, 1, 0, 0.953286, 0, -0.30207, -21.6185, -0.0470413, 26.6471)
 Data = ExtResource("8_4qxv8")
 
 [node name="Bandits" parent="." instance=ExtResource("10_n1psn")]

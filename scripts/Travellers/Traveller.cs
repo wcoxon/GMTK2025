@@ -32,6 +32,7 @@ public partial class Traveller : Node3D
 {
     CollisionShape3D collider;
 
+    [Export] public string CharacterName = "nameless";
     public float moveSpeed = 1;
     private int money = 0;
     public int Money { get => money; set => money = value; }
@@ -53,7 +54,6 @@ public partial class Traveller : Node3D
 
     
     public Journey journey = new();
-
     public List<Rumour> knownRumours = new();
 
     public virtual void AddRumour(Rumour rumour)

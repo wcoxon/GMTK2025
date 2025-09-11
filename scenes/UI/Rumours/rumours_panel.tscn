@@ -3,10 +3,11 @@
 [ext_resource type="Theme" uid="uid://cjcbo4rh5sarl" path="res://themes/WinXP/Body.tres" id="1_x4scl"]
 [ext_resource type="Script" uid="uid://bftjoa47j0j44" path="res://scripts/UI/Windows/RumoursUI.cs" id="2_nnikh"]
 [ext_resource type="PackedScene" uid="uid://cptdujo6ita6s" path="res://scenes/UI/Rumours/rumour_row.tscn" id="3_nnikh"]
-[ext_resource type="Theme" uid="uid://dd7oj65maaocx" path="res://themes/WinXP/HandleBar.tres" id="4_x4scl"]
+[ext_resource type="PackedScene" uid="uid://c8xbshv3vbksd" path="res://scenes/UI/Windows/window.tscn" id="4_nms0h"]
 
-[node name="RumoursPanel" type="Panel"]
+[node name="RumoursPanel" type="Control"]
 custom_minimum_size = Vector2(300, 0)
+layout_mode = 3
 anchors_preset = 13
 anchor_left = 0.5
 anchor_right = 0.5
@@ -17,35 +18,16 @@ offset_right = 202.0
 offset_bottom = -136.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = ExtResource("1_x4scl")
 script = ExtResource("2_nnikh")
 rumourRowScene = ExtResource("3_nnikh")
 
-[node name="WindowHeader" type="Panel" parent="."]
+[node name="Window" parent="." instance=ExtResource("4_nms0h")]
+visible = false
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 36.0
-grow_horizontal = 2
-theme = ExtResource("4_x4scl")
 
-[node name="Header" type="Label" parent="WindowHeader"]
-layout_mode = 1
-offset_right = 144.0
-offset_bottom = 33.0
-text = "RUMOURS"
-
-[node name="CloseButton" type="Button" parent="WindowHeader"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -31.0
-offset_bottom = 30.0
-grow_horizontal = 0
-text = "X"
-
-[node name="RumoursList" type="VBoxContainer" parent="."]
+[node name="RumoursList" type="VBoxContainer" parent="Window"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -56,5 +38,3 @@ offset_right = -16.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 26
-
-[connection signal="pressed" from="WindowHeader/CloseButton" to="." method="Close"]

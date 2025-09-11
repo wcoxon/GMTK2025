@@ -12,7 +12,7 @@ uniform sampler2D gradient : source_color;
 void vertex() {
 	// turn color into world position please thanks no prob :p
 	//COLOR.xyz = VERTEX;
-	VERTEX.y = HEIGHT*10.0; // vertex displacement
+	//VERTEX.y = HEIGHT*10.0; // vertex displacement
 }
 
 void fragment() {

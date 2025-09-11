@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjuf8ws1nsnua"]
+
+[ext_resource type="Script" uid="uid://bod5bn1der1x6" path="res://scripts/UI/Windows/UIController.cs" id="1_8ek4b"]
+[ext_resource type="PackedScene" uid="uid://4a320obeyeip" path="res://scenes/UI/toolbar.tscn" id="2_23td5"]
+[ext_resource type="PackedScene" uid="uid://c8xbshv3vbksd" path="res://scenes/UI/Windows/window.tscn" id="3_xenl7"]
+
+[node name="UICanvas" type="CanvasLayer"]
+script = ExtResource("1_8ek4b")
+
+[node name="Toolbar" parent="." node_paths=PackedStringArray("Windows") instance=ExtResource("2_23td5")]
+Windows = [NodePath("../Window"), null]
+
+[node name="Window" parent="." instance=ExtResource("3_xenl7")]
+visible = false

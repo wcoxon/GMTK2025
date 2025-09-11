@@ -18,9 +18,12 @@ public partial class TownContextMenu : Panel
     {
         // use a setter for this instead?
 
-        Show();
         town = _town;
         nameLabel.Text = town.TownName;
+
+        GetNode<Button>("VBoxContainer/Button2").Disabled = town == Player.Instance.traveller.Town;
+
+        Show();
     }
     public override void _Process(double delta)
     {
@@ -31,19 +34,13 @@ public partial class TownContextMenu : Panel
 
     public void Inspect()
     {
-        //Player.Instance.UI.townPanel.Town = town;
-        //town = null;
-        Player.Instance.UI.townPanel.Open(town);
+        Player.Instance.UI.townPanel.OpenTown(town);
         Close();
     }
 
     public void Plot()
     {
-        // open special plotting UI i think
-        // yeah like give this town to the plotting script and close this
-
         Player.Instance.plotJourney();
-        //Hide();
         Close();
 
     }
@@ -53,5 +50,4 @@ public partial class TownContextMenu : Panel
         town = null;
         Hide();
     }
-
 }

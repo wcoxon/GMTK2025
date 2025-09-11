@@ -1,8 +1,16 @@
 using Godot;
 using System;
 
-public partial class TradeUI : UIWindow
+public partial class TradeUI : Control
 {
+
+	public UIWindow Window;
+	public override void _EnterTree()
+    {
+        base._EnterTree();
+        Window = GetNode<UIWindow>("Window");
+    }
+
 	[Export] Label fundsLabel, costLabel;
 	[Export] Button confirmButton;
 	[Export] AudioStreamPlayer confirmSound;
@@ -64,6 +72,7 @@ public partial class TradeUI : UIWindow
 		// update ui
 		resetOffer();
 		updateUI();
+		UIController.Instance.inventoryUI.updateUI(); // prob emit a signal instead of this
 	}
 	int getCost()
 	{
@@ -74,9 +83,9 @@ public partial class TradeUI : UIWindow
 		}
 		return sum;
 	}
-	public override void Open()
+	public void Open()
 	{
-		base.Open();
+		Window.Open();
 
 		resetOffer();
 		updateUI();
@@ -84,9 +93,9 @@ public partial class TradeUI : UIWindow
 		Player.Instance.UI.timeControlPanel.Pause();
 		Player.Instance.UI.timeControlPanel.disable();
 	}
-	public override void Close()
+	public void Close()
 	{
-		base.Close();
+		Window.Close();
 		Player.Instance.UI.timeControlPanel.enable();
 	}
 	
