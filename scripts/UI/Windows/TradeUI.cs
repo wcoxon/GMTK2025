@@ -6,9 +6,10 @@ public partial class TradeUI : Control
 
 	public UIWindow Window;
 	public override void _EnterTree()
-    {
-        base._EnterTree();
-        Window = GetNode<UIWindow>("Window");
+	{
+		base._EnterTree();
+		Window = GetNode<UIWindow>("Window");
+		Window.Hide();
     }
 
 	[Export] Label fundsLabel, costLabel;

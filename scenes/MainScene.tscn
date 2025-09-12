@@ -85,6 +85,7 @@ anchor_bottom = 1.0
 offset_top = -45.0
 offset_right = 248.0
 grow_vertical = 0
+focus_mode = 0
 theme = ExtResource("19_25dfr")
 text = "Inventory"
 
@@ -96,6 +97,7 @@ offset_left = 249.0
 offset_top = -45.0
 offset_right = 497.0
 grow_vertical = 0
+focus_mode = 0
 theme = ExtResource("19_25dfr")
 text = "Town"
 
@@ -107,6 +109,7 @@ offset_left = 499.0
 offset_top = -45.0
 offset_right = 747.0
 grow_vertical = 0
+focus_mode = 0
 theme = ExtResource("19_25dfr")
 text = "Rumours"
 
@@ -122,15 +125,16 @@ grow_vertical = 0
 
 [node name="DialoguePanel" parent="UICanvas" instance=ExtResource("15_25dfr")]
 visible = false
+theme = ExtResource("19_25dfr")
 
 [node name="TownContextMenu" parent="UICanvas" instance=ExtResource("20_kjvyo")]
 visible = false
 
 [node name="TimePanel" parent="UICanvas" instance=ExtResource("10_xnxdc")]
-offset_left = -233.0
-offset_top = -92.0
-offset_right = -25.0
-offset_bottom = -25.0
+offset_left = -251.0
+offset_top = -113.0
+offset_right = -16.0
+offset_bottom = -22.0
 
 [node name="StatsView" parent="UICanvas" instance=ExtResource("12_xnxdc")]
 offset_left = 18.0
@@ -139,7 +143,6 @@ offset_right = 206.0
 offset_bottom = 88.0
 
 [node name="NotificationManager" type="Control" parent="UICanvas"]
-visible = false
 layout_mode = 3
 anchors_preset = 1
 anchor_left = 1.0

@@ -21,87 +21,87 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("1_agoys")
 script = ExtResource("1_bf4hf")
-fundsLabel = NodePath("Window/TradeContainer/SummaryContainer/PlayerFunds")
-costLabel = NodePath("Window/TradeContainer/SummaryContainer/TotalCost")
-confirmButton = NodePath("Window/TradeContainer/SummaryContainer/TradeButton")
+fundsLabel = NodePath("Window/ScrollContainer/TradeContainer/SummaryContainer/PlayerFunds")
+costLabel = NodePath("Window/ScrollContainer/TradeContainer/SummaryContainer/TotalCost")
+confirmButton = NodePath("Window/ScrollContainer/TradeContainer/SummaryContainer/TradeButton")
 confirmSound = NodePath("AudioStreamPlayer")
-rowContainer = NodePath("Window/TradeContainer/ProductsContainer")
+rowContainer = NodePath("Window/ScrollContainer/TradeContainer/ProductsContainer")
 
 [node name="Window" parent="." instance=ExtResource("3_ls2km")]
-visible = false
 layout_mode = 1
 
-[node name="TradeContainer" type="VBoxContainer" parent="Window"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Window"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 22.0
-offset_top = 67.0
-offset_right = -21.0
-offset_bottom = -13.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColumnHeaders" type="HBoxContainer" parent="Window/TradeContainer"]
+[node name="TradeContainer" type="VBoxContainer" parent="Window/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColumnHeaders" type="HBoxContainer" parent="Window/ScrollContainer/TradeContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Window/TradeContainer/ColumnHeaders"]
+[node name="Label" type="Label" parent="Window/ScrollContainer/TradeContainer/ColumnHeaders"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_l7dv1")
 text = "ITEM"
 horizontal_alignment = 1
 
-[node name="Label2" type="Label" parent="Window/TradeContainer/ColumnHeaders"]
+[node name="Label2" type="Label" parent="Window/ScrollContainer/TradeContainer/ColumnHeaders"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_l7dv1")
 text = "THEIR STOCK"
 horizontal_alignment = 1
 
-[node name="Label5" type="Label" parent="Window/TradeContainer/ColumnHeaders"]
+[node name="Label5" type="Label" parent="Window/ScrollContainer/TradeContainer/ColumnHeaders"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_l7dv1")
 text = "YOUR STOCK"
 horizontal_alignment = 1
 
-[node name="Label3" type="Label" parent="Window/TradeContainer/ColumnHeaders"]
+[node name="Label3" type="Label" parent="Window/ScrollContainer/TradeContainer/ColumnHeaders"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_l7dv1")
 text = "PRICE"
 horizontal_alignment = 1
 
-[node name="Label4" type="Label" parent="Window/TradeContainer/ColumnHeaders"]
+[node name="Label4" type="Label" parent="Window/ScrollContainer/TradeContainer/ColumnHeaders"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("2_l7dv1")
 text = "OFFER"
 horizontal_alignment = 1
 
-[node name="ProductsContainer" type="VBoxContainer" parent="Window/TradeContainer"]
+[node name="ProductsContainer" type="VBoxContainer" parent="Window/ScrollContainer/TradeContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="HBoxContainer" parent="Window/TradeContainer/ProductsContainer" instance=ExtResource("2_3fybu")]
+[node name="HBoxContainer" parent="Window/ScrollContainer/TradeContainer/ProductsContainer" instance=ExtResource("2_3fybu")]
 layout_mode = 2
 theme = null
 
-[node name="HBoxContainer2" parent="Window/TradeContainer/ProductsContainer" instance=ExtResource("2_3fybu")]
+[node name="HBoxContainer2" parent="Window/ScrollContainer/TradeContainer/ProductsContainer" instance=ExtResource("2_3fybu")]
 layout_mode = 2
 ItemID = 1
 
-[node name="HBoxContainer3" parent="Window/TradeContainer/ProductsContainer" instance=ExtResource("2_3fybu")]
+[node name="HBoxContainer3" parent="Window/ScrollContainer/TradeContainer/ProductsContainer" instance=ExtResource("2_3fybu")]
 layout_mode = 2
 ItemID = 2
 
-[node name="SummaryContainer" type="Control" parent="Window/TradeContainer"]
+[node name="SummaryContainer" type="Control" parent="Window/ScrollContainer/TradeContainer"]
 layout_mode = 2
 size_flags_vertical = 2
 
-[node name="PlayerFunds" type="Label" parent="Window/TradeContainer/SummaryContainer"]
+[node name="PlayerFunds" type="Label" parent="Window/ScrollContainer/TradeContainer/SummaryContainer"]
 layout_mode = 2
 offset_top = 1.0
 offset_right = 360.0
@@ -110,7 +110,7 @@ size_flags_horizontal = 3
 text = "YOUR FUNDS"
 horizontal_alignment = 1
 
-[node name="TotalCost" type="Label" parent="Window/TradeContainer/SummaryContainer"]
+[node name="TotalCost" type="Label" parent="Window/ScrollContainer/TradeContainer/SummaryContainer"]
 layout_mode = 2
 offset_left = 364.0
 offset_top = 1.0
@@ -120,7 +120,7 @@ size_flags_horizontal = 3
 text = "TOTAL COST"
 horizontal_alignment = 1
 
-[node name="TradeButton" type="Button" parent="Window/TradeContainer/SummaryContainer"]
+[node name="TradeButton" type="Button" parent="Window/ScrollContainer/TradeContainer/SummaryContainer"]
 layout_mode = 2
 offset_left = 691.0
 offset_right = 807.0
@@ -133,11 +133,11 @@ stream = ExtResource("4_cn8ec")
 volume_db = -14.715
 bus = &"Sound Effects"
 
-[connection signal="value_changed" from="Window/TradeContainer/ProductsContainer/HBoxContainer/purchaseAmount" to="." method="updateCost"]
-[connection signal="value_changed" from="Window/TradeContainer/ProductsContainer/HBoxContainer2/purchaseAmount" to="." method="updateCost"]
-[connection signal="value_changed" from="Window/TradeContainer/ProductsContainer/HBoxContainer3/purchaseAmount" to="." method="updateCost"]
-[connection signal="pressed" from="Window/TradeContainer/SummaryContainer/TradeButton" to="." method="confirmTrade"]
+[connection signal="value_changed" from="Window/ScrollContainer/TradeContainer/ProductsContainer/HBoxContainer/purchaseAmount" to="." method="updateCost"]
+[connection signal="value_changed" from="Window/ScrollContainer/TradeContainer/ProductsContainer/HBoxContainer2/purchaseAmount" to="." method="updateCost"]
+[connection signal="value_changed" from="Window/ScrollContainer/TradeContainer/ProductsContainer/HBoxContainer3/purchaseAmount" to="." method="updateCost"]
+[connection signal="pressed" from="Window/ScrollContainer/TradeContainer/SummaryContainer/TradeButton" to="." method="confirmTrade"]
 
-[editable path="Window/TradeContainer/ProductsContainer/HBoxContainer"]
-[editable path="Window/TradeContainer/ProductsContainer/HBoxContainer2"]
-[editable path="Window/TradeContainer/ProductsContainer/HBoxContainer3"]
+[editable path="Window/ScrollContainer/TradeContainer/ProductsContainer/HBoxContainer"]
+[editable path="Window/ScrollContainer/TradeContainer/ProductsContainer/HBoxContainer2"]
+[editable path="Window/ScrollContainer/TradeContainer/ProductsContainer/HBoxContainer3"]

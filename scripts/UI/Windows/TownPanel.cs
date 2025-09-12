@@ -33,6 +33,7 @@ public partial class TownPanel : Control
     {
         base._EnterTree();
         Window = GetNode<UIWindow>("Window");
+        Window.Hide();
     }
     
     public void focusEntered()

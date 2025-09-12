@@ -3,6 +3,7 @@ using System;
 
 public partial class UIWindow : Control
 {
+
     public virtual string getName() => "Window";
     public virtual void Open() => UIController.Instance.OpenUI(this); // overridden for handling different menu needs
     public virtual void Close() => UIController.Instance.CloseUI(this);
@@ -16,10 +17,14 @@ public partial class UIWindow : Control
         handleUI = GetNode<WindowHandleUI>("handlebar");
     }
 
+    public void focusWindow()
+    {
+        GetParent<Control>().MoveToFront();
+    }
+
     public void windowInput(InputEvent evt)
     {
-        if (evt is InputEventMouseButton mb && mb.Pressed) GetParent<Control>().MoveToFront();
-        
+        if (evt is InputEventMouseButton mb && mb.Pressed) focusWindow();
     }
 
     public void handleInput(InputEvent evt)

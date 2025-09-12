@@ -15,8 +15,9 @@ public partial class RumoursUI : Control
         base._EnterTree();
 
         Window = GetNode<UIWindow>("Window");
+        Window.Hide();
 
-        rumoursList = Window.GetNode<VBoxContainer>("RumoursList");
+        rumoursList = Window.GetNode<VBoxContainer>("ScrollContainer/RumoursList");
     }
 
 

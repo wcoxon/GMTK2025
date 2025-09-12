@@ -16,15 +16,19 @@ closeButton = NodePath("CloseButton")
 
 [node name="HeaderLabel" type="Label" parent="."]
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = 14
 anchor_top = 0.5
+anchor_right = 1.0
 anchor_bottom = 0.5
-offset_top = -16.5
-offset_right = 179.0
-offset_bottom = 16.5
+offset_left = 11.0
+offset_top = -10.0
+offset_right = -51.0
+offset_bottom = 11.0
+grow_horizontal = 2
 grow_vertical = 2
 text = "WINDOW NAME"
-vertical_alignment = 1
+clip_text = true
+text_overrun_behavior = 4
 
 [node name="CloseButton" type="Button" parent="."]
 layout_mode = 1
@@ -39,4 +43,22 @@ offset_right = -5.0
 offset_bottom = 16.0
 grow_horizontal = 0
 grow_vertical = 2
+focus_mode = 0
 text = "X"
+
+[node name="ResizeButton" type="Button" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -71.0
+offset_top = -18.0
+offset_right = -40.0
+offset_bottom = 16.0
+grow_horizontal = 0
+grow_vertical = 2
+focus_mode = 0
+text = "□"

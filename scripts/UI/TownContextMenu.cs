@@ -5,7 +5,6 @@ using System;
 public partial class TownContextMenu : Panel
 {
     Town town;
-
     Label nameLabel;
 
     public override void _EnterTree()
@@ -42,7 +41,6 @@ public partial class TownContextMenu : Panel
     {
         Player.Instance.plotJourney();
         Close();
-
     }
 
     void Close()

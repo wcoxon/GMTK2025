@@ -38,6 +38,8 @@ public partial class UIController : CanvasLayer
 
     public void OpenUI(UIWindow ui)
     {
+        ui.focusWindow();
+        
         if (Windows.Contains(ui)) return;
 
         Windows.Add(ui);

@@ -22,36 +22,41 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("1_krngk")
 script = ExtResource("1_egg3t")
-moneyLabel = NodePath("Window/MoneyLabel")
-rowsContainer = NodePath("Window/ItemRows")
+moneyLabel = NodePath("Window/ScrollContainer/Control/MoneyLabel")
+rowsContainer = NodePath("Window/ScrollContainer/Control/ItemRows")
 
 [node name="Window" parent="." instance=ExtResource("3_51bpq")]
 layout_mode = 1
 
-[node name="MoneyLabel" type="Label" parent="Window"]
-layout_mode = 1
-offset_left = 1.0
-offset_top = 54.0
-offset_right = 415.0
-offset_bottom = 100.0
-text = "Wealth: "
-
-[node name="ItemRows" type="VBoxContainer" parent="Window"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Window"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 94.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Control" parent="Window/ItemRows" instance=ExtResource("2_lvvmf")]
+[node name="Control" type="VBoxContainer" parent="Window/ScrollContainer"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MoneyLabel" type="Label" parent="Window/ScrollContainer/Control"]
+layout_mode = 2
+text = "Wealth: "
+
+[node name="ItemRows" type="VBoxContainer" parent="Window/ScrollContainer/Control"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control" parent="Window/ScrollContainer/Control/ItemRows" instance=ExtResource("2_lvvmf")]
 layout_mode = 2
 
-[node name="Control2" parent="Window/ItemRows" instance=ExtResource("2_lvvmf")]
+[node name="Control2" parent="Window/ScrollContainer/Control/ItemRows" instance=ExtResource("2_lvvmf")]
 layout_mode = 2
 ItemID = 1
 
-[node name="Control3" parent="Window/ItemRows" instance=ExtResource("2_lvvmf")]
+[node name="Control3" parent="Window/ScrollContainer/Control/ItemRows" instance=ExtResource("2_lvvmf")]
 layout_mode = 2
 ItemID = 2

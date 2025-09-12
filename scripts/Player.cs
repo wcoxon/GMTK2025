@@ -5,7 +5,6 @@ public partial class Player : Node3D
 {
     public static Player Instance;
 
-
     [Export] public UIController UI;
     public PlayerTraveller traveller;
     public WorldMap World;
@@ -84,7 +83,7 @@ public partial class Player : Node3D
         State = PlayerState.TOWN;
     }
 
-    public override void _Input(InputEvent @event)
+    public override void _UnhandledInput(InputEvent @event)
     {
         Scale += Vector3.One * Input.GetAxis("zoomIn", "zoomOut") * 0.1f;
 

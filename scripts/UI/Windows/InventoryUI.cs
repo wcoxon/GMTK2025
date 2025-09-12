@@ -67,9 +67,11 @@ public partial class InventoryUI : Control
 	public void OpenInventory(Traveller character)
 	{
 		subject = character;
+		
 
 		Window.handleUI.setTitle($"INVENTORY - {character.CharacterName}");
 		Window.Open();
+		
 		updateUI();
 	}
 

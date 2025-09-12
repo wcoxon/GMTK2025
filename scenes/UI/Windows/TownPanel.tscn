@@ -27,66 +27,66 @@ grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("1_5wlu1")
 script = ExtResource("1_0baqy")
-nameLabel = NodePath("Window/TownStats/TownName")
-populationLabel = NodePath("Window/TownStats/GridContainer/TownPop")
-wealthLabel = NodePath("Window/TownStats/GridContainer/TownWealth")
-visitorSprites = [NodePath("Window/TownStats/TabContainer/Visitors/VisitorsContainer/Panel/AnimatedSprite2D"), NodePath("Window/TownStats/TabContainer/Visitors/VisitorsContainer/Panel2/AnimatedSprite2D"), NodePath("Window/TownStats/TabContainer/Visitors/VisitorsContainer/Panel3/AnimatedSprite2D"), NodePath("Window/TownStats/TabContainer/Visitors/VisitorsContainer/Panel4/AnimatedSprite2D")]
-marketTable = NodePath("Window/TownStats/TabContainer/Market/MarketTable")
-tradeButton = NodePath("Window/TownStats/TabContainer/Market/trade")
-rumourButton = NodePath("Window/TownStats/TabContainer/Visitors/rumours")
+nameLabel = NodePath("Window/ScrollContainer/TownStats/TownName")
+populationLabel = NodePath("Window/ScrollContainer/TownStats/GridContainer/TownPop")
+wealthLabel = NodePath("Window/ScrollContainer/TownStats/GridContainer/TownWealth")
+visitorSprites = [NodePath("Window/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel/AnimatedSprite2D"), NodePath("Window/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel2/AnimatedSprite2D"), NodePath("Window/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel3/AnimatedSprite2D"), NodePath("Window/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel4/AnimatedSprite2D")]
+marketTable = NodePath("Window/ScrollContainer/TownStats/TabContainer/Market/MarketTable")
+tradeButton = NodePath("Window/ScrollContainer/TownStats/TabContainer/Market/trade")
+rumourButton = NodePath("Window/ScrollContainer/TownStats/TabContainer/Visitors/rumours")
 
 [node name="Window" parent="." instance=ExtResource("3_qim6p")]
-visible = false
 layout_mode = 1
 
-[node name="TownStats" type="VBoxContainer" parent="Window"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Window"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 9.0
-offset_top = 55.0
-offset_right = -9.0
-offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="TownStats" type="VBoxContainer" parent="Window/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 8
 
-[node name="TownName" type="Label" parent="Window/TownStats"]
+[node name="TownName" type="Label" parent="Window/ScrollContainer/TownStats"]
 layout_mode = 2
 text = "TOWN NAME"
 label_settings = SubResource("LabelSettings_45b72")
 horizontal_alignment = 1
 
-[node name="GridContainer" type="GridContainer" parent="Window/TownStats"]
+[node name="GridContainer" type="GridContainer" parent="Window/ScrollContainer/TownStats"]
 layout_mode = 2
 columns = 2
 
-[node name="TownPop" type="Label" parent="Window/TownStats/GridContainer"]
+[node name="TownPop" type="Label" parent="Window/ScrollContainer/TownStats/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 text = "population"
 
-[node name="TownWealth" type="Label" parent="Window/TownStats/GridContainer"]
+[node name="TownWealth" type="Label" parent="Window/ScrollContainer/TownStats/GridContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
 text = "Wealth"
 
-[node name="TabContainer" type="TabContainer" parent="Window/TownStats"]
+[node name="TabContainer" type="TabContainer" parent="Window/ScrollContainer/TownStats"]
 custom_minimum_size = Vector2(0, 250)
 layout_mode = 2
 current_tab = 1
 
-[node name="Visitors" type="Control" parent="Window/TownStats/TabContainer"]
+[node name="Visitors" type="Control" parent="Window/ScrollContainer/TownStats/TabContainer"]
 visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_tab_index = 0
 
-[node name="VisitorsContainer" type="HBoxContainer" parent="Window/TownStats/TabContainer/Visitors"]
+[node name="VisitorsContainer" type="HBoxContainer" parent="Window/ScrollContainer/TownStats/TabContainer/Visitors"]
 layout_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -94,47 +94,47 @@ offset_top = 32.0
 offset_right = -6.0
 offset_bottom = -3.0
 
-[node name="Panel" type="CenterContainer" parent="Window/TownStats/TabContainer/Visitors/VisitorsContainer"]
+[node name="Panel" type="CenterContainer" parent="Window/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Window/TownStats/TabContainer/Visitors/VisitorsContainer/Panel"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Window/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel"]
 position = Vector2(32, 32)
 scale = Vector2(0.5, 0.5)
 autoplay = "default"
 
-[node name="Panel2" type="CenterContainer" parent="Window/TownStats/TabContainer/Visitors/VisitorsContainer"]
+[node name="Panel2" type="CenterContainer" parent="Window/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Window/TownStats/TabContainer/Visitors/VisitorsContainer/Panel2"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Window/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel2"]
 position = Vector2(32, 32)
 scale = Vector2(0.5, 0.5)
 autoplay = "default"
 
-[node name="Panel3" type="CenterContainer" parent="Window/TownStats/TabContainer/Visitors/VisitorsContainer"]
+[node name="Panel3" type="CenterContainer" parent="Window/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Window/TownStats/TabContainer/Visitors/VisitorsContainer/Panel3"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Window/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel3"]
 position = Vector2(32, 32)
 scale = Vector2(0.5, 0.5)
 autoplay = "default"
 
-[node name="Panel4" type="CenterContainer" parent="Window/TownStats/TabContainer/Visitors/VisitorsContainer"]
+[node name="Panel4" type="CenterContainer" parent="Window/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer"]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Window/TownStats/TabContainer/Visitors/VisitorsContainer/Panel4"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Window/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel4"]
 position = Vector2(32, 32)
 scale = Vector2(0.5, 0.5)
 autoplay = "default"
 
-[node name="rumours" type="Button" parent="Window/TownStats/TabContainer/Visitors"]
+[node name="rumours" type="Button" parent="Window/ScrollContainer/TownStats/TabContainer/Visitors"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -148,17 +148,17 @@ grow_vertical = 0
 size_flags_horizontal = 8
 text = "Investigate rumours"
 
-[node name="Market" type="Control" parent="Window/TownStats/TabContainer"]
+[node name="Market" type="Control" parent="Window/ScrollContainer/TownStats/TabContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 metadata/_tab_index = 1
 
-[node name="MarketTable" parent="Window/TownStats/TabContainer/Market" instance=ExtResource("6_st7mx")]
+[node name="MarketTable" parent="Window/ScrollContainer/TownStats/TabContainer/Market" instance=ExtResource("6_st7mx")]
 layout_mode = 2
 anchors_preset = 0
 
-[node name="trade" type="Button" parent="Window/TownStats/TabContainer/Market"]
+[node name="trade" type="Button" parent="Window/ScrollContainer/TownStats/TabContainer/Market"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -173,5 +173,5 @@ size_flags_horizontal = 8
 size_flags_vertical = 10
 text = "Trade goods"
 
-[connection signal="pressed" from="Window/TownStats/TabContainer/Visitors/rumours" to="." method="getRumour"]
-[connection signal="pressed" from="Window/TownStats/TabContainer/Market/trade" to="." method="Trade"]
+[connection signal="pressed" from="Window/ScrollContainer/TownStats/TabContainer/Visitors/rumours" to="." method="getRumour"]
+[connection signal="pressed" from="Window/ScrollContainer/TownStats/TabContainer/Market/trade" to="." method="Trade"]

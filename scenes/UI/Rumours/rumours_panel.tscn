@@ -24,17 +24,18 @@ script = ExtResource("2_nnikh")
 rumourRowScene = ExtResource("3_nnikh")
 
 [node name="Window" parent="." instance=ExtResource("4_nms0h")]
-visible = false
 layout_mode = 1
 
-[node name="RumoursList" type="VBoxContainer" parent="Window"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Window"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 18.0
-offset_top = 90.0
-offset_right = -16.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="RumoursList" type="VBoxContainer" parent="Window/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 26
