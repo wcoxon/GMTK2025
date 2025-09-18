@@ -1,16 +1,97 @@
-[gd_scene load_steps=4 format=3 uid="uid://c8xbshv3vbksd"]
+[gd_scene load_steps=10 format=3 uid="uid://c8xbshv3vbksd"]
 
 [ext_resource type="Theme" uid="uid://cjcbo4rh5sarl" path="res://themes/WinXP/Body.tres" id="1_ymwp4"]
 [ext_resource type="Script" uid="uid://d23uhfm6750cv" path="res://scripts/UI/Windows/UIWindow.cs" id="2_rx2t0"]
 [ext_resource type="PackedScene" uid="uid://do2fuu40ydxtg" path="res://scenes/UI/Windows/handlebar.tscn" id="3_ymwp4"]
+[ext_resource type="PackedScene" uid="uid://dmn7cdrl68ltd" path="res://scenes/UI/Windows/resizers.tscn" id="4_nyck8"]
 
-[node name="Window" type="Panel"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ymwp4"]
+bg_color = Color(1, 0.921569, 0.580392, 1)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_color = Color(0, 0.133333, 0.811765, 1)
+expand_margin_left = 8.0
+expand_margin_top = 8.0
+expand_margin_right = 8.0
+expand_margin_bottom = 8.0
+
+[sub_resource type="Animation" id="Animation_rx2t0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_nyck8"]
+resource_name = "popup"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_qkgba"]
+resource_name = "collapse"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qkgba"]
+_data = {
+&"RESET": SubResource("Animation_rx2t0"),
+&"collapse": SubResource("Animation_qkgba"),
+&"popup": SubResource("Animation_nyck8")
+}
+
+[node name="Window" type="Control"]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = 47.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 mouse_force_pass_scroll_events = false
 theme = ExtResource("1_ymwp4")
 script = ExtResource("2_rx2t0")
@@ -20,49 +101,19 @@ layout_mode = 1
 offset_top = -46.0
 offset_bottom = 2.0
 
-[node name="leftResizer" type="Control" parent="."]
-custom_minimum_size = Vector2(8, 0)
+[node name="Body" type="Panel" parent="."]
 layout_mode = 1
-anchors_preset = 9
-anchor_bottom = 1.0
-offset_left = -14.0
-offset_right = 14.0
-grow_vertical = 2
-mouse_default_cursor_shape = 10
-
-[node name="rightResizer" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 18.0
-grow_horizontal = 0
-grow_vertical = 2
-mouse_default_cursor_shape = 10
-
-[node name="bottomResizer" type="Control" parent="."]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = 14.0
 grow_horizontal = 2
-grow_vertical = 0
-mouse_default_cursor_shape = 9
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ymwp4")
 
-[node name="topResizer" type="Control" parent="."]
+[node name="Resizers" parent="Body" instance=ExtResource("4_nyck8")]
 layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = -52.0
-offset_bottom = -42.0
-grow_horizontal = 2
-mouse_default_cursor_shape = 9
 
-[connection signal="gui_input" from="." to="." method="windowInput"]
-[connection signal="gui_input" from="leftResizer" to="." method="leftSideInput"]
-[connection signal="gui_input" from="rightResizer" to="." method="rightSideInput"]
-[connection signal="gui_input" from="bottomResizer" to="." method="bottomInput"]
-[connection signal="gui_input" from="topResizer" to="." method="topInput"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qkgba")
+}

@@ -10,11 +10,11 @@ public partial class StockUI : Control
 	public override void _EnterTree()
 	{
 		base._EnterTree();
+
 		nameLabel.Text = Game.itemNames[ItemID];
 	}
 	public void updateRow(Traveller traveller)
 	{
-		Quantity = traveller.inventory[ItemID];
+		quantityLabel.Text = traveller.inventory[ItemID].ToString();
 	}
-	public int Quantity { set => quantityLabel.Text = value.ToString(); }
 }

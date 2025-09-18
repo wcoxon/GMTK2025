@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://c1hdmyvtbduxr"
-path="res://.godot/imported/gamejamsong2_3.wav-bdac377a92576705a9788a61e2c26752.sample"
+path="res://.godot/imported/gamejamsong2_3.wav-0afd60eb27f02d9df3f18de7c3e02169.sample"
 
 [deps]
 
-source_file="res://Assets/Audio/gamejamsong2_3.wav"
-dest_files=["res://.godot/imported/gamejamsong2_3.wav-bdac377a92576705a9788a61e2c26752.sample"]
+source_file="res://Assets/Audio/Music/gamejamsong2_3.wav"
+dest_files=["res://.godot/imported/gamejamsong2_3.wav-0afd60eb27f02d9df3f18de7c3e02169.sample"]
 
 [params]
 

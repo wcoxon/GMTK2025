@@ -21,37 +21,32 @@ public partial class UIController : CanvasLayer
     [Export] public RumoursUI rumoursUI;
     [Export] public EncounterView encounterView;
 
-    List<UIWindow> Windows = new();
+    Control WindowsContainer;
 
     public override void _EnterTree()
     {
         base._EnterTree();
 
         Instance = this;
+
+        WindowsContainer = GetNode<Control>("Windows");
     }
 
+    // pressing esc closes frontmost window
     public override void _Input(InputEvent @event)
     {
         // esc to close
-        if (Input.IsActionJustPressed("Escape") && Windows.Count > 0) CloseUI(Windows.Last());
+        if (Input.IsActionJustPressed("Escape") && WindowsContainer.GetChildCount() > 0) WindowsContainer.GetChild<UIWindow>(-1).Close();
     }
 
     public void OpenUI(UIWindow ui)
     {
         ui.focusWindow();
-        
-        if (Windows.Contains(ui)) return;
-
-        Windows.Add(ui);
         ui.Show();
     }
     public void CloseUI(UIWindow ui)
     {
-        Windows.Remove(ui);
+        WindowsContainer.MoveChild(ui, 0);
         ui.Hide();
-    }
-    public void closeAll()
-    {
-        while (Windows.Count > 0) CloseUI(Windows.Last());
     }
 }

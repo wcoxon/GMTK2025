@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dpdvumg63k3xu"]
+[gd_scene load_steps=8 format=3 uid="uid://dpdvumg63k3xu"]
 
 [ext_resource type="Script" uid="uid://kj27sednfxyt" path="res://scripts/UI/Windows/TownPanel.cs" id="1_0baqy"]
 [ext_resource type="Theme" uid="uid://cjcbo4rh5sarl" path="res://themes/WinXP/Body.tres" id="1_5wlu1"]
 [ext_resource type="FontFile" uid="uid://clh4frvcwdwot" path="res://Assets/Fonts/AURORA-PRO.otf" id="2_8ml5p"]
 [ext_resource type="PackedScene" uid="uid://c8xbshv3vbksd" path="res://scenes/UI/Windows/window.tscn" id="3_qim6p"]
+[ext_resource type="PackedScene" uid="uid://b3d22d1uy5mux" path="res://scenes/UI/Table/table.tscn" id="6_0tbkl"]
 [ext_resource type="PackedScene" uid="uid://degyohtca0hlh" path="res://scenes/UI/Table/MarketTable.tscn" id="6_st7mx"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_45b72"]
@@ -53,6 +54,7 @@ size_flags_vertical = 3
 theme_override_constants/separation = 8
 
 [node name="TownName" type="Label" parent="Window/ScrollContainer/TownStats"]
+visible = false
 layout_mode = 2
 text = "TOWN NAME"
 label_settings = SubResource("LabelSettings_45b72")
@@ -63,6 +65,7 @@ layout_mode = 2
 columns = 2
 
 [node name="TownPop" type="Label" parent="Window/ScrollContainer/TownStats/GridContainer"]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 0
@@ -157,6 +160,8 @@ metadata/_tab_index = 1
 [node name="MarketTable" parent="Window/ScrollContainer/TownStats/TabContainer/Market" instance=ExtResource("6_st7mx")]
 layout_mode = 2
 anchors_preset = 0
+anchor_bottom = 0.826
+offset_bottom = -0.0680084
 
 [node name="trade" type="Button" parent="Window/ScrollContainer/TownStats/TabContainer/Market"]
 layout_mode = 1
@@ -172,6 +177,11 @@ grow_vertical = 0
 size_flags_horizontal = 8
 size_flags_vertical = 10
 text = "Trade goods"
+
+[node name="Table" parent="Window/ScrollContainer/TownStats/TabContainer" instance=ExtResource("6_0tbkl")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
 
 [connection signal="pressed" from="Window/ScrollContainer/TownStats/TabContainer/Visitors/rumours" to="." method="getRumour"]
 [connection signal="pressed" from="Window/ScrollContainer/TownStats/TabContainer/Market/trade" to="." method="Trade"]

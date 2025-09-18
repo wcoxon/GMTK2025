@@ -1,0 +1,101 @@
+[gd_scene format=3 uid="uid://dmn7cdrl68ltd"]
+
+[node name="Resizers" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="leftResizer" type="Control" parent="."]
+custom_minimum_size = Vector2(8, 0)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = -14.0
+offset_top = -51.0
+offset_right = 14.0
+grow_vertical = 2
+mouse_default_cursor_shape = 10
+
+[node name="rightResizer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -39.0
+offset_right = 10.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_default_cursor_shape = 10
+
+[node name="bottomResizer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_default_cursor_shape = 9
+
+[node name="topResizer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = -52.0
+offset_bottom = -42.0
+grow_horizontal = 2
+mouse_default_cursor_shape = 9
+
+[node name="BRResizer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -7.0
+offset_top = -7.0
+offset_right = 12.0
+offset_bottom = 12.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_default_cursor_shape = 12
+
+[node name="BLResizer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -12.0
+offset_top = -7.0
+offset_right = 7.0
+offset_bottom = 12.0
+grow_vertical = 0
+mouse_default_cursor_shape = 11
+
+[node name="TLResizer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = -13.0
+offset_top = -53.0
+offset_right = 6.0
+offset_bottom = -34.0
+mouse_default_cursor_shape = 12
+
+[node name="TRResizer" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -4.0
+offset_top = -54.0
+offset_right = 15.0
+offset_bottom = -35.0
+grow_horizontal = 0
+mouse_default_cursor_shape = 11

@@ -31,7 +31,6 @@ theme = ExtResource("1_pgipg")
 script = ExtResource("1_fqfft")
 
 [node name="Window" parent="." instance=ExtResource("3_uwiox")]
-visible = false
 layout_mode = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Window"]

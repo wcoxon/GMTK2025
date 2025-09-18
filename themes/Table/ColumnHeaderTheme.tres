@@ -1,0 +1,16 @@
+[gd_resource type="Theme" load_steps=3 format=3 uid="uid://bpgjpo21r7baa"]
+
+[ext_resource type="FontFile" uid="uid://ddsiipty5jxb1" path="res://Assets/Fonts/Lunazzi.ttf" id="1_wkimj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8aj5x"]
+bg_color = Color(0.737932, 0.674565, 0.626588, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.485703, 0.485704, 0.485703, 1)
+
+[resource]
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/fonts/font = ExtResource("1_wkimj")
+Label/styles/normal = SubResource("StyleBoxFlat_8aj5x")

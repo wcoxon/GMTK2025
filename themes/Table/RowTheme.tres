@@ -1,0 +1,16 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://bu34iqfaecoay"]
+
+[ext_resource type="FontFile" uid="uid://dmlnmhil16d4e" path="res://Assets/Fonts/exagger8.ttf" id="1_5mwvn"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tvv7r"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5mwvn"]
+bg_color = Color(1, 1, 1, 1)
+
+[resource]
+Label/colors/font_color = Color(0, 0, 0, 1)
+Label/fonts/font = ExtResource("1_5mwvn")
+Label/styles/normal = SubResource("StyleBoxFlat_tvv7r")
+RichTextLabel/colors/default_color = Color(0, 0, 0, 1)
+RichTextLabel/styles/normal = SubResource("StyleBoxFlat_5mwvn")

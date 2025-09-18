@@ -1,9 +1,11 @@
 [gd_scene load_steps=5 format=3 uid="uid://degyohtca0hlh"]
 
-[ext_resource type="Theme" uid="uid://cjcbo4rh5sarl" path="res://themes/WinXP/Body.tres" id="1_xwo0g"]
 [ext_resource type="Script" uid="uid://b4pms8qbak2uu" path="res://scripts/UI/Table/MarketTable.cs" id="2_2mygl"]
 [ext_resource type="PackedScene" uid="uid://chrvyq6gyys51" path="res://scenes/UI/Table/MarketUI.tscn" id="2_xwo0g"]
-[ext_resource type="Theme" uid="uid://du1snnt30dprh" path="res://themes/Table/HeaderTextTheme.tres" id="3_4hjvm"]
+[ext_resource type="Theme" uid="uid://bpgjpo21r7baa" path="res://themes/Table/ColumnHeaderTheme.tres" id="3_2mygl"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xwo0g"]
+bg_color = Color(0.197937, 0.197937, 0.197937, 1)
 
 [node name="Control" type="Panel" node_paths=PackedStringArray("rowContainer")]
 anchors_preset = 15
@@ -13,73 +15,63 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
-theme = ExtResource("1_xwo0g")
+theme_override_styles/panel = SubResource("StyleBoxFlat_xwo0g")
 script = ExtResource("2_2mygl")
-rowContainer = NodePath("ScrollContainer/StocksContainer")
+rowContainer = NodePath("VBoxContainer/ScrollContainer/StocksContainer")
 
-[node name="Headers" type="HBoxContainer" parent="."]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_top = -5.0
-offset_bottom = 29.0
-grow_horizontal = 2
-theme = ExtResource("3_4hjvm")
-
-[node name="Label" type="Label" parent="Headers"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Item"
-horizontal_alignment = 1
-
-[node name="Label2" type="Label" parent="Headers"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Quantity"
-horizontal_alignment = 1
-
-[node name="Label5" type="Label" parent="Headers"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Production"
-horizontal_alignment = 1
-
-[node name="Label6" type="Label" parent="Headers"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Consumption"
-horizontal_alignment = 1
-
-[node name="Label3" type="Label" parent="Headers"]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "Price"
-horizontal_alignment = 1
-
-[node name="ScrollContainer" type="ScrollContainer" parent="."]
-custom_minimum_size = Vector2(0, 32)
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = 29.0
-offset_bottom = -15.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Headers" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_2mygl")
+
+[node name="NameLabel" type="Label" parent="VBoxContainer/Headers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Item"
+vertical_alignment = 1
+
+[node name="QuantityLabel" type="Label" parent="VBoxContainer/Headers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Quantity"
+vertical_alignment = 1
+
+[node name="ProductionLabel" type="Label" parent="VBoxContainer/Headers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Production /Hr"
+vertical_alignment = 1
+
+[node name="PriceLabel" type="Label" parent="VBoxContainer/Headers"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Price"
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
 size_flags_vertical = 3
 
-[node name="StocksContainer" type="VBoxContainer" parent="ScrollContainer"]
+[node name="StocksContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Control" parent="ScrollContainer/StocksContainer" instance=ExtResource("2_xwo0g")]
+[node name="Control" parent="VBoxContainer/ScrollContainer/StocksContainer" instance=ExtResource("2_xwo0g")]
 layout_mode = 2
 
-[node name="Control2" parent="ScrollContainer/StocksContainer" instance=ExtResource("2_xwo0g")]
+[node name="Control2" parent="VBoxContainer/ScrollContainer/StocksContainer" instance=ExtResource("2_xwo0g")]
 layout_mode = 2
 ItemID = 1
 
-[node name="Control3" parent="ScrollContainer/StocksContainer" instance=ExtResource("2_xwo0g")]
+[node name="Control3" parent="VBoxContainer/ScrollContainer/StocksContainer" instance=ExtResource("2_xwo0g")]
 layout_mode = 2
 ItemID = 2

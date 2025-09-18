@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://b3d22d1uy5mux"]
+[gd_scene load_steps=5 format=3 uid="uid://b3d22d1uy5mux"]
 
 [ext_resource type="Script" uid="uid://ciwaifdkdbomr" path="res://scripts/UI/Table/Table.cs" id="1_sh0wm"]
+[ext_resource type="Theme" uid="uid://bpgjpo21r7baa" path="res://themes/Table/ColumnHeaderTheme.tres" id="2_ulqtp"]
+[ext_resource type="Theme" uid="uid://bu34iqfaecoay" path="res://themes/Table/RowTheme.tres" id="3_fa0fq"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulqtp"]
+bg_color = Color(0.197937, 0.197937, 0.197937, 1)
 
 [node name="Table" type="Control"]
 layout_mode = 3
@@ -9,19 +14,103 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_sh0wm")
 
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 239.0
-grow_horizontal = 2
-
-[node name="Rows" type="VBoxContainer" parent="Panel"]
+[node name="ContainerPanel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ulqtp")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ContainerPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColumnHeaders" type="HBoxContainer" parent="ContainerPanel/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("2_ulqtp")
+
+[node name="Label" type="Label" parent="ContainerPanel/VBoxContainer/ColumnHeaders"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "column 1"
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ContainerPanel/VBoxContainer/ColumnHeaders"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "column 2"
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="ContainerPanel/VBoxContainer/ColumnHeaders"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "column 3"
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="ContainerPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Rows" type="VBoxContainer" parent="ContainerPanel/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("3_fa0fq")
+
+[node name="Row" type="HBoxContainer" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "row 1"
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "row 1"
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "row 1"
+vertical_alignment = 1
+
+[node name="Row2" type="HBoxContainer" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "row 2"
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "row 2"
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "row 2"
+vertical_alignment = 1

@@ -1,22 +1,14 @@
 using Godot;
 using System;
 
-public partial class TradeUI : Control
+// trade menu
+public partial class TradeUI : UIWindow
 {
-
-	public UIWindow Window;
-	public override void _EnterTree()
-	{
-		base._EnterTree();
-		Window = GetNode<UIWindow>("Window");
-		Window.Hide();
-    }
-
+	[Export] VBoxContainer rowContainer;
 	[Export] Label fundsLabel, costLabel;
 	[Export] Button confirmButton;
 	[Export] AudioStreamPlayer confirmSound;
 
-	[Export] VBoxContainer rowContainer;
 	private Town town; // is its own window so isn't update by town panel, stores own town thus
 	public Town Town
 	{
@@ -24,9 +16,19 @@ public partial class TradeUI : Control
 		set
 		{
 			town = value;
-			updateUI();
+			updateUI(); // for switching towns update
 		}
 	}
+
+	public override void _EnterTree()
+	{
+		base._EnterTree();
+
+        Hide();
+
+		confirmButton.Pressed += confirmTrade;
+	}
+
 	void updateTable()
 	{
 		foreach (TradeRow row in rowContainer.GetChildren()) row.updateRow(Town);
@@ -34,6 +36,8 @@ public partial class TradeUI : Control
 
 	public void updateUI()
 	{
+        barUI.setTitle($"Trade - {Town.TownName}");
+		
 		updateTable();
 		updateCost(0);
 
@@ -84,29 +88,31 @@ public partial class TradeUI : Control
 		}
 		return sum;
 	}
-	public void Open()
+	public override void Open()
 	{
-		Window.Open();
+		base.Open();
+
+		UIController.Instance.timeControlPanel.Pause();
+		UIController.Instance.timeControlPanel.disable();
 
 		resetOffer();
 		updateUI();
+	}
 
-		Player.Instance.UI.timeControlPanel.Pause();
-		Player.Instance.UI.timeControlPanel.disable();
-	}
-	public void Close()
-	{
-		Window.Close();
-		Player.Instance.UI.timeControlPanel.enable();
-	}
-	
+    public override void Close()
+    {
+        base.Close();
+
+		UIController.Instance.timeControlPanel.enable();
+		UIController.Instance.timeControlPanel.Speed1();
+    }
+
 	void resetOffer()
 	{
 		foreach (TradeRow row in rowContainer.GetChildren())
 		{
-			row.updateRow(Town); // changes the min and max offer // shit it's still bugged when you first open the window
-			row.Offer = 0; // updates the arrows at 0
+			row.updateRow(Town); // updates the min and max offer
+			row.Offer = 0; // changing the offer should update the arrow colours to be right
 		}
 	}
-
 }

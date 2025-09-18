@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://qq3ahicughsm"
+path="res://.godot/imported/mouse click up.mp3-833e1a26fff36bb6cde8294d3a45393d.mp3str"
+
+[deps]
+
+source_file="res://Assets/Audio/SFX/mouse click up.mp3"
+dest_files=["res://.godot/imported/mouse click up.mp3-833e1a26fff36bb6cde8294d3a45393d.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

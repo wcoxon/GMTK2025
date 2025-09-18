@@ -1,0 +1,178 @@
+[gd_scene load_steps=7 format=3 uid="uid://b3iri6uclx8g0"]
+
+[ext_resource type="PackedScene" uid="uid://c8xbshv3vbksd" path="res://scenes/UI/Windows/window.tscn" id="1_7qauh"]
+[ext_resource type="Script" uid="uid://kj27sednfxyt" path="res://scripts/UI/Windows/TownPanel.cs" id="2_4w40o"]
+[ext_resource type="FontFile" uid="uid://clh4frvcwdwot" path="res://Assets/Fonts/AURORA-PRO.otf" id="2_wpomi"]
+[ext_resource type="PackedScene" uid="uid://degyohtca0hlh" path="res://scenes/UI/Table/MarketTable.tscn" id="3_4w40o"]
+[ext_resource type="PackedScene" uid="uid://b3d22d1uy5mux" path="res://scenes/UI/Table/table.tscn" id="4_xh8gu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_6hc5t"]
+font = ExtResource("2_wpomi")
+font_size = 48
+font_color = Color(1, 0.283333, 0, 1)
+outline_size = 8
+outline_color = Color(0, 0, 0, 1)
+
+[node name="Window" node_paths=PackedStringArray("nameLabel", "populationLabel", "wealthLabel", "visitorSprites", "marketTable", "tradeButton", "rumourButton") instance=ExtResource("1_7qauh")]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -423.0
+offset_top = -172.0
+offset_right = 392.0
+offset_bottom = 177.0
+script = ExtResource("2_4w40o")
+nameLabel = NodePath("Body/ScrollContainer/TownStats/GridContainer/TownName")
+populationLabel = NodePath("Body/ScrollContainer/TownStats/GridContainer/TownPop")
+wealthLabel = NodePath("Body/ScrollContainer/TownStats/GridContainer/TownWealth")
+visitorSprites = [NodePath("Body/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel/AnimatedSprite2D"), NodePath("Body/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel2/AnimatedSprite2D"), NodePath("Body/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel3/AnimatedSprite2D"), NodePath("Body/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel4/AnimatedSprite2D")]
+marketTable = NodePath("Body/ScrollContainer/TownStats/TabContainer/Market/MarketTable")
+tradeButton = NodePath("Body/ScrollContainer/TownStats/TabContainer/Market/trade")
+rumourButton = NodePath("Body/ScrollContainer/TownStats/TabContainer/Visitors/rumours")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Body" index="1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TownStats" type="VBoxContainer" parent="Body/ScrollContainer" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="GridContainer" type="GridContainer" parent="Body/ScrollContainer/TownStats" index="0"]
+visible = false
+layout_mode = 2
+columns = 2
+
+[node name="TownName" type="Label" parent="Body/ScrollContainer/TownStats/GridContainer" index="0"]
+visible = false
+layout_mode = 2
+text = "TOWN NAME"
+label_settings = SubResource("LabelSettings_6hc5t")
+horizontal_alignment = 1
+
+[node name="TownPop" type="Label" parent="Body/ScrollContainer/TownStats/GridContainer" index="1"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "population"
+
+[node name="TownWealth" type="Label" parent="Body/ScrollContainer/TownStats/GridContainer" index="2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 0
+text = "Wealth"
+
+[node name="TabContainer" type="TabContainer" parent="Body/ScrollContainer/TownStats" index="1"]
+custom_minimum_size = Vector2(0, 250)
+layout_mode = 2
+current_tab = 1
+
+[node name="Visitors" type="Control" parent="Body/ScrollContainer/TownStats/TabContainer" index="1"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_tab_index = 0
+
+[node name="VisitorsContainer" type="HBoxContainer" parent="Body/ScrollContainer/TownStats/TabContainer/Visitors" index="0"]
+layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 32.0
+offset_right = -6.0
+offset_bottom = -3.0
+
+[node name="Panel" type="CenterContainer" parent="Body/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer" index="0"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel" index="0"]
+position = Vector2(32, 32)
+scale = Vector2(0.5, 0.5)
+autoplay = "default"
+
+[node name="Panel2" type="CenterContainer" parent="Body/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer" index="1"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel2" index="0"]
+position = Vector2(32, 32)
+scale = Vector2(0.5, 0.5)
+autoplay = "default"
+
+[node name="Panel3" type="CenterContainer" parent="Body/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer" index="2"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel3" index="0"]
+position = Vector2(32, 32)
+scale = Vector2(0.5, 0.5)
+autoplay = "default"
+
+[node name="Panel4" type="CenterContainer" parent="Body/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer" index="3"]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Body/ScrollContainer/TownStats/TabContainer/Visitors/VisitorsContainer/Panel4" index="0"]
+position = Vector2(32, 32)
+scale = Vector2(0.5, 0.5)
+autoplay = "default"
+
+[node name="rumours" type="Button" parent="Body/ScrollContainer/TownStats/TabContainer/Visitors" index="1"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -279.0
+offset_top = -34.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+text = "Investigate rumours"
+
+[node name="Market" type="Control" parent="Body/ScrollContainer/TownStats/TabContainer" index="2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+metadata/_tab_index = 1
+
+[node name="MarketTable" parent="Body/ScrollContainer/TownStats/TabContainer/Market" index="0" instance=ExtResource("3_4w40o")]
+layout_mode = 2
+anchors_preset = 0
+anchor_bottom = 0.826
+offset_bottom = -0.0680084
+
+[node name="trade" type="Button" parent="Body/ScrollContainer/TownStats/TabContainer/Market" index="1"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -164.0
+offset_top = -34.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 8
+size_flags_vertical = 10
+text = "Trade goods"
+
+[node name="Table" parent="Body/ScrollContainer/TownStats/TabContainer" index="3" instance=ExtResource("4_xh8gu")]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2

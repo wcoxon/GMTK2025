@@ -1,0 +1,75 @@
+[gd_scene load_steps=5 format=3 uid="uid://cuyphuhwv0sqx"]
+
+[ext_resource type="PackedScene" uid="uid://c8xbshv3vbksd" path="res://scenes/UI/Windows/window.tscn" id="1_egbeu"]
+[ext_resource type="Script" uid="uid://16ds3cb23d0p" path="res://scripts/UI/Windows/DialogueUI.cs" id="2_bjo3e"]
+[ext_resource type="SpriteFrames" uid="uid://c8i3wf0qgu4ag" path="res://Assets/images/2head/2HeadFrames.tres" id="2_yw1bo"]
+[ext_resource type="Texture2D" uid="uid://b86l3qqloof4k" path="res://Assets/images/pointer.png" id="3_5rxap"]
+
+[node name="DialogueWindow" instance=ExtResource("1_egbeu")]
+custom_minimum_size = Vector2(39.41, 15.53)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -358.0
+offset_top = 114.0
+offset_right = 358.0
+offset_bottom = 268.0
+script = ExtResource("2_bjo3e")
+
+[node name="Message" type="Label" parent="Body" index="1"]
+layout_mode = 0
+offset_right = 341.0
+offset_bottom = 45.0
+text = "Watch out for this over here.."
+
+[node name="Button" type="Button" parent="Body" index="2"]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -142.0
+offset_top = -63.0
+offset_right = -18.0
+offset_bottom = -18.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Thanks"
+
+[node name="SpriteContainer" type="Control" parent="." index="2"]
+layout_mode = 1
+anchor_left = 0.851
+anchor_top = -0.167
+anchor_right = 0.851
+anchor_bottom = -0.167
+offset_left = -0.00701904
+offset_top = -80.451
+offset_right = -0.00701904
+offset_bottom = -80.451
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Pointer" type="TextureRect" parent="SpriteContainer" index="0"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -203.309
+offset_top = -21.831
+offset_right = -24.309
+offset_bottom = 71.169
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_5rxap")
+expand_mode = 1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SpriteContainer" index="1"]
+sprite_frames = ExtResource("2_yw1bo")
+autoplay = "default"
+
+[connection signal="pressed" from="Body/Button" to="." method="Close"]

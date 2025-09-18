@@ -1,0 +1,52 @@
+[gd_scene load_steps=4 format=3 uid="uid://cam1btrgn8owb"]
+
+[ext_resource type="PackedScene" uid="uid://c8xbshv3vbksd" path="res://scenes/UI/Windows/window.tscn" id="1_dtw0n"]
+[ext_resource type="Script" uid="uid://do6w43vwwbhb7" path="res://scripts/UI/Windows/InventoryUI.cs" id="2_ebnq5"]
+[ext_resource type="PackedScene" uid="uid://nscjafbhcguy" path="res://scenes/UI/Table/StockPanel.tscn" id="2_eqsxb"]
+
+[node name="InventoryWindow" node_paths=PackedStringArray("moneyLabel", "rowsContainer") instance=ExtResource("1_dtw0n")]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.571
+anchor_right = 0.5
+anchor_bottom = 0.571
+offset_left = -310.0
+offset_top = -91.008
+offset_right = 235.0
+offset_bottom = 90.992
+script = ExtResource("2_ebnq5")
+moneyLabel = NodePath("Body/ScrollContainer/Control/MoneyLabel")
+rowsContainer = NodePath("Body/ScrollContainer/Control/ItemRows")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Body" index="1"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Control" type="VBoxContainer" parent="Body/ScrollContainer" index="0"]
+clip_contents = true
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MoneyLabel" type="Label" parent="Body/ScrollContainer/Control" index="0"]
+layout_mode = 2
+text = "Crumbs: "
+
+[node name="ItemRows" type="VBoxContainer" parent="Body/ScrollContainer/Control" index="1"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Control" parent="Body/ScrollContainer/Control/ItemRows" index="0" instance=ExtResource("2_eqsxb")]
+layout_mode = 2
+
+[node name="Control2" parent="Body/ScrollContainer/Control/ItemRows" index="1" instance=ExtResource("2_eqsxb")]
+layout_mode = 2
+ItemID = 1
+
+[node name="Control3" parent="Body/ScrollContainer/Control/ItemRows" index="2" instance=ExtResource("2_eqsxb")]
+layout_mode = 2
+ItemID = 2

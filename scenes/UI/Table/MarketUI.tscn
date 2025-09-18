@@ -1,51 +1,47 @@
 [gd_scene load_steps=3 format=3 uid="uid://chrvyq6gyys51"]
 
-[ext_resource type="Theme" uid="uid://cjcbo4rh5sarl" path="res://themes/WinXP/Body.tres" id="1_13lg0"]
 [ext_resource type="Script" uid="uid://dxp513j888anf" path="res://scripts/UI/Table/MarketUI.cs" id="1_p05av"]
+[ext_resource type="Theme" uid="uid://bu34iqfaecoay" path="res://themes/Table/RowTheme.tres" id="1_t5nk6"]
 
-[node name="Control" type="HBoxContainer" node_paths=PackedStringArray("nameLabel", "stockLabel", "productionLabel", "consumptionLabel", "priceLabel")]
+[node name="Control" type="HBoxContainer" node_paths=PackedStringArray("nameLabel", "stockLabel", "netProductionLabel", "priceLabel")]
 custom_minimum_size = Vector2(0, 32)
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 32.0
 grow_horizontal = 2
-theme = ExtResource("1_13lg0")
+theme = ExtResource("1_t5nk6")
 script = ExtResource("1_p05av")
 nameLabel = NodePath("ItemName")
 stockLabel = NodePath("ItemQuantity")
-productionLabel = NodePath("Production")
-consumptionLabel = NodePath("Consumption")
+netProductionLabel = NodePath("NetProduction")
 priceLabel = NodePath("Price")
 
 [node name="ItemName" type="Label" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 1
 text = "NAME"
-horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="ItemQuantity" type="Label" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 5
 text = "QUANTITY"
-horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Production" type="Label" parent="."]
+[node name="NetProduction" type="RichTextLabel" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "PROD"
-horizontal_alignment = 1
-
-[node name="Consumption" type="Label" parent="."]
-layout_mode = 2
-size_flags_horizontal = 3
-text = "CONS"
-horizontal_alignment = 1
+bbcode_enabled = true
+text = "NET PROD."
+fit_content = true
+vertical_alignment = 1
 
 [node name="Price" type="RichTextLabel" parent="."]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_vertical = 4
 bbcode_enabled = true
 text = "PRICE"
 fit_content = true
-horizontal_alignment = 1
+vertical_alignment = 1

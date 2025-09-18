@@ -1,23 +1,26 @@
-[gd_scene load_steps=19 format=3 uid="uid://cvlfxg610affe"]
+[gd_scene load_steps=22 format=3 uid="uid://cvlfxg610affe"]
 
 [ext_resource type="PackedScene" uid="uid://clc830lkjlhip" path="res://scenes/map.tscn" id="1_5opw3"]
 [ext_resource type="PackedScene" uid="uid://b7hxl7dg26i7j" path="res://scenes/player.tscn" id="2_25dfr"]
-[ext_resource type="PackedScene" uid="uid://dpdvumg63k3xu" path="res://scenes/UI/Windows/TownPanel.tscn" id="3_y7ipx"]
-[ext_resource type="PackedScene" uid="uid://dao5worh1gb0c" path="res://scenes/UI/Windows/TradeUI.tscn" id="4_5hv5t"]
+[ext_resource type="Script" uid="uid://cmk6lrvywi45o" path="res://scripts/AudioController.cs" id="4_8wjpf"]
 [ext_resource type="PackedScene" uid="uid://durnjyano0ic4" path="res://scenes/waypoints.tscn" id="5_k24pf"]
-[ext_resource type="PackedScene" uid="uid://bdrkqejd8htea" path="res://scenes/UI/Windows/EncounterView.tscn" id="8_cfq0f"]
-[ext_resource type="PackedScene" uid="uid://c6yeey4j3upm4" path="res://scenes/UI/Windows/inventory.tscn" id="8_pd1er"]
+[ext_resource type="AudioStream" uid="uid://cdb504exdycwy" path="res://Assets/Audio/SFX/mouse click down.mp3" id="5_kjvyo"]
+[ext_resource type="AudioStream" uid="uid://qq3ahicughsm" path="res://Assets/Audio/SFX/mouse click up.mp3" id="6_2phbr"]
+[ext_resource type="AudioStream" uid="uid://b0rv23e1tb6qn" path="res://Assets/Audio/SFX/windows sound.mp3" id="7_2phbr"]
 [ext_resource type="PackedScene" uid="uid://bovy050xv5534" path="res://scenes/UI/time_panel.tscn" id="10_xnxdc"]
 [ext_resource type="Script" uid="uid://0n132a882k4r" path="res://scripts/UI/Notification/NotificationManager.cs" id="11_o3jky"]
 [ext_resource type="PackedScene" uid="uid://c1jvgnt81ughl" path="res://scenes/UI/notification.tscn" id="12_kp0ql"]
 [ext_resource type="PackedScene" uid="uid://ce3r73hprtho" path="res://scenes/UI/stats_view.tscn" id="12_xnxdc"]
-[ext_resource type="Theme" uid="uid://d18vm3ggivwpn" path="res://themes/button_theme.tres" id="13_1ns3k"]
+[ext_resource type="PackedScene" uid="uid://1s6chqjbabh5" path="res://scenes/UI/Windows/RumoursWindow.tscn" id="13_0ehpd"]
+[ext_resource type="PackedScene" uid="uid://b3iri6uclx8g0" path="res://scenes/UI/Windows/TownWindow.tscn" id="13_8wjpf"]
 [ext_resource type="Script" uid="uid://bod5bn1der1x6" path="res://scripts/UI/Windows/UIController.cs" id="13_mkg2b"]
-[ext_resource type="PackedScene" uid="uid://mc8jppn0igyl" path="res://scenes/UI/dialogue_panel.tscn" id="15_25dfr"]
+[ext_resource type="PackedScene" uid="uid://dharf5yrc87h1" path="res://scenes/UI/Windows/TradeWindow.tscn" id="14_8wjpf"]
+[ext_resource type="PackedScene" uid="uid://cam1btrgn8owb" path="res://scenes/UI/Windows/InventoryWindow.tscn" id="15_8wjpf"]
+[ext_resource type="PackedScene" uid="uid://buvrlm4hykg61" path="res://scenes/UI/Windows/EncounterWindow.tscn" id="16_0ehpd"]
 [ext_resource type="PackedScene" uid="uid://b3e7bqi6emii" path="res://scenes/UI/PlottingUI.tscn" id="16_kjvyo"]
+[ext_resource type="PackedScene" uid="uid://cuyphuhwv0sqx" path="res://scenes/UI/Windows/DialogueWindow.tscn" id="17_0ehpd"]
 [ext_resource type="Theme" uid="uid://cjcbo4rh5sarl" path="res://themes/WinXP/Body.tres" id="19_25dfr"]
 [ext_resource type="PackedScene" uid="uid://cuwvgg42ysqv1" path="res://scenes/UI/town_context_menu.tscn" id="20_kjvyo"]
-[ext_resource type="PackedScene" uid="uid://bxoubiowv8scg" path="res://scenes/UI/Rumours/rumours_panel.tscn" id="22_mkg2b"]
 
 [node name="Root" type="Node3D"]
 
@@ -29,19 +32,35 @@ UI = NodePath("../UICanvas")
 [node name="Waypoints" parent="." node_paths=PackedStringArray("world") instance=ExtResource("5_k24pf")]
 world = NodePath("../WorldMap")
 
+[node name="Audio" type="Node" parent="."]
+script = ExtResource("4_8wjpf")
+
+[node name="ClickDown" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("5_kjvyo")
+bus = &"Sound Effects"
+
+[node name="ClickUp" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("6_2phbr")
+bus = &"Sound Effects"
+
+[node name="WindowOpen" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("7_2phbr")
+volume_db = -3.54
+bus = &"Sound Effects"
+
 [node name="UICanvas" type="CanvasLayer" parent="." node_paths=PackedStringArray("timeControlPanel", "townContextMenu", "plottingUI", "townPanel", "inventoryUI", "tradeUI", "dialogueUI", "rumoursUI", "encounterView")]
 script = ExtResource("13_mkg2b")
-timeControlPanel = NodePath("TimePanel")
+timeControlPanel = NodePath("HUD/TimePanel")
 townContextMenu = NodePath("TownContextMenu")
 plottingUI = NodePath("PlottingUI")
-townPanel = NodePath("Windows/TownPanel")
-inventoryUI = NodePath("Windows/Inventory")
-tradeUI = NodePath("Windows/TradePanel")
-dialogueUI = NodePath("DialoguePanel")
-rumoursUI = NodePath("Windows/RumoursPanel")
-encounterView = NodePath("Windows/EncounterView")
+townPanel = NodePath("Windows/TownWindow")
+inventoryUI = NodePath("Windows/InventoryWindow")
+tradeUI = NodePath("Windows/TradeWindow")
+dialogueUI = NodePath("Windows/DialogueWindow")
+rumoursUI = NodePath("Windows/RumoursWindow")
+encounterView = NodePath("Windows/EncounterWindow")
 
-[node name="Windows" type="Control" parent="UICanvas"]
+[node name="HUD" type="Control" parent="UICanvas"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -50,64 +69,53 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="EncounterView" parent="UICanvas/Windows" instance=ExtResource("8_cfq0f")]
+[node name="TimePanel" parent="UICanvas/HUD" instance=ExtResource("10_xnxdc")]
 layout_mode = 1
-theme = ExtResource("13_1ns3k")
+offset_left = -251.0
+offset_top = -113.0
+offset_right = -16.0
+offset_bottom = -22.0
 
-[node name="TownPanel" parent="UICanvas/Windows" instance=ExtResource("3_y7ipx")]
+[node name="StatsView" parent="UICanvas/HUD" instance=ExtResource("12_xnxdc")]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 16.0
+offset_right = 206.0
+offset_bottom = 88.0
+
+[node name="InventoryButton" type="Button" parent="UICanvas/HUD"]
 layout_mode = 1
-offset_left = 227.0
-offset_top = 57.0
-offset_right = -225.0
-offset_bottom = -113.0
-
-[node name="TradePanel" parent="UICanvas/Windows" instance=ExtResource("4_5hv5t")]
-layout_mode = 1
-offset_left = 87.0
-offset_top = 124.0
-offset_right = -161.0
-offset_bottom = -141.0
-
-[node name="RumoursPanel" parent="UICanvas/Windows" instance=ExtResource("22_mkg2b")]
-layout_mode = 1
-
-[node name="Inventory" parent="UICanvas/Windows" instance=ExtResource("8_pd1er")]
-layout_mode = 1
-offset_left = -249.0
-offset_top = -129.0
-offset_right = 251.0
-offset_bottom = 171.0
-
-[node name="InventoryButton" type="Button" parent="UICanvas"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = -45.0
-offset_right = 248.0
+offset_right = 165.0
 grow_vertical = 0
 focus_mode = 0
 theme = ExtResource("19_25dfr")
 text = "Inventory"
 
-[node name="TownButton" type="Button" parent="UICanvas"]
+[node name="TownButton" type="Button" parent="UICanvas/HUD"]
+layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 249.0
+offset_left = 326.0
 offset_top = -45.0
-offset_right = 497.0
+offset_right = 442.0
 grow_vertical = 0
 focus_mode = 0
 theme = ExtResource("19_25dfr")
 text = "Town"
 
-[node name="RumourButton" type="Button" parent="UICanvas"]
+[node name="RumourButton" type="Button" parent="UICanvas/HUD"]
+layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 499.0
+offset_left = 171.0
 offset_top = -45.0
-offset_right = 747.0
+offset_right = 318.0
 grow_vertical = 0
 focus_mode = 0
 theme = ExtResource("19_25dfr")
@@ -123,26 +131,11 @@ offset_right = 102.0
 offset_bottom = -497.0
 grow_vertical = 0
 
-[node name="DialoguePanel" parent="UICanvas" instance=ExtResource("15_25dfr")]
-visible = false
-theme = ExtResource("19_25dfr")
-
 [node name="TownContextMenu" parent="UICanvas" instance=ExtResource("20_kjvyo")]
 visible = false
 
-[node name="TimePanel" parent="UICanvas" instance=ExtResource("10_xnxdc")]
-offset_left = -251.0
-offset_top = -113.0
-offset_right = -16.0
-offset_bottom = -22.0
-
-[node name="StatsView" parent="UICanvas" instance=ExtResource("12_xnxdc")]
-offset_left = 18.0
-offset_top = 16.0
-offset_right = 206.0
-offset_bottom = 88.0
-
 [node name="NotificationManager" type="Control" parent="UICanvas"]
+visible = false
 layout_mode = 3
 anchors_preset = 1
 anchor_left = 1.0
@@ -155,7 +148,74 @@ grow_horizontal = 0
 script = ExtResource("11_o3jky")
 notification_scene = ExtResource("12_kp0ql")
 
-[connection signal="gui_input" from="UICanvas/Windows/Inventory" to="UICanvas/Windows/Inventory" method="handleInput"]
-[connection signal="pressed" from="UICanvas/InventoryButton" to="UICanvas/Windows/Inventory" method="OpenPlayerInventory"]
-[connection signal="pressed" from="UICanvas/TownButton" to="UICanvas/Windows/TownPanel" method="OpenPlayerTown"]
-[connection signal="pressed" from="UICanvas/RumourButton" to="UICanvas/Windows/RumoursPanel" method="OpenPlayerRumours"]
+[node name="Windows" type="Control" parent="UICanvas"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="RumoursWindow" parent="UICanvas/Windows" instance=ExtResource("13_0ehpd")]
+layout_mode = 1
+offset_left = 215.0
+offset_top = -249.0
+offset_right = 519.0
+offset_bottom = 141.0
+pivot_offset = Vector2(558.755, 297.402)
+
+[node name="TownWindow" parent="UICanvas/Windows" instance=ExtResource("13_8wjpf")]
+layout_mode = 1
+offset_top = -145.0
+offset_right = 195.0
+offset_bottom = 126.0
+pivot_offset = Vector2(558.755, 297.402)
+
+[node name="TradeWindow" parent="UICanvas/Windows" instance=ExtResource("14_8wjpf")]
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 0.504
+anchor_right = 0.5
+anchor_bottom = 0.504
+offset_left = -406.0
+offset_top = -100.592
+offset_right = 406.0
+offset_bottom = 152.408
+pivot_offset = Vector2(558.755, 297.402)
+
+[node name="InventoryWindow" parent="UICanvas/Windows" instance=ExtResource("15_8wjpf")]
+layout_mode = 1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -549.0
+offset_top = -181.0
+offset_right = -135.0
+offset_bottom = -9.0
+pivot_offset = Vector2(558.755, 297.402)
+
+[node name="EncounterWindow" parent="UICanvas/Windows" instance=ExtResource("16_0ehpd")]
+layout_mode = 1
+offset_left = -205.0
+offset_top = -213.0
+offset_right = 207.0
+offset_bottom = 206.0
+pivot_offset = Vector2(558.755, 297.402)
+
+[node name="DialogueWindow" parent="UICanvas/Windows" instance=ExtResource("17_0ehpd")]
+layout_mode = 1
+offset_left = -394.0
+offset_top = 109.0
+offset_right = 394.0
+offset_bottom = 235.0
+pivot_offset = Vector2(558.755, 297.402)
+
+[connection signal="pressed" from="UICanvas/HUD/InventoryButton" to="UICanvas/Windows/InventoryWindow" method="OpenPlayerInventory"]
+[connection signal="pressed" from="UICanvas/HUD/TownButton" to="UICanvas/Windows/TownWindow" method="OpenPlayerTown"]
+[connection signal="pressed" from="UICanvas/HUD/RumourButton" to="UICanvas/Windows/RumoursWindow" method="OpenPlayerRumours"]
+[connection signal="gui_input" from="UICanvas/Windows/RumoursWindow" to="UICanvas/Windows/RumoursWindow" method="windowInput"]
+[connection signal="gui_input" from="UICanvas/Windows/TownWindow" to="UICanvas/Windows/TownWindow" method="windowInput"]
+[connection signal="gui_input" from="UICanvas/Windows/TradeWindow" to="UICanvas/Windows/TradeWindow" method="windowInput"]
+[connection signal="gui_input" from="UICanvas/Windows/InventoryWindow" to="UICanvas/Windows/InventoryWindow" method="windowInput"]
+[connection signal="gui_input" from="UICanvas/Windows/EncounterWindow" to="UICanvas/Windows/EncounterWindow" method="windowInput"]
+[connection signal="gui_input" from="UICanvas/Windows/DialogueWindow" to="UICanvas/Windows/DialogueWindow" method="windowInput"]

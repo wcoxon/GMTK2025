@@ -5,8 +5,6 @@ public partial class NPCTraveller : Traveller
 {
     double timeToEmbark = 0;
 
-    public override void _Ready() => base._Ready();
-
     public override void _Process(double delta)
     {
         double simDelta = delta * Player.Instance.World.timeScale;
@@ -23,22 +21,18 @@ public partial class NPCTraveller : Traveller
         else travel(simDelta);
     }
 
-    public override void onDeparture()
-    {
-        base.onDeparture();
-
-        chooseDestination();
-    }
-
-
     public override void onArrival(Town town)
     {
         base.onArrival(town);
 
         Trade();
-        //chooseDestination();
-        //newJourney(); // plan next journey
         timeToEmbark = 30; // start countdown to departure
+    }
+    public override void onDeparture()
+    {
+        base.onDeparture();
+
+        chooseDestination();
     }
 
     void newJourney()
@@ -60,8 +54,7 @@ public partial class NPCTraveller : Traveller
         /// sell what town consumes
         /// buy as much as you can of what town produces
         /// 
-
-
+        
         int buyPrice = 0;
 
         for (int item = 0; item < 3; item++)
@@ -95,7 +88,7 @@ public partial class NPCTraveller : Traveller
         // by taking how much of the buy price we can afford with our money,
         // so if i have 1/2 of buy price, then i can buy half the items ig
 
-        // i guess floor how much i buy though?
+        // i guess floor how much i buy though
 
         float buyPortion = Mathf.Min(Money / (float)buyPrice,1);
 
@@ -112,9 +105,8 @@ public partial class NPCTraveller : Traveller
             GD.Print($"bought {buyAmount} {Game.itemNames[item]}");
 
         }
-
-
     }
+
     void chooseDestination()
     {
         // get which item i have most of
@@ -150,18 +142,6 @@ public partial class NPCTraveller : Traveller
         //GD.Print("there is no functioning town that consumes any item i have");
     }
 
-    public void ShowInventory()
-    {
-        // update inventory to hovered traveller
-        UIController.Instance.inventoryUI.OpenInventory(this);
-
-
-    } //=> Player.Instance.UI.inventoryUI.Open(this); // called on hover
-    public void HideInventory()
-    {
-        // close inventory window
-        UIController.Instance.inventoryUI.Close();
-
-
-    } //=> Player.Instance.UI.inventoryUI.Close(); // called on mouse exit
+    public void ShowInventory() => UIController.Instance.inventoryUI.OpenInventory(this);
+    public void HideInventory() => UIController.Instance.inventoryUI.Close();
 }

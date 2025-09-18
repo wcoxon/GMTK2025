@@ -1,0 +1,133 @@
+[gd_scene load_steps=7 format=3 uid="uid://dharf5yrc87h1"]
+
+[ext_resource type="PackedScene" uid="uid://c8xbshv3vbksd" path="res://scenes/UI/Windows/window.tscn" id="1_kjaci"]
+[ext_resource type="Script" uid="uid://c0hsnpgpsni0t" path="res://scripts/UI/Windows/TradeUI.cs" id="2_ativa"]
+[ext_resource type="Theme" uid="uid://bpgjpo21r7baa" path="res://themes/Table/ColumnHeaderTheme.tres" id="2_peoci"]
+[ext_resource type="Theme" uid="uid://bu34iqfaecoay" path="res://themes/Table/RowTheme.tres" id="3_ativa"]
+[ext_resource type="PackedScene" uid="uid://co4hcp8xxoa5a" path="res://scenes/UI/Table/TradeRow.tscn" id="4_klttl"]
+[ext_resource type="AudioStream" uid="uid://dexswn45fjbmi" path="res://Assets/Audio/SFX/stinger.wav" id="6_ativa"]
+
+[node name="TradeWindow" node_paths=PackedStringArray("rowContainer", "fundsLabel", "costLabel", "confirmButton", "confirmSound") instance=ExtResource("1_kjaci")]
+anchors_preset = -1
+anchor_left = 0.537
+anchor_top = 0.5
+anchor_right = 0.537
+anchor_bottom = 0.5
+offset_left = -433.624
+offset_top = -183.0
+offset_right = 434.376
+offset_bottom = 109.0
+script = ExtResource("2_ativa")
+rowContainer = NodePath("Body/ScrollContainer/TradeContainer/ProductsContainer")
+fundsLabel = NodePath("Body/ScrollContainer/TradeContainer/SummaryContainer/PlayerFunds")
+costLabel = NodePath("Body/ScrollContainer/TradeContainer/SummaryContainer/TotalCost")
+confirmButton = NodePath("Body/ScrollContainer/TradeContainer/SummaryContainer/TradeButton")
+confirmSound = NodePath("AudioStreamPlayer")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Body" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TradeContainer" type="VBoxContainer" parent="Body/ScrollContainer" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ColumnHeaders" type="HBoxContainer" parent="Body/ScrollContainer/TradeContainer" index="0"]
+layout_mode = 2
+theme = ExtResource("2_peoci")
+
+[node name="Label" type="Label" parent="Body/ScrollContainer/TradeContainer/ColumnHeaders" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "ITEM"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="Body/ScrollContainer/TradeContainer/ColumnHeaders" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "THEIR STOCK"
+horizontal_alignment = 1
+
+[node name="Label5" type="Label" parent="Body/ScrollContainer/TradeContainer/ColumnHeaders" index="2"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "YOUR STOCK"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Body/ScrollContainer/TradeContainer/ColumnHeaders" index="3"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "PRICE"
+horizontal_alignment = 1
+
+[node name="Label4" type="Label" parent="Body/ScrollContainer/TradeContainer/ColumnHeaders" index="4"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "OFFER"
+horizontal_alignment = 1
+
+[node name="ProductsContainer" type="VBoxContainer" parent="Body/ScrollContainer/TradeContainer" index="1"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("3_ativa")
+
+[node name="HBoxContainer" parent="Body/ScrollContainer/TradeContainer/ProductsContainer" index="0" instance=ExtResource("4_klttl")]
+layout_mode = 2
+theme = null
+
+[node name="HBoxContainer2" parent="Body/ScrollContainer/TradeContainer/ProductsContainer" index="1" instance=ExtResource("4_klttl")]
+layout_mode = 2
+ItemID = 1
+
+[node name="HBoxContainer3" parent="Body/ScrollContainer/TradeContainer/ProductsContainer" index="2" instance=ExtResource("4_klttl")]
+layout_mode = 2
+ItemID = 2
+
+[node name="SummaryContainer" type="Control" parent="Body/ScrollContainer/TradeContainer" index="2"]
+layout_mode = 2
+size_flags_vertical = 2
+
+[node name="PlayerFunds" type="Label" parent="Body/ScrollContainer/TradeContainer/SummaryContainer" index="0"]
+layout_mode = 2
+offset_top = 1.0
+offset_right = 360.0
+offset_bottom = 33.0
+size_flags_horizontal = 3
+text = "YOUR FUNDS"
+horizontal_alignment = 1
+
+[node name="TotalCost" type="Label" parent="Body/ScrollContainer/TradeContainer/SummaryContainer" index="1"]
+layout_mode = 2
+offset_left = 364.0
+offset_top = 1.0
+offset_right = 725.0
+offset_bottom = 33.0
+size_flags_horizontal = 3
+text = "TOTAL COST"
+horizontal_alignment = 1
+
+[node name="TradeButton" type="Button" parent="Body/ScrollContainer/TradeContainer/SummaryContainer" index="2"]
+layout_mode = 2
+offset_left = 691.0
+offset_right = 807.0
+offset_bottom = 34.0
+size_flags_vertical = 4
+text = "TRADE"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="2"]
+stream = ExtResource("6_ativa")
+volume_db = -14.715
+bus = &"Sound Effects"
+
+[connection signal="value_changed" from="Body/ScrollContainer/TradeContainer/ProductsContainer/HBoxContainer/purchaseAmount" to="." method="updateCost"]
+[connection signal="value_changed" from="Body/ScrollContainer/TradeContainer/ProductsContainer/HBoxContainer2/purchaseAmount" to="." method="updateCost"]
+[connection signal="value_changed" from="Body/ScrollContainer/TradeContainer/ProductsContainer/HBoxContainer3/purchaseAmount" to="." method="updateCost"]
+
+[editable path="Body/ScrollContainer/TradeContainer/ProductsContainer/HBoxContainer"]
+[editable path="Body/ScrollContainer/TradeContainer/ProductsContainer/HBoxContainer2"]
+[editable path="Body/ScrollContainer/TradeContainer/ProductsContainer/HBoxContainer3"]

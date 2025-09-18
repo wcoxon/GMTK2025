@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://mc8jppn0igyl"]
+[gd_scene load_steps=4 format=3 uid="uid://mc8jppn0igyl"]
 
 [ext_resource type="SpriteFrames" uid="uid://c8i3wf0qgu4ag" path="res://Assets/images/2head/2HeadFrames.tres" id="1_av17p"]
-[ext_resource type="Script" uid="uid://16ds3cb23d0p" path="res://scripts/UI/Windows/DialogueUI.cs" id="1_tibyt"]
 [ext_resource type="Theme" uid="uid://d18vm3ggivwpn" path="res://themes/button_theme.tres" id="3_jbofw"]
 [ext_resource type="Texture2D" uid="uid://b86l3qqloof4k" path="res://Assets/images/pointer.png" id="5_lsnh0"]
 
@@ -13,7 +12,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-script = ExtResource("1_tibyt")
 
 [node name="Pointer" type="TextureRect" parent="."]
 layout_mode = 1

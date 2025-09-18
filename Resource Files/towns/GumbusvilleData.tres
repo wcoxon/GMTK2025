@@ -4,7 +4,7 @@
 [ext_resource type="Shader" uid="uid://bpkjttjrw55ub" path="res://shaders/Color Ramp/colorRamp.gdshader" id="2_wwtet"]
 [ext_resource type="ArrayMesh" uid="uid://dwqsxckirn075" path="res://Assets/Models/weirdcity2.obj" id="3_rm7sx"]
 [ext_resource type="Script" uid="uid://bu8blcnkgpmyl" path="res://scripts/Custom Resources/TownData.cs" id="4_2o0i1"]
-[ext_resource type="AudioStream" uid="uid://c1hdmyvtbduxr" path="res://Assets/Audio/gamejamsong2_3.wav" id="5_78t4a"]
+[ext_resource type="AudioStream" uid="uid://c1hdmyvtbduxr" path="res://Assets/Audio/Music/gamejamsong2_3.wav" id="5_78t4a"]
 
 [sub_resource type="Gradient" id="Gradient_5ibx0"]
 offsets = PackedFloat32Array(0.439834, 0.709544)

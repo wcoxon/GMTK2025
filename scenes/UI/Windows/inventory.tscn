@@ -44,7 +44,7 @@ size_flags_vertical = 3
 
 [node name="MoneyLabel" type="Label" parent="Window/ScrollContainer/Control"]
 layout_mode = 2
-text = "Wealth: "
+text = "Crumbs: "
 
 [node name="ItemRows" type="VBoxContainer" parent="Window/ScrollContainer/Control"]
 layout_mode = 2

@@ -9,7 +9,7 @@ public partial class RumourRow : Control
 
     public void onClick() 
     {
-        Player.Instance.UI.closeAll();
+        //Player.Instance.UI.closeAll();
         Rumour.focus();
     }
 }

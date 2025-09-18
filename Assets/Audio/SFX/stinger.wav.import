@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dexswn45fjbmi"
-path="res://.godot/imported/stinger.wav-c97ca90364402b77f043fb959787a6db.sample"
+path="res://.godot/imported/stinger.wav-cf52463247a58b613f6feedb565c4b07.sample"
 
 [deps]
 
-source_file="res://Assets/Audio/stinger.wav"
-dest_files=["res://.godot/imported/stinger.wav-c97ca90364402b77f043fb959787a6db.sample"]
+source_file="res://Assets/Audio/SFX/stinger.wav"
+dest_files=["res://.godot/imported/stinger.wav-cf52463247a58b613f6feedb565c4b07.sample"]
 
 [params]
 

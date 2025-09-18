@@ -12,6 +12,7 @@ public partial class TradeRow : Control
 	public override void _EnterTree()
 	{
 		base._EnterTree();
+
 		nameLabel.Text = Game.itemNames[ItemID];
 	}
 	public void updateRow(Town town)
@@ -24,34 +25,9 @@ public partial class TradeRow : Control
 
 		int price = town.appraise(ItemID);
 		priceLabel.Text = price.ToString();
-		PriceOffset = price - Game.itemBaseValues[ItemID];
-	}
-	//public int Stock
-	//{
-	//	set
-	//	{
-	//		stockLabel.Text = value.ToString(); // display quantity
-	//		offerBox.MaxValue = value; // limit buy offer to quantity
-	//	}
-	//}
-	//
-	//public int PlayerStock
-	//{
-	//	set
-	//	{
-	//		playerStockLabel.Text = value.ToString(); // display player quantity
-	//		offerBox.MinValue = -value; // limit sell offer to player quantity
-	//	}
-	//}
-	//
-	//public int Price { set => priceLabel.Text = value.ToString(); }
-	public int PriceOffset
-	{
-		set
-		{
-			if (value == 0) return;
-			priceLabel.Text += value < 0 ? $" [color=red]({value})[/color]" : $" [color=green](+{value})[/color]";
-		}
+		
+		int priceOffset = price - Game.itemBaseValues[ItemID];
+        priceLabel.Text += priceOffset == 0 ? "" : priceOffset < 0 ? $" [color=red]({priceOffset})" : $" [color=green](+{priceOffset})";
 	}
 
 	public int Offer { get => (int)offerBox.Value; set => offerBox.Value = value; }

@@ -3,7 +3,7 @@
 [ext_resource type="Theme" uid="uid://dd7oj65maaocx" path="res://themes/WinXP/HandleBar.tres" id="1_3qyhd"]
 [ext_resource type="Script" uid="uid://dj8mkmqmphc2n" path="res://scripts/UI/WindowHandleUI.cs" id="2_dp7b1"]
 
-[node name="handlebar" type="Panel" node_paths=PackedStringArray("titleLabel", "closeButton")]
+[node name="handlebar" type="Panel" node_paths=PackedStringArray("titleLabel", "closeButton", "collapseButton")]
 custom_minimum_size = Vector2(0, 48)
 anchors_preset = 10
 anchor_right = 1.0
@@ -13,6 +13,7 @@ theme = ExtResource("1_3qyhd")
 script = ExtResource("2_dp7b1")
 titleLabel = NodePath("HeaderLabel")
 closeButton = NodePath("CloseButton")
+collapseButton = NodePath("ResizeButton")
 
 [node name="HeaderLabel" type="Label" parent="."]
 layout_mode = 1
@@ -47,7 +48,6 @@ focus_mode = 0
 text = "X"
 
 [node name="ResizeButton" type="Button" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 6
 anchor_left = 1.0
@@ -61,4 +61,4 @@ offset_bottom = 16.0
 grow_horizontal = 0
 grow_vertical = 2
 focus_mode = 0
-text = "□"
+text = "..."

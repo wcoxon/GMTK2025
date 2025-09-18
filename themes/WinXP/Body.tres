@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=16 format=3 uid="uid://cjcbo4rh5sarl"]
+[gd_resource type="Theme" load_steps=17 format=3 uid="uid://cjcbo4rh5sarl"]
 
 [ext_resource type="FontFile" uid="uid://dmlnmhil16d4e" path="res://Assets/Fonts/exagger8.ttf" id="2_3hu17"]
 [ext_resource type="FontFile" uid="uid://c85eqv0eybdcy" path="res://Assets/Fonts/cCupang.ttf" id="2_ci6mg"]
@@ -61,7 +61,10 @@ bg_color = Color(1, 0.429628, 0.692874, 1)
 bg_color = Color(1, 1, 1, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b7byl"]
-bg_color = Color(0.8062, 0.87, 0.6786, 1)
+bg_color = Color(0.89, 0.4895, 0.816575, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y72ts"]
+bg_color = Color(0.56, 0.56, 0.56, 1)
 
 [resource]
 default_font = ExtResource("2_ci6mg")
@@ -76,7 +79,7 @@ Button/styles/hover = SubResource("StyleBoxFlat_6abfs")
 Button/styles/normal = SubResource("StyleBoxFlat_qnv5y")
 Button/styles/pressed = SubResource("StyleBoxFlat_hguu3")
 Label/colors/font_color = Color(0, 0, 0, 1)
-Label/font_sizes/font_size = 31
+Label/font_sizes/font_size = 32
 Label/fonts/font = SubResource("FontVariation_ntmcl")
 LineEdit/colors/font_color = Color(1, 1, 1, 1)
 LineEdit/fonts/font = ExtResource("2_lxh3m")
@@ -93,4 +96,7 @@ SpinBox/styles/up_background_disabled = SubResource("StyleBoxFlat_lxh3m")
 SpinBox/styles/up_background_hovered = SubResource("StyleBoxFlat_3hu17")
 SpinBox/styles/up_background_pressed = SubResource("StyleBoxFlat_ntmcl")
 SpinBoxInnerLineEdit/base_type = &"LineEdit"
-TabContainer/styles/panel = SubResource("StyleBoxFlat_b7byl")
+TabContainer/colors/font_selected_color = Color(0, 0, 0, 1)
+TabContainer/colors/font_unselected_color = Color(0, 0, 0, 1)
+TabContainer/styles/tab_selected = SubResource("StyleBoxFlat_b7byl")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxFlat_y72ts")

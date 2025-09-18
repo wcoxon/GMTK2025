@@ -1,11 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://dao5worh1gb0c"]
+[gd_scene load_steps=8 format=3 uid="uid://dao5worh1gb0c"]
 
 [ext_resource type="Theme" uid="uid://cjcbo4rh5sarl" path="res://themes/WinXP/Body.tres" id="1_agoys"]
 [ext_resource type="Script" uid="uid://c0hsnpgpsni0t" path="res://scripts/UI/Windows/TradeUI.cs" id="1_bf4hf"]
 [ext_resource type="PackedScene" uid="uid://co4hcp8xxoa5a" path="res://scenes/UI/Table/TradeRow.tscn" id="2_3fybu"]
-[ext_resource type="Theme" uid="uid://du1snnt30dprh" path="res://themes/Table/HeaderTextTheme.tres" id="2_l7dv1"]
 [ext_resource type="PackedScene" uid="uid://c8xbshv3vbksd" path="res://scenes/UI/Windows/window.tscn" id="3_ls2km"]
-[ext_resource type="AudioStream" uid="uid://dexswn45fjbmi" path="res://Assets/Audio/stinger.wav" id="4_cn8ec"]
+[ext_resource type="Theme" uid="uid://bpgjpo21r7baa" path="res://themes/Table/ColumnHeaderTheme.tres" id="4_7b2pl"]
+[ext_resource type="AudioStream" uid="uid://dexswn45fjbmi" path="res://Assets/Audio/SFX/stinger.wav" id="4_cn8ec"]
+[ext_resource type="Theme" uid="uid://bu34iqfaecoay" path="res://themes/Table/RowTheme.tres" id="5_d2jab"]
 
 [node name="TradePanel" type="Control" node_paths=PackedStringArray("fundsLabel", "costLabel", "confirmButton", "confirmSound", "rowContainer")]
 layout_mode = 3
@@ -45,45 +46,42 @@ size_flags_vertical = 3
 
 [node name="ColumnHeaders" type="HBoxContainer" parent="Window/ScrollContainer/TradeContainer"]
 layout_mode = 2
+theme = ExtResource("4_7b2pl")
 
 [node name="Label" type="Label" parent="Window/ScrollContainer/TradeContainer/ColumnHeaders"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("2_l7dv1")
 text = "ITEM"
 horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="Window/ScrollContainer/TradeContainer/ColumnHeaders"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("2_l7dv1")
 text = "THEIR STOCK"
 horizontal_alignment = 1
 
 [node name="Label5" type="Label" parent="Window/ScrollContainer/TradeContainer/ColumnHeaders"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("2_l7dv1")
 text = "YOUR STOCK"
 horizontal_alignment = 1
 
 [node name="Label3" type="Label" parent="Window/ScrollContainer/TradeContainer/ColumnHeaders"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("2_l7dv1")
 text = "PRICE"
 horizontal_alignment = 1
 
 [node name="Label4" type="Label" parent="Window/ScrollContainer/TradeContainer/ColumnHeaders"]
 layout_mode = 2
 size_flags_horizontal = 3
-theme = ExtResource("2_l7dv1")
 text = "OFFER"
 horizontal_alignment = 1
 
 [node name="ProductsContainer" type="VBoxContainer" parent="Window/ScrollContainer/TradeContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+theme = ExtResource("5_d2jab")
 
 [node name="HBoxContainer" parent="Window/ScrollContainer/TradeContainer/ProductsContainer" instance=ExtResource("2_3fybu")]
 layout_mode = 2
