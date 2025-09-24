@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://dharf5yrc87h1"]
 
 [ext_resource type="PackedScene" uid="uid://c8xbshv3vbksd" path="res://scenes/UI/Windows/window.tscn" id="1_kjaci"]
-[ext_resource type="Script" uid="uid://c0hsnpgpsni0t" path="res://scripts/UI/Windows/TradeUI.cs" id="2_ativa"]
+[ext_resource type="Script" uid="uid://c0hsnpgpsni0t" path="res://scripts/UI/Windows/TradeWindow.cs" id="2_ativa"]
 [ext_resource type="Theme" uid="uid://bpgjpo21r7baa" path="res://themes/Table/ColumnHeaderTheme.tres" id="2_peoci"]
 [ext_resource type="Theme" uid="uid://bu34iqfaecoay" path="res://themes/Table/RowTheme.tres" id="3_ativa"]
 [ext_resource type="PackedScene" uid="uid://co4hcp8xxoa5a" path="res://scenes/UI/Table/TradeRow.tscn" id="4_klttl"]
@@ -23,6 +23,11 @@ fundsLabel = NodePath("Body/ScrollContainer/TradeContainer/SummaryContainer/Play
 costLabel = NodePath("Body/ScrollContainer/TradeContainer/SummaryContainer/TotalCost")
 confirmButton = NodePath("Body/ScrollContainer/TradeContainer/SummaryContainer/TradeButton")
 confirmSound = NodePath("AudioStreamPlayer")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="2"]
+stream = ExtResource("6_ativa")
+volume_db = -14.715
+bus = &"Sound Effects"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Body" index="0"]
 layout_mode = 1
@@ -118,11 +123,6 @@ offset_right = 807.0
 offset_bottom = 34.0
 size_flags_vertical = 4
 text = "TRADE"
-
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="2"]
-stream = ExtResource("6_ativa")
-volume_db = -14.715
-bus = &"Sound Effects"
 
 [connection signal="value_changed" from="Body/ScrollContainer/TradeContainer/ProductsContainer/HBoxContainer/purchaseAmount" to="." method="updateCost"]
 [connection signal="value_changed" from="Body/ScrollContainer/TradeContainer/ProductsContainer/HBoxContainer2/purchaseAmount" to="." method="updateCost"]

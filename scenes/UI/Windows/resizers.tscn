@@ -1,13 +1,17 @@
-[gd_scene format=3 uid="uid://dmn7cdrl68ltd"]
+[gd_scene load_steps=2 format=3 uid="uid://dmn7cdrl68ltd"]
 
-[node name="Resizers" type="Control"]
-layout_mode = 3
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_io2rv"]
+bg_color = Color(0.607843, 0, 0.85098, 1)
+corner_detail = 4
+
+[node name="Resizers" type="Panel"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_io2rv")
 
 [node name="leftResizer" type="Control" parent="."]
 custom_minimum_size = Vector2(8, 0)

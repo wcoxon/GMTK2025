@@ -20,7 +20,7 @@ public partial class BanditEncounter : EncounterArea
 
         Node other = Body.GetParent();
 
-        if (other is PlayerTraveller) Player.Instance.UI.encounterView.DisplayEncounter(this);
+        if (other is PlayerTraveller) Player.Instance.UI.encounterWindow.DisplayEncounter(this);
         if (other is NPCTraveller npc) robItems(npc);
     }
 

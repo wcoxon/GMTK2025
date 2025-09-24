@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 // rumours menu
-public partial class RumoursUI : UIWindow
+public partial class RumoursWindow : UIWindow
 {
     [Export] PackedScene rumourRowScene;
     VBoxContainer rumoursList;

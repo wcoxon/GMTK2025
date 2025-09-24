@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://b3iri6uclx8g0"]
 
 [ext_resource type="PackedScene" uid="uid://c8xbshv3vbksd" path="res://scenes/UI/Windows/window.tscn" id="1_7qauh"]
-[ext_resource type="Script" uid="uid://kj27sednfxyt" path="res://scripts/UI/Windows/TownPanel.cs" id="2_4w40o"]
+[ext_resource type="Script" uid="uid://kj27sednfxyt" path="res://scripts/UI/Windows/TownWindow.cs" id="2_4w40o"]
 [ext_resource type="FontFile" uid="uid://clh4frvcwdwot" path="res://Assets/Fonts/AURORA-PRO.otf" id="2_wpomi"]
 [ext_resource type="PackedScene" uid="uid://degyohtca0hlh" path="res://scenes/UI/Table/MarketTable.tscn" id="3_4w40o"]
 [ext_resource type="PackedScene" uid="uid://b3d22d1uy5mux" path="res://scenes/UI/Table/table.tscn" id="4_xh8gu"]
@@ -32,7 +32,7 @@ marketTable = NodePath("Body/ScrollContainer/TownStats/TabContainer/Market/Marke
 tradeButton = NodePath("Body/ScrollContainer/TownStats/TabContainer/Market/trade")
 rumourButton = NodePath("Body/ScrollContainer/TownStats/TabContainer/Visitors/rumours")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Body" index="1"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Body" index="0"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

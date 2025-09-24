@@ -1,21 +1,71 @@
-[gd_scene load_steps=10 format=3 uid="uid://c8xbshv3vbksd"]
+[gd_scene load_steps=15 format=3 uid="uid://c8xbshv3vbksd"]
 
 [ext_resource type="Theme" uid="uid://cjcbo4rh5sarl" path="res://themes/WinXP/Body.tres" id="1_ymwp4"]
 [ext_resource type="Script" uid="uid://d23uhfm6750cv" path="res://scripts/UI/Windows/UIWindow.cs" id="2_rx2t0"]
+[ext_resource type="Shader" uid="uid://ckgn75vebpdr1" path="res://shaders/UI/Tiled.gdshader" id="3_qkgba"]
 [ext_resource type="PackedScene" uid="uid://do2fuu40ydxtg" path="res://scenes/UI/Windows/handlebar.tscn" id="3_ymwp4"]
 [ext_resource type="PackedScene" uid="uid://dmn7cdrl68ltd" path="res://scenes/UI/Windows/resizers.tscn" id="4_nyck8"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ymwp4"]
-bg_color = Color(1, 0.921569, 0.580392, 1)
-border_width_left = 8
-border_width_top = 8
-border_width_right = 8
-border_width_bottom = 8
-border_color = Color(0, 0.133333, 0.811765, 1)
-expand_margin_left = 8.0
-expand_margin_top = 8.0
-expand_margin_right = 8.0
-expand_margin_bottom = 8.0
+[sub_resource type="Gradient" id="Gradient_rx2t0"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.486486)
+colors = PackedColorArray(1, 0.954667, 0.66, 1, 0.9, 0.82395, 0.549, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qkgba"]
+noise_type = 5
+seed = 9
+frequency = 0.0061
+fractal_type = 0
+fractal_octaves = 1
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rx2t0"]
+seamless = true
+color_ramp = SubResource("Gradient_rx2t0")
+noise = SubResource("FastNoiseLite_qkgba")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_togvs"]
+shader = ExtResource("3_qkgba")
+shader_parameter/tileTexture = SubResource("NoiseTexture2D_rx2t0")
+
+[sub_resource type="Animation" id="Animation_5u5rm"]
+resource_name = "Close"
+length = 0.2
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1.00129, -0.1, 0, 0.0666667, 0.0161347, 1.17603, -0.0333333, -0.174737, 0.0333333, 0.148968, 0, -0.067, 0, 0.0287186, -0.0110491),
+"times": PackedFloat32Array(0, 0.1, 0.2)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(1.00129, -0.1, 0, 0.0666667, 0.0161347, 1.17603, -0.0333333, -0.174737, 0.0333333, 0.148968, 0, -0.067, 0, 0.0287186, -0.0110491),
+"times": PackedFloat32Array(0.000411633, 0.100412, 0.200412)
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"OnFinishClose"
+}]
+}
 
 [sub_resource type="Animation" id="Animation_rx2t0"]
 length = 0.001
@@ -43,21 +93,16 @@ tracks/1/keys = {
 "update": 0,
 "values": [Vector2(1, 1)]
 }
-
-[sub_resource type="Animation" id="Animation_nyck8"]
-resource_name = "popup"
-length = 0.2
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(0, 0), Vector2(1, 1)]
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:scale:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(1, -0.1, 0, 0.1, 0),
+"times": PackedFloat32Array(0)
 }
 
 [sub_resource type="Animation" id="Animation_qkgba"]
@@ -76,14 +121,54 @@ tracks/0/keys = {
 "values": [Vector2(1, 1), Vector2(1, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_nyck8"]
+resource_name = "popup"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.166667, 0.2),
+"transitions": PackedFloat32Array(0.517632, 1.8025, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(1.1, 1.1), Vector2(1, 1)]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 3, 0),
+"points": PackedFloat32Array(0, -0.1, 0, 0.0666667, 0.0161347, 1.17603, -0.0333333, 0.149664, 0.0333333, -0.149664, 1.00142, -0.0666667, 0.012472, 0.0287186, -0.0110491),
+"times": PackedFloat32Array(0, 0.1, 0.2)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:scale:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0, 0),
+"points": PackedFloat32Array(0, -0.1, 0, 0.0666667, 0.0161347, 1.17603, -0.0333333, 0.149664, 0.0333333, -0.149664, 1.00142, -0.0666667, 0.012472, 0.0287186, -0.0110491),
+"times": PackedFloat32Array(0, 0.1, 0.2)
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qkgba"]
 _data = {
+&"Close": SubResource("Animation_5u5rm"),
 &"RESET": SubResource("Animation_rx2t0"),
 &"collapse": SubResource("Animation_qkgba"),
 &"popup": SubResource("Animation_nyck8")
 }
 
 [node name="Window" type="Control"]
+custom_minimum_size = Vector2(16, 16)
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -96,24 +181,30 @@ mouse_force_pass_scroll_events = false
 theme = ExtResource("1_ymwp4")
 script = ExtResource("2_rx2t0")
 
-[node name="handlebar" parent="." instance=ExtResource("3_ymwp4")]
+[node name="TitleBar" parent="." instance=ExtResource("3_ymwp4")]
 layout_mode = 1
 offset_top = -46.0
 offset_bottom = 2.0
 
-[node name="Body" type="Panel" parent="."]
+[node name="Resizers" parent="." instance=ExtResource("4_nyck8")]
 layout_mode = 1
-anchors_preset = 15
+
+[node name="Body" type="Panel" parent="."]
+material = SubResource("ShaderMaterial_togvs")
+layout_mode = 1
+anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_ymwp4")
-
-[node name="Resizers" parent="Body" instance=ExtResource("4_nyck8")]
-layout_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_qkgba")
 }
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="OnAnimationFinish"]

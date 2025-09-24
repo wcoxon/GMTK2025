@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class EncounterView : UIWindow
+public partial class EncounterWindow : UIWindow
 {
     private EncounterArea encounter;
 

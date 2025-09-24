@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class WindowHandleUI : Panel
+public partial class UIWindowTitleBar : Panel
 {
     UIWindow window;
 

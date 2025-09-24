@@ -2,7 +2,7 @@ using Godot;
 using System;
 
 // trade menu
-public partial class TradeUI : UIWindow
+public partial class TradeWindow : UIWindow
 {
 	[Export] VBoxContainer rowContainer;
 	[Export] Label fundsLabel, costLabel;

@@ -1,9 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://do2fuu40ydxtg"]
+[gd_scene load_steps=7 format=3 uid="uid://do2fuu40ydxtg"]
 
 [ext_resource type="Theme" uid="uid://dd7oj65maaocx" path="res://themes/WinXP/HandleBar.tres" id="1_3qyhd"]
-[ext_resource type="Script" uid="uid://dj8mkmqmphc2n" path="res://scripts/UI/WindowHandleUI.cs" id="2_dp7b1"]
+[ext_resource type="Shader" uid="uid://3lxnixcq7sqo" path="res://shaders/UI/WindowBar.gdshader" id="1_dp7b1"]
+[ext_resource type="Script" uid="uid://dj8mkmqmphc2n" path="res://scripts/UI/Windows/UIWindowTitleBar.cs" id="2_dp7b1"]
+
+[sub_resource type="Gradient" id="Gradient_6e3jt"]
+colors = PackedColorArray(0, 0.14, 0.6, 1, 0.609167, 0, 0.85, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_4ymgl"]
+gradient = SubResource("Gradient_6e3jt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kv3pi"]
+shader = ExtResource("1_dp7b1")
+shader_parameter/gradient = SubResource("GradientTexture1D_4ymgl")
 
 [node name="handlebar" type="Panel" node_paths=PackedStringArray("titleLabel", "closeButton", "collapseButton")]
+material = SubResource("ShaderMaterial_kv3pi")
 custom_minimum_size = Vector2(0, 48)
 anchors_preset = 10
 anchor_right = 1.0

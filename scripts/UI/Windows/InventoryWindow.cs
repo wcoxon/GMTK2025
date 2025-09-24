@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class InventoryUI : UIWindow
+public partial class InventoryWindow : UIWindow
 {
 	private Traveller subject;
 

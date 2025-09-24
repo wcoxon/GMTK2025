@@ -14,12 +14,12 @@ public partial class UIController : CanvasLayer
     [Export] public PlottingUI plottingUI;
 
     // wins
-    [Export] public TownPanel townPanel;
-    [Export] public InventoryUI inventoryUI;
-    [Export] public TradeUI tradeUI;
-    [Export] public DialogueUI dialogueUI;
-    [Export] public RumoursUI rumoursUI;
-    [Export] public EncounterView encounterView;
+    [Export] public TownWindow townPanel;
+    [Export] public InventoryWindow inventoryUI;
+    [Export] public TradeWindow tradeUI;
+    [Export] public DialogueWindow dialogueWindow;
+    [Export] public RumoursWindow rumoursUI;
+    [Export] public EncounterWindow encounterWindow;
 
     Control WindowsContainer;
 

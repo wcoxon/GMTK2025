@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cam1btrgn8owb"]
 
 [ext_resource type="PackedScene" uid="uid://c8xbshv3vbksd" path="res://scenes/UI/Windows/window.tscn" id="1_dtw0n"]
-[ext_resource type="Script" uid="uid://do6w43vwwbhb7" path="res://scripts/UI/Windows/InventoryUI.cs" id="2_ebnq5"]
+[ext_resource type="Script" uid="uid://do6w43vwwbhb7" path="res://scripts/UI/Windows/InventoryWindow.cs" id="2_ebnq5"]
 [ext_resource type="PackedScene" uid="uid://nscjafbhcguy" path="res://scenes/UI/Table/StockPanel.tscn" id="2_eqsxb"]
 
 [node name="InventoryWindow" node_paths=PackedStringArray("moneyLabel", "rowsContainer") instance=ExtResource("1_dtw0n")]
@@ -13,12 +13,12 @@ anchor_bottom = 0.571
 offset_left = -310.0
 offset_top = -91.008
 offset_right = 235.0
-offset_bottom = 90.992
+offset_bottom = 97.992
 script = ExtResource("2_ebnq5")
 moneyLabel = NodePath("Body/ScrollContainer/Control/MoneyLabel")
 rowsContainer = NodePath("Body/ScrollContainer/Control/ItemRows")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Body" index="1"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Body" index="0"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

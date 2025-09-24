@@ -20,7 +20,7 @@ public partial class EncounterRumour : Rumour
         base.reveal(revealer);
 
         Encounter.Show();
-        Player.Instance.UI.dialogueUI.revealEncounter(revealer, Encounter);
+        Player.Instance.UI.dialogueWindow.revealEncounter(revealer, Encounter);
     }
 
 }

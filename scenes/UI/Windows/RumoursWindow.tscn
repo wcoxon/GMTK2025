@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://1s6chqjbabh5"]
 
 [ext_resource type="PackedScene" uid="uid://c8xbshv3vbksd" path="res://scenes/UI/Windows/window.tscn" id="1_kps8w"]
-[ext_resource type="Script" uid="uid://bftjoa47j0j44" path="res://scripts/UI/Windows/RumoursUI.cs" id="2_86m5y"]
+[ext_resource type="Script" uid="uid://bftjoa47j0j44" path="res://scripts/UI/Windows/RumoursWindow.cs" id="2_86m5y"]
 [ext_resource type="PackedScene" uid="uid://cptdujo6ita6s" path="res://scenes/UI/Rumours/rumour_row.tscn" id="3_grojl"]
 
 [node name="RumoursWindow" instance=ExtResource("1_kps8w")]
@@ -17,7 +17,7 @@ offset_bottom = 232.0
 script = ExtResource("2_86m5y")
 rumourRowScene = ExtResource("3_grojl")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="Body" index="1"]
+[node name="ScrollContainer" type="ScrollContainer" parent="Body" index="0"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

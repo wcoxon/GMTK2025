@@ -48,7 +48,13 @@ stream = ExtResource("7_2phbr")
 volume_db = -3.54
 bus = &"Sound Effects"
 
-[node name="UICanvas" type="CanvasLayer" parent="." node_paths=PackedStringArray("timeControlPanel", "townContextMenu", "plottingUI", "townPanel", "inventoryUI", "tradeUI", "dialogueUI", "rumoursUI", "encounterView")]
+[node name="WindowClose" type="AudioStreamPlayer" parent="Audio"]
+stream = ExtResource("7_2phbr")
+volume_db = -3.54
+pitch_scale = 0.88
+bus = &"Sound Effects"
+
+[node name="UICanvas" type="CanvasLayer" parent="." node_paths=PackedStringArray("timeControlPanel", "townContextMenu", "plottingUI", "townPanel", "inventoryUI", "tradeUI", "dialogueWindow", "rumoursUI", "encounterWindow")]
 script = ExtResource("13_mkg2b")
 timeControlPanel = NodePath("HUD/TimePanel")
 townContextMenu = NodePath("TownContextMenu")
@@ -56,9 +62,9 @@ plottingUI = NodePath("PlottingUI")
 townPanel = NodePath("Windows/TownWindow")
 inventoryUI = NodePath("Windows/InventoryWindow")
 tradeUI = NodePath("Windows/TradeWindow")
-dialogueUI = NodePath("Windows/DialogueWindow")
+dialogueWindow = NodePath("Windows/DialogueWindow")
 rumoursUI = NodePath("Windows/RumoursWindow")
-encounterView = NodePath("Windows/EncounterWindow")
+encounterWindow = NodePath("Windows/EncounterWindow")
 
 [node name="HUD" type="Control" parent="UICanvas"]
 layout_mode = 3
@@ -158,6 +164,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="RumoursWindow" parent="UICanvas/Windows" instance=ExtResource("13_0ehpd")]
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 offset_left = 215.0
 offset_top = -249.0
@@ -166,6 +173,7 @@ offset_bottom = 141.0
 pivot_offset = Vector2(558.755, 297.402)
 
 [node name="TownWindow" parent="UICanvas/Windows" instance=ExtResource("13_8wjpf")]
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 offset_top = -145.0
 offset_right = 195.0
@@ -173,6 +181,7 @@ offset_bottom = 126.0
 pivot_offset = Vector2(558.755, 297.402)
 
 [node name="TradeWindow" parent="UICanvas/Windows" instance=ExtResource("14_8wjpf")]
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 anchor_left = 0.5
 anchor_top = 0.504
@@ -185,6 +194,7 @@ offset_bottom = 152.408
 pivot_offset = Vector2(558.755, 297.402)
 
 [node name="InventoryWindow" parent="UICanvas/Windows" instance=ExtResource("15_8wjpf")]
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 anchor_top = 0.5
 anchor_bottom = 0.5
@@ -195,6 +205,7 @@ offset_bottom = -9.0
 pivot_offset = Vector2(558.755, 297.402)
 
 [node name="EncounterWindow" parent="UICanvas/Windows" instance=ExtResource("16_0ehpd")]
+custom_minimum_size = Vector2(0, 0)
 layout_mode = 1
 offset_left = -205.0
 offset_top = -213.0

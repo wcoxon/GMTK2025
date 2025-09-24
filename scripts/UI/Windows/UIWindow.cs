@@ -3,10 +3,8 @@ using System;
 
 public partial class UIWindow : Control
 {
-
-
-    public WindowHandleUI barUI;
-    public Panel bodyUI;
+    public UIWindowTitleBar barUI;
+    public Panel bodyUI, borderUI;
 
     public virtual void Open()
     {
@@ -19,38 +17,51 @@ public partial class UIWindow : Control
     }
     public virtual void Close()
     {
+        
+        PivotOffset = Size / 2;
+        GetNode<AnimationPlayer>("AnimationPlayer").Play("Close");
+
+        AudioController.Instance.playAudio("WindowClose");
+
+        //UIController.Instance.CloseUI(this);
+    }
+
+    public virtual void OnFinishClose()
+    {
         UIController.Instance.CloseUI(this);
     }
 
     public virtual void Collapse()
     {
         bodyUI.Visible = !bodyUI.Visible;
+        borderUI.Visible = bodyUI.Visible;
     }
 
     public override void _EnterTree()
     {
         base._EnterTree();
 
-        barUI = GetNode<WindowHandleUI>("handlebar");
+        barUI = GetNode<UIWindowTitleBar>("TitleBar");
         bodyUI = GetNode<Panel>("Body");
+        borderUI = GetNode<Panel>("Resizers");
 
 
-        GetNode<Control>("Body/Resizers/leftResizer").GuiInput += leftSideInput;
-        GetNode<Control>("Body/Resizers/rightResizer").GuiInput += rightSideInput;
-        GetNode<Control>("Body/Resizers/topResizer").GuiInput += topInput;
-        GetNode<Control>("Body/Resizers/bottomResizer").GuiInput += bottomInput;
+        GetNode<Control>("Resizers/leftResizer").GuiInput += leftSideInput;
+        GetNode<Control>("Resizers/rightResizer").GuiInput += rightSideInput;
+        GetNode<Control>("Resizers/topResizer").GuiInput += topInput;
+        GetNode<Control>("Resizers/bottomResizer").GuiInput += bottomInput;
 
-        GetNode<Control>("Body/Resizers/TLResizer").GuiInput += topInput;
-        GetNode<Control>("Body/Resizers/TLResizer").GuiInput += leftSideInput;
+        GetNode<Control>("Resizers/TLResizer").GuiInput += topInput;
+        GetNode<Control>("Resizers/TLResizer").GuiInput += leftSideInput;
 
-        GetNode<Control>("Body/Resizers/TRResizer").GuiInput += topInput;
-        GetNode<Control>("Body/Resizers/TRResizer").GuiInput += rightSideInput;
+        GetNode<Control>("Resizers/TRResizer").GuiInput += topInput;
+        GetNode<Control>("Resizers/TRResizer").GuiInput += rightSideInput;
 
-        GetNode<Control>("Body/Resizers/BLResizer").GuiInput += bottomInput;
-        GetNode<Control>("Body/Resizers/BLResizer").GuiInput += leftSideInput;
+        GetNode<Control>("Resizers/BLResizer").GuiInput += bottomInput;
+        GetNode<Control>("Resizers/BLResizer").GuiInput += leftSideInput;
 
-        GetNode<Control>("Body/Resizers/BRResizer").GuiInput += bottomInput;
-        GetNode<Control>("Body/Resizers/BRResizer").GuiInput += rightSideInput;
+        GetNode<Control>("Resizers/BRResizer").GuiInput += bottomInput;
+        GetNode<Control>("Resizers/BRResizer").GuiInput += rightSideInput;
 
 
         bodyUI.GuiInput += windowInput;

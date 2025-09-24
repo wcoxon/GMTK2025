@@ -1,7 +1,7 @@
 using Godot;
 
 // town menu
-public partial class TownPanel : UIWindow
+public partial class TownWindow : UIWindow
 {
     // populates UI contents with information about given town
 

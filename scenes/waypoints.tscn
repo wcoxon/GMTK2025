@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://durnjyano0ic4"]
 
-[ext_resource type="Script" uid="uid://c8kq8ardjabf1" path="res://scripts/Waypoints.cs" id="1_o7wve"]
+[ext_resource type="Script" uid="uid://c8kq8ardjabf1" path="res://scripts/Route/Waypoints.cs" id="1_o7wve"]
 [ext_resource type="PackedScene" uid="uid://ce8fqoxlbn15x" path="res://scenes/testing/testing_dot.tscn" id="2_bwv6p"]
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_3wc6k"]

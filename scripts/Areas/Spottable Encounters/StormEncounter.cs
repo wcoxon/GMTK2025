@@ -21,7 +21,7 @@ public partial class StormEncounter : EncounterArea
 
         if (Body.GetParent() is Traveller traveller) traveller.moveSpeed += moveSpeedModifier;
 
-        if (Body.GetParent() is PlayerTraveller) Player.Instance.UI.encounterView.DisplayEncounter(this);
+        if (Body.GetParent() is PlayerTraveller) Player.Instance.UI.encounterWindow.DisplayEncounter(this);
 
     }
 

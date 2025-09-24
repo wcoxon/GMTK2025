@@ -23,23 +23,23 @@ public partial class PlayerMovementController : Node3D
 
         var mousePos = GetViewport().GetMousePosition();
 
-        Vector3 mousePosition = dragPlane.IntersectsRay(camera.ProjectRayOrigin(mousePos), camera.ProjectRayNormal(mousePos)) ?? Vector3.Zero;
+        Vector3 dragPosition = dragPlane.IntersectsRay(camera.ProjectRayOrigin(mousePos), camera.ProjectRayNormal(mousePos)) ?? Vector3.Zero;
 
-        if (dragBegin)
-        {
-            cursor.Position = mousePosition;
-        }
+        if (dragBegin) cursor.Position = dragPosition;
+
         if (dragMove)
         {
-            var dragDelta = mousePosition - cursor.Position; // displacement from start of drag
+            var dragDelta = dragPosition - cursor.Position; // displacement from cursor noted at start of drag
 
             targetPosition -= dragDelta; // displace player opposite to drag
+
+            // if we add offset from cursor to target position then whilst lerping its adding a shit tonne more on
         }
     }
 
     public override void _Process(double delta)
     {
-        Player.Instance.Position = Player.Instance.Position.Lerp(targetPosition, 0.3f);
+        Player.Instance.Position = targetPosition;
     }
     public override void _PhysicsProcess(double delta)
     {

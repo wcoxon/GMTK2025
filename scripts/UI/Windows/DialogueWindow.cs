@@ -1,6 +1,6 @@
 using Godot;
 
-public partial class DialogueUI : UIWindow
+public partial class DialogueWindow : UIWindow
 {
     AnimatedSprite2D sprite;
 

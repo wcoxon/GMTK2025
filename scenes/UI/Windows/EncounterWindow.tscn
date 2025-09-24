@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://buvrlm4hykg61"]
 
 [ext_resource type="PackedScene" uid="uid://c8xbshv3vbksd" path="res://scenes/UI/Windows/window.tscn" id="1_54vbi"]
-[ext_resource type="Script" uid="uid://drqmuyl2y0oc1" path="res://scripts/UI/Windows/EncounterView.cs" id="2_khxmp"]
+[ext_resource type="Script" uid="uid://drqmuyl2y0oc1" path="res://scripts/UI/Windows/EncounterWindow.cs" id="2_khxmp"]
 
 [sub_resource type="Gradient" id="Gradient_cfq0f"]
 offsets = PackedFloat32Array(0, 0.142857, 0.29803, 0.470443, 0.64532, 0.825123, 1)
@@ -24,7 +24,7 @@ offset_right = 247.0
 offset_bottom = 254.0
 script = ExtResource("2_khxmp")
 
-[node name="MarginContainer" type="MarginContainer" parent="Body" index="1"]
+[node name="MarginContainer" type="MarginContainer" parent="Body" index="0"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

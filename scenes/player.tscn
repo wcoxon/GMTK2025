@@ -32,7 +32,6 @@ environment = ExtResource("2_g2els")
 
 [node name="Cursor" type="MeshInstance3D" parent="."]
 top_level = true
-visible = false
 mesh = SubResource("PrismMesh_g2els")
 
 [node name="PlayerMovementController" type="Node3D" parent="."]
