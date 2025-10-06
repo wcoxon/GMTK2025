@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://clc830lkjlhip"]
+[gd_scene load_steps=23 format=3 uid="uid://clc830lkjlhip"]
 
 [ext_resource type="PackedScene" uid="uid://b212emu5my3lk" path="res://scenes/town.tscn" id="1_2hyix"]
 [ext_resource type="Script" uid="uid://bbyde1g33rcwq" path="res://scripts/WorldMap.cs" id="1_4qxv8"]
@@ -15,8 +15,14 @@
 [ext_resource type="Gradient" uid="uid://64s1ndb6hm3q" path="res://shaders/Map/mapramp.tres" id="31_fq663"]
 [ext_resource type="FastNoiseLite" uid="uid://birrq6p1kcr3w" path="res://shaders/Map/mapNoise.tres" id="32_mniao"]
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_p7tei"]
+size = Vector2(100, 100)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n1psn"]
+albedo_color = Color(0, 0.147131, 0.333763, 1)
+
 [sub_resource type="PlaneMesh" id="PlaneMesh_m57gh"]
-size = Vector2(75, 75)
+size = Vector2(100, 100)
 subdivide_width = 32
 subdivide_depth = 32
 
@@ -73,15 +79,15 @@ Animation = ExtResource("11_y2ir2")
 [node name="NPCTraveller3" parent="." node_paths=PackedStringArray("Town") instance=ExtResource("4_y2ir2")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.16845, 0, -13.3013)
 CharacterName = "Incerative Rob"
-Town = NodePath("../Telemodem")
+Town = NodePath("../Modem")
 Animation = ExtResource("5_mkblt")
 
-[node name="Telemodem" parent="." instance=ExtResource("1_2hyix")]
+[node name="Modem" parent="." instance=ExtResource("1_2hyix")]
 transform = Transform3D(0.950997, 0, -0.3092, 0, 1, 0, 0.3092, 0, 0.950997, 19.1758, -0.294424, 4.71464)
 Data = ExtResource("5_fq663")
 
 [node name="Gumbusville" parent="." instance=ExtResource("1_2hyix")]
-transform = Transform3D(0.812165, 0, 0.583428, 0, 1, 0, -0.583428, 0, 0.812165, -31.8401, 0.0125952, -16.0707)
+transform = Transform3D(0.812165, 0, 0.583428, 0, 1, 0, -0.583428, 0, 0.812165, -42.2907, 0.0125952, -16.0707)
 Data = ExtResource("6_mniao")
 
 [node name="Slopton" parent="." instance=ExtResource("1_2hyix")]
@@ -97,9 +103,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.5218, 2.41767, 21.1237)
 [node name="StormArea" parent="." instance=ExtResource("11_c00ee")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.08288, 5.41955, -0.00314903)
 
-[node name="SurfacePlane" type="MeshInstance3D" parent="."]
-mesh = SubResource("PlaneMesh_m57gh")
-surface_material_override/0 = SubResource("ShaderMaterial_4qxv8")
-
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.610242, 0.792215, 0, -0.792215, 0.610242, 0, 0, 0)
+
+[node name="Terrain" type="Node3D" parent="."]
+
+[node name="Soup" type="MeshInstance3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.14567, 0)
+mesh = SubResource("PlaneMesh_p7tei")
+surface_material_override/0 = SubResource("StandardMaterial3D_n1psn")
+
+[node name="SurfacePlane" type="MeshInstance3D" parent="Terrain"]
+mesh = SubResource("PlaneMesh_m57gh")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_4qxv8")

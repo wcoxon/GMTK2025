@@ -5,10 +5,9 @@ public partial class TownWindow : UIWindow
 {
     // populates UI contents with information about given town
 
-    [Export] Label nameLabel, populationLabel, wealthLabel;
-
     [Export] AnimatedSprite2D[] visitorSprites;
-    [Export] MarketTable marketTable;
+    //[Export] MarketTable marketTable;
+    [Export] VBoxContainer rowsContainer;
 
     [Export] Button tradeButton, rumourButton;
 
@@ -40,14 +39,28 @@ public partial class TownWindow : UIWindow
 
     public void updateUI()
     {
-        //just need to update the dynamic ui to the latest values, town name won't need updating here it's set only when town is selected
-        populationLabel.Text = $"Population: {town.Population}";
-        wealthLabel.Text = $"Wealth: {town.Wealth}";
-
         updateVisitors();
-        marketTable.updateTable(Town);
+        //marketTable.updateTable(Town);
+
+        updateTable();
     }
 
+    void updateTable()
+    {
+        foreach (HBoxContainer row in rowsContainer.GetChildren())
+        {
+            // using item id from row metadata, and town from this menu, fill in data to labels
+
+            int itemID = (int)row.GetMeta("ItemID");
+
+            row.GetChild<Label>(0).Text = Game.itemNames[itemID];
+            row.GetChild<Label>(1).Text = ((int)Town.Stocks[itemID]).ToString();
+            row.GetChild<Label>(2).Text = ((int)Town.netProduction(itemID)).ToString();
+            row.GetChild<Label>(3).Text = Town.appraise(itemID).ToString();
+
+
+        }
+    }
     public void updateVisitors()
     {
         for (int i = 0; i < visitorSprites.Length; i++)
@@ -99,8 +112,6 @@ public partial class TownWindow : UIWindow
 
         Open();
 
-
-        nameLabel.Text = Town.TownName; // only update name when town changed
         updateUI(); // update stats UI
         updateActions(); // update buttons
     }

@@ -1,8 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://cam1btrgn8owb"]
+[gd_scene load_steps=8 format=3 uid="uid://cam1btrgn8owb"]
 
 [ext_resource type="PackedScene" uid="uid://c8xbshv3vbksd" path="res://scenes/UI/Windows/window.tscn" id="1_dtw0n"]
 [ext_resource type="Script" uid="uid://do6w43vwwbhb7" path="res://scripts/UI/Windows/InventoryWindow.cs" id="2_ebnq5"]
-[ext_resource type="PackedScene" uid="uid://nscjafbhcguy" path="res://scenes/UI/Table/StockPanel.tscn" id="2_eqsxb"]
+[ext_resource type="Script" uid="uid://ciwaifdkdbomr" path="res://scripts/UI/Table/Table.cs" id="3_ayiuf"]
+[ext_resource type="Theme" uid="uid://bpgjpo21r7baa" path="res://themes/Table/ColumnHeaderTheme.tres" id="4_wa72g"]
+[ext_resource type="Texture2D" uid="uid://jpprtujsqvll" path="res://Assets/images/arrow.png" id="5_65vra"]
+[ext_resource type="Theme" uid="uid://bu34iqfaecoay" path="res://themes/Table/RowTheme.tres" id="6_l8oy3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulqtp"]
+bg_color = Color(0.197937, 0.197937, 0.197937, 1)
 
 [node name="InventoryWindow" node_paths=PackedStringArray("moneyLabel", "rowsContainer") instance=ExtResource("1_dtw0n")]
 anchors_preset = -1
@@ -13,10 +19,10 @@ anchor_bottom = 0.571
 offset_left = -310.0
 offset_top = -91.008
 offset_right = 235.0
-offset_bottom = 97.992
+offset_bottom = 170.992
 script = ExtResource("2_ebnq5")
 moneyLabel = NodePath("Body/ScrollContainer/Control/MoneyLabel")
-rowsContainer = NodePath("Body/ScrollContainer/Control/ItemRows")
+rowsContainer = NodePath("Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer/ScrollContainer/Rows")
 
 [node name="ScrollContainer" type="ScrollContainer" parent="Body" index="0"]
 layout_mode = 1
@@ -36,17 +42,123 @@ size_flags_vertical = 3
 layout_mode = 2
 text = "Crumbs: "
 
-[node name="ItemRows" type="VBoxContainer" parent="Body/ScrollContainer/Control" index="1"]
+[node name="Table" type="Control" parent="Body/ScrollContainer/Control" index="1" node_paths=PackedStringArray("headersContainer", "rowsContainer", "sortIcon")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("3_ayiuf")
+headersContainer = NodePath("ContainerPanel/VBoxContainer/ColumnHeaders")
+rowsContainer = NodePath("ContainerPanel/VBoxContainer/ScrollContainer/Rows")
+sortIcon = NodePath("ContainerPanel/VBoxContainer/ColumnHeaders/Label/TextureRect")
+
+[node name="ContainerPanel" type="Panel" parent="Body/ScrollContainer/Control/Table" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ulqtp")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Body/ScrollContainer/Control/Table/ContainerPanel" index="0"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColumnHeaders" type="HBoxContainer" parent="Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer" index="0"]
+layout_mode = 2
+theme = ExtResource("4_wa72g")
+
+[node name="Label" type="Label" parent="Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer/ColumnHeaders" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 0
+text = "Item"
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer/ColumnHeaders/Label" index="0"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -24.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("5_65vra")
+expand_mode = 5
+
+[node name="Label2" type="Label" parent="Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer/ColumnHeaders" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 0
+text = "Quantity"
+vertical_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer" index="1"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Control" parent="Body/ScrollContainer/Control/ItemRows" index="0" instance=ExtResource("2_eqsxb")]
+[node name="Rows" type="VBoxContainer" parent="Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer/ScrollContainer" index="0"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource("6_l8oy3")
 
-[node name="Control2" parent="Body/ScrollContainer/Control/ItemRows" index="1" instance=ExtResource("2_eqsxb")]
+[node name="Row" type="HBoxContainer" parent="Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer/ScrollContainer/Rows" index="0"]
 layout_mode = 2
-ItemID = 1
+metadata/ItemID = 0
 
-[node name="Control3" parent="Body/ScrollContainer/Control/ItemRows" index="2" instance=ExtResource("2_eqsxb")]
+[node name="Label" type="Label" parent="Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row" index="0"]
 layout_mode = 2
-ItemID = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "AA"
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "row 1"
+vertical_alignment = 1
+
+[node name="Row3" type="HBoxContainer" parent="Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer/ScrollContainer/Rows" index="1"]
+layout_mode = 2
+metadata/ItemID = 1
+
+[node name="Label" type="Label" parent="Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row3" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "CC"
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row3" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "row 1"
+vertical_alignment = 1
+
+[node name="Row2" type="HBoxContainer" parent="Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer/ScrollContainer/Rows" index="2"]
+layout_mode = 2
+metadata/ItemID = 2
+
+[node name="Label" type="Label" parent="Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row2" index="0"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "BB"
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="Body/ScrollContainer/Control/Table/ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row2" index="1"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "row 2"
+vertical_alignment = 1

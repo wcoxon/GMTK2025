@@ -1,13 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://b3d22d1uy5mux"]
+[gd_scene load_steps=6 format=3 uid="uid://b3d22d1uy5mux"]
 
 [ext_resource type="Script" uid="uid://ciwaifdkdbomr" path="res://scripts/UI/Table/Table.cs" id="1_sh0wm"]
 [ext_resource type="Theme" uid="uid://bpgjpo21r7baa" path="res://themes/Table/ColumnHeaderTheme.tres" id="2_ulqtp"]
 [ext_resource type="Theme" uid="uid://bu34iqfaecoay" path="res://themes/Table/RowTheme.tres" id="3_fa0fq"]
+[ext_resource type="Texture2D" uid="uid://jpprtujsqvll" path="res://Assets/images/arrow.png" id="3_hps5i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ulqtp"]
 bg_color = Color(0.197937, 0.197937, 0.197937, 1)
 
-[node name="Table" type="Control"]
+[node name="Table" type="Control" node_paths=PackedStringArray("headersContainer", "rowsContainer", "sortIcon")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,6 +18,9 @@ grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("1_sh0wm")
+headersContainer = NodePath("ContainerPanel/VBoxContainer/ColumnHeaders")
+rowsContainer = NodePath("ContainerPanel/VBoxContainer/ScrollContainer/Rows")
+sortIcon = NodePath("ContainerPanel/VBoxContainer/ColumnHeaders/Label/TextureRect")
 
 [node name="ContainerPanel" type="Panel" parent="."]
 layout_mode = 1
@@ -42,18 +46,34 @@ theme = ExtResource("2_ulqtp")
 [node name="Label" type="Label" parent="ContainerPanel/VBoxContainer/ColumnHeaders"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 0
 text = "column 1"
 vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="ContainerPanel/VBoxContainer/ColumnHeaders/Label"]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -24.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("3_hps5i")
+expand_mode = 5
 
 [node name="Label2" type="Label" parent="ContainerPanel/VBoxContainer/ColumnHeaders"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 0
 text = "column 2"
 vertical_alignment = 1
 
 [node name="Label3" type="Label" parent="ContainerPanel/VBoxContainer/ColumnHeaders"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 0
 text = "column 3"
 vertical_alignment = 1
 
@@ -74,7 +94,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
-text = "row 1"
+text = "AA"
 vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row"]
@@ -88,7 +108,31 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
+text = "88"
+vertical_alignment = 1
+
+[node name="Row3" type="HBoxContainer" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "CC"
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
 text = "row 1"
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "512"
 vertical_alignment = 1
 
 [node name="Row2" type="HBoxContainer" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows"]
@@ -98,7 +142,7 @@ layout_mode = 2
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
-text = "row 2"
+text = "BB"
 vertical_alignment = 1
 
 [node name="Label2" type="Label" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row2"]
@@ -112,5 +156,29 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 5
-text = "row 2"
+text = "44"
+vertical_alignment = 1
+
+[node name="Row4" type="HBoxContainer" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row4"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "ZZ"
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row4"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "row 4"
+vertical_alignment = 1
+
+[node name="Label3" type="Label" parent="ContainerPanel/VBoxContainer/ScrollContainer/Rows/Row4"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 5
+text = "41"
 vertical_alignment = 1

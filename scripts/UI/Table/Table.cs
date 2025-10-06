@@ -1,58 +1,82 @@
 using Godot;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.XPath;
 
 public partial class Table : Control
 {
-    // this will be THE modular table system thing we need to display and read data in table form
+
+    int sortedColumn = 0;
+    bool sortAscending = true;
+
+    [Export] HBoxContainer headersContainer;
+    [Export] VBoxContainer rowsContainer;
+    [Export] TextureRect sortIcon;
+
+    public override void _EnterTree()
+    {
+        base._EnterTree();
+
+        foreach (Label headerLabel in headersContainer.GetChildren())
+        {
+            headerLabel.GuiInput += (evt) => headerInput(evt, headerLabel.GetIndex());
+        }
+    }
+
+    void headerInput(InputEvent evt, int columnIndex)
+    {
+        if(evt is InputEventMouseButton mb && Input.IsActionJustPressed("select")) SortColumn(columnIndex);
+    }
+
+    public void SortColumn(int columnIndex)
+    {
+        if (columnIndex == sortedColumn)
+        {
+            // this column is currently sorted
+            // flip order
+            sortAscending = !sortAscending;
+        }
+        else
+        {
+            sortAscending = true;
+        }
+
+        sortIcon.FlipV = !sortAscending;
+
+        sortIcon.GetParent().RemoveChild(sortIcon);
+        headersContainer.GetChild(columnIndex).AddChild(sortIcon); // move icon to this column
 
 
+        for (int passIndex = 1; passIndex < rowsContainer.GetChildCount(); passIndex++)
+        {
+            for (int rowIndex = 0; rowIndex < rowsContainer.GetChildCount() - passIndex; rowIndex++)
+            {
+                // compare row to next
+                HBoxContainer row = rowsContainer.GetChild<HBoxContainer>(rowIndex);
+                HBoxContainer nextRow = rowsContainer.GetChild<HBoxContainer>(rowIndex + 1);
 
-    // give row to table, row data
+                Node field = row.GetChild(columnIndex);
+                Node nextField = nextRow.GetChild(columnIndex);
 
+                if (CompareFields(field, nextField) == (sortAscending ? 1 : -1))
+                {
+                    rowsContainer.MoveChild(row, rowIndex + 1);
+                }
+            }
+        }
+        sortedColumn = columnIndex;
+    }
 
-    // inventory
-    //  item, quantity
+    public int CompareFields(Node field1, Node field2)
+    {
+        if (field1 is Label label1 && field2 is Label label2)
+        {
+            if (label1.Text.IsValidInt()) return label1.Text.ToInt().CompareTo(label2.Text.ToInt());
 
-    // market display
-    //  item, quantity, ...,  price
+            return label1.Text.CompareTo(label2.Text);
+        }
 
-    // trading
-    //  item, quantity, player quantity, price, offer
-
-
-    // i can make prefabs for types of row though right
-    // yeah but then if you make a script for interfacing with each type of row you have to use different logic to read from them too
-
-
-    // the idea is to split the market info into its own scene and have a script that manages that table,
-    // then it's like, why not use the same script for all the tables like that
-    // and then the head of the scene exposes all the stuff in the form of easy to read data
-    // same scene even. and yeah this would make it easier to add new columns and stuff too if we want
-
-
-    // so what form does this data take first off
-    //  well a 'table' can be stored as a list of objects, that's a way i like. structurally i call that a table anyway, a collection of records with set fields
-
-    // but the table's fields can vary in our case, depending on what we're representing. so the data type we collect would vary and how they are read
-
-
-    //  how about this, how are we ideally going to be able to send data into it
-
-
-    //  well the inventory, you provide a traveller
-    //  the market, you provide a town
-    //  trading, you provide a traveller AND a town
-
-
-    // so naturally these are going to need some preparation logic somewhere to bring the data forwards
-
-
-    // look, right now the town panel goes through each row setting the field values
-    
-    
-    
-
-
-
-
+        return 0;
+    }
 }
